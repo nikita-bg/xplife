@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppNavbar } from '@/components/shared/app-navbar'
+import { ChatWidget } from '@/components/chat/chat-widget'
 
 export default async function AppLayout({
   children,
@@ -30,6 +31,7 @@ export default async function AppLayout({
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {children}
       </main>
+      <ChatWidget userId={user.id} />
     </div>
   )
 }

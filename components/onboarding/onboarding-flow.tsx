@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { QUIZ_QUESTIONS } from '@/lib/constants'
 import type { QuizAnswer, PersonalityType, TaskCategory } from '@/lib/types'
+import { awardXp } from '@/lib/api/xp'
 import { WelcomeStep } from './welcome-step'
 import { QuizStep } from './quiz-step'
 import { GoalSettingStep } from './goal-setting-step'
@@ -85,6 +86,13 @@ export function OnboardingFlow({ userId, onComplete }: OnboardingFlowProps) {
       setLoading(false)
       alert('Failed to save onboarding. Please try again.')
       return
+    }
+
+    // Award 25 XP for completing the onboarding quiz
+    try {
+      await awardXp(userId, 25, 'onboarding_quiz')
+    } catch (err) {
+      console.error('Failed to award onboarding XP:', err)
     }
 
     // Try to generate initial tasks (will silently fail if n8n isn't configured)

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { LogOut, Upload } from 'lucide-react'
+import { AvatarCropDialog } from './avatar-crop-dialog'
 
 interface SettingsFormProps {
   userId: string
@@ -19,8 +20,9 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
   const [displayName, setDisplayName] = useState(currentDisplayName)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [cropImage, setCropImage] = useState<string | null>(null)
+  const [cropDialogOpen, setCropDialogOpen] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const handleSave = async () => {
@@ -44,33 +46,20 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
     router.refresh()
   }
 
-  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+    const url = URL.createObjectURL(file)
+    setCropImage(url)
+    setCropDialogOpen(true)
+    // Reset input so same file can be re-selected
+    e.target.value = ''
+  }
 
-    setUploading(true)
-    const supabase = createClient()
-    const ext = file.name.split('.').pop()
-    const path = `${userId}/avatar-${Date.now()}.${ext}`
-
-    const { data, error } = await supabase.storage
-      .from('avatars')
-      .upload(path, file, { upsert: true })
-
-    if (!error && data) {
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(data.path)
-
-      await supabase
-        .from('users')
-        .update({ avatar_url: publicUrl })
-        .eq('id', userId)
-
-      router.refresh()
-    }
-
-    setUploading(false)
+  const handleCropComplete = () => {
+    setCropDialogOpen(false)
+    setCropImage(null)
+    router.refresh()
   }
 
   const handleLogout = async () => {
@@ -102,16 +91,15 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
             size="sm"
             className="gap-2"
             onClick={() => fileRef.current?.click()}
-            disabled={uploading}
           >
             <Upload className="h-4 w-4" />
-            {uploading ? 'Uploading...' : 'Upload Avatar'}
+            Upload Avatar
           </Button>
           <input
             ref={fileRef}
             type="file"
             accept="image/*"
-            onChange={handleAvatarUpload}
+            onChange={handleFileSelect}
             className="hidden"
           />
         </div>
@@ -138,6 +126,18 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
           </Button>
         </div>
       </div>
+      {cropImage && (
+        <AvatarCropDialog
+          open={cropDialogOpen}
+          onOpenChange={(open) => {
+            setCropDialogOpen(open)
+            if (!open) setCropImage(null)
+          }}
+          imageSrc={cropImage}
+          userId={userId}
+          onCropComplete={handleCropComplete}
+        />
+      )}
     </div>
   )
 }

@@ -1,0 +1,152 @@
+{
+  "name": "XPLife - Task Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "xplife-generate-tasks",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "xplife-generate-tasks"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "userId",
+              "name": "userId",
+              "value": "={{ $json.body.userId }}",
+              "type": "string"
+            },
+            {
+              "id": "personalityType",
+              "name": "personalityType",
+              "value": "={{ $json.body.personalityType }}",
+              "type": "string"
+            },
+            {
+              "id": "level",
+              "name": "level",
+              "value": "={{ $json.body.level }}",
+              "type": "number"
+            },
+            {
+              "id": "goals",
+              "name": "goals",
+              "value": "={{ JSON.stringify($json.body.goals) }}",
+              "type": "string"
+            },
+            {
+              "id": "recentTasks",
+              "name": "recentTasks",
+              "value": "={{ JSON.stringify($json.body.recentTasks) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-1",
+      "name": "Parse Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "content": "You are a gamified life coach AI for the XPLife app. Generate personalized daily tasks/quests for users based on their personality type, level, goals, and recent activity.\n\nPersonality Types:\n- dopamine: Thrives on novelty, competition, and rewards. Prefers high-energy, varied tasks.\n- acetylcholine: Loves learning, creativity, and deep thinking. Prefers intellectual and creative tasks.\n- gaba: Values stability, routine, and social connection. Prefers consistent, community-oriented tasks.\n- serotonin: Seeks meaning, structure, and achievement. Prefers organized, milestone-driven tasks.\n\nRules:\n- Generate 3-5 tasks\n- Each task must have: title, description, category (fitness|mindfulness|learning|productivity|social|health|creativity), difficulty (easy|medium|hard|epic), xp_reward (easy=25, medium=50, hard=100, epic=200)\n- Tasks should be specific and actionable\n- Avoid repeating recent tasks\n- Match difficulty to user level (higher level = can handle harder tasks)\n- Respond ONLY with valid JSON",
+              "role": "system"
+            },
+            {
+              "content": "=User personality: {{ $json.personalityType }}\nUser level: {{ $json.level }}\nUser goals: {{ $json.goals }}\nRecent tasks: {{ $json.recentTasks }}\n\nGenerate personalized tasks for today.",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 1024
+        }
+      },
+      "id": "openai-1",
+      "name": "Generate Tasks (OpenAI)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [690, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.parse($json.message.content) }}",
+        "options": {}
+      },
+      "id": "respond-1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [910, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Input": {
+      "main": [
+        [
+          {
+            "node": "Generate Tasks (OpenAI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Tasks (OpenAI)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "XPLife"
+    }
+  ]
+}

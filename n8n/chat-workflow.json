@@ -1,0 +1,146 @@
+{
+  "name": "XPLife - AI Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "xplife-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-chat-1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "xplife-chat"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "userId",
+              "name": "userId",
+              "value": "={{ $json.body.userId }}",
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "personalityType",
+              "name": "personalityType",
+              "value": "={{ $json.body.personalityType }}",
+              "type": "string"
+            },
+            {
+              "id": "level",
+              "name": "level",
+              "value": "={{ $json.body.level }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-chat-1",
+      "name": "Parse Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "content": "You are the Quest Advisor for the XPLife app — a friendly, motivating life coach who speaks in a light gamification style. Your role is to help users with their quests (tasks), goals, and personal growth.\n\nUser personality type: {{ $json.personalityType }}\nUser level: {{ $json.level }}\n\nPersonality-based coaching style:\n- dopamine: Be energetic, use excitement, highlight rewards and novelty\n- acetylcholine: Be thoughtful, offer insights, encourage creative approaches\n- gaba: Be warm and supportive, emphasize consistency and community\n- serotonin: Be structured, offer clear steps, highlight progress and meaning\n\nRules:\n- Keep responses concise (2-4 sentences max)\n- Be encouraging and positive\n- Reference their level when relevant (\"As a Level X hero...\")\n- Suggest actionable advice\n- Use light quest/RPG metaphors naturally\n- Respond ONLY with valid JSON: { \"reply\": \"your message\" }",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.message }}",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 256
+        }
+      },
+      "id": "openai-chat-1",
+      "name": "AI Chat Response",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [690, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.parse($json.message.content) }}",
+        "options": {}
+      },
+      "id": "respond-chat-1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [910, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Input": {
+      "main": [
+        [
+          {
+            "node": "AI Chat Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Chat Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "XPLife"
+    }
+  ]
+}
