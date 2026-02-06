@@ -73,8 +73,19 @@ export async function POST(request: NextRequest) {
       throw new Error('Chat webhook request failed')
     }
 
-    const data = await response.json()
-    const reply = data.reply || 'Sorry, I could not generate a response.'
+    const raw = await response.json()
+    // N8N returns array: [{ output: '{"reply":"..."}' }]
+    let reply = 'Sorry, I could not generate a response.'
+    try {
+      if (Array.isArray(raw) && raw[0]?.output) {
+        const parsed = typeof raw[0].output === 'string' ? JSON.parse(raw[0].output) : raw[0].output
+        reply = parsed.reply || reply
+      } else if (raw.reply) {
+        reply = raw.reply
+      }
+    } catch {
+      console.error('Failed to parse N8N response:', raw)
+    }
 
     // Save assistant reply
     await supabase.from('ai_chat_history').insert({

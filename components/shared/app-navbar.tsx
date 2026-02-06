@@ -56,7 +56,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
           </div>
 
           <div className="hidden items-center gap-4 md:flex">
-            <div className="flex items-center gap-2">
+            <Link href="/profile" className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -71,7 +71,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
                   LVL {level}
                 </span>
               </div>
-            </div>
+            </Link>
             <button
               onClick={handleLogout}
               className="text-muted-foreground transition-colors hover:text-foreground"

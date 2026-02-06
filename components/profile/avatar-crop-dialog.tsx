@@ -25,7 +25,10 @@ interface AvatarCropDialogProps {
 function getCroppedImg(imageSrc: string, crop: Area): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const image = new Image()
-    image.crossOrigin = 'anonymous'
+    // Only set crossOrigin for non-blob URLs
+    if (!imageSrc.startsWith('blob:')) {
+      image.crossOrigin = 'anonymous'
+    }
     image.onload = () => {
       const canvas = document.createElement('canvas')
       const size = 256

@@ -138,7 +138,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
 
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 flex h-[450px] w-[300px] flex-col overflow-hidden rounded-2xl border border-border bg-background/80 shadow-2xl backdrop-blur-xl sm:w-[350px]">
+        <div className="fixed bottom-24 left-3 right-3 z-50 flex h-[calc(100dvh-8rem)] max-h-[450px] flex-col overflow-hidden rounded-2xl border border-border bg-background/80 shadow-2xl backdrop-blur-xl sm:left-auto sm:right-6 sm:w-[350px]">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border bg-background/90 px-4 py-3">
             <div>

@@ -53,8 +53,19 @@ export async function POST() {
       throw new Error('Webhook request failed')
     }
 
-    const data = await response.json()
-    const tasks = data.tasks || []
+    const raw = await response.json()
+    // N8N returns array: [{ output: '{"tasks":[...]}' }]
+    let tasks: { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }[] = []
+    try {
+      if (Array.isArray(raw) && raw[0]?.output) {
+        const parsed = typeof raw[0].output === 'string' ? JSON.parse(raw[0].output) : raw[0].output
+        tasks = parsed.tasks || []
+      } else if (raw.tasks) {
+        tasks = raw.tasks
+      }
+    } catch {
+      console.error('Failed to parse N8N response:', raw)
+    }
 
     if (tasks.length > 0) {
       const taskInserts = tasks.map((task: { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }) => ({
