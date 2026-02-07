@@ -70,21 +70,42 @@ export async function POST(request: NextRequest) {
     })
 
     if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Chat webhook failed:', response.status, errorText)
       throw new Error('Chat webhook request failed')
     }
 
-    const raw = await response.json()
-    // N8N returns array: [{ output: '{"reply":"..."}' }]
+    let raw: unknown
+    const responseText = await response.text()
+    console.log('N8N chat raw response:', responseText.substring(0, 500))
+    try {
+      raw = JSON.parse(responseText)
+    } catch {
+      console.error('N8N response is not valid JSON:', responseText.substring(0, 200))
+      throw new Error('Invalid JSON from N8N')
+    }
+
     let reply = 'Sorry, I could not generate a response.'
     try {
-      if (Array.isArray(raw) && raw[0]?.output) {
-        const parsed = typeof raw[0].output === 'string' ? JSON.parse(raw[0].output) : raw[0].output
+      if (typeof raw === 'object' && raw !== null && 'reply' in raw) {
+        // Direct JSON: { reply: "..." }
+        reply = (raw as { reply: string }).reply || reply
+      } else if (typeof raw === 'string') {
+        // JSON string: '{"reply":"..."}'
+        const parsed = JSON.parse(raw)
         reply = parsed.reply || reply
-      } else if (raw.reply) {
-        reply = raw.reply
+      } else if (Array.isArray(raw) && raw[0]?.output) {
+        // Array format: [{ output: "..." }] or [{ output: { reply: "..." } }]
+        const output = raw[0].output
+        if (typeof output === 'string') {
+          const parsed = JSON.parse(output)
+          reply = parsed.reply || reply
+        } else if (typeof output === 'object' && output.reply) {
+          reply = output.reply
+        }
       }
-    } catch {
-      console.error('Failed to parse N8N response:', raw)
+    } catch (parseErr) {
+      console.error('Failed to parse N8N chat response:', parseErr, raw)
     }
 
     // Save assistant reply

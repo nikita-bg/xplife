@@ -244,3 +244,27 @@ create policy "Users can insert own chat" on public.ai_chat_history for insert w
 
 -- Level Config: everyone can read
 create policy "Anyone can view level config" on public.level_config for select using (true);
+
+-- ============================================
+-- STORAGE POLICIES
+-- ============================================
+
+-- Avatars bucket: users can upload/read/delete own avatars
+insert into storage.buckets (id, name, public) values ('avatars', 'avatars', true)
+  on conflict (id) do nothing;
+
+create policy "Users can upload own avatar"
+  on storage.objects for insert
+  with check (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
+
+create policy "Users can update own avatar"
+  on storage.objects for update
+  using (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
+
+create policy "Users can delete own avatar"
+  on storage.objects for delete
+  using (bucket_id = 'avatars' and auth.uid()::text = (storage.foldername(name))[1]);
+
+create policy "Anyone can view avatars"
+  on storage.objects for select
+  using (bucket_id = 'avatars');

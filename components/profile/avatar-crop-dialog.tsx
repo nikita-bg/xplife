@@ -77,6 +77,7 @@ export function AvatarCropDialog({
   const [zoom, setZoom] = useState(1)
   const [croppedArea, setCroppedArea] = useState<Area | null>(null)
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const onCropAreaChange = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedArea(croppedAreaPixels)
@@ -86,34 +87,52 @@ export function AvatarCropDialog({
     if (!croppedArea) return
 
     setSaving(true)
+    setError(null)
     try {
       const blob = await getCroppedImg(imageSrc, croppedArea)
+      console.log('Avatar blob size:', blob.size, 'bytes')
+
+      if (blob.size === 0) {
+        setError('Failed to create image. Please try a different photo.')
+        setSaving(false)
+        return
+      }
+
       const supabase = createClient()
       const path = `${userId}/avatar-${Date.now()}.jpg`
 
-      const { data, error } = await supabase.storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(path, blob, { upsert: true, contentType: 'image/jpeg' })
 
-      if (error || !data) {
-        console.error('Avatar upload error:', error)
+      if (uploadError || !uploadData) {
+        console.error('Avatar upload error:', uploadError)
+        setError(uploadError?.message || 'Failed to upload avatar. Please try again.')
         setSaving(false)
         return
       }
 
       const {
         data: { publicUrl },
-      } = supabase.storage.from('avatars').getPublicUrl(data.path)
+      } = supabase.storage.from('avatars').getPublicUrl(uploadData.path)
 
-      await supabase
+      const { error: dbError } = await supabase
         .from('users')
-        .update({ avatar_url: publicUrl })
+        .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
         .eq('id', userId)
+
+      if (dbError) {
+        console.error('Avatar DB update error:', dbError)
+        setError('Avatar uploaded but failed to save. Please try again.')
+        setSaving(false)
+        return
+      }
 
       onCropComplete(publicUrl)
       onOpenChange(false)
     } catch (err) {
       console.error('Crop error:', err)
+      setError('Something went wrong. Please try again.')
     } finally {
       setSaving(false)
     }
@@ -151,6 +170,10 @@ export function AvatarCropDialog({
             className="flex-1"
           />
         </div>
+
+        {error && (
+          <p className="text-sm text-destructive px-1">{error}</p>
+        )}
 
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>

@@ -1,12 +1,20 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
-export async function POST() {
+export async function POST(request: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  let userGoals: string | undefined
+  try {
+    const body = await request.json()
+    userGoals = body.goals
+  } catch {
+    // no body or invalid JSON — that's fine, we'll use DB goals
   }
 
   const webhookUrl = process.env.N8N_WEBHOOK_URL
@@ -46,25 +54,51 @@ export async function POST() {
         level: profile?.level,
         goals: goals ?? [],
         recentTasks: recentTasks ?? [],
+        userGoals: userGoals || '',
       }),
     })
 
     if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Task generation webhook failed:', response.status, errorText)
       throw new Error('Webhook request failed')
     }
 
-    const raw = await response.json()
-    // N8N returns array: [{ output: '{"tasks":[...]}' }]
-    let tasks: { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }[] = []
+    let raw: unknown
+    const responseText = await response.text()
+    console.log('N8N tasks raw response:', responseText.substring(0, 500))
     try {
-      if (Array.isArray(raw) && raw[0]?.output) {
-        const parsed = typeof raw[0].output === 'string' ? JSON.parse(raw[0].output) : raw[0].output
-        tasks = parsed.tasks || []
-      } else if (raw.tasks) {
-        tasks = raw.tasks
-      }
+      raw = JSON.parse(responseText)
     } catch {
-      console.error('Failed to parse N8N response:', raw)
+      console.error('N8N response is not valid JSON:', responseText.substring(0, 200))
+      throw new Error('Invalid JSON from N8N')
+    }
+
+    type TaskItem = { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }
+    let tasks: TaskItem[] = []
+    try {
+      // Extract content string from various N8N response formats
+      let content: unknown = raw
+
+      if (Array.isArray(raw) && raw.length > 0) {
+        const first = raw[0]
+        if (first?.message?.content) {
+          // OpenAI chat format: [{ message: { content: "..." } }]
+          content = first.message.content
+        } else if (first?.output) {
+          // N8N output format: [{ output: "..." }]
+          content = first.output
+        }
+      }
+
+      if (typeof content === 'string') {
+        const parsed = JSON.parse(content)
+        tasks = parsed.tasks || []
+      } else if (typeof content === 'object' && content !== null && 'tasks' in content) {
+        tasks = (content as { tasks: TaskItem[] }).tasks || []
+      }
+    } catch (parseErr) {
+      console.error('Failed to parse N8N tasks response:', parseErr, raw)
     }
 
     if (tasks.length > 0) {

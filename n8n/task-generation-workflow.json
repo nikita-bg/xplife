@@ -48,6 +48,12 @@
               "name": "recentTasks",
               "value": "={{ JSON.stringify($json.body.recentTasks) }}",
               "type": "string"
+            },
+            {
+              "id": "userGoals",
+              "name": "userGoals",
+              "value": "={{ $json.body.userGoals || '' }}",
+              "type": "string"
             }
           ]
         },
@@ -70,7 +76,7 @@
               "role": "system"
             },
             {
-              "content": "=User personality: {{ $json.personalityType }}\nUser level: {{ $json.level }}\nUser goals: {{ $json.goals }}\nRecent tasks: {{ $json.recentTasks }}\n\nGenerate personalized tasks for today.",
+              "content": "=User personality: {{ $json.personalityType }}\nUser level: {{ $json.level }}\nUser goals: {{ $json.goals }}\n{{ $json.userGoals ? 'User described goals: ' + $json.userGoals : '' }}\nRecent tasks: {{ $json.recentTasks }}\n\nGenerate personalized tasks for today.",
               "role": "user"
             }
           ]
@@ -95,7 +101,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.parse($json.message.content) }}",
+        "responseBody": "={{ $json.message ? $json.message.content : $json.output }}",
         "options": {}
       },
       "id": "respond-1",
