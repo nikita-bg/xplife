@@ -63,9 +63,15 @@ export async function POST(request: NextRequest) {
   })
 
   try {
+    const webhookHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
+    const webhookSecret = process.env.N8N_WEBHOOK_SECRET
+    if (webhookSecret) {
+      webhookHeaders['X-Webhook-Secret'] = webhookSecret
+    }
+
     const response = await fetch(webhookUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: webhookHeaders,
       body: JSON.stringify({
         userId: user.id,
         message: message.trim(),
