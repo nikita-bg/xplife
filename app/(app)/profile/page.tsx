@@ -4,6 +4,7 @@ import { ProfileHeader } from '@/components/profile/profile-header'
 import { SettingsForm } from '@/components/profile/settings-form'
 import { StatsCard } from '@/components/profile/stats-card'
 import { BalanceCard } from '@/components/profile/balance-card'
+import { UpgradeBanner } from '@/components/shared/upgrade-banner'
 
 export default async function ProfilePage() {
   const supabase = createClient()
@@ -55,6 +56,8 @@ export default async function ProfilePage() {
         balance={profile?.gold_balance ?? 0}
         currency={profile?.preferred_currency ?? 'EUR'}
       />
+
+      <UpgradeBanner />
 
       <SettingsForm
         userId={user.id}

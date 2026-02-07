@@ -7,6 +7,7 @@ import { GoldBalance } from '@/components/dashboard/gold-balance'
 import { QuestsView } from '@/components/dashboard/quests-view'
 import { OnboardingBanner } from '@/components/dashboard/onboarding-banner'
 import { BravermanBanner } from '@/components/dashboard/braverman-banner'
+import { UpgradeBanner } from '@/components/shared/upgrade-banner'
 
 export default async function DashboardPage() {
   const supabase = createClient()
@@ -132,6 +133,8 @@ export default async function DashboardPage() {
           currency={profile.preferred_currency ?? 'EUR'}
         />
       </div>
+
+      <UpgradeBanner variant="compact" />
 
       <QuestsView
         yearlyQuests={yearlyQuests ?? []}
