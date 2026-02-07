@@ -25,6 +25,8 @@ export interface Database {
           acetylcholine_score: number
           gaba_score: number
           serotonin_score: number
+          gold_balance: number
+          preferred_currency: string
         }
         Insert: {
           id: string
@@ -41,6 +43,8 @@ export interface Database {
           acetylcholine_score?: number
           gaba_score?: number
           serotonin_score?: number
+          gold_balance?: number
+          preferred_currency?: string
         }
         Update: {
           id?: string
@@ -57,6 +61,8 @@ export interface Database {
           acetylcholine_score?: number
           gaba_score?: number
           serotonin_score?: number
+          gold_balance?: number
+          preferred_currency?: string
         }
       }
       braverman_results: {

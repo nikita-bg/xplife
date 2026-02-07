@@ -315,3 +315,11 @@ ALTER TABLE public.users
   ADD COLUMN acetylcholine_score integer DEFAULT 0,
   ADD COLUMN gaba_score integer DEFAULT 0,
   ADD COLUMN serotonin_score integer DEFAULT 0;
+
+-- ============================================
+-- GOLD BALANCE & CURRENCY PREFERENCE
+-- ============================================
+
+ALTER TABLE public.users
+  ADD COLUMN gold_balance numeric(12,2) DEFAULT 0,
+  ADD COLUMN preferred_currency text DEFAULT 'EUR';

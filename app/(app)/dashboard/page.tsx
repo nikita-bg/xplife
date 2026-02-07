@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { LevelDisplay } from '@/components/dashboard/level-display'
 import { XpBar } from '@/components/dashboard/xp-bar'
 import { StreakCounter } from '@/components/dashboard/streak-counter'
+import { GoldBalance } from '@/components/dashboard/gold-balance'
 import { QuestsView } from '@/components/dashboard/quests-view'
 import { OnboardingBanner } from '@/components/dashboard/onboarding-banner'
 import { BravermanBanner } from '@/components/dashboard/braverman-banner'
@@ -112,7 +113,7 @@ export default async function DashboardPage() {
       {!onboardingCompleted && <OnboardingBanner userId={user.id} />}
       {showBravermanBanner && <BravermanBanner />}
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <LevelDisplay
           level={profile.level}
           title={currentLevel?.title ?? 'Novice'}
@@ -125,6 +126,10 @@ export default async function DashboardPage() {
         <StreakCounter
           currentStreak={streak?.current_streak ?? 0}
           longestStreak={streak?.longest_streak ?? 0}
+        />
+        <GoldBalance
+          balance={profile.gold_balance ?? 0}
+          currency={profile.preferred_currency ?? 'EUR'}
         />
       </div>
 

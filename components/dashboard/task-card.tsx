@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { CheckCircle2, Circle, Zap } from 'lucide-react'
-import type { Task } from '@/lib/types'
+import type { Task, QuestTimeframe } from '@/lib/types'
+import { QuestTimer } from '@/components/dashboard/quest-timer'
 
 interface TaskCardProps {
   task: Task
@@ -41,6 +42,9 @@ export function TaskCard({ task }: TaskCardProps) {
       </div>
 
       <div className="flex items-center gap-2 flex-shrink-0">
+        {!isCompleted && task.quest_timeframe && (
+          <QuestTimer timeframe={task.quest_timeframe as QuestTimeframe} />
+        )}
         <span className={`rounded-md px-2 py-0.5 text-xs font-medium ${difficultyColors[task.difficulty] ?? 'bg-muted text-muted-foreground'}`}>
           {task.difficulty}
         </span>
