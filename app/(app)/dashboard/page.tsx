@@ -141,6 +141,7 @@ export default async function DashboardPage() {
         monthlyQuests={monthlyQuests ?? []}
         weeklyQuests={weeklyQuests ?? []}
         dailyQuests={dailyQuests ?? []}
+        plan={profile?.plan ?? 'free'}
       />
     </div>
   )

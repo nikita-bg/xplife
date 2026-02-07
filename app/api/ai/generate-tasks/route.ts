@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { getPlanLimits } from '@/lib/plan-limits'
 import type { QuestTimeframe } from '@/lib/types'
 
 const TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
@@ -8,8 +9,6 @@ const TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
   weekly: { min: 5, max: 7 },
   daily: { min: 3, max: 5 },
 }
-
-const MAX_YEARLY_QUESTS = 5
 
 export async function POST(request: Request) {
   const supabase = createClient()
@@ -42,7 +41,38 @@ export async function POST(request: Request) {
     )
   }
 
-  // For yearly quests, check existing count
+  // Fetch user context
+  const { data: profile } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  const planLimits = getPlanLimits(profile?.plan)
+
+  // Enforce weekly task generation limit for free users
+  if (planLimits.maxTasksPerWeek !== -1) {
+    const now = new Date()
+    const dayOfWeek = now.getDay()
+    const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - mondayOffset)
+    startOfWeek.setHours(0, 0, 0, 0)
+
+    const { count: weeklyCount } = await supabase
+      .from('tasks')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .gte('created_at', startOfWeek.toISOString())
+
+    if ((weeklyCount ?? 0) >= planLimits.maxTasksPerWeek) {
+      return NextResponse.json(
+        { error: `Weekly limit reached (${weeklyCount}/${planLimits.maxTasksPerWeek}). Upgrade for unlimited.`, upgrade: true },
+        { status: 429 }
+      )
+    }
+  }
+
+  // For yearly quests, check existing count using plan-based cap
   if (questTimeframe === 'yearly') {
     const { count } = await supabase
       .from('tasks')
@@ -51,20 +81,13 @@ export async function POST(request: Request) {
       .eq('quest_timeframe', 'yearly')
       .neq('status', 'skipped')
 
-    if ((count ?? 0) >= MAX_YEARLY_QUESTS) {
+    if ((count ?? 0) >= planLimits.maxYearlyQuests) {
       return NextResponse.json(
-        { error: `Maximum of ${MAX_YEARLY_QUESTS} yearly quests reached` },
+        { error: `Maximum of ${planLimits.maxYearlyQuests} yearly quests reached` },
         { status: 400 }
       )
     }
   }
-
-  // Fetch user context
-  const { data: profile } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.id)
-    .single()
 
   const { data: goals } = await supabase
     .from('goals')

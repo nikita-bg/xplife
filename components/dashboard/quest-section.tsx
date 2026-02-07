@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Sparkles } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from './task-card'
 import { GenerateQuestDialog } from './generate-quest-dialog'
@@ -14,6 +15,7 @@ interface QuestSectionProps {
   quests: Task[]
   parentQuests?: Task[]
   maxQuests?: number
+  plan?: string
 }
 
 export function QuestSection({
@@ -22,6 +24,7 @@ export function QuestSection({
   quests,
   parentQuests = [],
   maxQuests,
+  plan = 'free',
 }: QuestSectionProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -38,16 +41,26 @@ export function QuestSection({
             ({quests.length}{maxQuests ? `/${maxQuests}` : ''})
           </span>
         </h2>
-        <Button
-          onClick={() => setDialogOpen(true)}
-          disabled={atLimit}
-          variant="outline"
-          size="sm"
-          className="gap-2"
-        >
-          <Sparkles className="h-4 w-4" />
-          Generate
-        </Button>
+        <div className="flex flex-col items-end gap-1">
+          <Button
+            onClick={() => setDialogOpen(true)}
+            disabled={atLimit}
+            variant="outline"
+            size="sm"
+            className="gap-2"
+          >
+            <Sparkles className="h-4 w-4" />
+            Generate
+          </Button>
+          {atLimit && plan === 'free' && (
+            <Link
+              href="/pricing"
+              className="text-xs text-primary hover:underline"
+            >
+              Upgrade for more
+            </Link>
+          )}
+        </div>
       </div>
 
       <QuestProgress

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { OnboardingFlow } from '@/components/onboarding/onboarding-flow'
+import { getPlanLimits } from '@/lib/plan-limits'
 
 export default async function OnboardingPage() {
   const supabase = createClient()
@@ -12,7 +13,7 @@ export default async function OnboardingPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('onboarding_completed')
+    .select('onboarding_completed, plan')
     .eq('id', user.id)
     .single()
 
@@ -20,10 +21,12 @@ export default async function OnboardingPage() {
     redirect('/dashboard')
   }
 
+  const planLimits = getPlanLimits(profile?.plan)
+
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl">
-        <OnboardingFlow userId={user.id} />
+        <OnboardingFlow userId={user.id} maxGoals={planLimits.maxGoals} />
       </div>
     </div>
   )

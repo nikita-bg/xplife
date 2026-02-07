@@ -2,6 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { QuestSection } from './quest-section'
+import { getPlanLimits } from '@/lib/plan-limits'
 import type { Task } from '@/lib/types'
 
 interface QuestsViewProps {
@@ -9,6 +10,7 @@ interface QuestsViewProps {
   monthlyQuests: Task[]
   weeklyQuests: Task[]
   dailyQuests: Task[]
+  plan?: string
 }
 
 export function QuestsView({
@@ -16,7 +18,10 @@ export function QuestsView({
   monthlyQuests,
   weeklyQuests,
   dailyQuests,
+  plan,
 }: QuestsViewProps) {
+  const planLimits = getPlanLimits(plan)
+
   return (
     <Tabs defaultValue="daily" className="w-full">
       <TabsList className="grid w-full grid-cols-4">
@@ -31,7 +36,8 @@ export function QuestsView({
           title="Yearly Goals"
           timeframe="yearly"
           quests={yearlyQuests}
-          maxQuests={5}
+          maxQuests={planLimits.maxYearlyQuests}
+          plan={plan ?? 'free'}
         />
       </TabsContent>
 

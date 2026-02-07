@@ -10,16 +10,17 @@ import type { TaskCategory } from '@/lib/types'
 interface GoalSettingStepProps {
   onComplete: (goals: { category: TaskCategory; title: string }[]) => void
   loading: boolean
+  maxGoals?: number
 }
 
-export function GoalSettingStep({ onComplete, loading }: GoalSettingStepProps) {
+export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSettingStepProps) {
   const [selectedCategories, setSelectedCategories] = useState<TaskCategory[]>([])
   const [goalTitles, setGoalTitles] = useState<Record<string, string>>({})
 
   const toggleCategory = (cat: TaskCategory) => {
     setSelectedCategories((prev) => {
       if (prev.includes(cat)) return prev.filter((c) => c !== cat)
-      if (prev.length >= 3) return prev
+      if (prev.length >= maxGoals) return prev
       return [...prev, cat]
     })
   }
@@ -50,7 +51,7 @@ export function GoalSettingStep({ onComplete, loading }: GoalSettingStepProps) {
         Choose Your Quest Lines
       </h2>
       <p className="mb-8 text-center text-sm text-muted-foreground">
-        Select 1-3 categories and write a goal for each
+        Select {maxGoals === 1 ? '1 category' : `1-${maxGoals} categories`} and write a goal for each
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">

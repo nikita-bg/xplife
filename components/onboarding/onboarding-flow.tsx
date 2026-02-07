@@ -33,9 +33,10 @@ function calculatePersonality(answers: QuizAnswer[]): PersonalityType {
 interface OnboardingFlowProps {
   userId: string
   onComplete?: () => void
+  maxGoals?: number
 }
 
-export function OnboardingFlow({ userId, onComplete }: OnboardingFlowProps) {
+export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingFlowProps) {
   const router = useRouter()
   const [step, setStep] = useState<Step>('welcome')
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswer[]>([])
@@ -128,7 +129,7 @@ export function OnboardingFlow({ userId, onComplete }: OnboardingFlowProps) {
       )}
 
       {step === 'goals' && (
-        <GoalSettingStep onComplete={handleGoalsComplete} loading={loading} />
+        <GoalSettingStep onComplete={handleGoalsComplete} loading={loading} maxGoals={maxGoals} />
       )}
     </div>
   )
