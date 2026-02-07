@@ -14,17 +14,17 @@ export function FinalCTA() {
             <span className="gradient-text">Quest?</span>
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground leading-relaxed">
-            Join thousands of players who are transforming their daily routines into epic adventures.
+            Every day you wait is XP you&apos;ll never earn. Start your free quest today.
           </p>
           <Link
             href="/signup"
             className="mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-accent px-10 py-4 font-bold text-primary-foreground transition-all hover:shadow-2xl hover:shadow-primary/30 hover:opacity-95"
           >
             <Sword className="h-5 w-5" />
-            Create Free Account
+            Start Your Quest — It&apos;s Free
           </Link>
           <p className="mt-4 text-xs text-muted-foreground">
-            No credit card required. Start your 14-day full access trial.
+            No credit card required. Free forever, upgrade anytime.
           </p>
         </div>
       </div>

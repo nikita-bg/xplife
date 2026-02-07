@@ -1,16 +1,19 @@
 import Link from "next/link"
 import Script from "next/script"
 import { Check, Crown, Zap, Gem } from "lucide-react"
-import { PLANS } from "@/lib/constants/pricing"
+import { PLANS, LIFETIME_SPOTS } from "@/lib/constants/pricing"
+
+const spotsLeft = LIFETIME_SPOTS.total - LIFETIME_SPOTS.claimed
+const spotsPercent = (LIFETIME_SPOTS.claimed / LIFETIME_SPOTS.total) * 100
 
 const tiers = [
   {
     name: "Start Free",
-    price: "€0",
+    price: "\u20AC0",
     period: "forever",
-    description: "Get started with the basics",
+    description: PLANS.free.description,
     features: PLANS.free.features,
-    cta: "Get Started Free",
+    cta: "Start Playing Free",
     href: "/signup",
     highlighted: false,
     accent: "default" as const,
@@ -18,12 +21,12 @@ const tiers = [
   },
   {
     name: "Premium",
-    price: "€4.99",
+    price: "\u20AC4.99",
     period: "/month",
-    description: "Full power unlocked for serious achievers",
+    description: PLANS.premium.description,
     badge: "Most Popular",
     features: PLANS.premium.features,
-    cta: "Upgrade Now",
+    cta: "Go Premium",
     href: PLANS.premium.checkoutUrl,
     highlighted: true,
     accent: "default" as const,
@@ -31,12 +34,12 @@ const tiers = [
   },
   {
     name: "Lifetime",
-    price: "€49",
+    price: "\u20AC49",
     period: "one-time",
-    description: "Everything in Premium, forever",
+    description: PLANS.lifetime.description,
     badge: "Limited Offer",
     features: PLANS.lifetime.features,
-    cta: "Claim Your Spot",
+    cta: "Lock In Lifetime Access",
     href: PLANS.lifetime.checkoutUrl,
     highlighted: false,
     accent: "gold" as const,
@@ -58,7 +61,7 @@ export function Pricing() {
             Select Your <span className="gradient-text">Class</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground leading-relaxed">
-            Start free and upgrade when you are ready for the full experience.
+            No credit card needed. Upgrade anytime — or lock in lifetime access before spots run out.
           </p>
         </div>
 
@@ -117,6 +120,22 @@ export function Pricing() {
               </div>
               <p className="mb-6 text-sm text-muted-foreground">{tier.description}</p>
 
+              {/* FOMO spots counter for Lifetime tier */}
+              {tier.accent === "gold" && (
+                <div className="mb-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+                  <div className={`mb-2 flex items-center gap-2 text-sm font-bold text-amber-400 ${spotsLeft <= 20 ? "animate-pulse" : ""}`}>
+                    <span>🔥</span>
+                    <span>Only {spotsLeft} spots left out of {LIFETIME_SPOTS.total}</span>
+                  </div>
+                  <div className="h-2.5 overflow-hidden rounded-full bg-amber-900/30">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-1000"
+                      style={{ width: `${spotsPercent}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
               <ul className="mb-8 flex flex-col gap-3">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-sm text-foreground">
@@ -135,18 +154,25 @@ export function Pricing() {
               </ul>
 
               {tier.href.startsWith("http") ? (
-                <a
-                  href={`${tier.href}?embed=1`}
-                  className={`lemonsqueezy-button block w-full rounded-xl py-3 text-center text-sm font-bold transition-all ${
-                    tier.highlighted
-                      ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 hover:opacity-90"
-                      : tier.accent === "gold"
-                        ? "bg-gradient-to-r from-amber-500 to-yellow-400 text-black hover:shadow-lg hover:shadow-amber-500/25 hover:opacity-90"
-                        : "border border-border bg-secondary text-secondary-foreground hover:border-primary/50"
-                  }`}
-                >
-                  {tier.cta}
-                </a>
+                <>
+                  <a
+                    href={`${tier.href}?embed=1`}
+                    className={`lemonsqueezy-button block w-full rounded-xl py-3 text-center text-sm font-bold transition-all ${
+                      tier.highlighted
+                        ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 hover:opacity-90"
+                        : tier.accent === "gold"
+                          ? "bg-gradient-to-r from-amber-500 to-yellow-400 text-black hover:shadow-lg hover:shadow-amber-500/25 hover:opacity-90"
+                          : "border border-border bg-secondary text-secondary-foreground hover:border-primary/50"
+                    }`}
+                  >
+                    {tier.cta}
+                  </a>
+                  {tier.accent === "gold" && (
+                    <p className="mt-2 text-center text-xs text-amber-400/70">
+                      {spotsLeft} of {LIFETIME_SPOTS.total} spots remaining
+                    </p>
+                  )}
+                </>
               ) : (
                 <Link
                   href={tier.href}

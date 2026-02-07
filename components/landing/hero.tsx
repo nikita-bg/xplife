@@ -48,7 +48,7 @@ export function Hero() {
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
             <span className="h-2 w-2 animate-pulse rounded-full bg-accent" />
-            <span className="text-xs font-medium text-accent">New: AI-Powered Quests Available</span>
+            <span className="text-xs font-medium text-accent">Join 1,000+ players leveling up right now</span>
           </div>
 
           <h1 className="text-balance font-display text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
@@ -58,7 +58,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Turn your goals into epic quests. Earn XP. Track streaks. Become your best self.
+            Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -67,7 +67,7 @@ export function Hero() {
               className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/30 animate-pulse-glow"
             >
               <Sword className="h-4 w-4" />
-              Start Your Journey
+              Start Playing Free
             </Link>
             <a
               href="#how-it-works"
