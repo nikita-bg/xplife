@@ -1,14 +1,43 @@
 'use client'
 
 import Script from 'next/script'
-import { Crown, Gem, Sparkles } from 'lucide-react'
+import { Crown, Gem, Sparkles, Check } from 'lucide-react'
 import { PLANS } from '@/lib/constants/pricing'
 
 interface UpgradeBannerProps {
+  plan?: string
   variant?: 'compact' | 'full'
 }
 
-export function UpgradeBanner({ variant = 'full' }: UpgradeBannerProps) {
+export function UpgradeBanner({ plan = 'free', variant = 'full' }: UpgradeBannerProps) {
+  // Already subscribed — show active plan badge
+  if (plan === 'premium' || plan === 'lifetime') {
+    const isPremium = plan === 'premium'
+    return (
+      <div className={`glass-card rounded-2xl border p-4 ${isPremium ? 'border-primary/20' : 'border-amber-500/30'}`}>
+        <div className="flex items-center gap-3">
+          <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isPremium ? 'bg-primary/20' : 'bg-amber-500/20'}`}>
+            {isPremium ? (
+              <Crown className="h-4 w-4 text-primary" />
+            ) : (
+              <Gem className="h-4 w-4 text-amber-400" />
+            )}
+          </div>
+          <div>
+            <p className="text-sm font-bold text-foreground">
+              {isPremium ? 'Premium' : 'Lifetime'} Plan
+            </p>
+            <p className="flex items-center gap-1 text-xs text-accent">
+              <Check className="h-3 w-3" />
+              Active
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Free plan — show upgrade CTA
   if (variant === 'compact') {
     return (
       <>

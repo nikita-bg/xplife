@@ -27,6 +27,7 @@ export interface Database {
           serotonin_score: number
           gold_balance: number
           preferred_currency: string
+          plan: string
         }
         Insert: {
           id: string
@@ -45,6 +46,7 @@ export interface Database {
           serotonin_score?: number
           gold_balance?: number
           preferred_currency?: string
+          plan?: string
         }
         Update: {
           id?: string
@@ -63,6 +65,7 @@ export interface Database {
           serotonin_score?: number
           gold_balance?: number
           preferred_currency?: string
+          plan?: string
         }
       }
       braverman_results: {
@@ -255,6 +258,7 @@ export interface Database {
           display_name: string | null
           avatar_url: string | null
           current_streak: number
+          plan: string
           updated_at: string
         }
         Insert: {
@@ -266,6 +270,7 @@ export interface Database {
           display_name?: string | null
           avatar_url?: string | null
           current_streak?: number
+          plan?: string
           updated_at?: string
         }
         Update: {
@@ -277,6 +282,7 @@ export interface Database {
           display_name?: string | null
           avatar_url?: string | null
           current_streak?: number
+          plan?: string
           updated_at?: string
         }
       }

@@ -134,7 +134,7 @@ export default async function DashboardPage() {
         />
       </div>
 
-      <UpgradeBanner variant="compact" />
+      <UpgradeBanner variant="compact" plan={profile?.plan ?? 'free'} />
 
       <QuestsView
         yearlyQuests={yearlyQuests ?? []}

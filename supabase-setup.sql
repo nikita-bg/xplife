@@ -323,3 +323,30 @@ ALTER TABLE public.users
 ALTER TABLE public.users
   ADD COLUMN gold_balance numeric(12,2) DEFAULT 0,
   ADD COLUMN preferred_currency text DEFAULT 'EUR';
+
+-- ============================================
+-- SUBSCRIPTION PLAN SUPPORT
+-- ============================================
+
+ALTER TABLE public.users
+  ADD COLUMN plan text DEFAULT 'free' CHECK (plan IN ('free', 'premium', 'lifetime'));
+
+ALTER TABLE public.leaderboard
+  ADD COLUMN plan text DEFAULT 'free';
+
+-- Update sync trigger to include plan
+CREATE OR REPLACE FUNCTION public.sync_leaderboard()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE public.leaderboard
+  SET
+    total_xp = new.total_xp,
+    level = new.level,
+    display_name = new.display_name,
+    avatar_url = new.avatar_url,
+    plan = new.plan,
+    updated_at = now()
+  WHERE user_id = new.id;
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;

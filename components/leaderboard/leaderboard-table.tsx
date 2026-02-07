@@ -1,4 +1,4 @@
-import { Flame, Zap } from 'lucide-react'
+import { Flame, Zap, Crown, Gem } from 'lucide-react'
 import { RankBadge } from './rank-badge'
 import type { LeaderboardEntry } from '@/lib/types'
 
@@ -6,6 +6,16 @@ interface LeaderboardTableProps {
   entries: LeaderboardEntry[]
   currentUserId: string
   myRank?: number
+}
+
+function PlanBadge({ plan }: { plan?: string }) {
+  if (plan === 'premium') {
+    return <span title="Premium"><Crown className="h-3 w-3 text-primary" /></span>
+  }
+  if (plan === 'lifetime') {
+    return <span title="Lifetime"><Gem className="h-3 w-3 text-amber-400" /></span>
+  }
+  return null
 }
 
 export function LeaderboardTable({ entries, currentUserId, myRank }: LeaderboardTableProps) {
@@ -68,6 +78,7 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
                       {entry.display_name || 'Anonymous'}
                       {isCurrentUser && <span className="ml-1 text-xs text-primary">(You)</span>}
                     </span>
+                    <PlanBadge plan={entry.plan} />
                   </div>
 
                   <div className="flex items-center justify-end gap-1 text-sm">
@@ -104,6 +115,7 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
                     <span className={`block truncate text-sm ${isCurrentUser ? 'font-bold text-foreground' : 'text-foreground'}`}>
                       {entry.display_name || 'Anonymous'}
                       {isCurrentUser && <span className="ml-1 text-xs text-primary">(You)</span>}
+                      <PlanBadge plan={entry.plan} />
                     </span>
                     <div className="flex items-center gap-3 mt-0.5">
                       <span className="flex items-center gap-1 text-xs text-muted-foreground">

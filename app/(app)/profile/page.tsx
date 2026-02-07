@@ -43,6 +43,7 @@ export default async function ProfilePage() {
         avatarUrl={profile?.avatar_url}
         level={profile?.level ?? 1}
         levelTitle={levelConfig?.title ?? 'Novice'}
+        plan={profile?.plan ?? 'free'}
       />
 
       <StatsCard
@@ -57,7 +58,7 @@ export default async function ProfilePage() {
         currency={profile?.preferred_currency ?? 'EUR'}
       />
 
-      <UpgradeBanner />
+      <UpgradeBanner plan={profile?.plan ?? 'free'} />
 
       <SettingsForm
         userId={user.id}
