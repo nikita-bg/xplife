@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Script from "next/script"
 import { Check, Crown, Zap, Gem } from "lucide-react"
 import { PLANS } from "@/lib/constants/pricing"
 
@@ -135,9 +136,8 @@ export function Pricing() {
 
               {tier.href.startsWith("http") ? (
                 <a
-                  href={tier.href}
-                  rel="noopener noreferrer"
-                  className={`block w-full rounded-xl py-3 text-center text-sm font-bold transition-all ${
+                  href={`${tier.href}?embed=1`}
+                  className={`lemonsqueezy-button block w-full rounded-xl py-3 text-center text-sm font-bold transition-all ${
                     tier.highlighted
                       ? "bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 hover:opacity-90"
                       : tier.accent === "gold"
@@ -165,6 +165,7 @@ export function Pricing() {
           ))}
         </div>
       </div>
+      <Script src="https://assets.lemonsqueezy.com/lemon.js" strategy="lazyOnload" />
     </section>
   )
 }
