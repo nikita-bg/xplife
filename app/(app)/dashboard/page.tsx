@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation'
 import { LevelDisplay } from '@/components/dashboard/level-display'
 import { XpBar } from '@/components/dashboard/xp-bar'
 import { StreakCounter } from '@/components/dashboard/streak-counter'
-import { DailyTasks } from '@/components/dashboard/daily-tasks'
+import { QuestsView } from '@/components/dashboard/quests-view'
 import { OnboardingBanner } from '@/components/dashboard/onboarding-banner'
+import { BravermanBanner } from '@/components/dashboard/braverman-banner'
 
 export default async function DashboardPage() {
   const supabase = createClient()
@@ -26,13 +27,58 @@ export default async function DashboardPage() {
     .eq('user_id', user.id)
     .single()
 
-  const today = new Date().toISOString().split('T')[0]
-  const { data: tasks } = await supabase
+  // Fetch quests by timeframe
+  // Yearly: all non-skipped yearly quests
+  const { data: yearlyQuests } = await supabase
     .from('tasks')
     .select('*')
     .eq('user_id', user.id)
+    .eq('quest_timeframe', 'yearly')
+    .neq('status', 'skipped')
+    .order('created_at', { ascending: true })
+
+  // Monthly: current month's quests
+  const now = new Date()
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+  const { data: monthlyQuests } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'monthly')
+    .gte('created_at', startOfMonth)
+    .order('created_at', { ascending: true })
+
+  // Weekly: current week's quests (Monday start)
+  const dayOfWeek = now.getDay()
+  const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
+  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - mondayOffset)
+  startOfWeek.setHours(0, 0, 0, 0)
+  const { data: weeklyQuests } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'weekly')
+    .gte('created_at', startOfWeek.toISOString())
+    .order('created_at', { ascending: true })
+
+  // Daily: today's quests
+  const today = new Date().toISOString().split('T')[0]
+  const { data: dailyQuests } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'daily')
     .gte('created_at', `${today}T00:00:00`)
     .order('created_at', { ascending: true })
+
+  // Check if Braverman test completed
+  const { data: bravermanResult } = await supabase
+    .from('braverman_results')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  const showBravermanBanner = (profile?.level ?? 1) >= 2 && !bravermanResult
 
   // Get current level config
   const { data: currentLevel } = await supabase
@@ -64,6 +110,7 @@ export default async function DashboardPage() {
       </div>
 
       {!onboardingCompleted && <OnboardingBanner userId={user.id} />}
+      {showBravermanBanner && <BravermanBanner />}
 
       <div className="grid gap-4 sm:grid-cols-3">
         <LevelDisplay
@@ -81,7 +128,12 @@ export default async function DashboardPage() {
         />
       </div>
 
-      <DailyTasks tasks={tasks ?? []} userId={user.id} />
+      <QuestsView
+        yearlyQuests={yearlyQuests ?? []}
+        monthlyQuests={monthlyQuests ?? []}
+        weeklyQuests={weeklyQuests ?? []}
+        dailyQuests={dailyQuests ?? []}
+      />
     </div>
   )
 }

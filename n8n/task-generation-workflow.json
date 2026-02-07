@@ -54,6 +54,42 @@
               "name": "userGoals",
               "value": "={{ $json.body.userGoals || '' }}",
               "type": "string"
+            },
+            {
+              "id": "questTimeframe",
+              "name": "questTimeframe",
+              "value": "={{ $json.body.questTimeframe || 'daily' }}",
+              "type": "string"
+            },
+            {
+              "id": "generationMode",
+              "name": "generationMode",
+              "value": "={{ $json.body.generationMode || 'manual' }}",
+              "type": "string"
+            },
+            {
+              "id": "parentQuest",
+              "name": "parentQuest",
+              "value": "={{ $json.body.parentQuest ? JSON.stringify($json.body.parentQuest) : '' }}",
+              "type": "string"
+            },
+            {
+              "id": "neurotransmitterScores",
+              "name": "neurotransmitterScores",
+              "value": "={{ JSON.stringify($json.body.neurotransmitterScores || {}) }}",
+              "type": "string"
+            },
+            {
+              "id": "taskCountMin",
+              "name": "taskCountMin",
+              "value": "={{ $json.body.taskCount ? $json.body.taskCount.min : 3 }}",
+              "type": "number"
+            },
+            {
+              "id": "taskCountMax",
+              "name": "taskCountMax",
+              "value": "={{ $json.body.taskCount ? $json.body.taskCount.max : 5 }}",
+              "type": "number"
             }
           ]
         },
@@ -72,11 +108,11 @@
         "messages": {
           "values": [
             {
-              "content": "You are a gamified life coach AI for the XPLife app. Generate personalized daily tasks/quests for users based on their personality type, level, goals, and recent activity.\n\nPersonality Types:\n- dopamine: Thrives on novelty, competition, and rewards. Prefers high-energy, varied tasks.\n- acetylcholine: Loves learning, creativity, and deep thinking. Prefers intellectual and creative tasks.\n- gaba: Values stability, routine, and social connection. Prefers consistent, community-oriented tasks.\n- serotonin: Seeks meaning, structure, and achievement. Prefers organized, milestone-driven tasks.\n\nRules:\n- Generate 3-5 tasks\n- Each task must have: title, description, category (fitness|mindfulness|learning|productivity|social|health|creativity), difficulty (easy|medium|hard|epic), xp_reward (easy=25, medium=50, hard=100, epic=200)\n- Tasks should be specific and actionable\n- Avoid repeating recent tasks\n- Match difficulty to user level (higher level = can handle harder tasks)\n- Respond ONLY with valid JSON",
+              "content": "You are a gamified life coach AI for the XPLife app. Generate personalized quests for users based on their personality type, level, goals, and recent activity.\n\nPersonality Types:\n- dopamine: Thrives on novelty, competition, and rewards. Prefers high-energy, varied tasks.\n- acetylcholine: Loves learning, creativity, and deep thinking. Prefers intellectual and creative tasks.\n- gaba: Values stability, routine, and social connection. Prefers consistent, community-oriented tasks.\n- serotonin: Seeks meaning, structure, and achievement. Prefers organized, milestone-driven tasks.\n\nQuest Timeframes:\n- yearly: 1-3 big ambitious annual goals. These are epic-tier visions for the year.\n- monthly: 3-5 monthly milestones that break down yearly goals into achievable chunks.\n- weekly: 5-7 specific weekly targets derived from monthly goals.\n- daily: 3-5 actionable daily tasks derived from weekly targets.\n\nIf generationMode is \"from-parent\", break down the parent quest into appropriate child quests for the requested timeframe.\n\nNeurotransmitter Score Personalization (use when scores are provided):\n- High dopamine deficiency: Include novel, exciting, competitive tasks to boost dopamine\n- High acetylcholine deficiency: Include creative, learning-focused tasks to boost acetylcholine\n- High GABA deficiency: Include routine, calming, community-oriented tasks to boost GABA\n- High serotonin deficiency: Include structured, achievement-focused, meaningful tasks to boost serotonin\n\nRules:\n- Generate between the specified min and max task count\n- Each task must have: title, description, category (fitness|mindfulness|learning|productivity|social|health|creativity), difficulty (easy|medium|hard|epic), xp_reward (easy=25, medium=50, hard=100, epic=200)\n- For yearly quests, use difficulty=epic and xp_reward=200\n- Tasks should be specific and actionable\n- Avoid repeating recent tasks\n- Match difficulty to user level (higher level = can handle harder tasks)\n- Respond ONLY with valid JSON in format: {\"tasks\": [...]}",
               "role": "system"
             },
             {
-              "content": "=User personality: {{ $json.personalityType }}\nUser level: {{ $json.level }}\nUser goals: {{ $json.goals }}\n{{ $json.userGoals ? 'User described goals: ' + $json.userGoals : '' }}\nRecent tasks: {{ $json.recentTasks }}\n\nGenerate personalized tasks for today.",
+              "content": "=User personality: {{ $json.personalityType }}\nUser level: {{ $json.level }}\nUser goals: {{ $json.goals }}\n{{ $json.userGoals ? 'User described goals: ' + $json.userGoals : '' }}\nRecent tasks: {{ $json.recentTasks }}\nQuest timeframe: {{ $json.questTimeframe }}\nGeneration mode: {{ $json.generationMode }}\n{{ $json.parentQuest ? 'Parent quest to break down: ' + $json.parentQuest : '' }}\nNeurotransmitter scores: {{ $json.neurotransmitterScores }}\nGenerate {{ $json.taskCountMin }} to {{ $json.taskCountMax }} {{ $json.questTimeframe }} quests.",
               "role": "user"
             }
           ]

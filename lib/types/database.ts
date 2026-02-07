@@ -21,6 +21,10 @@ export interface Database {
           onboarding_completed: boolean
           created_at: string
           updated_at: string
+          dopamine_score: number
+          acetylcholine_score: number
+          gaba_score: number
+          serotonin_score: number
         }
         Insert: {
           id: string
@@ -33,6 +37,10 @@ export interface Database {
           onboarding_completed?: boolean
           created_at?: string
           updated_at?: string
+          dopamine_score?: number
+          acetylcholine_score?: number
+          gaba_score?: number
+          serotonin_score?: number
         }
         Update: {
           id?: string
@@ -45,6 +53,42 @@ export interface Database {
           onboarding_completed?: boolean
           created_at?: string
           updated_at?: string
+          dopamine_score?: number
+          acetylcholine_score?: number
+          gaba_score?: number
+          serotonin_score?: number
+        }
+      }
+      braverman_results: {
+        Row: {
+          id: string
+          user_id: string
+          dopamine_score: number
+          acetylcholine_score: number
+          gaba_score: number
+          serotonin_score: number
+          dominant_type: string
+          completed_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          dopamine_score: number
+          acetylcholine_score: number
+          gaba_score: number
+          serotonin_score: number
+          dominant_type: string
+          completed_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          dopamine_score?: number
+          acetylcholine_score?: number
+          gaba_score?: number
+          serotonin_score?: number
+          dominant_type?: string
+          completed_at?: string
         }
       }
       tasks: {
@@ -61,6 +105,8 @@ export interface Database {
           due_date: string | null
           created_at: string
           completed_at: string | null
+          quest_timeframe: string
+          parent_quest_id: string | null
         }
         Insert: {
           id?: string
@@ -75,6 +121,8 @@ export interface Database {
           due_date?: string | null
           created_at?: string
           completed_at?: string | null
+          quest_timeframe?: string
+          parent_quest_id?: string | null
         }
         Update: {
           id?: string
@@ -89,6 +137,8 @@ export interface Database {
           due_date?: string | null
           created_at?: string
           completed_at?: string | null
+          quest_timeframe?: string
+          parent_quest_id?: string | null
         }
       }
       goals: {

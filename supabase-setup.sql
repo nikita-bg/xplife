@@ -268,3 +268,50 @@ create policy "Users can delete own avatar"
 create policy "Anyone can view avatars"
   on storage.objects for select
   using (bucket_id = 'avatars');
+
+-- ============================================
+-- QUEST TIMEFRAME & PARENT QUEST SUPPORT
+-- ============================================
+
+ALTER TABLE public.tasks
+  ADD COLUMN quest_timeframe text DEFAULT 'daily'
+    CHECK (quest_timeframe IN ('yearly','monthly','weekly','daily')),
+  ADD COLUMN parent_quest_id uuid REFERENCES public.tasks(id) ON DELETE SET NULL;
+
+CREATE INDEX idx_tasks_timeframe ON public.tasks(quest_timeframe, user_id);
+CREATE INDEX idx_tasks_parent ON public.tasks(parent_quest_id);
+
+-- ============================================
+-- BRAVERMAN RESULTS TABLE
+-- ============================================
+
+CREATE TABLE public.braverman_results (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid REFERENCES public.users ON DELETE CASCADE NOT NULL,
+  dopamine_score integer NOT NULL DEFAULT 0,
+  acetylcholine_score integer NOT NULL DEFAULT 0,
+  gaba_score integer NOT NULL DEFAULT 0,
+  serotonin_score integer NOT NULL DEFAULT 0,
+  dominant_type text NOT NULL,
+  completed_at timestamptz DEFAULT now(),
+  UNIQUE(user_id)
+);
+
+ALTER TABLE public.braverman_results ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view own braverman results"
+  ON public.braverman_results FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own braverman results"
+  ON public.braverman_results FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own braverman results"
+  ON public.braverman_results FOR UPDATE USING (auth.uid() = user_id);
+
+-- ============================================
+-- NEUROTRANSMITTER SCORES ON USERS
+-- ============================================
+
+ALTER TABLE public.users
+  ADD COLUMN dopamine_score integer DEFAULT 0,
+  ADD COLUMN acetylcholine_score integer DEFAULT 0,
+  ADD COLUMN gaba_score integer DEFAULT 0,
+  ADD COLUMN serotonin_score integer DEFAULT 0;

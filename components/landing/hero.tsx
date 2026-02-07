@@ -28,7 +28,7 @@ export function Hero() {
   }, [xpAnimated])
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-16">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24 sm:pt-16">
       {/* Grid background */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.04]"

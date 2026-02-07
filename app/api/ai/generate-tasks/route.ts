@@ -1,5 +1,15 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { QuestTimeframe } from '@/lib/types'
+
+const TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
+  yearly: { min: 1, max: 3 },
+  monthly: { min: 3, max: 5 },
+  weekly: { min: 5, max: 7 },
+  daily: { min: 3, max: 5 },
+}
+
+const MAX_YEARLY_QUESTS = 5
 
 export async function POST(request: Request) {
   const supabase = createClient()
@@ -10,9 +20,16 @@ export async function POST(request: Request) {
   }
 
   let userGoals: string | undefined
+  let questTimeframe: QuestTimeframe = 'daily'
+  let parentQuestId: string | undefined
+  let generationMode: 'manual' | 'from-parent' = 'manual'
+
   try {
     const body = await request.json()
     userGoals = body.goals
+    questTimeframe = body.questTimeframe || 'daily'
+    parentQuestId = body.parentQuestId
+    generationMode = body.generationMode || 'manual'
   } catch {
     // no body or invalid JSON — that's fine, we'll use DB goals
   }
@@ -23,6 +40,23 @@ export async function POST(request: Request) {
       { error: 'AI task generation not configured yet' },
       { status: 503 }
     )
+  }
+
+  // For yearly quests, check existing count
+  if (questTimeframe === 'yearly') {
+    const { count } = await supabase
+      .from('tasks')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'yearly')
+      .neq('status', 'skipped')
+
+    if ((count ?? 0) >= MAX_YEARLY_QUESTS) {
+      return NextResponse.json(
+        { error: `Maximum of ${MAX_YEARLY_QUESTS} yearly quests reached` },
+        { status: 400 }
+      )
+    }
   }
 
   // Fetch user context
@@ -44,6 +78,20 @@ export async function POST(request: Request) {
     .order('created_at', { ascending: false })
     .limit(10)
 
+  // Fetch parent quest if generating from parent
+  let parentQuest = null
+  if (parentQuestId && generationMode === 'from-parent') {
+    const { data } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('id', parentQuestId)
+      .eq('user_id', user.id)
+      .single()
+    parentQuest = data
+  }
+
+  const limits = TASK_LIMITS[questTimeframe]
+
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -55,6 +103,16 @@ export async function POST(request: Request) {
         goals: goals ?? [],
         recentTasks: recentTasks ?? [],
         userGoals: userGoals || '',
+        questTimeframe,
+        generationMode,
+        parentQuest,
+        neurotransmitterScores: {
+          dopamine: profile?.dopamine_score ?? 0,
+          acetylcholine: profile?.acetylcholine_score ?? 0,
+          gaba: profile?.gaba_score ?? 0,
+          serotonin: profile?.serotonin_score ?? 0,
+        },
+        taskCount: { min: limits.min, max: limits.max },
       }),
     })
 
@@ -83,10 +141,8 @@ export async function POST(request: Request) {
       if (Array.isArray(raw) && raw.length > 0) {
         const first = raw[0]
         if (first?.message?.content) {
-          // OpenAI chat format: [{ message: { content: "..." } }]
           content = first.message.content
         } else if (first?.output) {
-          // N8N output format: [{ output: "..." }]
           content = first.output
         }
       }
@@ -102,7 +158,7 @@ export async function POST(request: Request) {
     }
 
     if (tasks.length > 0) {
-      const taskInserts = tasks.map((task: { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }) => ({
+      const taskInserts = tasks.map((task) => ({
         user_id: user.id,
         title: task.title,
         description: task.description ?? null,
@@ -110,6 +166,8 @@ export async function POST(request: Request) {
         difficulty: task.difficulty ?? 'medium',
         xp_reward: task.xp_reward ?? 50,
         status: 'pending',
+        quest_timeframe: questTimeframe,
+        parent_quest_id: parentQuestId ?? null,
       }))
 
       await supabase.from('tasks').insert(taskInserts)
