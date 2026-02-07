@@ -5,6 +5,7 @@ import { Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TaskCard } from './task-card'
 import { GenerateQuestDialog } from './generate-quest-dialog'
+import { QuestProgress } from './quest-progress'
 import type { Task, QuestTimeframe } from '@/lib/types'
 
 interface QuestSectionProps {
@@ -48,6 +49,12 @@ export function QuestSection({
           Generate
         </Button>
       </div>
+
+      <QuestProgress
+        completed={completedQuests.length}
+        total={quests.length}
+        timeframe={timeframe}
+      />
 
       {quests.length === 0 ? (
         <div className="glass-card rounded-2xl p-12 text-center">

@@ -84,17 +84,19 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
           />
         </div>
 
-        <div className="space-y-2">
-          <Label>Avatar</Label>
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2"
-            onClick={() => fileRef.current?.click()}
-          >
-            <Upload className="h-4 w-4" />
-            Upload Avatar
-          </Button>
+        <div>
+          <div className="flex items-center gap-3">
+            <Label>Avatar</Label>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2"
+              onClick={() => fileRef.current?.click()}
+            >
+              <Upload className="h-4 w-4" />
+              Upload Avatar
+            </Button>
+          </div>
           <input
             ref={fileRef}
             type="file"

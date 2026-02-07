@@ -85,7 +85,7 @@ export function BalanceCard({ balance: initialBalance, currency: initialCurrency
             <ChevronDown className={`h-3.5 w-3.5 transition-transform ${currencyOpen ? 'rotate-180' : ''}`} />
           </button>
           {currencyOpen && (
-            <div className="absolute right-0 top-full z-10 mt-1 max-h-60 w-48 overflow-y-auto rounded-lg border border-border bg-card shadow-lg">
+            <div className="absolute right-0 top-full z-50 mt-1 max-h-60 w-48 overflow-y-auto rounded-lg border border-border bg-card shadow-lg">
               {CURRENCIES.map(c => (
                 <button
                   key={c.code}
