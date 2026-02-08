@@ -2,15 +2,23 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles, X } from 'lucide-react'
+import { Sparkles, X, AlertCircle, ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { TaskCard } from './task-card'
 import type { Task } from '@/lib/types'
+import Link from 'next/link'
 
 interface DailyTasksProps {
   tasks: Task[]
   userId: string
+}
+
+type ErrorType = {
+  message: string
+  canRetry: boolean
+  showUpgrade: boolean
+  showProfileLink: boolean
 }
 
 export function DailyTasks({ tasks, userId }: DailyTasksProps) {
@@ -18,7 +26,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
   const [generating, setGenerating] = useState(false)
   const [showGoalInput, setShowGoalInput] = useState(false)
   const [goalText, setGoalText] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<ErrorType | null>(null)
 
   const handleGenerateClick = () => {
     if (!showGoalInput) {
@@ -31,7 +39,12 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
   const handleGenerate = async () => {
     const trimmed = goalText.trim()
     if (!trimmed) {
-      setError('Please describe your goals before generating quests.')
+      setError({
+        message: 'Please describe your goals before generating quests.',
+        canRetry: false,
+        showUpgrade: false,
+        showProfileLink: false,
+      })
       return
     }
 
@@ -43,15 +56,54 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ goals: trimmed }),
       })
+
       if (!res.ok) {
         const data = await res.json().catch(() => null)
-        throw new Error(data?.error || 'Failed to generate quests')
+        const errorMessage = data?.error || 'Failed to generate quests'
+
+        // Determine error type based on status code and message
+        const errorType: ErrorType = {
+          message: errorMessage,
+          canRetry: false,
+          showUpgrade: false,
+          showProfileLink: false,
+        }
+
+        // 429 = rate limit/weekly limit
+        if (res.status === 429 || errorMessage.toLowerCase().includes('limit')) {
+          errorType.showUpgrade = true
+          errorType.canRetry = false
+        }
+        // 404 = profile not found
+        else if (res.status === 404 || errorMessage.toLowerCase().includes('profile not found')) {
+          errorType.showProfileLink = true
+          errorType.canRetry = false
+        }
+        // 503 = temporary service issues
+        else if (res.status === 503 || errorMessage.toLowerCase().includes('temporarily unavailable')) {
+          errorType.canRetry = true
+        }
+        // Other server errors might be temporary
+        else if (res.status >= 500) {
+          errorType.canRetry = true
+        }
+
+        setError(errorType)
+        return
       }
+
       setShowGoalInput(false)
       setGoalText('')
+      setError(null)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate quests')
+      // Network errors are usually temporary
+      setError({
+        message: err instanceof Error ? err.message : 'Failed to generate quests',
+        canRetry: true,
+        showUpgrade: false,
+        showProfileLink: false,
+      })
     } finally {
       setGenerating(false)
     }
@@ -105,7 +157,51 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
             className="resize-none"
           />
           {error && (
-            <p className="text-sm text-destructive">{error}</p>
+            <div className="glass-card rounded-lg p-3 border border-destructive/20 bg-destructive/5">
+              <div className="flex gap-2">
+                <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                <div className="flex-1 space-y-2">
+                  <p className="text-sm text-destructive">{error.message}</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {error.canRetry && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleGenerate}
+                        disabled={generating}
+                        className="h-7 text-xs"
+                      >
+                        Try Again
+                      </Button>
+                    )}
+                    {error.showUpgrade && (
+                      <Link href="/profile">
+                        <Button
+                          size="sm"
+                          variant="default"
+                          className="h-7 text-xs gap-1"
+                        >
+                          Upgrade Plan
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    )}
+                    {error.showProfileLink && (
+                      <Link href="/profile">
+                        <Button
+                          size="sm"
+                          variant="default"
+                          className="h-7 text-xs gap-1"
+                        >
+                          Complete Profile
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
           <div className="flex gap-2 justify-end">
             <Button

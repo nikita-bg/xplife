@@ -33,6 +33,9 @@ export async function POST(request: Request) {
     // no body or invalid JSON — that's fine, we'll use DB goals
   }
 
+  const timestamp = new Date().toISOString()
+  console.log(`[TASK-GEN ${timestamp}] Started for user:`, user.id, 'timeframe:', questTimeframe, 'mode:', generationMode)
+
   const webhookUrl = process.env.N8N_WEBHOOK_URL
   if (!webhookUrl) {
     return NextResponse.json(
@@ -42,11 +45,21 @@ export async function POST(request: Request) {
   }
 
   // Fetch user context
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('users')
     .select('*')
     .eq('id', user.id)
     .single()
+
+  if (profileError || !profile) {
+    console.error(`[TASK-GEN ${timestamp}] No profile found for user:`, user.id, 'error:', profileError)
+    return NextResponse.json(
+      { error: 'User profile not found. Please complete your profile setup.' },
+      { status: 404 }
+    )
+  }
+
+  console.log(`[TASK-GEN ${timestamp}] Profile loaded:`, { plan: profile.plan, level: profile.level })
 
   const planLimits = getPlanLimits(profile?.plan)
 
@@ -58,13 +71,24 @@ export async function POST(request: Request) {
     const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - mondayOffset)
     startOfWeek.setHours(0, 0, 0, 0)
 
-    const { count: weeklyCount } = await supabase
+    const { count: weeklyCount, error: countError } = await supabase
       .from('tasks')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
       .gte('created_at', startOfWeek.toISOString())
 
+    if (countError) {
+      console.error(`[TASK-GEN ${timestamp}] Failed to check weekly count:`, countError)
+      return NextResponse.json(
+        { error: 'Database error while checking limits. Please try again.' },
+        { status: 500 }
+      )
+    }
+
+    console.log(`[TASK-GEN ${timestamp}] Weekly task count:`, weeklyCount, '/', planLimits.maxTasksPerWeek)
+
     if ((weeklyCount ?? 0) >= planLimits.maxTasksPerWeek) {
+      console.log(`[TASK-GEN ${timestamp}] Weekly limit reached for user:`, user.id)
       return NextResponse.json(
         { error: `Weekly limit reached (${weeklyCount}/${planLimits.maxTasksPerWeek}). Upgrade for unlimited.`, upgrade: true },
         { status: 429 }
@@ -74,14 +98,25 @@ export async function POST(request: Request) {
 
   // For yearly quests, check existing count using plan-based cap
   if (questTimeframe === 'yearly') {
-    const { count } = await supabase
+    const { count, error: yearlyCountError } = await supabase
       .from('tasks')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
       .eq('quest_timeframe', 'yearly')
       .neq('status', 'skipped')
 
+    if (yearlyCountError) {
+      console.error(`[TASK-GEN ${timestamp}] Failed to check yearly count:`, yearlyCountError)
+      return NextResponse.json(
+        { error: 'Database error while checking yearly quest limits. Please try again.' },
+        { status: 500 }
+      )
+    }
+
+    console.log(`[TASK-GEN ${timestamp}] Yearly quest count:`, count, '/', planLimits.maxYearlyQuests)
+
     if ((count ?? 0) >= planLimits.maxYearlyQuests) {
+      console.log(`[TASK-GEN ${timestamp}] Yearly quest limit reached for user:`, user.id)
       return NextResponse.json(
         { error: `Maximum of ${planLimits.maxYearlyQuests} yearly quests reached` },
         { status: 400 }
@@ -89,27 +124,46 @@ export async function POST(request: Request) {
     }
   }
 
-  const { data: goals } = await supabase
+  const { data: goals, error: goalsError } = await supabase
     .from('goals')
     .select('*')
     .eq('user_id', user.id)
 
-  const { data: recentTasks } = await supabase
+  if (goalsError) {
+    console.error(`[TASK-GEN ${timestamp}] Failed to fetch goals:`, goalsError)
+  }
+
+  console.log(`[TASK-GEN ${timestamp}] Loaded ${goals?.length ?? 0} goals`)
+
+  const { data: recentTasks, error: tasksError } = await supabase
     .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(10)
 
+  if (tasksError) {
+    console.error(`[TASK-GEN ${timestamp}] Failed to fetch recent tasks:`, tasksError)
+  }
+
+  console.log(`[TASK-GEN ${timestamp}] Loaded ${recentTasks?.length ?? 0} recent tasks`)
+
   // Fetch parent quest if generating from parent
   let parentQuest = null
   if (parentQuestId && generationMode === 'from-parent') {
-    const { data } = await supabase
+    const { data, error: parentError } = await supabase
       .from('tasks')
       .select('*')
       .eq('id', parentQuestId)
       .eq('user_id', user.id)
       .single()
+
+    if (parentError) {
+      console.error(`[TASK-GEN ${timestamp}] Failed to fetch parent quest:`, parentQuestId, parentError)
+    } else {
+      console.log(`[TASK-GEN ${timestamp}] Loaded parent quest:`, parentQuestId)
+    }
+
     parentQuest = data
   }
 
@@ -121,6 +175,8 @@ export async function POST(request: Request) {
     if (webhookSecret) {
       webhookHeaders['X-Webhook-Secret'] = webhookSecret
     }
+
+    console.log(`[TASK-GEN ${timestamp}] Calling N8N webhook with ${limits.min}-${limits.max} task limit`)
 
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -147,18 +203,26 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('Task generation webhook failed:', response.status, errorText)
-      throw new Error('Webhook request failed')
+      console.error(`[TASK-GEN ${timestamp}] Task generation webhook failed:`, response.status, errorText)
+      return NextResponse.json(
+        { error: 'AI service temporarily unavailable. Please try again in a few moments.' },
+        { status: 503 }
+      )
     }
+
+    console.log(`[TASK-GEN ${timestamp}] N8N webhook responded with status:`, response.status)
 
     let raw: unknown
     const responseText = await response.text()
-    console.log('N8N tasks raw response:', responseText.substring(0, 500))
+    console.log(`[TASK-GEN ${timestamp}] N8N tasks raw response:`, responseText.substring(0, 500))
     try {
       raw = JSON.parse(responseText)
-    } catch {
-      console.error('N8N response is not valid JSON:', responseText.substring(0, 200))
-      throw new Error('Invalid JSON from N8N')
+    } catch (jsonError) {
+      console.error(`[TASK-GEN ${timestamp}] N8N response is not valid JSON:`, responseText.substring(0, 200), jsonError)
+      return NextResponse.json(
+        { error: 'AI service returned invalid response. Please try again.' },
+        { status: 503 }
+      )
     }
 
     type TaskItem = { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }
@@ -183,8 +247,10 @@ export async function POST(request: Request) {
         tasks = (content as { tasks: TaskItem[] }).tasks || []
       }
     } catch (parseErr) {
-      console.error('Failed to parse N8N tasks response:', parseErr, raw)
+      console.error(`[TASK-GEN ${timestamp}] Failed to parse N8N tasks response:`, parseErr, raw)
     }
+
+    console.log(`[TASK-GEN ${timestamp}] Parsed ${tasks.length} tasks from N8N response`)
 
     if (tasks.length > 0) {
       const taskInserts = tasks.map((task) => ({
@@ -199,14 +265,33 @@ export async function POST(request: Request) {
         parent_quest_id: parentQuestId ?? null,
       }))
 
-      await supabase.from('tasks').insert(taskInserts)
+      console.log(`[TASK-GEN ${timestamp}] Inserting ${taskInserts.length} tasks into database`)
+
+      const { error: insertError } = await supabase.from('tasks').insert(taskInserts)
+
+      if (insertError) {
+        console.error(`[TASK-GEN ${timestamp}] Failed to insert tasks:`, insertError)
+        return NextResponse.json(
+          { error: 'Database error while saving tasks. Please try again.' },
+          { status: 500 }
+        )
+      }
+
+      console.log(`[TASK-GEN ${timestamp}] Successfully inserted ${taskInserts.length} tasks`)
+    } else {
+      console.warn(`[TASK-GEN ${timestamp}] No tasks generated by N8N`)
     }
 
     return NextResponse.json({ success: true, count: tasks.length })
   } catch (error) {
-    console.error('AI task generation error:', error)
+    const isDev = process.env.NODE_ENV !== 'production'
+    console.error(`[TASK-GEN ${timestamp}] AI task generation error:`, error)
+
     return NextResponse.json(
-      { error: 'Failed to generate tasks' },
+      {
+        error: 'Failed to generate tasks. Please try again.',
+        ...(isDev && { details: error instanceof Error ? error.message : String(error) })
+      },
       { status: 500 }
     )
   }
