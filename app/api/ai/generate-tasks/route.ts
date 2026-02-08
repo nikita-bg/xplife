@@ -37,7 +37,9 @@ export async function POST(request: Request) {
   console.log(`[TASK-GEN ${timestamp}] Started for user:`, user.id, 'timeframe:', questTimeframe, 'mode:', generationMode)
 
   const webhookUrl = process.env.N8N_WEBHOOK_URL
+  console.log(`[TASK-GEN ${timestamp}] N8N_WEBHOOK_URL:`, webhookUrl ? 'CONFIGURED' : 'MISSING')
   if (!webhookUrl) {
+    console.error(`[TASK-GEN ${timestamp}] N8N_WEBHOOK_URL environment variable is not set`)
     return NextResponse.json(
       { error: 'AI task generation not configured yet' },
       { status: 503 }
@@ -174,43 +176,52 @@ export async function POST(request: Request) {
     const webhookSecret = process.env.N8N_WEBHOOK_SECRET
     if (webhookSecret) {
       webhookHeaders['X-Webhook-Secret'] = webhookSecret
+      console.log(`[TASK-GEN ${timestamp}] Webhook secret is configured`)
+    } else {
+      console.warn(`[TASK-GEN ${timestamp}] Webhook secret is NOT configured`)
     }
 
-    console.log(`[TASK-GEN ${timestamp}] Calling N8N webhook with ${limits.min}-${limits.max} task limit`)
+    const requestPayload = {
+      userId: user.id,
+      personalityType: profile?.personality_type,
+      level: profile?.level,
+      goals: goals ?? [],
+      recentTasks: recentTasks ?? [],
+      userGoals: userGoals || '',
+      questTimeframe,
+      generationMode,
+      parentQuest,
+      neurotransmitterScores: {
+        dopamine: profile?.dopamine_score ?? 0,
+        acetylcholine: profile?.acetylcholine_score ?? 0,
+        gaba: profile?.gaba_score ?? 0,
+        serotonin: profile?.serotonin_score ?? 0,
+      },
+      taskCount: { min: limits.min, max: limits.max },
+    }
+
+    console.log(`[TASK-GEN ${timestamp}] Calling N8N webhook:`, webhookUrl)
+    console.log(`[TASK-GEN ${timestamp}] Request payload:`, JSON.stringify(requestPayload).substring(0, 200))
 
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: webhookHeaders,
-      body: JSON.stringify({
-        userId: user.id,
-        personalityType: profile?.personality_type,
-        level: profile?.level,
-        goals: goals ?? [],
-        recentTasks: recentTasks ?? [],
-        userGoals: userGoals || '',
-        questTimeframe,
-        generationMode,
-        parentQuest,
-        neurotransmitterScores: {
-          dopamine: profile?.dopamine_score ?? 0,
-          acetylcholine: profile?.acetylcholine_score ?? 0,
-          gaba: profile?.gaba_score ?? 0,
-          serotonin: profile?.serotonin_score ?? 0,
-        },
-        taskCount: { min: limits.min, max: limits.max },
-      }),
+      body: JSON.stringify(requestPayload),
     })
+
+    console.log(`[TASK-GEN ${timestamp}] Fetch completed, status:`, response.status)
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error(`[TASK-GEN ${timestamp}] Task generation webhook failed:`, response.status, errorText)
+      console.error(`[TASK-GEN ${timestamp}] N8N webhook failed with status ${response.status}:`, errorText)
+      console.error(`[TASK-GEN ${timestamp}] Response headers:`, JSON.stringify(Object.fromEntries(response.headers.entries())))
       return NextResponse.json(
         { error: 'AI service temporarily unavailable. Please try again in a few moments.' },
         { status: 503 }
       )
     }
 
-    console.log(`[TASK-GEN ${timestamp}] N8N webhook responded with status:`, response.status)
+    console.log(`[TASK-GEN ${timestamp}] N8N webhook responded successfully with status:`, response.status)
 
     let raw: unknown
     const responseText = await response.text()
@@ -286,6 +297,25 @@ export async function POST(request: Request) {
   } catch (error) {
     const isDev = process.env.NODE_ENV !== 'production'
     console.error(`[TASK-GEN ${timestamp}] AI task generation error:`, error)
+
+    // Log detailed error information
+    if (error instanceof Error) {
+      console.error(`[TASK-GEN ${timestamp}] Error name:`, error.name)
+      console.error(`[TASK-GEN ${timestamp}] Error message:`, error.message)
+      console.error(`[TASK-GEN ${timestamp}] Error stack:`, error.stack)
+    }
+
+    // Check if it's a network error
+    const isNetworkError = error instanceof Error && (
+      error.message.includes('fetch') ||
+      error.message.includes('network') ||
+      error.message.includes('ECONNREFUSED') ||
+      error.message.includes('timeout')
+    )
+
+    if (isNetworkError) {
+      console.error(`[TASK-GEN ${timestamp}] Network error detected - cannot reach N8N webhook`)
+    }
 
     return NextResponse.json(
       {
