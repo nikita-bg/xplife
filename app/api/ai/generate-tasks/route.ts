@@ -10,6 +10,83 @@ const TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
   daily: { min: 3, max: 5 },
 }
 
+interface CategoryStats {
+  completion_rate: number
+  total_completed: number
+  total_tasks: number
+  avg_time_hours: number | null
+}
+
+interface CategoryAnalytics {
+  categoryStats: Record<string, CategoryStats>
+  bestCategory: string | null
+  strugglingCategory: string | null
+}
+
+/**
+ * Calculate success rate analytics by category
+ * Tracks completion rates, average time, best/worst performing categories
+ */
+async function calculateCategoryStats(
+  userId: string,
+  supabase: ReturnType<typeof createClient>
+): Promise<CategoryAnalytics> {
+  const { data: allTasks } = await supabase
+    .from('tasks')
+    .select('category, status, created_at, completed_at')
+    .eq('user_id', userId)
+    .in('status', ['completed', 'skipped'])
+
+  if (!allTasks || allTasks.length === 0) {
+    return {
+      categoryStats: {},
+      bestCategory: null,
+      strugglingCategory: null,
+    }
+  }
+
+  const statsByCategory: Record<string, CategoryStats> = {}
+  const categories = ['fitness', 'learning', 'creativity', 'productivity', 'social', 'health', 'mindfulness']
+
+  for (const category of categories) {
+    const categoryTasks = allTasks.filter((t) => t.category === category)
+    const completed = categoryTasks.filter((t) => t.status === 'completed')
+    const total = categoryTasks.length
+
+    if (total > 0) {
+      // Calculate average time for completed tasks
+      let avgTimeHours: number | null = null
+      const completedWithTime = completed.filter((t) => t.completed_at && t.created_at)
+      if (completedWithTime.length > 0) {
+        const totalHours = completedWithTime.reduce((sum, t) => {
+          const created = new Date(t.created_at!).getTime()
+          const completedAt = new Date(t.completed_at!).getTime()
+          return sum + (completedAt - created) / (1000 * 60 * 60)
+        }, 0)
+        avgTimeHours = totalHours / completedWithTime.length
+      }
+
+      statsByCategory[category] = {
+        completion_rate: completed.length / total,
+        total_completed: completed.length,
+        total_tasks: total,
+        avg_time_hours: avgTimeHours,
+      }
+    }
+  }
+
+  // Find best and worst performing categories (only if they have at least 3 tasks)
+  const sortedCategories = Object.entries(statsByCategory)
+    .filter(([, stats]) => stats.total_tasks >= 3)
+    .sort((a, b) => b[1].completion_rate - a[1].completion_rate)
+
+  return {
+    categoryStats: statsByCategory,
+    bestCategory: sortedCategories[0]?.[0] || null,
+    strugglingCategory: sortedCategories[sortedCategories.length - 1]?.[0] || null,
+  }
+}
+
 export async function POST(request: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -181,6 +258,60 @@ export async function POST(request: Request) {
       console.warn(`[TASK-GEN ${timestamp}] Webhook secret is NOT configured`)
     }
 
+    // Calculate category analytics (QUICK WIN #1)
+    console.log(`[TASK-GEN ${timestamp}] Calculating category analytics...`)
+    const categoryAnalytics = await calculateCategoryStats(user.id, supabase)
+    console.log(`[TASK-GEN ${timestamp}] Category analytics:`, {
+      best: categoryAnalytics.bestCategory,
+      struggling: categoryAnalytics.strugglingCategory,
+      totalCategories: Object.keys(categoryAnalytics.categoryStats).length,
+    })
+
+    // Fetch user interests
+    const { data: interests } = await supabase
+      .from('user_interests')
+      .select('interest')
+      .eq('user_id', user.id)
+
+    // Fetch recent task feedback
+    const { data: feedbackHistory } = await supabase
+      .from('task_feedback')
+      .select('*, tasks(category, title)')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(20)
+
+    console.log(`[TASK-GEN ${timestamp}] Loaded ${interests?.length ?? 0} interests, ${feedbackHistory?.length ?? 0} feedback entries`)
+
+    // Calculate category preferences from feedback
+    const categoryPreferences: Record<string, { avgEnjoyment: number; avgDifficulty: number; count: number }> = {}
+    if (feedbackHistory && feedbackHistory.length > 0) {
+      const feedbackByCategory: Record<string, Array<{ enjoyment: number; difficulty: number }>> = {}
+
+      for (const fb of feedbackHistory) {
+        const category = (fb.tasks as { category?: string })?.category
+        if (category && fb.enjoyment_score && fb.difficulty_rating) {
+          if (!feedbackByCategory[category]) {
+            feedbackByCategory[category] = []
+          }
+          feedbackByCategory[category].push({
+            enjoyment: fb.enjoyment_score,
+            difficulty: fb.difficulty_rating,
+          })
+        }
+      }
+
+      for (const [category, feedbacks] of Object.entries(feedbackByCategory)) {
+        const avgEnjoyment = feedbacks.reduce((sum, f) => sum + f.enjoyment, 0) / feedbacks.length
+        const avgDifficulty = feedbacks.reduce((sum, f) => sum + f.difficulty, 0) / feedbacks.length
+        categoryPreferences[category] = {
+          avgEnjoyment,
+          avgDifficulty,
+          count: feedbacks.length,
+        }
+      }
+    }
+
     const requestPayload = {
       userId: user.id,
       personalityType: profile?.personality_type,
@@ -198,6 +329,20 @@ export async function POST(request: Request) {
         serotonin: profile?.serotonin_score ?? 0,
       },
       taskCount: { min: limits.min, max: limits.max },
+      // PERSONALIZATION DATA
+      categoryStats: categoryAnalytics.categoryStats,
+      bestCategory: categoryAnalytics.bestCategory,
+      strugglingCategory: categoryAnalytics.strugglingCategory,
+      timePreference: profile?.time_preference || null,
+      bestFocusTimes: profile?.best_focus_times || null,
+      preferredTaskDuration: profile?.preferred_task_duration || null,
+      occupation: profile?.occupation_type || null,
+      workSchedule: profile?.work_schedule || null,
+      lifePhase: profile?.life_phase || null,
+      mainChallenge: profile?.main_challenge || null,
+      interests: interests?.map((i) => i.interest) || [],
+      recentFeedback: feedbackHistory || [],
+      categoryPreferences,
     }
 
     console.log(`[TASK-GEN ${timestamp}] Calling N8N webhook:`, webhookUrl)

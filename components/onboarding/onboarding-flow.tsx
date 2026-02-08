@@ -8,10 +8,13 @@ import type { QuizAnswer, PersonalityType, TaskCategory } from '@/lib/types'
 import { awardXp } from '@/lib/api/xp'
 import { WelcomeStep } from './welcome-step'
 import { QuizStep } from './quiz-step'
+import { TimePreferencesStep } from './time-preferences-step'
+import { LifestyleStep } from './lifestyle-step'
+import { InterestsStep } from './interests-step'
 import { GoalSettingStep } from './goal-setting-step'
 import { OnboardingProgress } from './onboarding-progress'
 
-type Step = 'welcome' | 'quiz' | 'goals' | 'complete'
+type Step = 'welcome' | 'quiz' | 'time-preferences' | 'lifestyle' | 'interests' | 'goals' | 'complete'
 
 function calculatePersonality(answers: QuizAnswer[]): PersonalityType {
   const counts: Record<PersonalityType, number> = {
@@ -43,8 +46,26 @@ export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingF
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [loading, setLoading] = useState(false)
 
-  const totalSteps = 3
-  const currentStepIndex = step === 'welcome' ? 0 : step === 'quiz' ? 1 : 2
+  // Personalization data
+  const [timePreference, setTimePreference] = useState<string>('morning')
+  const [preferredTaskDuration, setPreferredTaskDuration] = useState<string>('medium')
+  const [occupationType, setOccupationType] = useState<string | null>(null)
+  const [workSchedule, setWorkSchedule] = useState<string | null>(null)
+  const [lifePhase, setLifePhase] = useState<string | null>(null)
+  const [mainChallenge, setMainChallenge] = useState<string | null>(null)
+  const [interests, setInterests] = useState<string[]>([])
+
+  const totalSteps = 6
+  const stepMap: Record<Step, number> = {
+    welcome: 0,
+    quiz: 1,
+    'time-preferences': 2,
+    lifestyle: 3,
+    interests: 4,
+    goals: 5,
+    complete: 6,
+  }
+  const currentStepIndex = stepMap[step] || 0
 
   const handleQuizAnswer = (answer: QuizAnswer) => {
     const newAnswers = [...quizAnswers, answer]
@@ -53,8 +74,32 @@ export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingF
     if (currentQuestion < QUIZ_QUESTIONS.length - 1) {
       setCurrentQuestion((prev) => prev + 1)
     } else {
-      setStep('goals')
+      setStep('time-preferences')
     }
+  }
+
+  const handleTimePreferences = (data: { timePreference: string; preferredTaskDuration: string }) => {
+    setTimePreference(data.timePreference)
+    setPreferredTaskDuration(data.preferredTaskDuration)
+    setStep('lifestyle')
+  }
+
+  const handleLifestyle = (data: {
+    occupationType: string | null
+    workSchedule: string | null
+    lifePhase: string | null
+    mainChallenge: string | null
+  }) => {
+    setOccupationType(data.occupationType)
+    setWorkSchedule(data.workSchedule)
+    setLifePhase(data.lifePhase)
+    setMainChallenge(data.mainChallenge)
+    setStep('interests')
+  }
+
+  const handleInterests = (selectedInterests: string[]) => {
+    setInterests(selectedInterests)
+    setStep('goals')
   }
 
   const handleGoalsComplete = async (goals: { category: TaskCategory; title: string }[]) => {
@@ -72,12 +117,28 @@ export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingF
     const { error: goalsError } = await supabase.from('goals').insert(goalInserts)
     if (goalsError) console.error('Goals insert error:', goalsError)
 
-    // Update user profile — this MUST succeed for onboarding to complete
+    // Insert interests if any
+    if (interests.length > 0) {
+      const interestInserts = interests.map((interest) => ({
+        user_id: userId,
+        interest,
+      }))
+      const { error: interestsError } = await supabase.from('user_interests').insert(interestInserts)
+      if (interestsError) console.error('Interests insert error:', interestsError)
+    }
+
+    // Update user profile with all personalization data — this MUST succeed for onboarding to complete
     const { error: updateError } = await supabase
       .from('users')
       .update({
         onboarding_completed: true,
         personality_type: personalityType,
+        time_preference: timePreference,
+        preferred_task_duration: preferredTaskDuration,
+        occupation_type: occupationType,
+        work_schedule: workSchedule,
+        life_phase: lifePhase,
+        main_challenge: mainChallenge,
         updated_at: new Date().toISOString(),
       })
       .eq('id', userId)
@@ -126,6 +187,18 @@ export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingF
           totalQuestions={QUIZ_QUESTIONS.length}
           onAnswer={handleQuizAnswer}
         />
+      )}
+
+      {step === 'time-preferences' && (
+        <TimePreferencesStep onComplete={handleTimePreferences} />
+      )}
+
+      {step === 'lifestyle' && (
+        <LifestyleStep onComplete={handleLifestyle} />
+      )}
+
+      {step === 'interests' && (
+        <InterestsStep onComplete={handleInterests} />
       )}
 
       {step === 'goals' && (

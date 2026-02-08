@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { ProofUpload } from './proof-upload'
 import { TaskCompletionDialog } from './task-completion-dialog'
+import { TaskFeedbackDialog } from './task-feedback-dialog'
 import { LevelUpModal } from '@/components/shared/level-up-modal'
 import { XpAnimation } from '@/components/shared/xp-animation'
 import type { Task } from '@/lib/types'
@@ -31,6 +32,7 @@ const difficultyColors: Record<string, string> = {
 export function TaskDetail({ task, userId, currentXp, currentLevel, nextLevelXp, nextLevelTitle }: TaskDetailProps) {
   const router = useRouter()
   const [showConfirm, setShowConfirm] = useState(false)
+  const [showFeedback, setShowFeedback] = useState(false)
   const [showLevelUp, setShowLevelUp] = useState(false)
   const [showXpAnim, setShowXpAnim] = useState(false)
   const [proofUrl, setProofUrl] = useState<string | null>(null)
@@ -111,13 +113,52 @@ export function TaskDetail({ task, userId, currentXp, currentLevel, nextLevelXp,
 
     setTimeout(() => {
       setShowXpAnim(false)
+      // Show feedback dialog after XP animation
+      setShowFeedback(true)
+    }, 1500)
+  }
+
+  const handleFeedbackSubmit = async (feedback: {
+    difficulty_rating: number
+    enjoyment_score: number
+    time_taken?: string
+    notes?: string
+  }) => {
+    try {
+      const response = await fetch(`/api/tasks/${task.id}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedback),
+      })
+
+      if (!response.ok) {
+        console.error('Failed to submit feedback')
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error)
+    }
+
+    // Close feedback and show level up or redirect
+    setShowFeedback(false)
+    if (nextLevelXp && currentXp + task.xp_reward >= nextLevelXp) {
+      setShowLevelUp(true)
+    } else {
+      router.push('/dashboard')
+      router.refresh()
+    }
+  }
+
+  const handleFeedbackClose = (open: boolean) => {
+    if (!open) {
+      // User closed/skipped feedback
       if (nextLevelXp && currentXp + task.xp_reward >= nextLevelXp) {
         setShowLevelUp(true)
       } else {
         router.push('/dashboard')
         router.refresh()
       }
-    }, 1500)
+    }
+    setShowFeedback(open)
   }
 
   return (
@@ -184,6 +225,14 @@ export function TaskDetail({ task, userId, currentXp, currentLevel, nextLevelXp,
         xpReward={task.xp_reward}
         onConfirm={handleComplete}
         loading={completing}
+      />
+
+      <TaskFeedbackDialog
+        open={showFeedback}
+        onOpenChange={handleFeedbackClose}
+        taskId={task.id}
+        taskTitle={task.title}
+        onSubmit={handleFeedbackSubmit}
       />
 
       <LevelUpModal
