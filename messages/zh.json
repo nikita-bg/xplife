@@ -612,11 +612,28 @@
     "novice": "新手",
     "legend": "传奇"
   },
+  "blog": {
+    "metaTitle": "博客 | XPLife",
+    "metaDescription": "关于游戏化生产力、习惯养成和现实生活升级的技巧、策略和见解。",
+    "badge": "任务日志",
+    "title": "",
+    "titleHighlight": "任务日志",
+    "subtitle": "关于游戏化生产力和现实生活升级的技巧、策略和见解。",
+    "emptyTitle": "暂无文章",
+    "emptyDescription": "新任务正在撰写中。请稍后再来！",
+    "readMore": "阅读更多",
+    "backToBlog": "返回博客",
+    "readTime": "{minutes} 分钟阅读",
+    "ctaTitle": "准备好升级了吗？",
+    "ctaDescription": "别光看了。开始行动吧。你的任务在等着你。",
+    "ctaButton": "免费开始"
+  },
   "footer": {
     "tagline": "一次一个任务，提升你的生活水平。",
     "copyright": "© 2025 XPLife。保留所有权利。",
     "links": {
       "about": "关于",
+      "blog": "博客",
       "contact": "联系",
       "privacy": "隐私",
       "terms": "条款"

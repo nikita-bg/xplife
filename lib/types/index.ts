@@ -9,6 +9,7 @@ export type LevelConfig = Database['public']['Tables']['level_config']['Row']
 export type LeaderboardEntry = Database['public']['Tables']['leaderboard']['Row']
 
 export type BravermanResult = Database['public']['Tables']['braverman_results']['Row']
+export type BlogPost = Database['public']['Tables']['blog_posts']['Row']
 
 export type TaskStatus = 'pending' | 'in_progress' | 'completed' | 'skipped'
 export type TaskDifficulty = 'easy' | 'medium' | 'hard' | 'epic'

@@ -612,11 +612,28 @@
     "novice": "Novice",
     "legend": "Legend"
   },
+  "blog": {
+    "metaTitle": "Blog | XPLife",
+    "metaDescription": "Tips, strategies, and insights on gamified productivity, habit building, and leveling up your real life.",
+    "badge": "Quest Log",
+    "title": "The",
+    "titleHighlight": "Quest Log",
+    "subtitle": "Tips, strategies, and insights on gamified productivity and leveling up your real life.",
+    "emptyTitle": "No Posts Yet",
+    "emptyDescription": "New quests are being written. Check back soon!",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "readTime": "{minutes} min read",
+    "ctaTitle": "Ready to Level Up?",
+    "ctaDescription": "Stop reading about it. Start playing. Your quests are waiting.",
+    "ctaButton": "Start Playing Free"
+  },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",
     "copyright": "© 2025 XPLife. All rights reserved.",
     "links": {
       "about": "About",
+      "blog": "Blog",
       "contact": "Contact",
       "privacy": "Privacy",
       "terms": "Terms"

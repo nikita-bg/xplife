@@ -612,11 +612,28 @@
     "novice": "Novato",
     "legend": "Leyenda"
   },
+  "blog": {
+    "metaTitle": "Blog | XPLife",
+    "metaDescription": "Consejos, estrategias e ideas sobre productividad gamificada, creación de hábitos y subir de nivel en la vida real.",
+    "badge": "Registro de Misiones",
+    "title": "El Registro",
+    "titleHighlight": "de Misiones",
+    "subtitle": "Consejos, estrategias e ideas sobre productividad gamificada y subir de nivel en la vida real.",
+    "emptyTitle": "Aún No Hay Publicaciones",
+    "emptyDescription": "Se están escribiendo nuevas misiones. ¡Vuelve pronto!",
+    "readMore": "Leer Más",
+    "backToBlog": "Volver al Blog",
+    "readTime": "{minutes} min de lectura",
+    "ctaTitle": "¿Listo para Subir de Nivel?",
+    "ctaDescription": "Deja de leer sobre ello. Empieza a jugar. Tus misiones te esperan.",
+    "ctaButton": "Empieza Gratis"
+  },
   "footer": {
     "tagline": "Sube de nivel tu vida, una misión a la vez.",
     "copyright": "© 2025 XPLife. Todos los derechos reservados.",
     "links": {
       "about": "Acerca de",
+      "blog": "Blog",
       "contact": "Contacto",
       "privacy": "Privacidad",
       "terms": "Términos"

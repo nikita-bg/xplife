@@ -612,11 +612,28 @@
     "novice": "初心者",
     "legend": "伝説"
   },
+  "blog": {
+    "metaTitle": "ブログ | XPLife",
+    "metaDescription": "ゲーミフィケーション生産性、習慣づくり、リアルライフのレベルアップに関するヒント、戦略、インサイト。",
+    "badge": "クエストログ",
+    "title": "",
+    "titleHighlight": "クエストログ",
+    "subtitle": "ゲーミフィケーション生産性とリアルライフのレベルアップに関するヒント、戦略、インサイト。",
+    "emptyTitle": "まだ投稿がありません",
+    "emptyDescription": "新しいクエストを準備中です。すぐにまたチェックしてください！",
+    "readMore": "続きを読む",
+    "backToBlog": "ブログに戻る",
+    "readTime": "{minutes}分で読める",
+    "ctaTitle": "レベルアップの準備はできましたか？",
+    "ctaDescription": "読むだけで終わりにしない。プレイを始めよう。クエストが待っています。",
+    "ctaButton": "無料で始める"
+  },
   "footer": {
     "tagline": "一度に一つのクエストで、あなたの人生をレベルアップ。",
     "copyright": "© 2025 XPLife。全著作権所有。",
     "links": {
       "about": "について",
+      "blog": "ブログ",
       "contact": "お問い合わせ",
       "privacy": "プライバシー",
       "terms": "利用規約"

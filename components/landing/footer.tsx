@@ -24,6 +24,9 @@ export function Footer() {
           <Link href={`/${locale}/about`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
             {t('links.about')}
           </Link>
+          <Link href={`/${locale}/blog`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            {t('links.blog')}
+          </Link>
           <Link href={`/${locale}/privacy`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
             {t('links.privacy')}
           </Link>
