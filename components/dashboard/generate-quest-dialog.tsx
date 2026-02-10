@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, AlertCircle, ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import {
@@ -52,18 +53,22 @@ export function GenerateQuestDialog({
   const [generating, setGenerating] = useState(false)
   const [goalText, setGoalText] = useState('')
   const [selectedParentId, setSelectedParentId] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<{
+    message: string
+    canRetry: boolean
+    showUpgrade: boolean
+  } | null>(null)
 
   const parentTimeframe = PARENT_TIMEFRAME[timeframe]
   const hasParentOption = !!parentTimeframe && parentQuests.length > 0
 
   const handleGenerate = async (mode: 'manual' | 'from-parent') => {
     if (mode === 'manual' && !goalText.trim()) {
-      setError('Please describe your goals before generating quests.')
+      setError({ message: 'Please describe your goals before generating quests.', canRetry: false, showUpgrade: false })
       return
     }
     if (mode === 'from-parent' && !selectedParentId) {
-      setError('Please select a parent quest.')
+      setError({ message: 'Please select a parent quest.', canRetry: false, showUpgrade: false })
       return
     }
 
@@ -82,14 +87,29 @@ export function GenerateQuestDialog({
       })
       if (!res.ok) {
         const data = await res.json().catch(() => null)
-        throw new Error(data?.error || 'Failed to generate quests')
+        const errorMessage = data?.error || 'Failed to generate quests'
+
+        if (res.status === 429 || errorMessage.toLowerCase().includes('limit')) {
+          setError({ message: errorMessage, canRetry: false, showUpgrade: true })
+        } else if (res.status === 503) {
+          setError({ message: errorMessage, canRetry: true, showUpgrade: false })
+        } else if (res.status >= 500) {
+          setError({ message: errorMessage, canRetry: true, showUpgrade: false })
+        } else {
+          setError({ message: errorMessage, canRetry: false, showUpgrade: false })
+        }
+        return
       }
       setGoalText('')
       setSelectedParentId('')
       onOpenChange(false)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate quests')
+      setError({
+        message: err instanceof Error ? err.message : 'Failed to generate quests',
+        canRetry: true,
+        showUpgrade: false,
+      })
     } finally {
       setGenerating(false)
     }
@@ -122,7 +142,29 @@ export function GenerateQuestDialog({
                 rows={3}
                 className="resize-none"
               />
-              {error && <p className="text-sm text-destructive">{error}</p>}
+              {error && (
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-start">
+                    <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-destructive">{error.message}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {error.canRetry && (
+                      <Button size="sm" variant="outline" onClick={() => handleGenerate('manual')} disabled={generating} className="h-7 text-xs">
+                        Try Again
+                      </Button>
+                    )}
+                    {error.showUpgrade && (
+                      <Link href="/pricing">
+                        <Button size="sm" variant="default" className="h-7 text-xs gap-1">
+                          Upgrade Plan
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
               <Button
                 onClick={() => handleGenerate('manual')}
                 disabled={generating}
@@ -146,7 +188,29 @@ export function GenerateQuestDialog({
                   ))}
                 </SelectContent>
               </Select>
-              {error && <p className="text-sm text-destructive">{error}</p>}
+              {error && (
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-start">
+                    <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-destructive">{error.message}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {error.canRetry && (
+                      <Button size="sm" variant="outline" onClick={() => handleGenerate('manual')} disabled={generating} className="h-7 text-xs">
+                        Try Again
+                      </Button>
+                    )}
+                    {error.showUpgrade && (
+                      <Link href="/pricing">
+                        <Button size="sm" variant="default" className="h-7 text-xs gap-1">
+                          Upgrade Plan
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
               <Button
                 onClick={() => handleGenerate('from-parent')}
                 disabled={generating}
@@ -166,7 +230,29 @@ export function GenerateQuestDialog({
               rows={3}
               className="resize-none"
             />
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && (
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-start">
+                    <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-destructive">{error.message}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {error.canRetry && (
+                      <Button size="sm" variant="outline" onClick={() => handleGenerate('manual')} disabled={generating} className="h-7 text-xs">
+                        Try Again
+                      </Button>
+                    )}
+                    {error.showUpgrade && (
+                      <Link href="/pricing">
+                        <Button size="sm" variant="default" className="h-7 text-xs gap-1">
+                          Upgrade Plan
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
             <Button
               onClick={() => handleGenerate('manual')}
               disabled={generating}

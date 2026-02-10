@@ -8,7 +8,7 @@ export interface PlanLimits {
 }
 
 export const PLAN_LIMITS: Record<PlanType, PlanLimits> = {
-  free:     { maxGoals: 1, maxTasksPerWeek: 3,  chatPerDay: 15, maxYearlyQuests: 3 },
+  free:     { maxGoals: 1, maxTasksPerWeek: 15, chatPerDay: 15, maxYearlyQuests: 3 },
   premium:  { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5 },
   lifetime: { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5 },
 }

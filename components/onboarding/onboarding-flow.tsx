@@ -161,11 +161,25 @@ export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingF
       console.error('Failed to award onboarding XP:', err)
     }
 
-    // Try to generate initial tasks (will silently fail if n8n isn't configured)
+    // Generate initial tasks based on the onboarding data
     try {
-      await fetch('/api/ai/generate-tasks', { method: 'POST' })
-    } catch {
-      // n8n not configured yet, skip
+      const goalsText = goals.map((g) => g.title).join(', ')
+      const res = await fetch('/api/ai/generate-tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          goals: goalsText,
+          questTimeframe: 'daily',
+          generationMode: 'manual',
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        console.error('Initial task generation failed:', res.status, data?.error)
+      }
+    } catch (err) {
+      console.error('Initial task generation error:', err)
     }
 
     if (onComplete) {
