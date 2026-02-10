@@ -2,20 +2,20 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations, useMessages } from 'next-intl'
 import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BRAVERMAN_QUESTIONS } from '@/lib/constants/braverman-questions'
 import { BravermanResults } from './braverman-results'
 import type { PersonalityType } from '@/lib/types'
 
-const SCORE_LABELS = ['Never', 'Sometimes', 'Often', 'Always'] as const
 const STORAGE_KEY = 'braverman-progress'
 
-const SECTION_RANGES: { label: string; neurotransmitter: PersonalityType; start: number; end: number }[] = [
-  { label: 'Part 1: Dopamine', neurotransmitter: 'dopamine', start: 0, end: 34 },
-  { label: 'Part 2: Acetylcholine', neurotransmitter: 'acetylcholine', start: 35, end: 69 },
-  { label: 'Part 3: GABA', neurotransmitter: 'gaba', start: 70, end: 104 },
-  { label: 'Part 4: Serotonin', neurotransmitter: 'serotonin', start: 105, end: 139 },
+const SECTION_KEYS: { key: string; neurotransmitter: PersonalityType; start: number; end: number }[] = [
+  { key: 'sectionDopamine', neurotransmitter: 'dopamine', start: 0, end: 34 },
+  { key: 'sectionAcetylcholine', neurotransmitter: 'acetylcholine', start: 35, end: 69 },
+  { key: 'sectionGaba', neurotransmitter: 'gaba', start: 70, end: 104 },
+  { key: 'sectionSerotonin', neurotransmitter: 'serotonin', start: 105, end: 139 },
 ]
 
 interface SavedProgress {
@@ -25,6 +25,10 @@ interface SavedProgress {
 
 export function BravermanTest() {
   const router = useRouter()
+  const t = useTranslations('braverman.test')
+  const messages = useMessages()
+  const translatedQuestions = (messages as any)?.braverman?.questions as string[] | undefined
+  const scoreLabels = [t('never'), t('sometimes'), t('often'), t('always')]
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [submitting, setSubmitting] = useState(false)
@@ -63,7 +67,7 @@ export function BravermanTest() {
 
   const question = BRAVERMAN_QUESTIONS[currentIndex]
   const totalQuestions = BRAVERMAN_QUESTIONS.length
-  const currentSection = SECTION_RANGES.find(
+  const currentSection = SECTION_KEYS.find(
     (s) => currentIndex >= s.start && currentIndex <= s.end
   )
   const allAnswered = Object.keys(answers).length === totalQuestions
@@ -101,7 +105,7 @@ export function BravermanTest() {
 
   const handleSubmit = async () => {
     if (!allAnswered) {
-      setError(`Please answer all ${totalQuestions} questions before submitting.`)
+      setError(t('error', { count: totalQuestions }))
       return
     }
 
@@ -141,11 +145,11 @@ export function BravermanTest() {
         <div className="glass-card rounded-2xl p-6 text-center">
           <Sparkles className="mx-auto mb-2 h-8 w-8 text-accent" />
           <h2 className="font-display text-xl font-bold text-foreground">
-            +{results.xpAwarded} XP Earned!
+            {t('xpEarned', { xp: results.xpAwarded })}
           </h2>
           {results.leveledUp && (
             <p className="text-sm text-accent mt-1">
-              Level Up! You are now Level {results.newLevel}
+              {t('levelUp', { level: results.newLevel })}
             </p>
           )}
         </div>
@@ -160,10 +164,10 @@ export function BravermanTest() {
       <div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-muted-foreground">
-            {currentSection?.label}
+            {currentSection ? t(currentSection.key as any) : ''}
           </span>
           <span className="text-sm text-muted-foreground">
-            {currentIndex + 1} of {totalQuestions}
+            {t('progress', { current: currentIndex + 1, total: totalQuestions })}
           </span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-muted">
@@ -177,11 +181,11 @@ export function BravermanTest() {
       {/* Question */}
       <div className="glass-card rounded-2xl p-6">
         <p className="text-lg font-medium text-foreground mb-6">
-          {question.question}
+          {translatedQuestions?.[currentIndex] || question.question}
         </p>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {SCORE_LABELS.map((label, score) => {
+          {scoreLabels.map((label, score) => {
             const isSelected = answers[question.id] === score
             return (
               <button
@@ -210,7 +214,7 @@ export function BravermanTest() {
           className="gap-1"
         >
           <ChevronLeft className="h-4 w-4" />
-          Previous
+          {t('previous')}
         </Button>
 
         {isLastQuestion && allAnswered ? (
@@ -220,7 +224,7 @@ export function BravermanTest() {
             className="gap-2"
           >
             <Sparkles className="h-4 w-4" />
-            {submitting ? 'Submitting...' : 'Submit Assessment'}
+            {submitting ? t('submitting') : t('submit')}
           </Button>
         ) : (
           <Button
@@ -230,7 +234,7 @@ export function BravermanTest() {
             disabled={isLastQuestion}
             className="gap-1"
           >
-            Next
+            {t('next')}
             <ChevronRight className="h-4 w-4" />
           </Button>
         )}
@@ -256,7 +260,7 @@ export function BravermanTest() {
                   ? 'bg-accent/60'
                   : 'bg-muted-foreground/30'
             }`}
-            title={`Question ${i + 1}`}
+            title={t('questionTooltip', { number: i + 1 })}
           />
         ))}
       </div>

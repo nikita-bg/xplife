@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { PERSONALITY_DESCRIPTIONS } from '@/lib/constants'
 import type { PersonalityType } from '@/lib/types'
@@ -15,23 +16,26 @@ interface BravermanResultsProps {
   dominantType: string
 }
 
-const NT_LABELS: Record<PersonalityType, { label: string; color: string }> = {
-  dopamine: { label: 'Dopamine', color: 'bg-red-500' },
-  acetylcholine: { label: 'Acetylcholine', color: 'bg-blue-500' },
-  gaba: { label: 'GABA', color: 'bg-green-500' },
-  serotonin: { label: 'Serotonin', color: 'bg-purple-500' },
+const NT_COLORS: Record<PersonalityType, string> = {
+  dopamine: 'bg-red-500',
+  acetylcholine: 'bg-blue-500',
+  gaba: 'bg-green-500',
+  serotonin: 'bg-purple-500',
 }
+
+const NT_KEYS: PersonalityType[] = ['dopamine', 'acetylcholine', 'gaba', 'serotonin']
 
 const MAX_SCORE = 105 // 35 questions * max 3 per question
 
 export function BravermanResults({ scores, dominantType }: BravermanResultsProps) {
+  const t = useTranslations('braverman.results')
   const personality = PERSONALITY_DESCRIPTIONS[dominantType]
 
   return (
     <div className="flex flex-col gap-6">
       <div className="glass-card rounded-2xl p-6 text-center">
         <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-          Your Dominant Type: <span className="gradient-text">{personality?.title ?? dominantType}</span>
+          {t('dominantType')} <span className="gradient-text">{personality?.title ?? dominantType}</span>
         </h2>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
           {personality?.description}
@@ -40,14 +44,15 @@ export function BravermanResults({ scores, dominantType }: BravermanResultsProps
 
       <div className="glass-card rounded-2xl p-6">
         <h3 className="font-display text-lg font-bold text-foreground mb-4">
-          Deficiency Scores
+          {t('deficiencyScores')}
         </h3>
         <p className="text-xs text-muted-foreground mb-4">
-          Higher scores indicate greater deficiency — your quests will target these areas.
+          {t('deficiencyDescription')}
         </p>
         <div className="flex flex-col gap-4">
-          {(Object.entries(NT_LABELS) as [PersonalityType, { label: string; color: string }][]).map(
-            ([key, { label, color }]) => {
+          {NT_KEYS.map((key) => {
+              const color = NT_COLORS[key]
+              const label = t(key as any)
               const score = scores[key]
               const percentage = Math.round((score / MAX_SCORE) * 100)
               const isDominant = key === dominantType
@@ -58,7 +63,7 @@ export function BravermanResults({ scores, dominantType }: BravermanResultsProps
                     <span className={`text-sm font-medium ${isDominant ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {label}
                       {isDominant && (
-                        <span className="ml-2 text-xs text-primary">(Dominant)</span>
+                        <span className="ml-2 text-xs text-primary">{t('dominant')}</span>
                       )}
                     </span>
                     <span className="text-sm text-muted-foreground">
@@ -80,7 +85,7 @@ export function BravermanResults({ scores, dominantType }: BravermanResultsProps
 
       <div className="flex justify-center">
         <Button asChild>
-          <Link href="/dashboard">Back to Dashboard</Link>
+          <Link href="/dashboard">{t('backToDashboard')}</Link>
         </Button>
       </div>
     </div>
