@@ -349,10 +349,23 @@
       "generating": "生成中...",
       "describeGoals": "目標を説明してください",
       "placeholder": "例：もっと運動したい、スペイン語を学びたい、毎日20ページ読みたい...",
+      "emptyGoalsError": "クエストを生成する前に目標を入力してください。",
+      "tryAgain": "再試行",
+      "upgradePlan": "プランをアップグレード",
+      "completeProfile": "プロフィールを完成",
+      "cancel": "キャンセル",
       "generate": "生成",
       "noQuestsTitle": "クエストがありません",
       "noQuestsDescription": "「クエストを生成」をクリックして、パーソナライズされた毎日のチャレンジを取得してください。",
       "completed": "完了"
+    },
+    "questProgress": {
+      "noQuests": "まだクエストがありません",
+      "progress": "{timeframe}の進捗",
+      "completed": "{completed}/{total} 完了"
+    },
+    "questTimer": {
+      "expired": "期限切れ"
     },
     "questTabs": {
       "yearly": "年間",
@@ -411,6 +424,42 @@
     "yourRank": "あなたのランク：",
     "anonymous": "匿名",
     "you": "（あなた）"
+  },
+  "levelUp": {
+    "title": "レベルアップ！",
+    "description": "おめでとうございます！新しいレベルに到達しました。",
+    "level": "レベル {level}",
+    "continue": "続ける"
+  },
+  "chat": {
+    "closeChat": "チャットを閉じる",
+    "openChat": "チャットを開く",
+    "title": "AIクエストアドバイザー",
+    "messagesLeft": "今日の残りメッセージ {remaining}/50",
+    "emptyState": "クエストや目標について何でも聞いてください！",
+    "thinking": "考え中...",
+    "placeholder": "メッセージを入力...",
+    "errorDefault": "問題が発生しました。",
+    "errorSend": "送信に失敗しました。もう一度お試しください。"
+  },
+  "generateQuestDialog": {
+    "title": "{timeframe}クエストを生成",
+    "description": "目標に合わせたAIクエストを作成します。",
+    "customGoal": "カスタム目標",
+    "fromQuest": "{timeframe}クエストから",
+    "selectQuest": "{timeframe}クエストを選択",
+    "emptyGoalsError": "クエストを生成する前に目標を入力してください。",
+    "selectParentError": "親クエストを選択してください。",
+    "tryAgain": "再試行",
+    "upgradePlan": "プランをアップグレード",
+    "generate": "生成",
+    "generateFromQuest": "クエストから生成",
+    "generating": "生成中...",
+    "placeholder": "例：もっと運動したい、スペイン語を学びたい、毎日20ページ読みたい...",
+    "yearly": "年間",
+    "monthly": "月間",
+    "weekly": "週間",
+    "daily": "日間"
   },
   "tasks": {
     "title": "タスク詳細",

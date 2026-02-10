@@ -349,10 +349,23 @@
       "generating": "Генериране...",
       "describeGoals": "Опишете целите си",
       "placeholder": "Напр. искам да тренирам повече, да науча испански, да чета 20 страници дневно...",
+      "emptyGoalsError": "Моля, опишете целите си преди генериране на квестове.",
+      "tryAgain": "Опитай Отново",
+      "upgradePlan": "Надгради Плана",
+      "completeProfile": "Завърши Профила",
+      "cancel": "Отказ",
       "generate": "Генерирай",
       "noQuestsTitle": "Все още няма квестове",
       "noQuestsDescription": "Кликнете \"Генерирай Квестове\", за да получите персонализираните си дневни предизвикателства.",
       "completed": "Завършено"
+    },
+    "questProgress": {
+      "noQuests": "Все още няма квестове",
+      "progress": "Прогрес за {timeframe}",
+      "completed": "{completed}/{total} завършени"
+    },
+    "questTimer": {
+      "expired": "Изтекъл"
     },
     "questTabs": {
       "yearly": "Годишни",
@@ -411,6 +424,42 @@
     "yourRank": "Твоят ранг:",
     "anonymous": "Анонимен",
     "you": "(Ти)"
+  },
+  "levelUp": {
+    "title": "Ново Ниво!",
+    "description": "Поздравления! Достигнахте ново ниво.",
+    "level": "Ниво {level}",
+    "continue": "Продължи"
+  },
+  "chat": {
+    "closeChat": "Затвори чата",
+    "openChat": "Отвори чата",
+    "title": "AI Съветник за Квестове",
+    "messagesLeft": "{remaining}/50 съобщения остават днес",
+    "emptyState": "Попитай ме каквото искаш за квестовете и целите си!",
+    "thinking": "Мисля...",
+    "placeholder": "Напиши съобщение...",
+    "errorDefault": "Нещо се обърка.",
+    "errorSend": "Неуспешно изпращане. Моля, опитайте отново."
+  },
+  "generateQuestDialog": {
+    "title": "Генерирай {timeframe} Квестове",
+    "description": "Създай AI квестове, пригодени за целите ти.",
+    "customGoal": "Своя Цел",
+    "fromQuest": "От {timeframe} Квест",
+    "selectQuest": "Избери {timeframe} квест",
+    "emptyGoalsError": "Моля, опишете целите си преди генериране на квестове.",
+    "selectParentError": "Моля, изберете родителски квест.",
+    "tryAgain": "Опитай Отново",
+    "upgradePlan": "Надгради Плана",
+    "generate": "Генерирай",
+    "generateFromQuest": "Генерирай от Квест",
+    "generating": "Генериране...",
+    "placeholder": "Напр. искам да тренирам повече, да уча испански, да чета 20 страници на ден...",
+    "yearly": "Годишни",
+    "monthly": "Месечни",
+    "weekly": "Седмични",
+    "daily": "Дневни"
   },
   "tasks": {
     "title": "Детайли за Задачата",

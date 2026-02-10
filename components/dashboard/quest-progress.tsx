@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import type { QuestTimeframe } from '@/lib/types'
 
 interface QuestProgressProps {
@@ -7,9 +10,11 @@ interface QuestProgressProps {
 }
 
 export function QuestProgress({ completed, total, timeframe }: QuestProgressProps) {
+  const t = useTranslations('dashboard.questProgress')
+
   if (total === 0) {
     return (
-      <p className="text-sm text-muted-foreground">No quests yet</p>
+      <p className="text-sm text-muted-foreground">{t('noQuests')}</p>
     )
   }
 
@@ -18,9 +23,9 @@ export function QuestProgress({ completed, total, timeframe }: QuestProgressProp
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-muted-foreground capitalize">{timeframe} progress</span>
+        <span className="font-medium text-muted-foreground capitalize">{t('progress', { timeframe })}</span>
         <span className="font-medium text-foreground">
-          {completed}/{total} completed
+          {t('completed', { completed, total })}
         </span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-muted">

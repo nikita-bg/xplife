@@ -349,10 +349,23 @@
       "generating": "Generando...",
       "describeGoals": "Describe tus objetivos",
       "placeholder": "Ej. Quiero hacer más ejercicio, aprender español, leer 20 páginas diarias...",
+      "emptyGoalsError": "Por favor, describe tus objetivos antes de generar misiones.",
+      "tryAgain": "Intentar de Nuevo",
+      "upgradePlan": "Mejorar Plan",
+      "completeProfile": "Completar Perfil",
+      "cancel": "Cancelar",
       "generate": "Generar",
       "noQuestsTitle": "Aún No Hay Misiones",
       "noQuestsDescription": "Haz clic en \"Generar Misiones\" para obtener tus desafíos diarios personalizados.",
       "completed": "Completado"
+    },
+    "questProgress": {
+      "noQuests": "Aún no hay misiones",
+      "progress": "Progreso {timeframe}",
+      "completed": "{completed}/{total} completadas"
+    },
+    "questTimer": {
+      "expired": "Expirado"
     },
     "questTabs": {
       "yearly": "Anuales",
@@ -411,6 +424,42 @@
     "yourRank": "Tu rango:",
     "anonymous": "Anónimo",
     "you": "(Tú)"
+  },
+  "levelUp": {
+    "title": "¡Subiste de Nivel!",
+    "description": "¡Felicidades! Has alcanzado un nuevo nivel.",
+    "level": "Nivel {level}",
+    "continue": "Continuar"
+  },
+  "chat": {
+    "closeChat": "Cerrar chat",
+    "openChat": "Abrir chat",
+    "title": "Consejero de Misiones AI",
+    "messagesLeft": "{remaining}/50 mensajes restantes hoy",
+    "emptyState": "¡Pregúntame lo que quieras sobre tus misiones y objetivos!",
+    "thinking": "Pensando...",
+    "placeholder": "Escribe un mensaje...",
+    "errorDefault": "Algo salió mal.",
+    "errorSend": "Error al enviar. Por favor, inténtalo de nuevo."
+  },
+  "generateQuestDialog": {
+    "title": "Generar Misiones {timeframe}",
+    "description": "Crea misiones con IA adaptadas a tus objetivos.",
+    "customGoal": "Objetivo Personalizado",
+    "fromQuest": "Desde Misión {timeframe}",
+    "selectQuest": "Selecciona una misión {timeframe}",
+    "emptyGoalsError": "Por favor, describe tus objetivos antes de generar misiones.",
+    "selectParentError": "Por favor, selecciona una misión principal.",
+    "tryAgain": "Intentar de Nuevo",
+    "upgradePlan": "Mejorar Plan",
+    "generate": "Generar",
+    "generateFromQuest": "Generar desde Misión",
+    "generating": "Generando...",
+    "placeholder": "Ej. quiero hacer más ejercicio, aprender español, leer 20 páginas al día...",
+    "yearly": "Anuales",
+    "monthly": "Mensuales",
+    "weekly": "Semanales",
+    "daily": "Diarias"
   },
   "tasks": {
     "title": "Detalles de la Tarea",

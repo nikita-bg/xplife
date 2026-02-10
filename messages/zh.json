@@ -352,7 +352,20 @@
       "generate": "生成",
       "noQuestsTitle": "暂无任务",
       "noQuestsDescription": "点击\"生成任务\"以获取您的个性化每日挑战。",
-      "completed": "已完成"
+      "completed": "已完成",
+      "emptyGoalsError": "请在生成任务前描述你的目标。",
+      "tryAgain": "重试",
+      "upgradePlan": "升级计划",
+      "completeProfile": "完善资料",
+      "cancel": "取消"
+    },
+    "questProgress": {
+      "noQuests": "暂无任务",
+      "progress": "{timeframe}进度",
+      "completed": "{completed}/{total} 已完成"
+    },
+    "questTimer": {
+      "expired": "已过期"
     },
     "questTabs": {
       "yearly": "年度",
@@ -411,6 +424,42 @@
     "yourRank": "你的排名：",
     "anonymous": "匿名",
     "you": "（你）"
+  },
+  "levelUp": {
+    "title": "升级了！",
+    "description": "恭喜！你已达到新等级。",
+    "level": "等级 {level}",
+    "continue": "继续"
+  },
+  "chat": {
+    "closeChat": "关闭聊天",
+    "openChat": "打开聊天",
+    "title": "AI任务顾问",
+    "messagesLeft": "今日剩余 {remaining}/50 条消息",
+    "emptyState": "问我任何关于你的任务和目标的问题！",
+    "thinking": "思考中...",
+    "placeholder": "输入消息...",
+    "errorDefault": "出了点问题。",
+    "errorSend": "发送失败，请重试。"
+  },
+  "generateQuestDialog": {
+    "title": "生成{timeframe}任务",
+    "description": "创建适合你目标的AI任务。",
+    "customGoal": "自定义目标",
+    "fromQuest": "从{timeframe}任务",
+    "selectQuest": "选择一个{timeframe}任务",
+    "emptyGoalsError": "请在生成任务前描述你的目标。",
+    "selectParentError": "请选择一个父任务。",
+    "tryAgain": "重试",
+    "upgradePlan": "升级计划",
+    "generate": "生成",
+    "generateFromQuest": "从任务生成",
+    "generating": "生成中...",
+    "placeholder": "例如：我想多运动、学西班牙语、每天读20页书...",
+    "yearly": "年度",
+    "monthly": "月度",
+    "weekly": "每周",
+    "daily": "每日"
   },
   "tasks": {
     "title": "任务详情",

@@ -278,7 +278,8 @@
       "noAccount": "Don't have an account?",
       "signupLink": "Sign up",
       "invalidCredentials": "Invalid email or password",
-      "emailNotConfirmed": "Your email is not confirmed yet. Please check your inbox or resend the confirmation link."
+      "emailNotConfirmed": "Your email is not confirmed yet. Please check your inbox or resend the confirmation link.",
+      "error": "Invalid email or password"
     },
     "signup": {
       "title": "Create Account",
@@ -294,7 +295,10 @@
       "hasAccount": "Already have an account?",
       "loginLink": "Log in",
       "checkEmailTitle": "Check Your Email",
-      "checkEmailMessage": "We sent a confirmation link to your email. Click it to activate your account and start your quest."
+      "checkEmailMessage": "We sent a confirmation link to your email. Click it to activate your account and start your quest.",
+      "error": "Something went wrong. Please try again.",
+      "login": "Log in",
+      "passwordMismatch": "Passwords do not match"
     },
     "socialLogin": {
       "continueWithGoogle": "Continue with Google",
@@ -345,10 +349,23 @@
       "generating": "Generating...",
       "describeGoals": "Describe your goals",
       "placeholder": "E.g. I want to exercise more, learn Spanish, read 20 pages daily...",
+      "emptyGoalsError": "Please describe your goals before generating quests.",
+      "tryAgain": "Try Again",
+      "upgradePlan": "Upgrade Plan",
+      "completeProfile": "Complete Profile",
+      "cancel": "Cancel",
       "generate": "Generate",
       "noQuestsTitle": "No Quests Yet",
       "noQuestsDescription": "Click \"Generate Quests\" to get your personalized daily challenges.",
       "completed": "Completed"
+    },
+    "questProgress": {
+      "noQuests": "No quests yet",
+      "progress": "{timeframe} progress",
+      "completed": "{completed}/{total} completed"
+    },
+    "questTimer": {
+      "expired": "Expired"
     },
     "questTabs": {
       "yearly": "Yearly",
@@ -407,6 +424,42 @@
     "yourRank": "Your rank:",
     "anonymous": "Anonymous",
     "you": "(You)"
+  },
+  "levelUp": {
+    "title": "Level Up!",
+    "description": "Congratulations! You have reached a new level.",
+    "level": "Level {level}",
+    "continue": "Continue"
+  },
+  "chat": {
+    "closeChat": "Close chat",
+    "openChat": "Open chat",
+    "title": "AI Quest Advisor",
+    "messagesLeft": "{remaining}/50 messages left today",
+    "emptyState": "Ask me anything about your quests and goals!",
+    "thinking": "Thinking...",
+    "placeholder": "Type a message...",
+    "errorDefault": "Something went wrong.",
+    "errorSend": "Failed to send message. Please try again."
+  },
+  "generateQuestDialog": {
+    "title": "Generate {timeframe} Quests",
+    "description": "Create AI-powered {timeframe} quests tailored to your goals.",
+    "customGoal": "Custom Goal",
+    "fromQuest": "From {timeframe} Quest",
+    "selectQuest": "Select a {timeframe} quest",
+    "emptyGoalsError": "Please describe your goals before generating quests.",
+    "selectParentError": "Please select a parent quest.",
+    "tryAgain": "Try Again",
+    "upgradePlan": "Upgrade Plan",
+    "generate": "Generate",
+    "generateFromQuest": "Generate from Quest",
+    "generating": "Generating...",
+    "placeholder": "E.g. I want to exercise more, learn Spanish, read 20 pages daily...",
+    "yearly": "Yearly",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "daily": "Daily"
   },
   "tasks": {
     "title": "Task Details",

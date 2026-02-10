@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { QuestTimeframe } from '@/lib/types'
 
 interface QuestTimerProps {
@@ -45,8 +46,8 @@ function getTotalDuration(timeframe: QuestTimeframe): number {
   }
 }
 
-function formatTimeLeft(ms: number): string {
-  if (ms <= 0) return 'Expired'
+function formatTimeLeft(ms: number, expiredLabel: string): string {
+  if (ms <= 0) return expiredLabel
   const seconds = Math.floor(ms / 1000)
   const minutes = Math.floor(seconds / 60)
   const hours = Math.floor(minutes / 60)
@@ -69,6 +70,7 @@ function getColorClass(percentRemaining: number): string {
 }
 
 export function QuestTimer({ timeframe }: QuestTimerProps) {
+  const t = useTranslations('dashboard.questTimer')
   const [timeLeft, setTimeLeft] = useState<number>(() => {
     const deadline = getDeadline(timeframe)
     return deadline.getTime() - Date.now()
@@ -90,7 +92,7 @@ export function QuestTimer({ timeframe }: QuestTimerProps) {
   return (
     <span className={`flex items-center gap-1 text-xs ${colorClass}`}>
       <Clock className="h-3 w-3" />
-      {formatTimeLeft(timeLeft)}
+      {formatTimeLeft(timeLeft, t('expired'))}
     </span>
   )
 }

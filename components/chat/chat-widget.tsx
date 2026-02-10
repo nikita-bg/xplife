@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -18,6 +19,7 @@ interface ChatWidgetProps {
 }
 
 export function ChatWidget({ userId }: ChatWidgetProps) {
+  const t = useTranslations('chat')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
@@ -89,7 +91,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
       if (!res.ok) {
         const errorMsg: ChatMessage = {
           role: 'assistant',
-          content: data.error || 'Something went wrong.',
+          content: data.error || t('errorDefault'),
         }
         setMessages((prev) => [...prev, errorMsg])
         if (data.remainingMessages !== undefined) {
@@ -110,7 +112,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
     } catch {
       const errorMsg: ChatMessage = {
         role: 'assistant',
-        content: 'Failed to send message. Please try again.',
+        content: t('errorSend'),
       }
       setMessages((prev) => [...prev, errorMsg])
     } finally {
@@ -131,7 +133,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
       <button
         onClick={() => setOpen(!open)}
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
-        aria-label={open ? 'Close chat' : 'Open chat'}
+        aria-label={open ? t('closeChat') : t('openChat')}
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>
@@ -142,9 +144,9 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border bg-background/90 px-4 py-3">
             <div>
-              <h3 className="font-display text-sm font-bold text-foreground">AI Quest Advisor</h3>
+              <h3 className="font-display text-sm font-bold text-foreground">{t('title')}</h3>
               {remaining !== null && (
-                <p className="text-xs text-muted-foreground">{remaining}/50 messages left today</p>
+                <p className="text-xs text-muted-foreground">{t('messagesLeft', { remaining })}</p>
               )}
             </div>
           </div>
@@ -154,7 +156,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
             {messages.length === 0 && (
               <div className="flex h-full items-center justify-center">
                 <p className="text-center text-sm text-muted-foreground">
-                  Ask me anything about your quests and goals!
+                  {t('emptyState')}
                 </p>
               </div>
             )}
@@ -177,7 +179,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
             {sending && (
               <div className="mb-2 flex justify-start">
                 <div className="max-w-[85%] rounded-xl bg-muted px-3 py-2 text-sm text-muted-foreground">
-                  Thinking...
+                  {t('thinking')}
                 </div>
               </div>
             )}
@@ -190,7 +192,7 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Type a message..."
+              placeholder={t('placeholder')}
               className="flex-1 bg-background/50 text-sm"
               disabled={sending || remaining === 0}
             />

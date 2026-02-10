@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Sparkles, X, AlertCircle, ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -23,6 +24,7 @@ type ErrorType = {
 
 export function DailyTasks({ tasks, userId }: DailyTasksProps) {
   const router = useRouter()
+  const t = useTranslations('dashboard.dailyTasks')
   const [generating, setGenerating] = useState(false)
   const [showGoalInput, setShowGoalInput] = useState(false)
   const [goalText, setGoalText] = useState('')
@@ -40,7 +42,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
     const trimmed = goalText.trim()
     if (!trimmed) {
       setError({
-        message: 'Please describe your goals before generating quests.',
+        message: t('emptyGoalsError'),
         canRetry: false,
         showUpgrade: false,
         showProfileLink: false,
@@ -61,7 +63,6 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
         const data = await res.json().catch(() => null)
         const errorMessage = data?.error || 'Failed to generate quests'
 
-        // Determine error type based on status code and message
         const errorType: ErrorType = {
           message: errorMessage,
           canRetry: false,
@@ -69,22 +70,15 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
           showProfileLink: false,
         }
 
-        // 429 = rate limit/weekly limit
         if (res.status === 429 || errorMessage.toLowerCase().includes('limit')) {
           errorType.showUpgrade = true
           errorType.canRetry = false
-        }
-        // 404 = profile not found
-        else if (res.status === 404 || errorMessage.toLowerCase().includes('profile not found')) {
+        } else if (res.status === 404 || errorMessage.toLowerCase().includes('profile not found')) {
           errorType.showProfileLink = true
           errorType.canRetry = false
-        }
-        // 503 = temporary service issues
-        else if (res.status === 503 || errorMessage.toLowerCase().includes('temporarily unavailable')) {
+        } else if (res.status === 503 || errorMessage.toLowerCase().includes('temporarily unavailable')) {
           errorType.canRetry = true
-        }
-        // Other server errors might be temporary
-        else if (res.status >= 500) {
+        } else if (res.status >= 500) {
           errorType.canRetry = true
         }
 
@@ -97,7 +91,6 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
       setError(null)
       router.refresh()
     } catch (err) {
-      // Network errors are usually temporary
       setError({
         message: err instanceof Error ? err.message : 'Failed to generate quests',
         canRetry: true,
@@ -122,7 +115,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="font-display text-xl font-bold text-foreground">
-          {"Today's Quests"}
+          {t('title')}
         </h2>
         <Button
           onClick={handleGenerateClick}
@@ -132,7 +125,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
           className="gap-2"
         >
           <Sparkles className="h-4 w-4" />
-          {generating ? 'Generating...' : 'Generate Quests'}
+          {generating ? t('generating') : t('generateQuests')}
         </Button>
       </div>
 
@@ -140,7 +133,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
         <div className="glass-card rounded-2xl p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium text-foreground">
-              Describe your goals
+              {t('describeGoals')}
             </h3>
             <button
               onClick={handleCancel}
@@ -150,7 +143,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
             </button>
           </div>
           <Textarea
-            placeholder="E.g. I want to exercise more, learn Spanish, read 20 pages daily..."
+            placeholder={t('placeholder')}
             value={goalText}
             onChange={(e) => setGoalText(e.target.value)}
             rows={3}
@@ -171,7 +164,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
                         disabled={generating}
                         className="h-7 text-xs"
                       >
-                        Try Again
+                        {t('tryAgain')}
                       </Button>
                     )}
                     {error.showUpgrade && (
@@ -181,7 +174,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
                           variant="default"
                           className="h-7 text-xs gap-1"
                         >
-                          Upgrade Plan
+                          {t('upgradePlan')}
                           <ArrowUpRight className="h-3 w-3" />
                         </Button>
                       </Link>
@@ -193,7 +186,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
                           variant="default"
                           className="h-7 text-xs gap-1"
                         >
-                          Complete Profile
+                          {t('completeProfile')}
                           <ArrowUpRight className="h-3 w-3" />
                         </Button>
                       </Link>
@@ -210,7 +203,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
               onClick={handleCancel}
               disabled={generating}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               size="sm"
@@ -219,7 +212,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
               className="gap-2"
             >
               <Sparkles className="h-4 w-4" />
-              {generating ? 'Generating...' : 'Generate'}
+              {generating ? t('generating') : t('generate')}
             </Button>
           </div>
         </div>
@@ -228,9 +221,9 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
       {tasks.length === 0 ? (
         <div className="glass-card rounded-2xl p-12 text-center">
           <Sparkles className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
-          <h3 className="font-display text-lg font-bold text-foreground">No Quests Yet</h3>
+          <h3 className="font-display text-lg font-bold text-foreground">{t('noQuestsTitle')}</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Click &ldquo;Generate Quests&rdquo; to get your personalized daily challenges.
+            {t('noQuestsDescription')}
           </p>
         </div>
       ) : (
@@ -245,7 +238,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
 
           {completedTasks.length > 0 && (
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-medium text-muted-foreground">Completed</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">{t('completed')}</h3>
               {completedTasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}
