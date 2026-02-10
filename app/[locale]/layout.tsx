@@ -1,15 +1,9 @@
 import React from 'react';
-import type { Metadata, Viewport } from 'next';
-import { Inter, Orbitron } from 'next/font/google';
+import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n';
-
-import '../globals.css';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' });
 
 type Props = {
   children: React.ReactNode;
@@ -56,10 +50,6 @@ export async function generateMetadata({
   };
 }
 
-export const viewport: Viewport = {
-  themeColor: '#0d0d14',
-};
-
 export default async function LocaleLayout({
   children,
   params: { locale }
@@ -73,17 +63,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${inter.variable} ${orbitron.variable} font-sans antialiased`}>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,
-          }}
-        />
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }

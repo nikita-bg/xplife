@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Viewport } from 'next';
 import { Inter, Orbitron } from 'next/font/google';
-import { redirect } from 'next/navigation';
-
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -12,16 +10,13 @@ export const viewport: Viewport = {
   themeColor: '#0d0d14',
 };
 
-// Root layout - redirects to default locale
+// Root layout provides html/body structure
+// Locale-specific layout in [locale]/layout.tsx provides i18n context
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // This layout should only be hit when accessing the root path without locale
-  // Redirect to default locale
-  redirect('/en');
-
   return (
     <html suppressHydrationWarning>
       <body suppressHydrationWarning className={`${inter.variable} ${orbitron.variable} font-sans antialiased`}>
