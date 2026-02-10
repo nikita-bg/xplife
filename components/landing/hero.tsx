@@ -111,8 +111,8 @@ export function Hero() {
                 </div>
                 <div className="h-3 overflow-hidden rounded-full bg-muted">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-[2000ms] ease-out"
-                    style={{ width: xpAnimated ? '85%' : '0%' }}
+                    className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all ease-out"
+                    style={{ transitionDuration: '2000ms', width: xpAnimated ? '85%' : '0%' }}
                   />
                 </div>
               </div>
