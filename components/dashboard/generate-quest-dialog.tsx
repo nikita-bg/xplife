@@ -88,7 +88,7 @@ export function GenerateQuestDialog({
 
         if (res.status === 429 || errorMessage.toLowerCase().includes('limit')) {
           setError({ message: errorMessage, canRetry: false, showUpgrade: true })
-        } else if (res.status === 503) {
+        } else if (res.status === 503 || res.status === 422) {
           setError({ message: errorMessage, canRetry: true, showUpgrade: false })
         } else if (res.status >= 500) {
           setError({ message: errorMessage, canRetry: true, showUpgrade: false })

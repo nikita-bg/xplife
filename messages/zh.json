@@ -440,7 +440,8 @@
     "thinking": "思考中...",
     "placeholder": "输入消息...",
     "errorDefault": "出了点问题。",
-    "errorSend": "发送失败，请重试。"
+    "errorSend": "发送失败，请重试。",
+    "tasksCreated": "已添加{count}个任务到你的任务列表！"
   },
   "generateQuestDialog": {
     "title": "生成{timeframe}任务",

@@ -440,7 +440,8 @@
     "thinking": "Pensando...",
     "placeholder": "Escribe un mensaje...",
     "errorDefault": "Algo salió mal.",
-    "errorSend": "Error al enviar. Por favor, inténtalo de nuevo."
+    "errorSend": "Error al enviar. Por favor, inténtalo de nuevo.",
+    "tasksCreated": "¡{count} tarea(s) añadida(s) a tus misiones!"
   },
   "generateQuestDialog": {
     "title": "Generar Misiones {timeframe}",

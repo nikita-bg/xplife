@@ -440,7 +440,8 @@
     "thinking": "Thinking...",
     "placeholder": "Type a message...",
     "errorDefault": "Something went wrong.",
-    "errorSend": "Failed to send message. Please try again."
+    "errorSend": "Failed to send message. Please try again.",
+    "tasksCreated": "{count} task(s) added to your quests!"
   },
   "generateQuestDialog": {
     "title": "Generate {timeframe} Quests",

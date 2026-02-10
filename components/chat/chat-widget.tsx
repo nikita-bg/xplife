@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MessageCircle, X, Send } from 'lucide-react'
+import { MessageCircle, X, Send, CheckCircle2 } from 'lucide-react'
 
 interface ChatMessage {
   id?: string
@@ -19,6 +20,7 @@ interface ChatWidgetProps {
 }
 
 export function ChatWidget({ userId }: ChatWidgetProps) {
+  const router = useRouter()
   const t = useTranslations('chat')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -100,9 +102,15 @@ export function ChatWidget({ userId }: ChatWidgetProps) {
         return
       }
 
+      let replyContent = data.reply
+      if (data.tasksCreated > 0) {
+        replyContent += `\n\n✅ ${t('tasksCreated', { count: data.tasksCreated })}`
+        router.refresh()
+      }
+
       const assistantMsg: ChatMessage = {
         role: 'assistant',
-        content: data.reply,
+        content: replyContent,
       }
       setMessages((prev) => [...prev, assistantMsg])
 

@@ -440,7 +440,8 @@
     "thinking": "考え中...",
     "placeholder": "メッセージを入力...",
     "errorDefault": "問題が発生しました。",
-    "errorSend": "送信に失敗しました。もう一度お試しください。"
+    "errorSend": "送信に失敗しました。もう一度お試しください。",
+    "tasksCreated": "{count}件のタスクがクエストに追加されました！"
   },
   "generateQuestDialog": {
     "title": "{timeframe}クエストを生成",

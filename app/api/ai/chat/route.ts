@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '@/lib/plan-limits'
 
+// Allow up to 30 seconds for AI chat responses
+export const maxDuration = 30
+
+interface ChatTask {
+  title: string
+  description?: string
+  category?: string
+  difficulty?: string
+  xp_reward?: number
+  quest_timeframe?: string
+}
+
 export async function POST(request: NextRequest) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -31,7 +43,7 @@ export async function POST(request: NextRequest) {
   // Fetch user profile for context and plan
   const { data: profile, error: profileError } = await supabase
     .from('users')
-    .select('personality_type, level, plan')
+    .select('personality_type, level, plan, display_name')
     .eq('id', user.id)
     .single()
 
@@ -105,18 +117,51 @@ export async function POST(request: NextRequest) {
       webhookHeaders['X-Webhook-Secret'] = webhookSecret
     }
 
+    // Fetch recent tasks and goals for context
+    const { data: recentTasks } = await supabase
+      .from('tasks')
+      .select('title, category, status, quest_timeframe')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(10)
+
+    const { data: goals } = await supabase
+      .from('goals')
+      .select('title, category')
+      .eq('user_id', user.id)
+
     console.log(`[AI-CHAT ${timestamp}] Calling N8N chat webhook`)
 
-    const response = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: webhookHeaders,
-      body: JSON.stringify({
-        userId: user.id,
-        message: message.trim(),
-        personalityType: profile?.personality_type,
-        level: profile?.level,
-      }),
-    })
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 25_000)
+
+    let response: Response
+    try {
+      response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: webhookHeaders,
+        body: JSON.stringify({
+          userId: user.id,
+          message: message.trim(),
+          personalityType: profile?.personality_type,
+          level: profile?.level,
+          recentTasks: recentTasks ?? [],
+          goals: goals ?? [],
+        }),
+        signal: controller.signal,
+      })
+    } catch (fetchErr) {
+      clearTimeout(timeoutId)
+      const isTimeout = fetchErr instanceof Error && fetchErr.name === 'AbortError'
+      console.error(`[AI-CHAT ${timestamp}] Fetch failed:`, isTimeout ? 'TIMEOUT' : fetchErr)
+      return NextResponse.json(
+        { error: isTimeout
+          ? 'AI response timed out. Please try again.'
+          : 'Could not reach AI service. Please try again.' },
+        { status: 503 }
+      )
+    }
+    clearTimeout(timeoutId)
 
     if (!response.ok) {
       const errorText = await response.text()
@@ -143,29 +188,70 @@ export async function POST(request: NextRequest) {
     }
 
     let reply = 'Sorry, I could not generate a response.'
+    let createdTasks: ChatTask[] = []
     try {
+      // Helper: extract JSON from markdown fences
+      const extractJson = (str: string): string => {
+        const fenceMatch = str.match(/```(?:json)?\s*([\s\S]*?)```/)
+        return fenceMatch ? fenceMatch[1].trim() : str.trim()
+      }
+
+      const extractFromParsed = (obj: Record<string, unknown>) => {
+        if (obj.reply) reply = obj.reply as string
+        if (Array.isArray(obj.createTasks)) createdTasks = obj.createTasks as ChatTask[]
+      }
+
       if (typeof raw === 'object' && raw !== null && 'reply' in raw) {
-        // Direct JSON: { reply: "..." }
-        reply = (raw as { reply: string }).reply || reply
+        extractFromParsed(raw as Record<string, unknown>)
       } else if (typeof raw === 'string') {
-        // JSON string: '{"reply":"..."}'
-        const parsed = JSON.parse(raw)
-        reply = parsed.reply || reply
+        const parsed = JSON.parse(extractJson(raw))
+        extractFromParsed(parsed)
       } else if (Array.isArray(raw) && raw[0]?.output) {
-        // Array format: [{ output: "..." }] or [{ output: { reply: "..." } }]
         const output = raw[0].output
         if (typeof output === 'string') {
-          const parsed = JSON.parse(output)
-          reply = parsed.reply || reply
-        } else if (typeof output === 'object' && output.reply) {
-          reply = output.reply
+          const parsed = JSON.parse(extractJson(output))
+          extractFromParsed(parsed)
+        } else if (typeof output === 'object') {
+          extractFromParsed(output)
         }
       }
     } catch (parseErr) {
       console.error(`[AI-CHAT ${timestamp}] Failed to parse N8N chat response:`, parseErr, raw)
     }
 
-    console.log(`[AI-CHAT ${timestamp}] Parsed reply, length:`, reply.length)
+    console.log(`[AI-CHAT ${timestamp}] Parsed reply, length:`, reply.length, 'tasks:', createdTasks.length)
+
+    // If AI suggested tasks, create them in the database
+    let tasksCreated = 0
+    if (createdTasks.length > 0) {
+      const validCategories = ['fitness', 'mindfulness', 'learning', 'productivity', 'social', 'health', 'creativity']
+      const validDifficulties = ['easy', 'medium', 'hard', 'epic']
+      const validTimeframes = ['yearly', 'monthly', 'weekly', 'daily']
+
+      const taskInserts = createdTasks
+        .filter((t) => t.title && typeof t.title === 'string')
+        .slice(0, 5) // max 5 tasks per chat message
+        .map((t) => ({
+          user_id: user.id,
+          title: t.title,
+          description: t.description ?? null,
+          category: validCategories.includes(t.category || '') ? t.category : 'productivity',
+          difficulty: validDifficulties.includes(t.difficulty || '') ? t.difficulty : 'medium',
+          xp_reward: t.xp_reward ?? 50,
+          status: 'pending',
+          quest_timeframe: validTimeframes.includes(t.quest_timeframe || '') ? t.quest_timeframe : 'daily',
+        }))
+
+      if (taskInserts.length > 0) {
+        const { error: insertTasksError } = await supabase.from('tasks').insert(taskInserts)
+        if (insertTasksError) {
+          console.error(`[AI-CHAT ${timestamp}] Failed to insert chat tasks:`, insertTasksError)
+        } else {
+          tasksCreated = taskInserts.length
+          console.log(`[AI-CHAT ${timestamp}] Created ${tasksCreated} tasks from chat`)
+        }
+      }
+    }
 
     // Save assistant reply
     const { error: insertAssistantError } = await supabase.from('ai_chat_history').insert({
@@ -176,7 +262,6 @@ export async function POST(request: NextRequest) {
 
     if (insertAssistantError) {
       console.error(`[AI-CHAT ${timestamp}] Failed to save assistant reply:`, insertAssistantError)
-      // Don't fail the request, just log the error
     }
 
     console.log(`[AI-CHAT ${timestamp}] Successfully completed chat interaction`)
@@ -184,6 +269,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       reply,
       remainingMessages: dailyLimit === -1 ? -1 : dailyLimit - usedToday - 1,
+      tasksCreated,
     })
   } catch (error) {
     const isDev = process.env.NODE_ENV !== 'production'
