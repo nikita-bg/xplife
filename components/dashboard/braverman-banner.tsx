@@ -2,8 +2,11 @@
 
 import Link from 'next/link'
 import { Brain, ChevronRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function BravermanBanner() {
+  const t = useTranslations('dashboard.banners.braverman')
+
   return (
     <Link
       href="/braverman"
@@ -14,10 +17,10 @@ export function BravermanBanner() {
       </div>
       <div className="flex-1 min-w-0">
         <p className="font-display text-sm font-bold text-foreground">
-          Unlock Deep Personality Insights
+          {t('title')}
         </p>
         <p className="text-xs text-muted-foreground">
-          Take the Braverman Assessment for +500 XP and personalized quests
+          {t('description')}
         </p>
       </div>
       <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0" />

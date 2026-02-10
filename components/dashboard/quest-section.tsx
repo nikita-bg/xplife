@@ -8,6 +8,7 @@ import { TaskCard } from './task-card'
 import { GenerateQuestDialog } from './generate-quest-dialog'
 import { QuestProgress } from './quest-progress'
 import type { Task, QuestTimeframe } from '@/lib/types'
+import { useTranslations } from 'next-intl'
 
 interface QuestSectionProps {
   title: string
@@ -26,6 +27,7 @@ export function QuestSection({
   maxQuests,
   plan = 'free',
 }: QuestSectionProps) {
+  const t = useTranslations('dashboard.questSection')
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const pendingQuests = quests.filter((t) => t.status !== 'completed')
@@ -50,14 +52,14 @@ export function QuestSection({
             className="gap-2"
           >
             <Sparkles className="h-4 w-4" />
-            Generate
+            {t('generate')}
           </Button>
           {atLimit && plan === 'free' && (
             <Link
               href="/pricing"
               className="text-xs text-primary hover:underline"
             >
-              Upgrade for more
+              {t('upgradeForMore')}
             </Link>
           )}
         </div>
@@ -72,9 +74,9 @@ export function QuestSection({
       {quests.length === 0 ? (
         <div className="glass-card rounded-2xl p-12 text-center">
           <Sparkles className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
-          <h3 className="font-display text-lg font-bold text-foreground">No Quests Yet</h3>
+          <h3 className="font-display text-lg font-bold text-foreground">{t('noQuestsTitle')}</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Click &ldquo;Generate&rdquo; to create AI-powered {timeframe} quests.
+            {t('noQuestsDescription', { timeframe })}
           </p>
         </div>
       ) : (
@@ -89,7 +91,7 @@ export function QuestSection({
 
           {completedQuests.length > 0 && (
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-medium text-muted-foreground">Completed</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">{t('completed')}</h3>
               {completedQuests.map((task) => (
                 <TaskCard key={task.id} task={task} />
               ))}

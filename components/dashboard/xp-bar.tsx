@@ -1,6 +1,7 @@
 'use client'
 
 import { Zap } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface XpBarProps {
   currentXp: number
@@ -9,6 +10,7 @@ interface XpBarProps {
 }
 
 export function XpBar({ currentXp, requiredXp, totalXp }: XpBarProps) {
+  const t = useTranslations('dashboard.stats')
   const percentage = requiredXp > 0 ? Math.min((currentXp / requiredXp) * 100, 100) : 0
 
   return (
@@ -16,7 +18,7 @@ export function XpBar({ currentXp, requiredXp, totalXp }: XpBarProps) {
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Zap className="h-4 w-4 text-accent" />
-          <span className="text-sm text-muted-foreground">Experience</span>
+          <span className="text-sm text-muted-foreground">{t('experience')}</span>
         </div>
         <span className="font-display text-sm text-primary">
           {totalXp.toLocaleString()} XP
@@ -29,7 +31,7 @@ export function XpBar({ currentXp, requiredXp, totalXp }: XpBarProps) {
         />
       </div>
       <p className="mt-2 text-xs text-muted-foreground">
-        {currentXp} / {requiredXp} XP to next level
+        {t('xpToNextLevel', { current: currentXp, required: requiredXp })}
       </p>
     </div>
   )

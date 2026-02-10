@@ -187,10 +187,33 @@
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
-      "totalXP": "Total XP",
-      "completedQuests": "Completed",
-      "currentStreak": "Streak",
-      "days": "{count}d"
+      "totalXP": "XP Total",
+      "completedQuests": "Completadas",
+      "currentStreak": "Racha",
+      "days": "{count}d",
+      "best": "Mejor: {streak}d",
+      "experience": "Experiencia",
+      "xpToNextLevel": "{current} / {required} XP al siguiente nivel",
+      "goldBalance": "Balance de Oro",
+      "add": "Añadir"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "¡Completa la configuración de tu misión!",
+        "description": "Responde algunas preguntas para que podamos personalizar tus misiones diarias y recompensas de XP.",
+        "startQuiz": "Iniciar Test"
+      },
+      "braverman": {
+        "title": "Desbloquea Información Profunda de Personalidad",
+        "description": "Realiza la Evaluación Braverman por +500 XP y misiones personalizadas"
+      }
+    },
+    "questSection": {
+      "generate": "Generar",
+      "upgradeForMore": "Mejora para más",
+      "noQuestsTitle": "Aún No Hay Misiones",
+      "noQuestsDescription": "Haz clic en \"Generar\" para crear misiones {timeframe} impulsadas por IA.",
+      "completed": "Completado"
     },
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
@@ -219,13 +242,26 @@
     }
   },
   "profile": {
-    "title": "Profile",
-    "personalInfo": "Personal Information",
-    "displayName": "Display Name",
-    "email": "Email",
-    "personality": "Personality Type",
-    "stats": "Statistics",
-    "save": "Save Changes",
+    "title": "Perfil",
+    "personalInfo": "Información Personal",
+    "displayName": "Nombre para Mostrar",
+    "email": "Correo Electrónico",
+    "personality": "Tipo de Personalidad",
+    "stats": {
+      "title": "Estadísticas",
+      "totalXp": "XP Total",
+      "questsDone": "Misiones Completadas",
+      "streak": "Racha"
+    },
+    "balance": {
+      "title": "Balance de Oro",
+      "addEarnings": "Añadir Ganancias"
+    },
+    "planNames": {
+      "premium": "Premium",
+      "lifetime": "Vitalicio"
+    },
+    "save": "Guardar Cambios",
     "settings": {
       "title": "Configuración",
       "displayName": "Nombre para Mostrar",
@@ -340,6 +376,30 @@
         "name": "Vitalicio",
         "badge": "Oferta Limitada",
         "cta": "Asegura Acceso Vitalicio"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1 meta activa",
+        "feature2": "3 tareas generadas por IA por semana",
+        "feature3": "Acceso básico a la clasificación",
+        "feature4": "Soporte de la comunidad"
+      },
+      "premium": {
+        "feature1": "Tareas de IA ilimitadas diarias",
+        "feature2": "3 metas paralelas",
+        "feature3": "Coaching e insights completos de IA",
+        "feature4": "Congelación de rachas (3/mes)",
+        "feature5": "Clasificación prioritaria",
+        "feature6": "Análisis avanzados"
+      },
+      "lifetime": {
+        "feature1": "Todo en Premium, para siempre",
+        "feature2": "Sin pagos recurrentes",
+        "feature3": "Insignia de miembro fundador",
+        "feature4": "Acceso anticipado a nuevas funciones"
       }
     }
   },

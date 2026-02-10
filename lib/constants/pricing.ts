@@ -3,6 +3,29 @@ export const LIFETIME_SPOTS = {
   claimed: 82,
 }
 
+export const PLAN_FEATURES_KEYS = {
+  free: [
+    'features.free.feature1',
+    'features.free.feature2',
+    'features.free.feature3',
+    'features.free.feature4',
+  ],
+  premium: [
+    'features.premium.feature1',
+    'features.premium.feature2',
+    'features.premium.feature3',
+    'features.premium.feature4',
+    'features.premium.feature5',
+    'features.premium.feature6',
+  ],
+  lifetime: [
+    'features.lifetime.feature1',
+    'features.lifetime.feature2',
+    'features.lifetime.feature3',
+    'features.lifetime.feature4',
+  ],
+} as const
+
 export const PLANS = {
   free: {
     name: 'Free',

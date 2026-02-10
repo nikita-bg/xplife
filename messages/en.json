@@ -186,7 +186,30 @@
       "totalXP": "Total XP",
       "completedQuests": "Completed",
       "currentStreak": "Streak",
-      "days": "{count}d"
+      "days": "days",
+      "best": "Best: {streak}d",
+      "experience": "Experience",
+      "xpToNextLevel": "{current} / {required} XP to next level",
+      "goldBalance": "Gold Balance",
+      "add": "Add"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "Complete your quest setup!",
+        "description": "Answer a few questions so we can personalize your daily quests and XP rewards.",
+        "startQuiz": "Start Quiz"
+      },
+      "braverman": {
+        "title": "Unlock Deep Personality Insights",
+        "description": "Take the Braverman Assessment for +500 XP and personalized quests"
+      }
+    },
+    "questSection": {
+      "generate": "Generate",
+      "upgradeForMore": "Upgrade for more",
+      "noQuestsTitle": "No Quests Yet",
+      "noQuestsDescription": "Click \"Generate\" to create AI-powered {timeframe} quests.",
+      "completed": "Completed"
     },
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
@@ -220,7 +243,20 @@
     "displayName": "Display Name",
     "email": "Email",
     "personality": "Personality Type",
-    "stats": "Statistics",
+    "stats": {
+      "title": "Stats",
+      "totalXp": "Total XP",
+      "questsDone": "Quests Done",
+      "streak": "Streak"
+    },
+    "balance": {
+      "title": "Gold Balance",
+      "addEarnings": "Add Earnings"
+    },
+    "planNames": {
+      "premium": "Premium",
+      "lifetime": "Lifetime"
+    },
     "save": "Save Changes",
     "settings": {
       "title": "Settings",
@@ -336,6 +372,30 @@
         "name": "Lifetime",
         "badge": "Limited Offer",
         "cta": "Lock In Lifetime Access"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1 active goal",
+        "feature2": "3 AI-generated tasks per week",
+        "feature3": "Basic leaderboard access",
+        "feature4": "Community support"
+      },
+      "premium": {
+        "feature1": "Unlimited AI tasks daily",
+        "feature2": "3 parallel goals",
+        "feature3": "Full AI coaching & insights",
+        "feature4": "Streak freezes (3/month)",
+        "feature5": "Priority leaderboard",
+        "feature6": "Advanced analytics"
+      },
+      "lifetime": {
+        "feature1": "Everything in Premium, forever",
+        "feature2": "No recurring payments",
+        "feature3": "Founding member badge",
+        "feature4": "Early access to new features"
       }
     }
   },

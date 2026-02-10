@@ -187,10 +187,33 @@
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
-      "totalXP": "Total XP",
-      "completedQuests": "Completed",
-      "currentStreak": "Streak",
-      "days": "{count}d"
+      "totalXP": "総経験値",
+      "completedQuests": "完了済み",
+      "currentStreak": "連続記録",
+      "days": "{count}日",
+      "best": "最高: {streak}日",
+      "experience": "経験値",
+      "xpToNextLevel": "次のレベルまで{current} / {required} XP",
+      "goldBalance": "ゴールド残高",
+      "add": "追加"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "クエスト設定を完了しましょう！",
+        "description": "いくつかの質問に答えて、毎日のクエストとXP報酬をパーソナライズしましょう。",
+        "startQuiz": "クイズを始める"
+      },
+      "braverman": {
+        "title": "深い性格洞察をアンロック",
+        "description": "Braverman評価を受けて+500 XPとパーソナライズされたクエストを獲得"
+      }
+    },
+    "questSection": {
+      "generate": "生成",
+      "upgradeForMore": "アップグレードしてさらに",
+      "noQuestsTitle": "クエストがありません",
+      "noQuestsDescription": "「生成」をクリックして、AI駆動の{timeframe}クエストを作成してください。",
+      "completed": "完了"
     },
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
@@ -219,13 +242,26 @@
     }
   },
   "profile": {
-    "title": "Profile",
-    "personalInfo": "Personal Information",
-    "displayName": "Display Name",
-    "email": "Email",
-    "personality": "Personality Type",
-    "stats": "Statistics",
-    "save": "Save Changes",
+    "title": "プロフィール",
+    "personalInfo": "個人情報",
+    "displayName": "表示名",
+    "email": "メールアドレス",
+    "personality": "性格タイプ",
+    "stats": {
+      "title": "統計",
+      "totalXp": "総経験値",
+      "questsDone": "完了したクエスト",
+      "streak": "連続記録"
+    },
+    "balance": {
+      "title": "ゴールド残高",
+      "addEarnings": "収入を追加"
+    },
+    "planNames": {
+      "premium": "プレミアム",
+      "lifetime": "ライフタイム"
+    },
+    "save": "変更を保存",
     "settings": {
       "title": "設定",
       "displayName": "表示名",
@@ -340,6 +376,30 @@
         "name": "ライフタイム",
         "badge": "期間限定オファー",
         "cta": "ライフタイムアクセスをロック"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1つのアクティブな目標",
+        "feature2": "週3つのAI生成タスク",
+        "feature3": "基本的なリーダーボードアクセス",
+        "feature4": "コミュニティサポート"
+      },
+      "premium": {
+        "feature1": "毎日無制限のAIタスク",
+        "feature2": "3つの並行目標",
+        "feature3": "完全なAIコーチングと洞察",
+        "feature4": "連続記録凍結（月3回）",
+        "feature5": "優先リーダーボード",
+        "feature6": "高度な分析"
+      },
+      "lifetime": {
+        "feature1": "プレミアムのすべて、永久に",
+        "feature2": "定期的な支払いなし",
+        "feature3": "創設メンバーバッジ",
+        "feature4": "新機能への早期アクセス"
       }
     }
   },

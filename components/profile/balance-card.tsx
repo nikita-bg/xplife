@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Coins, Plus, Check, X, ChevronDown } from 'lucide-react'
 import { CURRENCIES, getCurrency } from '@/lib/constants/currencies'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 interface BalanceCardProps {
   balance: number
@@ -11,6 +12,7 @@ interface BalanceCardProps {
 }
 
 export function BalanceCard({ balance: initialBalance, currency: initialCurrency }: BalanceCardProps) {
+  const t = useTranslations('profile.balance')
   const router = useRouter()
   const [balance, setBalance] = useState(initialBalance)
   const [currency, setCurrency] = useState(initialCurrency)
@@ -74,7 +76,7 @@ export function BalanceCard({ balance: initialBalance, currency: initialCurrency
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 font-display text-lg font-bold text-foreground">
           <Coins className="h-5 w-5 text-yellow-400" />
-          Gold Balance
+          {t('title')}
         </h2>
         <div className="relative">
           <button
@@ -116,7 +118,7 @@ export function BalanceCard({ balance: initialBalance, currency: initialCurrency
             className="flex items-center gap-2 rounded-lg bg-yellow-400/10 px-4 py-2 text-sm font-medium text-yellow-400 transition-colors hover:bg-yellow-400/20"
           >
             <Plus className="h-4 w-4" />
-            Add Earnings
+            {t('addEarnings')}
           </button>
         ) : (
           <div className="flex items-center gap-2">

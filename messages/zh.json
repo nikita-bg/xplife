@@ -187,10 +187,33 @@
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
-      "totalXP": "Total XP",
-      "completedQuests": "Completed",
-      "currentStreak": "Streak",
-      "days": "{count}d"
+      "totalXP": "总经验值",
+      "completedQuests": "已完成",
+      "currentStreak": "连胜",
+      "days": "{count}天",
+      "best": "最佳: {streak}天",
+      "experience": "经验",
+      "xpToNextLevel": "{current} / {required} XP 到下一级",
+      "goldBalance": "金币余额",
+      "add": "添加"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "完成任务设置！",
+        "description": "回答几个问题，以便我们个性化您的每日任务和XP奖励。",
+        "startQuiz": "开始测验"
+      },
+      "braverman": {
+        "title": "解锁深度个性洞察",
+        "description": "参加Braverman评估获得+500 XP和个性化任务"
+      }
+    },
+    "questSection": {
+      "generate": "生成",
+      "upgradeForMore": "升级获取更多",
+      "noQuestsTitle": "暂无任务",
+      "noQuestsDescription": "点击\"生成\"创建AI驱动的{timeframe}任务。",
+      "completed": "已完成"
     },
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
@@ -219,13 +242,26 @@
     }
   },
   "profile": {
-    "title": "Profile",
-    "personalInfo": "Personal Information",
-    "displayName": "Display Name",
-    "email": "Email",
-    "personality": "Personality Type",
-    "stats": "Statistics",
-    "save": "Save Changes",
+    "title": "个人资料",
+    "personalInfo": "个人信息",
+    "displayName": "显示名称",
+    "email": "电子邮件",
+    "personality": "个性类型",
+    "stats": {
+      "title": "统计",
+      "totalXp": "总经验值",
+      "questsDone": "已完成任务",
+      "streak": "连胜"
+    },
+    "balance": {
+      "title": "金币余额",
+      "addEarnings": "添加收入"
+    },
+    "planNames": {
+      "premium": "高级版",
+      "lifetime": "终身版"
+    },
+    "save": "保存更改",
     "settings": {
       "title": "设置",
       "displayName": "显示名称",
@@ -340,6 +376,30 @@
         "name": "终身版",
         "badge": "限时优惠",
         "cta": "锁定终身访问"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1个活跃目标",
+        "feature2": "每周3个AI生成的任务",
+        "feature3": "基本排行榜访问",
+        "feature4": "社区支持"
+      },
+      "premium": {
+        "feature1": "每日无限AI任务",
+        "feature2": "3个并行目标",
+        "feature3": "完整的AI辅导和洞察",
+        "feature4": "连胜冻结（3次/月）",
+        "feature5": "优先排行榜",
+        "feature6": "高级分析"
+      },
+      "lifetime": {
+        "feature1": "永久享有高级版所有功能",
+        "feature2": "无需重复付款",
+        "feature3": "创始会员徽章",
+        "feature4": "抢先体验新功能"
       }
     }
   },

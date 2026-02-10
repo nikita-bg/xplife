@@ -1,4 +1,7 @@
+'use client'
+
 import { Flame } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface StreakCounterProps {
   currentStreak: number
@@ -6,6 +9,8 @@ interface StreakCounterProps {
 }
 
 export function StreakCounter({ currentStreak, longestStreak }: StreakCounterProps) {
+  const t = useTranslations('dashboard.stats')
+
   return (
     <div className="glass-card gradient-border rounded-2xl p-6">
       <div className="flex items-center gap-4">
@@ -15,9 +20,9 @@ export function StreakCounter({ currentStreak, longestStreak }: StreakCounterPro
         <div>
           <p className="font-display text-3xl font-bold text-foreground">
             {currentStreak}
-            <span className="ml-1 text-base text-muted-foreground">days</span>
+            <span className="ml-1 text-base text-muted-foreground">{t('days')}</span>
           </p>
-          <p className="text-sm text-muted-foreground">Best: {longestStreak}d</p>
+          <p className="text-sm text-muted-foreground">{t('best', { streak: longestStreak })}</p>
         </div>
       </div>
     </div>

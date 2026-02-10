@@ -1,4 +1,7 @@
+'use client'
+
 import { Shield, Crown, Gem } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface ProfileHeaderProps {
   displayName: string
@@ -9,6 +12,7 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ displayName, avatarUrl, level, levelTitle, plan = 'free' }: ProfileHeaderProps) {
+  const t = useTranslations('profile.planNames')
   return (
     <div className="glass-card gradient-border rounded-2xl p-8 text-center">
       <div className="mb-4 flex justify-center">
@@ -35,13 +39,13 @@ export function ProfileHeader({ displayName, avatarUrl, level, levelTitle, plan 
         {plan === 'premium' && (
           <div className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-1">
             <Crown className="h-3.5 w-3.5 text-primary" />
-            <span className="font-display text-sm font-bold text-primary">Premium</span>
+            <span className="font-display text-sm font-bold text-primary">{t('premium')}</span>
           </div>
         )}
         {plan === 'lifetime' && (
           <div className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 px-3 py-1">
             <Gem className="h-3.5 w-3.5 text-amber-400" />
-            <span className="font-display text-sm font-bold text-amber-400">Lifetime</span>
+            <span className="font-display text-sm font-bold text-amber-400">{t('lifetime')}</span>
           </div>
         )}
       </div>

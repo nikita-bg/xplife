@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Coins, Plus, Check, X } from 'lucide-react'
 import { getCurrency } from '@/lib/constants/currencies'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 interface GoldBalanceProps {
   balance: number
@@ -11,6 +12,7 @@ interface GoldBalanceProps {
 }
 
 export function GoldBalance({ balance: initialBalance, currency }: GoldBalanceProps) {
+  const t = useTranslations('dashboard.stats')
   const router = useRouter()
   const [balance, setBalance] = useState(initialBalance)
   const [adding, setAdding] = useState(false)
@@ -47,7 +49,7 @@ export function GoldBalance({ balance: initialBalance, currency }: GoldBalancePr
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Coins className="h-4 w-4 text-yellow-400" />
-          <span className="text-sm text-muted-foreground">Gold Balance</span>
+          <span className="text-sm text-muted-foreground">{t('goldBalance')}</span>
         </div>
         {!adding && (
           <button
@@ -55,7 +57,7 @@ export function GoldBalance({ balance: initialBalance, currency }: GoldBalancePr
             className="flex items-center gap-1 rounded-md bg-yellow-400/10 px-2 py-0.5 text-xs font-medium text-yellow-400 transition-colors hover:bg-yellow-400/20"
           >
             <Plus className="h-3 w-3" />
-            Add
+            {t('add')}
           </button>
         )}
       </div>

@@ -187,10 +187,33 @@
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
-      "totalXP": "Total XP",
-      "completedQuests": "Completed",
-      "currentStreak": "Streak",
-      "days": "{count}d"
+      "totalXP": "Общо XP",
+      "completedQuests": "Завършени",
+      "currentStreak": "Серия",
+      "days": "{count}д",
+      "best": "Най-добра: {streak}д",
+      "experience": "Опит",
+      "xpToNextLevel": "{current} / {required} XP до следващо ниво",
+      "goldBalance": "Златен Баланс",
+      "add": "Добави"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "Завърши настройката на квестовете си!",
+        "description": "Отговори на няколко въпроса, за да можем да персонализираме дневните ти квестове и XP награди.",
+        "startQuiz": "Започни Теста"
+      },
+      "braverman": {
+        "title": "Отключи Дълбоки Лични Прозрения",
+        "description": "Направи Braverman оценката за +500 XP и персонализирани квестове"
+      }
+    },
+    "questSection": {
+      "generate": "Генерирай",
+      "upgradeForMore": "Надгради за повече",
+      "noQuestsTitle": "Все още няма квестове",
+      "noQuestsDescription": "Кликни \"Генерирай\", за да създадеш AI {timeframe} квестове.",
+      "completed": "Завършено"
     },
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
@@ -219,13 +242,26 @@
     }
   },
   "profile": {
-    "title": "Profile",
-    "personalInfo": "Personal Information",
-    "displayName": "Display Name",
-    "email": "Email",
-    "personality": "Personality Type",
-    "stats": "Statistics",
-    "save": "Save Changes",
+    "title": "Профил",
+    "personalInfo": "Лична Информация",
+    "displayName": "Показвано Име",
+    "email": "Имейл",
+    "personality": "Тип Личност",
+    "stats": {
+      "title": "Статистики",
+      "totalXp": "Общо XP",
+      "questsDone": "Завършени Квестове",
+      "streak": "Серия"
+    },
+    "balance": {
+      "title": "Златен Баланс",
+      "addEarnings": "Добави Печалби"
+    },
+    "planNames": {
+      "premium": "Премиум",
+      "lifetime": "Пожизнен"
+    },
+    "save": "Запази Промените",
     "settings": {
       "title": "Настройки",
       "displayName": "Показвано Име",
@@ -340,6 +376,30 @@
         "name": "Пожизнен",
         "badge": "Ограничена Оферта",
         "cta": "Заключете Пожизнен Достъп"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1 активна цел",
+        "feature2": "3 AI генерирани задачи седмично",
+        "feature3": "Основен достъп до класацията",
+        "feature4": "Подкрепа от общността"
+      },
+      "premium": {
+        "feature1": "Неограничени AI задачи дневно",
+        "feature2": "3 паралелни цели",
+        "feature3": "Пълен AI коучинг и прозрения",
+        "feature4": "Замразяване на серии (3/месец)",
+        "feature5": "Приоритетна класация",
+        "feature6": "Разширена аналитика"
+      },
+      "lifetime": {
+        "feature1": "Всичко в Премиум, завинаги",
+        "feature2": "Без периодични плащания",
+        "feature3": "Значка на основател",
+        "feature4": "Ранен достъп до нови функции"
       }
     }
   },

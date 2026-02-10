@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Script from "next/script"
 import { Check, Crown, Zap, Gem } from "lucide-react"
-import { PLANS, LIFETIME_SPOTS } from "@/lib/constants/pricing"
+import { PLANS, LIFETIME_SPOTS, PLAN_FEATURES_KEYS } from "@/lib/constants/pricing"
 import { useTranslations } from 'next-intl'
 
 const spotsLeft = LIFETIME_SPOTS.total - LIFETIME_SPOTS.claimed
@@ -11,6 +11,7 @@ const spotsPercent = (LIFETIME_SPOTS.claimed / LIFETIME_SPOTS.total) * 100
 
 export function Pricing() {
   const t = useTranslations('landing.pricing')
+  const tPricing = useTranslations('pricing')
 
   const tiers = [
     {
@@ -18,7 +19,7 @@ export function Pricing() {
       price: "\u20AC0",
       period: "forever",
       description: PLANS.free.description,
-      features: PLANS.free.features,
+      featureKeys: PLAN_FEATURES_KEYS.free,
       cta: t('free.cta'),
       href: "/signup",
       highlighted: false,
@@ -31,7 +32,7 @@ export function Pricing() {
       period: "/month",
       description: PLANS.premium.description,
       badge: t('premium.badge'),
-      features: PLANS.premium.features,
+      featureKeys: PLAN_FEATURES_KEYS.premium,
       cta: t('premium.cta'),
       href: PLANS.premium.checkoutUrl,
       highlighted: true,
@@ -44,7 +45,7 @@ export function Pricing() {
       period: "one-time",
       description: PLANS.lifetime.description,
       badge: t('lifetime.badge'),
-      features: PLANS.lifetime.features,
+      featureKeys: PLAN_FEATURES_KEYS.lifetime,
       cta: t('lifetime.cta'),
       href: PLANS.lifetime.checkoutUrl,
       highlighted: false,
@@ -142,8 +143,8 @@ export function Pricing() {
               )}
 
               <ul className="mb-8 flex flex-col gap-3">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-sm text-foreground">
+                {tier.featureKeys.map((featureKey) => (
+                  <li key={featureKey} className="flex items-center gap-3 text-sm text-foreground">
                     <Check
                       className={`h-4 w-4 flex-shrink-0 ${
                         tier.highlighted
@@ -153,7 +154,7 @@ export function Pricing() {
                             : "text-primary"
                       }`}
                     />
-                    {feature}
+                    {tPricing(featureKey)}
                   </li>
                 ))}
               </ul>

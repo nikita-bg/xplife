@@ -1,5 +1,8 @@
+'use client'
+
 import { CheckCircle2, Flame, Sparkles, Zap } from 'lucide-react'
 import { PERSONALITY_DESCRIPTIONS } from '@/lib/constants'
+import { useTranslations } from 'next-intl'
 
 interface StatsCardProps {
   totalXp: number
@@ -9,27 +12,28 @@ interface StatsCardProps {
 }
 
 export function StatsCard({ totalXp, totalTasks, currentStreak, personalityType }: StatsCardProps) {
+  const t = useTranslations('profile.stats')
   const personality = personalityType ? PERSONALITY_DESCRIPTIONS[personalityType] : null
 
   return (
     <div className="glass-card rounded-2xl p-6">
-      <h2 className="mb-4 font-display text-lg font-bold text-foreground">Stats</h2>
+      <h2 className="mb-4 font-display text-lg font-bold text-foreground">{t('title')}</h2>
 
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl bg-muted p-4 text-center">
           <Zap className="mx-auto mb-2 h-5 w-5 text-primary" />
           <p className="font-display text-xl font-bold text-foreground">{totalXp.toLocaleString()}</p>
-          <p className="text-xs text-muted-foreground">Total XP</p>
+          <p className="text-xs text-muted-foreground">{t('totalXp')}</p>
         </div>
         <div className="rounded-xl bg-muted p-4 text-center">
           <CheckCircle2 className="mx-auto mb-2 h-5 w-5 text-accent" />
           <p className="font-display text-xl font-bold text-foreground">{totalTasks}</p>
-          <p className="text-xs text-muted-foreground">Quests Done</p>
+          <p className="text-xs text-muted-foreground">{t('questsDone')}</p>
         </div>
         <div className="rounded-xl bg-muted p-4 text-center">
           <Flame className="mx-auto mb-2 h-5 w-5 text-orange-400" />
           <p className="font-display text-xl font-bold text-foreground">{currentStreak}d</p>
-          <p className="text-xs text-muted-foreground">Streak</p>
+          <p className="text-xs text-muted-foreground">{t('streak')}</p>
         </div>
       </div>
 
