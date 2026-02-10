@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { ProfileHeader } from '@/components/profile/profile-header'
 import { SettingsForm } from '@/components/profile/settings-form'
@@ -11,6 +12,7 @@ export default async function ProfilePage({
 }: {
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

@@ -1,8 +1,10 @@
 import { redirect, notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { TaskDetail } from '@/components/task/task-detail'
 
 export default async function TaskPage({ params }: { params: { id: string; locale: string } }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

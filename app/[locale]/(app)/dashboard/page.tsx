@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { setRequestLocale } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import { LevelDisplay } from '@/components/dashboard/level-display'
 import { XpBar } from '@/components/dashboard/xp-bar'
@@ -14,6 +15,7 @@ export default async function DashboardPage({
 }: {
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

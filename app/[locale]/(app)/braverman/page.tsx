@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { setRequestLocale } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import { Lock } from 'lucide-react'
 import { BravermanTest } from '@/components/braverman/braverman-test'
@@ -11,6 +12,7 @@ export default async function BravermanPage({
 }: {
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

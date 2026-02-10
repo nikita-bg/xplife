@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { OnboardingFlow } from '@/components/onboarding/onboarding-flow'
 import { getPlanLimits } from '@/lib/plan-limits'
@@ -8,6 +9,7 @@ export default async function OnboardingPage({
 }: {
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

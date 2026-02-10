@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
 
@@ -7,6 +8,7 @@ export default async function LeaderboardPage({
 }: {
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

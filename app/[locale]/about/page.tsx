@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import { setRequestLocale } from 'next-intl/server'
 import { ArrowLeft, Zap } from 'lucide-react'
 
-export default function AboutPage() {
+export default function AboutPage({ params: { locale } }: { params: { locale: string } }) {
+  setRequestLocale(locale)
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <Link href="/" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
