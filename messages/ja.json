@@ -460,7 +460,8 @@
     "yearly": "年間",
     "monthly": "月間",
     "weekly": "週間",
-    "daily": "日間"
+    "daily": "日間",
+    "generateError": "クエストの生成に失敗しました。もう一度お試しください。"
   },
   "tasks": {
     "title": "タスク詳細",

@@ -460,7 +460,8 @@
     "yearly": "年度",
     "monthly": "月度",
     "weekly": "每周",
-    "daily": "每日"
+    "daily": "每日",
+    "generateError": "生成任务失败，请重试。"
   },
   "tasks": {
     "title": "任务详情",

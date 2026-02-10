@@ -84,16 +84,12 @@ export function GenerateQuestDialog({
       })
       if (!res.ok) {
         const data = await res.json().catch(() => null)
-        const errorMessage = data?.error || 'Failed to generate quests'
+        const errorMessage = data?.error || t('generateError')
 
         if (res.status === 429 || errorMessage.toLowerCase().includes('limit')) {
           setError({ message: errorMessage, canRetry: false, showUpgrade: true })
-        } else if (res.status === 503 || res.status === 422) {
-          setError({ message: errorMessage, canRetry: true, showUpgrade: false })
-        } else if (res.status >= 500) {
-          setError({ message: errorMessage, canRetry: true, showUpgrade: false })
         } else {
-          setError({ message: errorMessage, canRetry: false, showUpgrade: false })
+          setError({ message: errorMessage, canRetry: true, showUpgrade: false })
         }
         return
       }

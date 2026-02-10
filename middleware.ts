@@ -3,7 +3,12 @@ import { intlMiddleware } from '@/lib/i18n/middleware'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  // First, handle i18n routing
+  // Skip i18n for API routes — only run Supabase session refresh
+  if (request.nextUrl.pathname.startsWith('/api')) {
+    return updateSession(request)
+  }
+
+  // Handle i18n routing for page routes
   const intlResponse = intlMiddleware(request)
 
   // If i18n middleware returns a redirect, use it

@@ -460,7 +460,8 @@
     "yearly": "Anuales",
     "monthly": "Mensuales",
     "weekly": "Semanales",
-    "daily": "Diarias"
+    "daily": "Diarias",
+    "generateError": "Error al generar misiones. Por favor, inténtalo de nuevo."
   },
   "tasks": {
     "title": "Detalles de la Tarea",

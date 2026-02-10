@@ -460,7 +460,8 @@
     "yearly": "Yearly",
     "monthly": "Monthly",
     "weekly": "Weekly",
-    "daily": "Daily"
+    "daily": "Daily",
+    "generateError": "Failed to generate quests. Please try again."
   },
   "tasks": {
     "title": "Task Details",
