@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Sword, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -8,6 +9,8 @@ interface WelcomeStepProps {
 }
 
 export function WelcomeStep({ onContinue }: WelcomeStepProps) {
+  const t = useTranslations('onboarding')
+
   return (
     <div className="glass-card gradient-border rounded-2xl p-8 text-center sm:p-12">
       <div className="mb-6 flex justify-center">
@@ -17,11 +20,11 @@ export function WelcomeStep({ onContinue }: WelcomeStepProps) {
       </div>
 
       <h1 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-        Welcome to <span className="gradient-text">XPLife</span>
+        {t('welcome.title')} <span className="gradient-text">XPLife</span>
       </h1>
 
       <p className="mx-auto mt-4 max-w-md text-muted-foreground leading-relaxed">
-        {"You're about to embark on an epic quest to become your best self. Let's start by learning about you so we can craft the perfect challenges."}
+        {t('welcome.description')}
       </p>
 
       <div className="mt-8 flex flex-col items-center gap-4">
@@ -31,9 +34,9 @@ export function WelcomeStep({ onContinue }: WelcomeStepProps) {
           className="gap-2 px-8"
         >
           <Sword className="h-4 w-4" />
-          Begin Quest
+          {t('welcome.beginQuest')}
         </Button>
-        <p className="text-xs text-muted-foreground">Takes about 2 minutes</p>
+        <p className="text-xs text-muted-foreground">{t('welcome.duration')}</p>
       </div>
     </div>
   )

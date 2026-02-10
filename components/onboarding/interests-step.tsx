@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Heart, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -8,30 +9,31 @@ interface InterestsStepProps {
   onComplete: (interests: string[]) => void
 }
 
-const INTEREST_OPTIONS = [
-  'Yoga',
-  'Running',
-  'Meditation',
-  'Reading',
-  'Writing',
-  'Coding',
-  'Painting',
-  'Music',
-  'Gaming',
-  'Cooking',
-  'Photography',
-  'Languages',
-  'Hiking',
-  'Gardening',
-  'Dancing',
-  'Cycling',
-  'Swimming',
-  'Drawing',
-  'Journaling',
-  'Podcasts',
+const INTEREST_KEYS = [
+  'yoga',
+  'running',
+  'meditation',
+  'reading',
+  'writing',
+  'coding',
+  'painting',
+  'music',
+  'gaming',
+  'cooking',
+  'photography',
+  'languages',
+  'hiking',
+  'gardening',
+  'dancing',
+  'cycling',
+  'swimming',
+  'drawing',
+  'journaling',
+  'podcasts',
 ]
 
 export function InterestsStep({ onComplete }: InterestsStepProps) {
+  const t = useTranslations('onboarding.interests')
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
 
   const toggleInterest = (interest: string) => {
@@ -58,28 +60,29 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
     <div className="glass-card gradient-border rounded-2xl p-8 sm:p-12">
       <div className="mb-2 text-center">
         <span className="font-display text-xs font-bold uppercase tracking-widest text-accent">
-          Optional
+          {t('subtitle')}
         </span>
       </div>
 
       <h2 className="mb-3 text-center font-display text-xl font-bold text-foreground sm:text-2xl">
-        What Are Your Interests?
+        {t('title')}
       </h2>
       <p className="mb-2 text-center text-sm text-muted-foreground">
-        Select up to 10 interests to personalize your tasks
+        {t('description')}
       </p>
       <p className="mb-8 text-center text-xs text-muted-foreground">
-        {selectedInterests.length}/10 selected
+        {t('selected', { count: selectedInterests.length })}
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-        {INTEREST_OPTIONS.map((interest) => {
-          const isSelected = selectedInterests.includes(interest)
+        {INTEREST_KEYS.map((interestKey) => {
+          const interestLabel = t(`options.${interestKey}`)
+          const isSelected = selectedInterests.includes(interestLabel)
           return (
             <button
-              key={interest}
+              key={interestKey}
               type="button"
-              onClick={() => toggleInterest(interest)}
+              onClick={() => toggleInterest(interestLabel)}
               className={`flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-xs font-medium transition-all ${
                 isSelected
                   ? 'border-primary bg-primary/10 text-foreground'
@@ -87,7 +90,7 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
               }`}
             >
               {isSelected && <Heart className="h-3 w-3 fill-primary text-primary" />}
-              {interest}
+              {interestLabel}
             </button>
           )
         })}
@@ -97,7 +100,7 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
         <div className="mb-6 rounded-lg bg-primary/5 p-4">
           <div className="mb-2 flex items-center gap-2 text-sm font-medium text-foreground">
             <Sparkles className="h-4 w-4 text-primary" />
-            You selected:
+            {t('youSelected')}
           </div>
           <div className="flex flex-wrap gap-2">
             {selectedInterests.map((interest) => (
@@ -114,7 +117,7 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
 
       <div className="flex gap-3">
         <Button onClick={handleSkip} variant="outline" className="flex-1" size="lg">
-          Skip
+          {t('skip')}
         </Button>
         <Button
           onClick={handleSubmit}
@@ -122,7 +125,7 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
           size="lg"
           disabled={selectedInterests.length === 0}
         >
-          Continue
+          {t('continue')}
         </Button>
       </div>
     </div>

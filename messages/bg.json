@@ -127,13 +127,137 @@
     "epic": "Epic"
   },
   "onboarding": {
-    "welcome": "Welcome to XPLife",
-    "title": "Discover Your Player Type",
-    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
-    "question": "Question {current} of {total}",
-    "calculating": "Analyzing your answers...",
-    "result": "You are...",
-    "continue": "Continue to Dashboard"
+    "welcome": {
+      "title": "Добре дошли в",
+      "description": "Предстои ви епично приключение да станете най-добрата версия на себе си. Нека започнем, като научим повече за вас, за да създадем перфектните предизвикателства.",
+      "beginQuest": "Започни Квест",
+      "duration": "Отнема около 2 минути"
+    },
+    "title": "Открийте Типа Си на Играч",
+    "subtitle": "Отговорете на 5 бързи въпроса, за да отключите персонализираната система за квестове",
+    "question": "Въпрос {current} от {total}",
+    "calculating": "Анализиране на отговорите ви...",
+    "result": "Вие сте...",
+    "continue": "Продължи към Таблото",
+    "timePreferences": {
+      "subtitle": "Персонализирайте Опита Си",
+      "title": "Кога Работите Най-Добре?",
+      "description": "Помогнете ни да планираме задачи в моментите на най-високата ви продуктивност",
+      "energyQuestion": "Кога имате най-много енергия?",
+      "durationQuestion": "Предпочитана продължителност на задачите?",
+      "continue": "Продължи",
+      "timeOptions": {
+        "morning": {
+          "label": "Сутрешен Човек",
+          "description": "Най-енергичен сутрин"
+        },
+        "afternoon": {
+          "label": "Следобеден Връх",
+          "description": "Най-добра концентрация след обяд"
+        },
+        "evening": {
+          "label": "Вечерна Енергия",
+          "description": "Продуктивен вечер"
+        },
+        "night": {
+          "label": "Нощна Птица",
+          "description": "Работи най-добре през нощта"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "Бързи Победи",
+          "description": "5-15 минутни задачи"
+        },
+        "medium": {
+          "label": "Балансирани Задачи",
+          "description": "15-45 минутни задачи"
+        },
+        "deep": {
+          "label": "Дълбока Работа",
+          "description": "1+ час сесии"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "Разкажете Ни За Вас",
+      "title": "Вашият Житейски Контекст",
+      "description": "Това ни помага да създадем задачи, които пасват на ежедневието ви",
+      "occupationQuestion": "Какво ви описва най-добре?",
+      "scheduleQuestion": "Работен график (по желание)",
+      "phaseQuestion": "Текуща житейска фаза (по желание)",
+      "challengeQuestion": "Какво е най-голямото ви предизвикателство?",
+      "continue": "Продължи",
+      "occupationOptions": {
+        "student": "Студент",
+        "officeWorker": "Офис Работник",
+        "remoteWorker": "Отдалечен Работник",
+        "entrepreneur": "Предприемач",
+        "freelancer": "Свободен Професионалист",
+        "healthcare": "Здравеопазване",
+        "creative": "Творец",
+        "other": "Друго"
+      },
+      "scheduleOptions": {
+        "fullTime": "Пълно работно време",
+        "partTime": "Непълно работно време",
+        "flexible": "Гъвкав",
+        "shiftWork": "Сменна работа"
+      },
+      "phaseOptions": {
+        "buildingCareer": "Изграждане на кариера",
+        "workLifeBalance": "Баланс работа-живот",
+        "studentLife": "Студентски живот",
+        "exploring": "Изследване"
+      },
+      "challengeOptions": {
+        "findingTime": "Намиране на време",
+        "lowEnergy": "Ниска енергия",
+        "stayingFocused": "Запазване на фокус",
+        "motivation": "Мотивация",
+        "beingConsistent": "Постоянство"
+      }
+    },
+    "interests": {
+      "subtitle": "По Желание",
+      "title": "Какви Са Вашите Интереси?",
+      "description": "Изберете до 10 интереса за персонализиране на задачите",
+      "selected": "{count}/10 избрани",
+      "youSelected": "Избрахте:",
+      "skip": "Пропусни",
+      "continue": "Продължи",
+      "options": {
+        "yoga": "Йога",
+        "running": "Бягане",
+        "meditation": "Медитация",
+        "reading": "Четене",
+        "writing": "Писане",
+        "coding": "Програмиране",
+        "painting": "Рисуване",
+        "music": "Музика",
+        "gaming": "Игри",
+        "cooking": "Готвене",
+        "photography": "Фотография",
+        "languages": "Езици",
+        "hiking": "Туризъм",
+        "gardening": "Градинарство",
+        "dancing": "Танци",
+        "cycling": "Колоездене",
+        "swimming": "Плуване",
+        "drawing": "Рисуване",
+        "journaling": "Дневник",
+        "podcasts": "Подкасти"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "Задайте Целите Си",
+      "title": "Изберете Вашите Квест Линии",
+      "description": "Изберете {maxGoals} и напишете цел за всяка",
+      "goalLabel": "Цел за {category}",
+      "goalPlaceholder": "напр., \"Тичане 5К за под 30 минути\"",
+      "settingUp": "Настройване на квеста ви...",
+      "startAdventure": "Започнете Приключението"
+    }
   },
   "navigation": {
     "dashboard": "Табло",

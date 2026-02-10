@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Target } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +15,8 @@ interface GoalSettingStepProps {
 }
 
 export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSettingStepProps) {
+  const t = useTranslations('onboarding.goalSetting')
+  const tCategories = useTranslations('taskCategories')
   const [selectedCategories, setSelectedCategories] = useState<TaskCategory[]>([])
   const [goalTitles, setGoalTitles] = useState<Record<string, string>>({})
 
@@ -43,15 +46,15 @@ export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSetti
     <div className="glass-card gradient-border rounded-2xl p-8 sm:p-12">
       <div className="mb-2 text-center">
         <span className="font-display text-xs font-bold uppercase tracking-widest text-accent">
-          Set Your Goals
+          {t('subtitle')}
         </span>
       </div>
 
       <h2 className="mb-3 text-center font-display text-xl font-bold text-foreground sm:text-2xl">
-        Choose Your Quest Lines
+        {t('title')}
       </h2>
       <p className="mb-8 text-center text-sm text-muted-foreground">
-        Select {maxGoals === 1 ? '1 category' : `1-${maxGoals} categories`} and write a goal for each
+        {t('description', { maxGoals: maxGoals === 1 ? '1 category' : `1-${maxGoals} categories` })}
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
@@ -69,7 +72,7 @@ export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSetti
               }`}
             >
               <Target className={`h-5 w-5 ${isSelected ? 'text-primary' : ''}`} />
-              <span className="text-xs font-medium">{cat.label}</span>
+              <span className="text-xs font-medium">{tCategories(cat.value)}</span>
             </button>
           )
         })}
@@ -78,14 +81,14 @@ export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSetti
       {selectedCategories.length > 0 && (
         <div className="mb-8 flex flex-col gap-4">
           {selectedCategories.map((cat) => {
-            const label = TASK_CATEGORIES.find((c) => c.value === cat)?.label
+            const label = tCategories(cat)
             return (
               <div key={cat} className="space-y-2">
                 <label className="text-sm font-medium text-foreground">
-                  {label} Goal
+                  {t('goalLabel', { category: label })}
                 </label>
                 <Input
-                  placeholder={`e.g., "Run 5K in under 30 minutes"`}
+                  placeholder={t('goalPlaceholder')}
                   value={goalTitles[cat] || ''}
                   onChange={(e) =>
                     setGoalTitles((prev) => ({ ...prev, [cat]: e.target.value }))
@@ -104,7 +107,7 @@ export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSetti
         className="w-full"
         size="lg"
       >
-        {loading ? 'Setting up your quest...' : 'Start Your Adventure'}
+        {loading ? t('settingUp') : t('startAdventure')}
       </Button>
     </div>
   )

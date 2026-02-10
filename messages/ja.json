@@ -127,13 +127,137 @@
     "epic": "Epic"
   },
   "onboarding": {
-    "welcome": "Welcome to XPLife",
-    "title": "Discover Your Player Type",
-    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
-    "question": "Question {current} of {total}",
-    "calculating": "Analyzing your answers...",
-    "result": "You are...",
-    "continue": "Continue to Dashboard"
+    "welcome": {
+      "title": "ようこそ",
+      "description": "あなたは最高の自分になるための壮大なクエストに乗り出そうとしています。完璧なチャレンジを作成するために、まずあなたについて学びましょう。",
+      "beginQuest": "クエスト開始",
+      "duration": "約2分かかります"
+    },
+    "title": "あなたのプレイヤータイプを発見",
+    "subtitle": "5つの簡単な質問に答えて、パーソナライズされたクエストシステムをアンロック",
+    "question": "質問 {current} / {total}",
+    "calculating": "回答を分析中...",
+    "result": "あなたは...",
+    "continue": "ダッシュボードへ続く",
+    "timePreferences": {
+      "subtitle": "体験をパーソナライズ",
+      "title": "いつ最も効率よく働けますか？",
+      "description": "最高のパフォーマンスタイムにタスクをスケジュールするのを手伝ってください",
+      "energyQuestion": "いつ最もエネルギーがありますか？",
+      "durationQuestion": "希望するタスクの長さは？",
+      "continue": "続ける",
+      "timeOptions": {
+        "morning": {
+          "label": "朝型人間",
+          "description": "朝が最もエネルギッシュ"
+        },
+        "afternoon": {
+          "label": "午後がピーク",
+          "description": "昼食後が最も集中できる"
+        },
+        "evening": {
+          "label": "夕方のエネルギー",
+          "description": "夕方が生産的"
+        },
+        "night": {
+          "label": "夜型人間",
+          "description": "夜が最も効率的"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "クイック勝利",
+          "description": "5〜15分のタスク"
+        },
+        "medium": {
+          "label": "バランスタスク",
+          "description": "15〜45分のタスク"
+        },
+        "deep": {
+          "label": "ディープワーク",
+          "description": "1時間以上のセッション"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "あなたについて教えてください",
+      "title": "あなたのライフスタイルコンテキスト",
+      "description": "これにより、あなたの日常生活に合ったタスクを作成できます",
+      "occupationQuestion": "あなたを最もよく表すものは？",
+      "scheduleQuestion": "勤務スケジュール（オプション）",
+      "phaseQuestion": "現在の人生の段階（オプション）",
+      "challengeQuestion": "あなたの最大の課題は何ですか？",
+      "continue": "続ける",
+      "occupationOptions": {
+        "student": "学生",
+        "officeWorker": "会社員",
+        "remoteWorker": "リモートワーカー",
+        "entrepreneur": "起業家",
+        "freelancer": "フリーランサー",
+        "healthcare": "医療従事者",
+        "creative": "クリエイティブ",
+        "other": "その他"
+      },
+      "scheduleOptions": {
+        "fullTime": "フルタイム",
+        "partTime": "パートタイム",
+        "flexible": "フレキシブル",
+        "shiftWork": "シフト勤務"
+      },
+      "phaseOptions": {
+        "buildingCareer": "キャリア構築中",
+        "workLifeBalance": "ワークライフバランス",
+        "studentLife": "学生生活",
+        "exploring": "探索中"
+      },
+      "challengeOptions": {
+        "findingTime": "時間を見つける",
+        "lowEnergy": "エネルギー不足",
+        "stayingFocused": "集中を維持する",
+        "motivation": "モチベーション",
+        "beingConsistent": "一貫性を保つ"
+      }
+    },
+    "interests": {
+      "subtitle": "オプション",
+      "title": "あなたの興味は何ですか？",
+      "description": "タスクをパーソナライズするために最大10の興味を選択してください",
+      "selected": "{count}/10 選択済み",
+      "youSelected": "選択したもの：",
+      "skip": "スキップ",
+      "continue": "続ける",
+      "options": {
+        "yoga": "ヨガ",
+        "running": "ランニング",
+        "meditation": "瞑想",
+        "reading": "読書",
+        "writing": "執筆",
+        "coding": "プログラミング",
+        "painting": "絵画",
+        "music": "音楽",
+        "gaming": "ゲーム",
+        "cooking": "料理",
+        "photography": "写真",
+        "languages": "言語",
+        "hiking": "ハイキング",
+        "gardening": "ガーデニング",
+        "dancing": "ダンス",
+        "cycling": "サイクリング",
+        "swimming": "水泳",
+        "drawing": "描画",
+        "journaling": "日記",
+        "podcasts": "ポッドキャスト"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "目標を設定",
+      "title": "クエストラインを選択",
+      "description": "{maxGoals} を選択し、それぞれの目標を書いてください",
+      "goalLabel": "{category} の目標",
+      "goalPlaceholder": "例：「30分以内に5K走る」",
+      "settingUp": "クエストを設定中...",
+      "startAdventure": "冒険を始める"
+    }
   },
   "navigation": {
     "dashboard": "ダッシュボード",

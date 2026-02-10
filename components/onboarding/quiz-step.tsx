@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import type { QuizQuestion, QuizAnswer } from '@/lib/types'
 
@@ -11,11 +12,13 @@ interface QuizStepProps {
 }
 
 export function QuizStep({ question, questionNumber, totalQuestions, onAnswer }: QuizStepProps) {
+  const t = useTranslations('onboarding')
+
   return (
     <div className="glass-card gradient-border rounded-2xl p-8 sm:p-12">
       <div className="mb-2 text-center">
         <span className="font-display text-xs font-bold uppercase tracking-widest text-accent">
-          Question {questionNumber} of {totalQuestions}
+          {t('question', { current: questionNumber, total: totalQuestions })}
         </span>
       </div>
 

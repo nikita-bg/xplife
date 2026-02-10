@@ -127,13 +127,137 @@
     "epic": "Epic"
   },
   "onboarding": {
-    "welcome": "Welcome to XPLife",
+    "welcome": {
+      "title": "Welcome to",
+      "description": "You're about to embark on an epic quest to become your best self. Let's start by learning about you so we can craft the perfect challenges.",
+      "beginQuest": "Begin Quest",
+      "duration": "Takes about 2 minutes"
+    },
     "title": "Discover Your Player Type",
     "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
     "question": "Question {current} of {total}",
     "calculating": "Analyzing your answers...",
     "result": "You are...",
-    "continue": "Continue to Dashboard"
+    "continue": "Continue to Dashboard",
+    "timePreferences": {
+      "subtitle": "Personalize Your Experience",
+      "title": "When Do You Work Best?",
+      "description": "Help us schedule tasks at your peak performance times",
+      "energyQuestion": "When do you have the most energy?",
+      "durationQuestion": "Preferred task length?",
+      "continue": "Continue",
+      "timeOptions": {
+        "morning": {
+          "label": "Morning Person",
+          "description": "Most energetic in the morning"
+        },
+        "afternoon": {
+          "label": "Afternoon Peak",
+          "description": "Best focus after lunch"
+        },
+        "evening": {
+          "label": "Evening Energy",
+          "description": "Productive in the evening"
+        },
+        "night": {
+          "label": "Night Owl",
+          "description": "Work best at night"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "Quick Wins",
+          "description": "5-15 minute tasks"
+        },
+        "medium": {
+          "label": "Balanced Tasks",
+          "description": "15-45 minute tasks"
+        },
+        "deep": {
+          "label": "Deep Work",
+          "description": "1+ hour sessions"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "Tell Us About You",
+      "title": "Your Lifestyle Context",
+      "description": "This helps us create tasks that fit your daily life",
+      "occupationQuestion": "What describes you best?",
+      "scheduleQuestion": "Work schedule (optional)",
+      "phaseQuestion": "Current life phase (optional)",
+      "challengeQuestion": "What's your biggest challenge?",
+      "continue": "Continue",
+      "occupationOptions": {
+        "student": "Student",
+        "officeWorker": "Office Worker",
+        "remoteWorker": "Remote Worker",
+        "entrepreneur": "Entrepreneur",
+        "freelancer": "Freelancer",
+        "healthcare": "Healthcare",
+        "creative": "Creative",
+        "other": "Other"
+      },
+      "scheduleOptions": {
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "flexible": "Flexible",
+        "shiftWork": "Shift work"
+      },
+      "phaseOptions": {
+        "buildingCareer": "Building career",
+        "workLifeBalance": "Work-life balance",
+        "studentLife": "Student life",
+        "exploring": "Exploring"
+      },
+      "challengeOptions": {
+        "findingTime": "Finding time",
+        "lowEnergy": "Low energy",
+        "stayingFocused": "Staying focused",
+        "motivation": "Motivation",
+        "beingConsistent": "Being consistent"
+      }
+    },
+    "interests": {
+      "subtitle": "Optional",
+      "title": "What Are Your Interests?",
+      "description": "Select up to 10 interests to personalize your tasks",
+      "selected": "{count}/10 selected",
+      "youSelected": "You selected:",
+      "skip": "Skip",
+      "continue": "Continue",
+      "options": {
+        "yoga": "Yoga",
+        "running": "Running",
+        "meditation": "Meditation",
+        "reading": "Reading",
+        "writing": "Writing",
+        "coding": "Coding",
+        "painting": "Painting",
+        "music": "Music",
+        "gaming": "Gaming",
+        "cooking": "Cooking",
+        "photography": "Photography",
+        "languages": "Languages",
+        "hiking": "Hiking",
+        "gardening": "Gardening",
+        "dancing": "Dancing",
+        "cycling": "Cycling",
+        "swimming": "Swimming",
+        "drawing": "Drawing",
+        "journaling": "Journaling",
+        "podcasts": "Podcasts"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "Set Your Goals",
+      "title": "Choose Your Quest Lines",
+      "description": "Select {maxGoals} and write a goal for each",
+      "goalLabel": "{category} Goal",
+      "goalPlaceholder": "e.g., \"Run 5K in under 30 minutes\"",
+      "settingUp": "Setting up your quest...",
+      "startAdventure": "Start Your Adventure"
+    }
   },
   "navigation": {
     "dashboard": "Dashboard",

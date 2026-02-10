@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
-import { QUIZ_QUESTIONS } from '@/lib/constants'
+import { getQuizQuestions } from '@/lib/constants'
 import type { QuizAnswer, PersonalityType, TaskCategory } from '@/lib/types'
 import { awardXp } from '@/lib/api/xp'
 import { WelcomeStep } from './welcome-step'
@@ -41,6 +42,8 @@ interface OnboardingFlowProps {
 
 export function OnboardingFlow({ userId, onComplete, maxGoals = 1 }: OnboardingFlowProps) {
   const router = useRouter()
+  const t = useTranslations('quiz')
+  const QUIZ_QUESTIONS = getQuizQuestions((key) => t(key), (key) => t(key))
   const [step, setStep] = useState<Step>('welcome')
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswer[]>([])
   const [currentQuestion, setCurrentQuestion] = useState(0)

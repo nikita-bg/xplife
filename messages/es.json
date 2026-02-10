@@ -127,13 +127,137 @@
     "epic": "Epic"
   },
   "onboarding": {
-    "welcome": "Welcome to XPLife",
-    "title": "Discover Your Player Type",
-    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
-    "question": "Question {current} of {total}",
-    "calculating": "Analyzing your answers...",
-    "result": "You are...",
-    "continue": "Continue to Dashboard"
+    "welcome": {
+      "title": "Bienvenido a",
+      "description": "Estás a punto de embarcarte en una misión épica para convertirte en tu mejor versión. Comencemos aprendiendo sobre ti para crear los desafíos perfectos.",
+      "beginQuest": "Comenzar Misión",
+      "duration": "Toma alrededor de 2 minutos"
+    },
+    "title": "Descubre Tu Tipo de Jugador",
+    "subtitle": "Responde 5 preguntas rápidas para desbloquear tu sistema de misiones personalizado",
+    "question": "Pregunta {current} de {total}",
+    "calculating": "Analizando tus respuestas...",
+    "result": "Eres...",
+    "continue": "Continuar al Panel",
+    "timePreferences": {
+      "subtitle": "Personaliza Tu Experiencia",
+      "title": "¿Cuándo Trabajas Mejor?",
+      "description": "Ayúdanos a programar tareas en tus momentos de máximo rendimiento",
+      "energyQuestion": "¿Cuándo tienes más energía?",
+      "durationQuestion": "¿Duración de tarea preferida?",
+      "continue": "Continuar",
+      "timeOptions": {
+        "morning": {
+          "label": "Persona Matutina",
+          "description": "Más energético por la mañana"
+        },
+        "afternoon": {
+          "label": "Pico de Tarde",
+          "description": "Mejor enfoque después del almuerzo"
+        },
+        "evening": {
+          "label": "Energía Vespertina",
+          "description": "Productivo por la tarde"
+        },
+        "night": {
+          "label": "Búho Nocturno",
+          "description": "Trabaja mejor de noche"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "Victorias Rápidas",
+          "description": "Tareas de 5-15 minutos"
+        },
+        "medium": {
+          "label": "Tareas Equilibradas",
+          "description": "Tareas de 15-45 minutos"
+        },
+        "deep": {
+          "label": "Trabajo Profundo",
+          "description": "Sesiones de 1+ hora"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "Cuéntanos Sobre Ti",
+      "title": "Tu Contexto de Vida",
+      "description": "Esto nos ayuda a crear tareas que se ajusten a tu vida diaria",
+      "occupationQuestion": "¿Qué te describe mejor?",
+      "scheduleQuestion": "Horario de trabajo (opcional)",
+      "phaseQuestion": "Fase actual de vida (opcional)",
+      "challengeQuestion": "¿Cuál es tu mayor desafío?",
+      "continue": "Continuar",
+      "occupationOptions": {
+        "student": "Estudiante",
+        "officeWorker": "Trabajador de Oficina",
+        "remoteWorker": "Trabajador Remoto",
+        "entrepreneur": "Emprendedor",
+        "freelancer": "Freelancer",
+        "healthcare": "Salud",
+        "creative": "Creativo",
+        "other": "Otro"
+      },
+      "scheduleOptions": {
+        "fullTime": "Tiempo completo",
+        "partTime": "Medio tiempo",
+        "flexible": "Flexible",
+        "shiftWork": "Por turnos"
+      },
+      "phaseOptions": {
+        "buildingCareer": "Construyendo carrera",
+        "workLifeBalance": "Balance trabajo-vida",
+        "studentLife": "Vida estudiantil",
+        "exploring": "Explorando"
+      },
+      "challengeOptions": {
+        "findingTime": "Encontrar tiempo",
+        "lowEnergy": "Poca energía",
+        "stayingFocused": "Mantener el enfoque",
+        "motivation": "Motivación",
+        "beingConsistent": "Ser consistente"
+      }
+    },
+    "interests": {
+      "subtitle": "Opcional",
+      "title": "¿Cuáles Son Tus Intereses?",
+      "description": "Selecciona hasta 10 intereses para personalizar tus tareas",
+      "selected": "{count}/10 seleccionados",
+      "youSelected": "Seleccionaste:",
+      "skip": "Omitir",
+      "continue": "Continuar",
+      "options": {
+        "yoga": "Yoga",
+        "running": "Correr",
+        "meditation": "Meditación",
+        "reading": "Lectura",
+        "writing": "Escritura",
+        "coding": "Programación",
+        "painting": "Pintura",
+        "music": "Música",
+        "gaming": "Videojuegos",
+        "cooking": "Cocina",
+        "photography": "Fotografía",
+        "languages": "Idiomas",
+        "hiking": "Senderismo",
+        "gardening": "Jardinería",
+        "dancing": "Baile",
+        "cycling": "Ciclismo",
+        "swimming": "Natación",
+        "drawing": "Dibujo",
+        "journaling": "Diario",
+        "podcasts": "Podcasts"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "Establece Tus Metas",
+      "title": "Elige Tus Líneas de Misión",
+      "description": "Selecciona {maxGoals} y escribe una meta para cada una",
+      "goalLabel": "Meta de {category}",
+      "goalPlaceholder": "ej., \"Correr 5K en menos de 30 minutos\"",
+      "settingUp": "Configurando tu misión...",
+      "startAdventure": "Comenzar Tu Aventura"
+    }
   },
   "navigation": {
     "dashboard": "Panel",

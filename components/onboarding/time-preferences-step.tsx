@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Sun, Cloud, Sunset, Moon, Zap, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -14,6 +15,7 @@ interface TimePreferencesStepProps {
 }
 
 export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
+  const t = useTranslations('onboarding.timePreferences')
   const [timePreference, setTimePreference] = useState<TimePreferencesData['timePreference']>('morning')
   const [preferredTaskDuration, setPreferredTaskDuration] = useState<TimePreferencesData['preferredTaskDuration']>('medium')
 
@@ -22,37 +24,37 @@ export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
   }
 
   const timeOptions = [
-    { value: 'morning' as const, label: 'Morning Person', icon: Sun, description: 'Most energetic in the morning' },
-    { value: 'afternoon' as const, label: 'Afternoon Peak', icon: Cloud, description: 'Best focus after lunch' },
-    { value: 'evening' as const, label: 'Evening Energy', icon: Sunset, description: 'Productive in the evening' },
-    { value: 'night' as const, label: 'Night Owl', icon: Moon, description: 'Work best at night' },
+    { value: 'morning' as const, label: t('timeOptions.morning.label'), icon: Sun, description: t('timeOptions.morning.description') },
+    { value: 'afternoon' as const, label: t('timeOptions.afternoon.label'), icon: Cloud, description: t('timeOptions.afternoon.description') },
+    { value: 'evening' as const, label: t('timeOptions.evening.label'), icon: Sunset, description: t('timeOptions.evening.description') },
+    { value: 'night' as const, label: t('timeOptions.night.label'), icon: Moon, description: t('timeOptions.night.description') },
   ]
 
   const durationOptions = [
-    { value: 'quick' as const, label: 'Quick Wins', icon: Zap, description: '5-15 minute tasks' },
-    { value: 'medium' as const, label: 'Balanced Tasks', icon: Clock, description: '15-45 minute tasks' },
-    { value: 'deep' as const, label: 'Deep Work', icon: Clock, description: '1+ hour sessions' },
+    { value: 'quick' as const, label: t('durationOptions.quick.label'), icon: Zap, description: t('durationOptions.quick.description') },
+    { value: 'medium' as const, label: t('durationOptions.medium.label'), icon: Clock, description: t('durationOptions.medium.description') },
+    { value: 'deep' as const, label: t('durationOptions.deep.label'), icon: Clock, description: t('durationOptions.deep.description') },
   ]
 
   return (
     <div className="glass-card gradient-border rounded-2xl p-8 sm:p-12">
       <div className="mb-2 text-center">
         <span className="font-display text-xs font-bold uppercase tracking-widest text-accent">
-          Personalize Your Experience
+          {t('subtitle')}
         </span>
       </div>
 
       <h2 className="mb-3 text-center font-display text-xl font-bold text-foreground sm:text-2xl">
-        When Do You Work Best?
+        {t('title')}
       </h2>
       <p className="mb-8 text-center text-sm text-muted-foreground">
-        Help us schedule tasks at your peak performance times
+        {t('description')}
       </p>
 
       {/* Time Preference Selection */}
       <div className="mb-8">
         <label className="mb-3 block text-sm font-medium text-foreground">
-          When do you have the most energy?
+          {t('energyQuestion')}
         </label>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {timeOptions.map((option) => {
@@ -85,7 +87,7 @@ export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
       {/* Task Duration Preference */}
       <div className="mb-8">
         <label className="mb-3 block text-sm font-medium text-foreground">
-          Preferred task length?
+          {t('durationQuestion')}
         </label>
         <div className="grid grid-cols-1 gap-3">
           {durationOptions.map((option) => {
@@ -116,7 +118,7 @@ export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
       </div>
 
       <Button onClick={handleSubmit} className="w-full" size="lg">
-        Continue
+        {t('continue')}
       </Button>
     </div>
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Briefcase, Calendar, Target, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -16,6 +17,7 @@ interface LifestyleStepProps {
 }
 
 export function LifestyleStep({ onComplete }: LifestyleStepProps) {
+  const t = useTranslations('onboarding.lifestyle')
   const [occupationType, setOccupationType] = useState<string | null>(null)
   const [workSchedule, setWorkSchedule] = useState<string | null>(null)
   const [lifePhase, setLifePhase] = useState<string | null>(null)
@@ -28,58 +30,58 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
   const canSubmit = occupationType && mainChallenge
 
   const occupationOptions = [
-    'Student',
-    'Office Worker',
-    'Remote Worker',
-    'Entrepreneur',
-    'Freelancer',
-    'Healthcare',
-    'Creative',
-    'Other',
+    t('occupationOptions.student'),
+    t('occupationOptions.officeWorker'),
+    t('occupationOptions.remoteWorker'),
+    t('occupationOptions.entrepreneur'),
+    t('occupationOptions.freelancer'),
+    t('occupationOptions.healthcare'),
+    t('occupationOptions.creative'),
+    t('occupationOptions.other'),
   ]
 
   const scheduleOptions = [
-    'Full-time',
-    'Part-time',
-    'Flexible',
-    'Shift work',
+    t('scheduleOptions.fullTime'),
+    t('scheduleOptions.partTime'),
+    t('scheduleOptions.flexible'),
+    t('scheduleOptions.shiftWork'),
   ]
 
   const phaseOptions = [
-    'Building career',
-    'Work-life balance',
-    'Student life',
-    'Exploring',
+    t('phaseOptions.buildingCareer'),
+    t('phaseOptions.workLifeBalance'),
+    t('phaseOptions.studentLife'),
+    t('phaseOptions.exploring'),
   ]
 
   const challengeOptions = [
-    'Finding time',
-    'Low energy',
-    'Staying focused',
-    'Motivation',
-    'Being consistent',
+    t('challengeOptions.findingTime'),
+    t('challengeOptions.lowEnergy'),
+    t('challengeOptions.stayingFocused'),
+    t('challengeOptions.motivation'),
+    t('challengeOptions.beingConsistent'),
   ]
 
   return (
     <div className="glass-card gradient-border rounded-2xl p-8 sm:p-12">
       <div className="mb-2 text-center">
         <span className="font-display text-xs font-bold uppercase tracking-widest text-accent">
-          Tell Us About You
+          {t('subtitle')}
         </span>
       </div>
 
       <h2 className="mb-3 text-center font-display text-xl font-bold text-foreground sm:text-2xl">
-        Your Lifestyle Context
+        {t('title')}
       </h2>
       <p className="mb-8 text-center text-sm text-muted-foreground">
-        This helps us create tasks that fit your daily life
+        {t('description')}
       </p>
 
       {/* Occupation Type */}
       <div className="mb-6">
         <label className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
           <Briefcase className="h-4 w-4" />
-          What describes you best?
+          {t('occupationQuestion')}
         </label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {occupationOptions.map((option) => {
@@ -106,7 +108,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
       <div className="mb-6">
         <label className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
           <Calendar className="h-4 w-4" />
-          Work schedule (optional)
+          {t('scheduleQuestion')}
         </label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {scheduleOptions.map((option) => {
@@ -133,7 +135,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
       <div className="mb-6">
         <label className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
           <Target className="h-4 w-4" />
-          Current life phase (optional)
+          {t('phaseQuestion')}
         </label>
         <div className="grid grid-cols-2 gap-2">
           {phaseOptions.map((option) => {
@@ -160,7 +162,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
       <div className="mb-8">
         <label className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
           <AlertCircle className="h-4 w-4" />
-          What&apos;s your biggest challenge?
+          {t('challengeQuestion')}
         </label>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {challengeOptions.map((option) => {
@@ -184,7 +186,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
       </div>
 
       <Button onClick={handleSubmit} disabled={!canSubmit} className="w-full" size="lg">
-        Continue
+        {t('continue')}
       </Button>
     </div>
   )

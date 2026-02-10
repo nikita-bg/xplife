@@ -127,13 +127,137 @@
     "epic": "Epic"
   },
   "onboarding": {
-    "welcome": "Welcome to XPLife",
-    "title": "Discover Your Player Type",
-    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
-    "question": "Question {current} of {total}",
-    "calculating": "Analyzing your answers...",
-    "result": "You are...",
-    "continue": "Continue to Dashboard"
+    "welcome": {
+      "title": "欢迎来到",
+      "description": "您即将踏上成为最好的自己的史诗般旅程。让我们从了解您开始，以便为您制定完美的挑战。",
+      "beginQuest": "开始任务",
+      "duration": "大约需要2分钟"
+    },
+    "title": "发现您的玩家类型",
+    "subtitle": "回答5个快速问题，解锁您的个性化任务系统",
+    "question": "问题 {current} / {total}",
+    "calculating": "正在分析您的答案...",
+    "result": "您是...",
+    "continue": "继续到仪表板",
+    "timePreferences": {
+      "subtitle": "个性化您的体验",
+      "title": "您什么时候工作最好？",
+      "description": "帮助我们在您的最佳表现时间安排任务",
+      "energyQuestion": "您什么时候最有精力？",
+      "durationQuestion": "首选任务时长？",
+      "continue": "继续",
+      "timeOptions": {
+        "morning": {
+          "label": "早晨型人",
+          "description": "早上最有活力"
+        },
+        "afternoon": {
+          "label": "下午巅峰",
+          "description": "午餐后专注力最佳"
+        },
+        "evening": {
+          "label": "傍晚精力",
+          "description": "傍晚最有生产力"
+        },
+        "night": {
+          "label": "夜猫子",
+          "description": "夜间工作最好"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "快速胜利",
+          "description": "5-15分钟任务"
+        },
+        "medium": {
+          "label": "平衡任务",
+          "description": "15-45分钟任务"
+        },
+        "deep": {
+          "label": "深度工作",
+          "description": "1小时以上的会话"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "告诉我们关于您",
+      "title": "您的生活方式背景",
+      "description": "这有助于我们创建适合您日常生活的任务",
+      "occupationQuestion": "什么最能描述您？",
+      "scheduleQuestion": "工作时间表（可选）",
+      "phaseQuestion": "当前生活阶段（可选）",
+      "challengeQuestion": "您最大的挑战是什么？",
+      "continue": "继续",
+      "occupationOptions": {
+        "student": "学生",
+        "officeWorker": "办公室职员",
+        "remoteWorker": "远程工作者",
+        "entrepreneur": "企业家",
+        "freelancer": "自由职业者",
+        "healthcare": "医疗保健",
+        "creative": "创意工作者",
+        "other": "其他"
+      },
+      "scheduleOptions": {
+        "fullTime": "全职",
+        "partTime": "兼职",
+        "flexible": "灵活",
+        "shiftWork": "轮班工作"
+      },
+      "phaseOptions": {
+        "buildingCareer": "建立职业生涯",
+        "workLifeBalance": "工作生活平衡",
+        "studentLife": "学生生活",
+        "exploring": "探索中"
+      },
+      "challengeOptions": {
+        "findingTime": "寻找时间",
+        "lowEnergy": "精力不足",
+        "stayingFocused": "保持专注",
+        "motivation": "动力",
+        "beingConsistent": "保持一致性"
+      }
+    },
+    "interests": {
+      "subtitle": "可选",
+      "title": "您的兴趣是什么？",
+      "description": "选择最多10个兴趣来个性化您的任务",
+      "selected": "已选择 {count}/10",
+      "youSelected": "您选择了：",
+      "skip": "跳过",
+      "continue": "继续",
+      "options": {
+        "yoga": "瑜伽",
+        "running": "跑步",
+        "meditation": "冥想",
+        "reading": "阅读",
+        "writing": "写作",
+        "coding": "编程",
+        "painting": "绘画",
+        "music": "音乐",
+        "gaming": "游戏",
+        "cooking": "烹饪",
+        "photography": "摄影",
+        "languages": "语言",
+        "hiking": "徒步旅行",
+        "gardening": "园艺",
+        "dancing": "舞蹈",
+        "cycling": "骑自行车",
+        "swimming": "游泳",
+        "drawing": "绘图",
+        "journaling": "写日记",
+        "podcasts": "播客"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "设定您的目标",
+      "title": "选择您的任务线",
+      "description": "选择 {maxGoals} 并为每个写一个目标",
+      "goalLabel": "{category} 目标",
+      "goalPlaceholder": "例如，\"在30分钟内跑完5公里\"",
+      "settingUp": "正在设置您的任务...",
+      "startAdventure": "开始您的冒险"
+    }
   },
   "navigation": {
     "dashboard": "仪表板",

@@ -1,7 +1,6 @@
 'use client'
 
 import { CheckCircle2, Flame, Sparkles, Zap } from 'lucide-react'
-import { PERSONALITY_DESCRIPTIONS } from '@/lib/constants'
 import { useTranslations } from 'next-intl'
 
 interface StatsCardProps {
@@ -13,7 +12,12 @@ interface StatsCardProps {
 
 export function StatsCard({ totalXp, totalTasks, currentStreak, personalityType }: StatsCardProps) {
   const t = useTranslations('profile.stats')
-  const personality = personalityType ? PERSONALITY_DESCRIPTIONS[personalityType] : null
+  const tPersonality = useTranslations('personalities')
+
+  const personality = personalityType ? {
+    title: tPersonality(`${personalityType}.title`),
+    description: tPersonality(`${personalityType}.description`)
+  } : null
 
   return (
     <div className="glass-card rounded-2xl p-6">
