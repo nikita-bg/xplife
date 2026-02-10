@@ -376,6 +376,10 @@
       "monthlyTitle": "月度里程碑",
       "weeklyTitle": "周度目标",
       "dailyTitle": "今日任务"
+    },
+    "autoRefresh": {
+      "generating": "自动生成任务中...",
+      "generatingDescription": "正在根据您的目标创建个性化任务，请稍候。"
     }
   },
   "profile": {

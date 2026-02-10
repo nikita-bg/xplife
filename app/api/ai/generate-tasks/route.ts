@@ -6,11 +6,35 @@ import type { QuestTimeframe } from '@/lib/types'
 // Allow up to 60 seconds for AI generation (Vercel serverless timeout)
 export const maxDuration = 60
 
-const TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
+const LOCALE_TO_LANGUAGE: Record<string, string> = {
+  en: 'English',
+  bg: 'Bulgarian',
+  es: 'Spanish',
+  zh: 'Chinese',
+  ja: 'Japanese',
+}
+
+type PersonalityType = 'dopamine' | 'acetylcholine' | 'gaba' | 'serotonin'
+
+const PERSONALITY_TASK_LIMITS: Record<PersonalityType, Record<QuestTimeframe, { min: number; max: number }>> = {
+  dopamine:       { yearly: { min: 1, max: 3 }, monthly: { min: 3, max: 4 }, weekly: { min: 5, max: 7 }, daily: { min: 4, max: 6 } },
+  acetylcholine:  { yearly: { min: 1, max: 3 }, monthly: { min: 2, max: 3 }, weekly: { min: 3, max: 4 }, daily: { min: 2, max: 3 } },
+  gaba:           { yearly: { min: 1, max: 3 }, monthly: { min: 2, max: 3 }, weekly: { min: 3, max: 5 }, daily: { min: 3, max: 4 } },
+  serotonin:      { yearly: { min: 1, max: 3 }, monthly: { min: 3, max: 4 }, weekly: { min: 4, max: 5 }, daily: { min: 3, max: 5 } },
+}
+
+const DEFAULT_TASK_LIMITS: Record<QuestTimeframe, { min: number; max: number }> = {
   yearly: { min: 1, max: 3 },
   monthly: { min: 3, max: 5 },
   weekly: { min: 5, max: 7 },
   daily: { min: 3, max: 5 },
+}
+
+function getTaskLimits(timeframe: QuestTimeframe, personalityType?: string | null): { min: number; max: number } {
+  if (personalityType && personalityType in PERSONALITY_TASK_LIMITS) {
+    return PERSONALITY_TASK_LIMITS[personalityType as PersonalityType][timeframe]
+  }
+  return DEFAULT_TASK_LIMITS[timeframe]
 }
 
 interface CategoryStats {
@@ -103,6 +127,7 @@ export async function POST(request: Request) {
   let parentQuestId: string | undefined
   let parentQuestIds: string[] | undefined
   let generationMode: 'manual' | 'from-parent' | 'cascade' = 'manual'
+  let locale = 'en'
 
   try {
     const body = await request.json()
@@ -111,9 +136,12 @@ export async function POST(request: Request) {
     parentQuestId = body.parentQuestId
     parentQuestIds = body.parentQuestIds
     generationMode = body.generationMode || 'manual'
+    locale = body.locale || 'en'
   } catch {
     // no body or invalid JSON — that's fine, we'll use DB goals
   }
+
+  const language = LOCALE_TO_LANGUAGE[locale] || 'English'
 
   const timestamp = new Date().toISOString()
   console.log(`[TASK-GEN ${timestamp}] Started for user:`, user.id, 'timeframe:', questTimeframe, 'mode:', generationMode)
@@ -266,9 +294,41 @@ export async function POST(request: Request) {
     parentQuest = data
   }
 
-  const limits = TASK_LIMITS[questTimeframe]
+  const limits = getTaskLimits(questTimeframe, profile?.personality_type)
 
   try {
+    // Duplicate generation guard for non-yearly timeframes
+    if (questTimeframe !== 'yearly') {
+      let periodStart: string
+      const guardNow = new Date()
+
+      if (questTimeframe === 'daily') {
+        periodStart = `${guardNow.toISOString().split('T')[0]}T00:00:00`
+      } else if (questTimeframe === 'weekly') {
+        const dow = guardNow.getDay()
+        const monOffset = dow === 0 ? 6 : dow - 1
+        const monday = new Date(guardNow.getFullYear(), guardNow.getMonth(), guardNow.getDate() - monOffset)
+        monday.setHours(0, 0, 0, 0)
+        periodStart = monday.toISOString()
+      } else {
+        // monthly
+        periodStart = new Date(guardNow.getFullYear(), guardNow.getMonth(), 1).toISOString()
+      }
+
+      const { count: existingCount } = await supabase
+        .from('tasks')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('quest_timeframe', questTimeframe)
+        .neq('status', 'skipped')
+        .gte('created_at', periodStart)
+
+      if ((existingCount ?? 0) > 0) {
+        console.log(`[TASK-GEN ${timestamp}] Duplicate guard: ${existingCount} ${questTimeframe} tasks already exist for current period`)
+        return NextResponse.json({ success: true, count: 0, alreadyExists: true })
+      }
+    }
+
     const webhookHeaders: Record<string, string> = { 'Content-Type': 'application/json' }
     const webhookSecret = process.env.N8N_WEBHOOK_SECRET
     if (webhookSecret) {
@@ -341,6 +401,8 @@ export async function POST(request: Request) {
       userGoals: userGoals || '',
       questTimeframe,
       generationMode,
+      locale,
+      language,
       parentQuest,
       parentQuests: parentQuests.length > 0 ? parentQuests : undefined,
       neurotransmitterScores: {

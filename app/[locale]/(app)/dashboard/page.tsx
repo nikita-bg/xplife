@@ -62,6 +62,42 @@ export default async function DashboardPage({
     }
   }
 
+  // Mark stale pending tasks as skipped before fetching
+  const now = new Date()
+  const todayStart = `${now.toISOString().split('T')[0]}T00:00:00`
+
+  // Daily: pending tasks created before today
+  await supabase
+    .from('tasks')
+    .update({ status: 'skipped' })
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'daily')
+    .eq('status', 'pending')
+    .lt('created_at', todayStart)
+
+  // Weekly: pending tasks created before this Monday
+  const dayOfWeekForStale = now.getDay()
+  const mondayOffsetForStale = dayOfWeekForStale === 0 ? 6 : dayOfWeekForStale - 1
+  const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - mondayOffsetForStale)
+  thisMonday.setHours(0, 0, 0, 0)
+  await supabase
+    .from('tasks')
+    .update({ status: 'skipped' })
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'weekly')
+    .eq('status', 'pending')
+    .lt('created_at', thisMonday.toISOString())
+
+  // Monthly: pending tasks created before 1st of this month
+  const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+  await supabase
+    .from('tasks')
+    .update({ status: 'skipped' })
+    .eq('user_id', user.id)
+    .eq('quest_timeframe', 'monthly')
+    .eq('status', 'pending')
+    .lt('created_at', thisMonthStart)
+
   // Fetch quests by timeframe
   // Yearly: all non-skipped yearly quests
   const { data: yearlyQuests } = await supabase
@@ -73,37 +109,30 @@ export default async function DashboardPage({
     .order('created_at', { ascending: true })
 
   // Monthly: current month's quests
-  const now = new Date()
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
   const { data: monthlyQuests } = await supabase
     .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .eq('quest_timeframe', 'monthly')
-    .gte('created_at', startOfMonth)
+    .gte('created_at', thisMonthStart)
     .order('created_at', { ascending: true })
 
   // Weekly: current week's quests (Monday start)
-  const dayOfWeek = now.getDay()
-  const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
-  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - mondayOffset)
-  startOfWeek.setHours(0, 0, 0, 0)
   const { data: weeklyQuests } = await supabase
     .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .eq('quest_timeframe', 'weekly')
-    .gte('created_at', startOfWeek.toISOString())
+    .gte('created_at', thisMonday.toISOString())
     .order('created_at', { ascending: true })
 
   // Daily: today's quests
-  const today = new Date().toISOString().split('T')[0]
   const { data: dailyQuests } = await supabase
     .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .eq('quest_timeframe', 'daily')
-    .gte('created_at', `${today}T00:00:00`)
+    .gte('created_at', todayStart)
     .order('created_at', { ascending: true })
 
   // Check if Braverman test completed

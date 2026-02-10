@@ -376,6 +376,10 @@
       "monthlyTitle": "月間マイルストーン",
       "weeklyTitle": "週間ターゲット",
       "dailyTitle": "今日のクエスト"
+    },
+    "autoRefresh": {
+      "generating": "クエストを自動生成中...",
+      "generatingDescription": "目標に基づいてパーソナライズされたクエストを作成しています。少々お待ちください。"
     }
   },
   "profile": {

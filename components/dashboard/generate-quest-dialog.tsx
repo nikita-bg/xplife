@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Sparkles, AlertCircle, ArrowUpRight, Check, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -57,6 +57,7 @@ export function GenerateQuestDialog({
 }: GenerateQuestDialogProps) {
   const router = useRouter()
   const t = useTranslations('generateQuestDialog')
+  const locale = useLocale()
   const [generating, setGenerating] = useState(false)
   const [goalText, setGoalText] = useState('')
   const [selectedParentId, setSelectedParentId] = useState<string>('')
@@ -106,6 +107,7 @@ export function GenerateQuestDialog({
         questTimeframe: tf,
         generationMode: 'cascade',
         parentQuestIds: parentIds,
+        locale,
       }),
     })
 
@@ -177,6 +179,7 @@ export function GenerateQuestDialog({
           questTimeframe: timeframe,
           generationMode: mode,
           parentQuestId: mode === 'from-parent' ? selectedParentId : undefined,
+          locale,
         }),
       })
       if (!res.ok) {

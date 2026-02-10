@@ -376,6 +376,10 @@
       "monthlyTitle": "Hitos Mensuales",
       "weeklyTitle": "Objetivos Semanales",
       "dailyTitle": "Misiones de Hoy"
+    },
+    "autoRefresh": {
+      "generating": "Generando misiones automáticamente...",
+      "generatingDescription": "Creando misiones personalizadas basadas en tus objetivos. Esto puede tomar un momento."
     }
   },
   "profile": {

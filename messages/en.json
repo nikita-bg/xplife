@@ -376,6 +376,10 @@
       "monthlyTitle": "Monthly Milestones",
       "weeklyTitle": "Weekly Targets",
       "dailyTitle": "Today's Quests"
+    },
+    "autoRefresh": {
+      "generating": "Auto-generating quests...",
+      "generatingDescription": "Creating personalized quests based on your goals. This may take a moment."
     }
   },
   "profile": {
