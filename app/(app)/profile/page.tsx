@@ -24,6 +24,32 @@ export default async function ProfilePage() {
     .eq('user_id', user.id)
     .single()
 
+  // Check and reset streak if inactive for more than 1 day
+  if (streak && streak.last_activity_date) {
+    const today = new Date().toISOString().split('T')[0]
+    const lastActivity = streak.last_activity_date
+
+    if (lastActivity !== today) {
+      const lastDate = new Date(lastActivity + 'T00:00:00')
+      const todayDate = new Date(today + 'T00:00:00')
+      const diffDays = Math.round((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
+
+      // Reset streak if more than 1 day has passed
+      if (diffDays > 1) {
+        await supabase
+          .from('streaks')
+          .update({
+            current_streak: 0,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('user_id', user.id)
+
+        // Update local streak object for display
+        streak.current_streak = 0
+      }
+    }
+  }
+
   const { data: levelConfig } = await supabase
     .from('level_config')
     .select('title')
