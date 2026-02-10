@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -22,6 +22,8 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const router = useRouter()
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [needsConfirmation, setNeedsConfirmation] = useState(false)
@@ -59,7 +61,7 @@ export function LoginForm() {
       return
     }
 
-    router.push('/dashboard')
+    router.push(`/${locale}/dashboard`)
     router.refresh()
   }
 
@@ -124,7 +126,7 @@ export function LoginForm() {
                     type: 'signup',
                     email: pendingEmail,
                     options: {
-                      emailRedirectTo: `${window.location.origin}/callback`,
+                      emailRedirectTo: `${window.location.origin}/${locale}/callback`,
                     },
                   })
                   setResending(false)
@@ -145,7 +147,7 @@ export function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         {"Don't have an account? "}
-        <Link href="/signup" className="font-medium text-primary hover:underline">
+        <Link href={`/${locale}/signup`} className="font-medium text-primary hover:underline">
           Sign up
         </Link>
       </p>

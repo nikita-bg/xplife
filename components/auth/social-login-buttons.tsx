@@ -1,15 +1,19 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 
 export function SocialLoginButtons() {
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
+
   const handleOAuth = async (provider: 'google' | 'github') => {
     const supabase = createClient()
     await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/callback`,
+        redirectTo: `${window.location.origin}/${locale}/callback`,
       },
     })
   }

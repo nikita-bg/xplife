@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -24,6 +25,8 @@ const signupSchema = z.object({
 type SignupFormData = z.infer<typeof signupSchema>
 
 export function SignupForm() {
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -45,7 +48,7 @@ export function SignupForm() {
       email: data.email,
       password: data.password,
       options: {
-        emailRedirectTo: `${window.location.origin}/callback`,
+        emailRedirectTo: `${window.location.origin}/${locale}/callback`,
       },
     })
 
@@ -68,7 +71,7 @@ export function SignupForm() {
         type: 'signup',
         email: data.email,
         options: {
-          emailRedirectTo: `${window.location.origin}/callback`,
+          emailRedirectTo: `${window.location.origin}/${locale}/callback`,
         },
       })
       setLoading(false)
@@ -91,7 +94,7 @@ export function SignupForm() {
         <p className="mt-3 text-sm text-muted-foreground">
           We sent a confirmation link to your email. Click it to activate your account and start your quest.
         </p>
-        <Link href="/login" className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
+        <Link href={`/${locale}/login`} className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
           Back to login
         </Link>
       </div>
@@ -172,7 +175,7 @@ export function SignupForm() {
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Already have an account?{' '}
-        <Link href="/login" className="font-medium text-primary hover:underline">
+        <Link href={`/${locale}/login`} className="font-medium text-primary hover:underline">
           Log in
         </Link>
       </p>

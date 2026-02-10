@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { LayoutDashboard, Trophy, User, LogOut, Menu, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -15,26 +15,28 @@ interface AppNavbarProps {
 
 export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
   const router = useRouter()
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/')
+    router.push(`/${locale}`)
     router.refresh()
   }
 
   const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-    { href: '/profile', label: 'Profile', icon: User },
+    { href: `/${locale}/dashboard`, label: 'Dashboard', icon: LayoutDashboard },
+    { href: `/${locale}/leaderboard`, label: 'Leaderboard', icon: Trophy },
+    { href: `/${locale}/profile`, label: 'Profile', icon: User },
   ]
 
   return (
     <nav className="sticky top-0 z-50 glass-card border-b border-border/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href={`/${locale}/dashboard`} className="flex items-center gap-2">
             <Image src="/logo.svg" alt="XPLife" width={32} height={32} className="rounded-lg" />
             <span className="font-display text-lg font-bold tracking-wider text-foreground">
               XPLife
@@ -55,7 +57,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
           </div>
 
           <div className="hidden items-center gap-4 md:flex">
-            <Link href="/profile" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+            <Link href={`/${locale}/profile`} className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element

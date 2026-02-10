@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -17,6 +17,8 @@ interface SettingsFormProps {
 
 export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: SettingsFormProps) {
   const router = useRouter()
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
   const [displayName, setDisplayName] = useState(currentDisplayName)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -65,7 +67,7 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/')
+    router.push(`/${locale}`)
     router.refresh()
   }
 
