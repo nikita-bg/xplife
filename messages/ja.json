@@ -399,11 +399,18 @@
   },
   "leaderboard": {
     "title": "リーダーボード",
-    "subtitle": "今週のトッププレイヤー",
+    "subtitle": "栄光を競うトッププレイヤー",
     "rank": "ランク",
     "player": "プレイヤー",
     "xp": "経験値",
-    "level": "レベル"
+    "level": "レベル",
+    "streak": "連続",
+    "lvl": "LV {level}",
+    "noRankingsTitle": "ランキングはまだありません",
+    "noRankingsDescription": "クエストを完了してリーダーボードに登場しましょう。",
+    "yourRank": "あなたのランク：",
+    "anonymous": "匿名",
+    "you": "（あなた）"
   },
   "tasks": {
     "title": "タスク詳細",

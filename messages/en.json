@@ -395,11 +395,18 @@
   },
   "leaderboard": {
     "title": "Leaderboard",
-    "subtitle": "Top players this week",
+    "subtitle": "Top players competing for glory",
     "rank": "Rank",
     "player": "Player",
     "xp": "XP",
-    "level": "Level"
+    "level": "Level",
+    "streak": "Streak",
+    "lvl": "LVL {level}",
+    "noRankingsTitle": "No Rankings Yet",
+    "noRankingsDescription": "Complete quests to appear on the leaderboard.",
+    "yourRank": "Your rank:",
+    "anonymous": "Anonymous",
+    "you": "(You)"
   },
   "tasks": {
     "title": "Task Details",

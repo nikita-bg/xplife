@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
 
@@ -10,6 +10,7 @@ export default async function LeaderboardPage({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
+  const t = await getTranslations('leaderboard')
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -33,10 +34,10 @@ export default async function LeaderboardPage({
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-          <span className="gradient-text">Leaderboard</span>
+          <span className="gradient-text">{t('title')}</span>
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Top players competing for glory
+          {t('subtitle')}
         </p>
       </div>
 

@@ -399,11 +399,18 @@
   },
   "leaderboard": {
     "title": "排行榜",
-    "subtitle": "本周顶级玩家",
+    "subtitle": "争夺荣耀的顶尖玩家",
     "rank": "排名",
     "player": "玩家",
     "xp": "经验值",
-    "level": "等级"
+    "level": "等级",
+    "streak": "连续",
+    "lvl": "LV {level}",
+    "noRankingsTitle": "暂无排名",
+    "noRankingsDescription": "完成任务以出现在排行榜上。",
+    "yourRank": "你的排名：",
+    "anonymous": "匿名",
+    "you": "（你）"
   },
   "tasks": {
     "title": "任务详情",

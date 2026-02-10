@@ -399,11 +399,18 @@
   },
   "leaderboard": {
     "title": "Класация",
-    "subtitle": "Топ играчи тази седмица",
+    "subtitle": "Топ играчи, които се борят за слава",
     "rank": "Ранг",
     "player": "Играч",
     "xp": "XP",
-    "level": "Ниво"
+    "level": "Ниво",
+    "streak": "Серия",
+    "lvl": "НВ {level}",
+    "noRankingsTitle": "Все още няма класиране",
+    "noRankingsDescription": "Завърши квестове, за да се появиш в класацията.",
+    "yourRank": "Твоят ранг:",
+    "anonymous": "Анонимен",
+    "you": "(Ти)"
   },
   "tasks": {
     "title": "Детайли за Задачата",

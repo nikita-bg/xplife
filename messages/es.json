@@ -399,11 +399,18 @@
   },
   "leaderboard": {
     "title": "Clasificación",
-    "subtitle": "Mejores jugadores esta semana",
+    "subtitle": "Los mejores jugadores compitiendo por la gloria",
     "rank": "Rango",
     "player": "Jugador",
     "xp": "XP",
-    "level": "Nivel"
+    "level": "Nivel",
+    "streak": "Racha",
+    "lvl": "NVL {level}",
+    "noRankingsTitle": "Sin Clasificación Aún",
+    "noRankingsDescription": "Completa misiones para aparecer en la clasificación.",
+    "yourRank": "Tu rango:",
+    "anonymous": "Anónimo",
+    "you": "(Tú)"
   },
   "tasks": {
     "title": "Detalles de la Tarea",

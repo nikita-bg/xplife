@@ -1,4 +1,7 @@
+'use client'
+
 import { Flame, Zap, Crown, Gem } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { RankBadge } from './rank-badge'
 import type { LeaderboardEntry } from '@/lib/types'
 
@@ -19,13 +22,15 @@ function PlanBadge({ plan }: { plan?: string }) {
 }
 
 export function LeaderboardTable({ entries, currentUserId, myRank }: LeaderboardTableProps) {
+  const t = useTranslations('leaderboard')
+
   if (entries.length === 0) {
     return (
       <div className="glass-card rounded-2xl p-12 text-center">
         <Zap className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
-        <h3 className="font-display text-lg font-bold text-foreground">No Rankings Yet</h3>
+        <h3 className="font-display text-lg font-bold text-foreground">{t('noRankingsTitle')}</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Complete quests to appear on the leaderboard.
+          {t('noRankingsDescription')}
         </p>
       </div>
     )
@@ -36,7 +41,7 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
       {myRank && (
         <div className="glass-card rounded-xl p-4">
           <p className="text-sm text-muted-foreground">
-            Your rank: <span className="font-display font-bold text-primary">#{myRank}</span>
+            {t('yourRank')} <span className="font-display font-bold text-primary">#{myRank}</span>
           </p>
         </div>
       )}
@@ -44,11 +49,11 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
       <div className="glass-card rounded-2xl overflow-hidden">
         {/* Desktop header */}
         <div className="hidden sm:grid grid-cols-[60px_1fr_100px_80px_60px] gap-2 border-b border-border/50 px-4 py-3 text-xs font-medium text-muted-foreground">
-          <span>Rank</span>
-          <span>Player</span>
-          <span className="text-right">XP</span>
-          <span className="text-right">Level</span>
-          <span className="text-right">Streak</span>
+          <span>{t('rank')}</span>
+          <span>{t('player')}</span>
+          <span className="text-right">{t('xp')}</span>
+          <span className="text-right">{t('level')}</span>
+          <span className="text-right">{t('streak')}</span>
         </div>
 
         <div className="divide-y divide-border/30">
@@ -75,8 +80,8 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
                       )}
                     </div>
                     <span className={`truncate text-sm ${isCurrentUser ? 'font-bold text-foreground' : 'text-foreground'}`}>
-                      {entry.display_name || 'Anonymous'}
-                      {isCurrentUser && <span className="ml-1 text-xs text-primary">(You)</span>}
+                      {entry.display_name || t('anonymous')}
+                      {isCurrentUser && <span className="ml-1 text-xs text-primary">{t('you')}</span>}
                     </span>
                     <PlanBadge plan={entry.plan} />
                   </div>
@@ -88,7 +93,7 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
 
                   <div className="text-right">
                     <span className="rounded bg-primary/10 px-1.5 py-0.5 font-display text-xs text-primary">
-                      LVL {entry.level}
+                      {t('lvl', { level: entry.level })}
                     </span>
                   </div>
 
@@ -113,8 +118,8 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
 
                   <div className="flex-1 min-w-0">
                     <span className={`block truncate text-sm ${isCurrentUser ? 'font-bold text-foreground' : 'text-foreground'}`}>
-                      {entry.display_name || 'Anonymous'}
-                      {isCurrentUser && <span className="ml-1 text-xs text-primary">(You)</span>}
+                      {entry.display_name || t('anonymous')}
+                      {isCurrentUser && <span className="ml-1 text-xs text-primary">{t('you')}</span>}
                       <PlanBadge plan={entry.plan} />
                     </span>
                     <div className="flex items-center gap-3 mt-0.5">
@@ -122,7 +127,7 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
                         <Zap className="h-3 w-3 text-primary" />
                         {entry.total_xp.toLocaleString()}
                       </span>
-                      <span className="font-display text-xs text-primary">LVL {entry.level}</span>
+                      <span className="font-display text-xs text-primary">{t('lvl', { level: entry.level })}</span>
                       <span className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Flame className="h-3 w-3 text-orange-400" />
                         {entry.current_streak}
