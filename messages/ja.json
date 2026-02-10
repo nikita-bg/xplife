@@ -182,8 +182,8 @@
     }
   },
   "dashboard": {
-    "welcome": "Welcome back, {name}!",
-    "subtitle": "Ready to level up today?",
+    "welcome": "おかえりなさい、{name}",
+    "subtitle": "今日のクエスト状況です",
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
@@ -206,6 +206,16 @@
       "noQuestsTitle": "クエストがありません",
       "noQuestsDescription": "「クエストを生成」をクリックして、パーソナライズされた毎日のチャレンジを取得してください。",
       "completed": "完了"
+    },
+    "questTabs": {
+      "yearly": "年間",
+      "monthly": "月間",
+      "weekly": "週間",
+      "daily": "毎日",
+      "yearlyTitle": "年間目標",
+      "monthlyTitle": "月間マイルストーン",
+      "weeklyTitle": "週間ターゲット",
+      "dailyTitle": "今日のクエスト"
     }
   },
   "profile": {
@@ -263,6 +273,54 @@
         "title": "深いパーソナライゼーション",
         "description": "Bravermanテスト統合により、あなたの脳化学に合ったタスクを提供。万能なアプローチはありません。"
       }
+    },
+    "howItWorks": {
+      "subtitle": "クエストガイド",
+      "title": "使い方",
+      "titleHighlight": "ガイド",
+      "description": "サインアップからレベルアップまで、3つの簡単なステップ。",
+      "step1": {
+        "step": "01",
+        "title": "サインアップ＆クイッククイズ",
+        "description": "ライフスタイル、目標、脳のタイプについていくつかの質問に答えてください。わずか2分です。"
+      },
+      "step2": {
+        "step": "02",
+        "title": "毎日のAIタスクを取得",
+        "description": "AIがあなたの独自のプロフィールと進捗に基づいて、毎日パーソナライズされたクエストを作成します。"
+      },
+      "step3": {
+        "step": "03",
+        "title": "完了してレベルアップ",
+        "description": "クエストを完了してXPを獲得し、実績をアンロックし、グローバルリーダーボードを登りましょう。"
+      }
+    },
+    "socialProof": {
+      "badge": "1,000人以上の人々が人生をレベルアップしています",
+      "title": "プレイヤーの",
+      "titleHighlight": "レビュー",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "ソフトウェアエンジニア",
+        "quote": "あらゆる生産性アプリを試してきました。XPLifeは実際に習慣を続けられた最初のアプリです。RPGメカニクスは天才的です。"
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "学生",
+        "quote": "AIタスクは恐ろしいほど正確です。自分の脳の働き方を本当に理解してくれるライフコーチを持っているようです。60日連続達成しました！"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "フリーランサー",
+        "quote": "リーダーボードで友達と競い合うことで、怠惰な朝が生産的なパワーアワーに変わりました。今月だけで3レベル上がりました。"
+      }
+    },
+    "finalCta": {
+      "title": "クエストを",
+      "titleHighlight": "始めませんか？",
+      "description": "待つ日々は二度と獲得できないXPです。今日無料のクエストを始めましょう。",
+      "button": "クエストを始める — 無料",
+      "disclaimer": "クレジットカード不要。永久無料、いつでもアップグレード可能。"
     },
     "pricing": {
       "subtitle": "道を選ぶ",

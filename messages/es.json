@@ -182,8 +182,8 @@
     }
   },
   "dashboard": {
-    "welcome": "Welcome back, {name}!",
-    "subtitle": "Ready to level up today?",
+    "welcome": "Bienvenido de nuevo, {name}",
+    "subtitle": "Aquí está el estado de tus misiones para hoy",
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
@@ -206,6 +206,16 @@
       "noQuestsTitle": "Aún No Hay Misiones",
       "noQuestsDescription": "Haz clic en \"Generar Misiones\" para obtener tus desafíos diarios personalizados.",
       "completed": "Completado"
+    },
+    "questTabs": {
+      "yearly": "Anuales",
+      "monthly": "Mensuales",
+      "weekly": "Semanales",
+      "daily": "Diarias",
+      "yearlyTitle": "Metas Anuales",
+      "monthlyTitle": "Hitos Mensuales",
+      "weeklyTitle": "Objetivos Semanales",
+      "dailyTitle": "Misiones de Hoy"
     }
   },
   "profile": {
@@ -263,6 +273,54 @@
         "title": "Personalización Profunda",
         "description": "Integración del test de Braverman para tareas que se ajustan a TU química cerebral. Sin enfoque único para todos."
       }
+    },
+    "howItWorks": {
+      "subtitle": "Guía de Misiones",
+      "title": "Cómo",
+      "titleHighlight": "Funciona",
+      "description": "Desde el registro hasta subir de nivel en tres simples pasos.",
+      "step1": {
+        "step": "01",
+        "title": "Regístrate y Haz un Test Rápido",
+        "description": "Responde algunas preguntas sobre tu estilo de vida, objetivos y tipo de cerebro. Solo toma 2 minutos."
+      },
+      "step2": {
+        "step": "02",
+        "title": "Recibe Tareas Diarias de IA",
+        "description": "Nuestra IA crea misiones personalizadas todos los días basadas en tu perfil único y progreso."
+      },
+      "step3": {
+        "step": "03",
+        "title": "Completa y Sube de Nivel",
+        "description": "Termina misiones para ganar XP, desbloquear logros y escalar la clasificación global."
+      }
+    },
+    "socialProof": {
+      "badge": "Únete a más de 1,000 personas subiendo de nivel en sus vidas",
+      "title": "Reseñas de",
+      "titleHighlight": "Jugadores",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "Ingeniero de Software",
+        "quote": "He probado todas las aplicaciones de productividad que existen. XPLife es la primera que realmente me hizo mantener mis hábitos. Las mecánicas RPG son geniales."
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "Estudiante",
+        "quote": "Las tareas de IA son aterradoramente precisas. Es como tener un coach de vida que realmente entiende cómo funciona mi cerebro. ¡Alcancé una racha de 60 días!"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "Freelancer",
+        "quote": "Competir con amigos en la clasificación convirtió mis mañanas perezosas en horas productivas de poder. Subí 3 niveles solo este mes."
+      }
+    },
+    "finalCta": {
+      "title": "¿Listo para Comenzar tu",
+      "titleHighlight": "Misión?",
+      "description": "Cada día que esperas es XP que nunca ganarás. Comienza tu misión gratuita hoy.",
+      "button": "Comienza Tu Misión — Es Gratis",
+      "disclaimer": "No se requiere tarjeta de crédito. Gratis para siempre, actualiza en cualquier momento."
     },
     "pricing": {
       "subtitle": "Elige Tu Camino",

@@ -1,27 +1,32 @@
-import { ArrowRight, ClipboardList, Sparkles, Trophy } from "lucide-react"
+'use client'
 
-const steps = [
-  {
-    icon: ClipboardList,
-    step: "01",
-    title: "Sign Up & Take Quick Quiz",
-    description: "Answer a few questions about your lifestyle, goals, and brain type. It only takes 2 minutes.",
-  },
-  {
-    icon: Sparkles,
-    step: "02",
-    title: "Get Daily AI Tasks",
-    description: "Our AI crafts personalized quests every day based on your unique profile and progress.",
-  },
-  {
-    icon: Trophy,
-    step: "03",
-    title: "Complete & Level Up",
-    description: "Finish quests to earn XP, unlock achievements, and climb the global leaderboard.",
-  },
-]
+import { ArrowRight, ClipboardList, Sparkles, Trophy } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export function HowItWorks() {
+  const t = useTranslations('landing.howItWorks')
+
+  const steps = [
+    {
+      icon: ClipboardList,
+      step: t('step1.step'),
+      title: t('step1.title'),
+      description: t('step1.description'),
+    },
+    {
+      icon: Sparkles,
+      step: t('step2.step'),
+      title: t('step2.title'),
+      description: t('step2.description'),
+    },
+    {
+      icon: Trophy,
+      step: t('step3.step'),
+      title: t('step3.title'),
+      description: t('step3.description'),
+    },
+  ]
+
   return (
     <section id="how-it-works" className="relative py-24 px-4">
       <div className="pointer-events-none absolute left-0 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
@@ -29,13 +34,13 @@ export function HowItWorks() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 text-center">
           <p className="mb-3 font-display text-xs font-bold uppercase tracking-widest text-primary">
-            Quest Guide
+            {t('subtitle')}
           </p>
           <h2 className="text-balance font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-            How It <span className="gradient-text">Works</span>
+            {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground leading-relaxed">
-            From signup to level-up in three simple steps.
+            {t('description')}
           </p>
         </div>
 

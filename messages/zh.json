@@ -182,8 +182,8 @@
     }
   },
   "dashboard": {
-    "welcome": "Welcome back, {name}!",
-    "subtitle": "Ready to level up today?",
+    "welcome": "欢迎回来，{name}",
+    "subtitle": "这是您今天的任务状态",
     "level": "Level {level}",
     "xp": "{current} / {next} XP",
     "stats": {
@@ -206,6 +206,16 @@
       "noQuestsTitle": "暂无任务",
       "noQuestsDescription": "点击\"生成任务\"以获取您的个性化每日挑战。",
       "completed": "已完成"
+    },
+    "questTabs": {
+      "yearly": "年度",
+      "monthly": "月度",
+      "weekly": "周度",
+      "daily": "每日",
+      "yearlyTitle": "年度目标",
+      "monthlyTitle": "月度里程碑",
+      "weeklyTitle": "周度目标",
+      "dailyTitle": "今日任务"
     }
   },
   "profile": {
@@ -263,6 +273,54 @@
         "title": "深度个性化",
         "description": "整合Braverman测试，提供符合您大脑化学的任务。没有一刀切的方法。"
       }
+    },
+    "howItWorks": {
+      "subtitle": "任务指南",
+      "title": "如何",
+      "titleHighlight": "运作",
+      "description": "从注册到升级，只需三个简单步骤。",
+      "step1": {
+        "step": "01",
+        "title": "注册并参加快速测验",
+        "description": "回答几个关于您的生活方式、目标和大脑类型的问题。只需2分钟。"
+      },
+      "step2": {
+        "step": "02",
+        "title": "获取每日AI任务",
+        "description": "我们的AI每天根据您的独特档案和进度制定个性化任务。"
+      },
+      "step3": {
+        "step": "03",
+        "title": "完成并升级",
+        "description": "完成任务以赚取经验值，解锁成就，攀登全球排行榜。"
+      }
+    },
+    "socialProof": {
+      "badge": "加入1,000多人一起提升生活水平",
+      "title": "玩家",
+      "titleHighlight": "评价",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "软件工程师",
+        "quote": "我试过所有的生产力应用。XPLife是第一个真正让我坚持习惯的应用。RPG机制太棒了。"
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "学生",
+        "quote": "AI任务准确得可怕。就像有一个真正理解我大脑运作方式的生活教练。达到了60天连胜！"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "自由职业者",
+        "quote": "与朋友在排行榜上竞争，让我的懒散早晨变成了高效的时光。仅本月就升了3级。"
+      }
+    },
+    "finalCta": {
+      "title": "准备好开始您的",
+      "titleHighlight": "任务了吗？",
+      "description": "您等待的每一天都是永远无法获得的经验值。今天就开始您的免费任务。",
+      "button": "开始您的任务 — 完全免费",
+      "disclaimer": "无需信用卡。永久免费，随时升级。"
     },
     "pricing": {
       "subtitle": "选择您的道路",

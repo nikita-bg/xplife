@@ -3,6 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { QuestSection } from './quest-section'
 import { getPlanLimits } from '@/lib/plan-limits'
+import { useTranslations } from 'next-intl'
 import type { Task } from '@/lib/types'
 
 interface QuestsViewProps {
@@ -21,19 +22,20 @@ export function QuestsView({
   plan,
 }: QuestsViewProps) {
   const planLimits = getPlanLimits(plan)
+  const t = useTranslations('dashboard.questTabs')
 
   return (
     <Tabs defaultValue="daily" className="w-full">
       <TabsList className="grid w-full grid-cols-4">
-        <TabsTrigger value="yearly">Yearly</TabsTrigger>
-        <TabsTrigger value="monthly">Monthly</TabsTrigger>
-        <TabsTrigger value="weekly">Weekly</TabsTrigger>
-        <TabsTrigger value="daily">Daily</TabsTrigger>
+        <TabsTrigger value="yearly">{t('yearly')}</TabsTrigger>
+        <TabsTrigger value="monthly">{t('monthly')}</TabsTrigger>
+        <TabsTrigger value="weekly">{t('weekly')}</TabsTrigger>
+        <TabsTrigger value="daily">{t('daily')}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="yearly">
         <QuestSection
-          title="Yearly Goals"
+          title={t('yearlyTitle')}
           timeframe="yearly"
           quests={yearlyQuests}
           maxQuests={planLimits.maxYearlyQuests}
@@ -43,7 +45,7 @@ export function QuestsView({
 
       <TabsContent value="monthly">
         <QuestSection
-          title="Monthly Milestones"
+          title={t('monthlyTitle')}
           timeframe="monthly"
           quests={monthlyQuests}
           parentQuests={yearlyQuests}
@@ -52,7 +54,7 @@ export function QuestsView({
 
       <TabsContent value="weekly">
         <QuestSection
-          title="Weekly Targets"
+          title={t('weeklyTitle')}
           timeframe="weekly"
           quests={weeklyQuests}
           parentQuests={monthlyQuests}
@@ -61,7 +63,7 @@ export function QuestsView({
 
       <TabsContent value="daily">
         <QuestSection
-          title="Today's Quests"
+          title={t('dailyTitle')}
           timeframe="daily"
           quests={dailyQuests}
           parentQuests={weeklyQuests}

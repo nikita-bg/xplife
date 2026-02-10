@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { setRequestLocale } from 'next-intl/server'
+import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import { LevelDisplay } from '@/components/dashboard/level-display'
 import { XpBar } from '@/components/dashboard/xp-bar'
@@ -133,14 +133,16 @@ export default async function DashboardPage({
   const xpProgress = profile.total_xp - xpForCurrentLevel
   const xpNeeded = xpForNextLevel - xpForCurrentLevel
 
+  const t = await getTranslations('dashboard')
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-          Welcome back, <span className="gradient-text">{profile.display_name || 'Hero'}</span>
+          {t('welcome', { name: profile.display_name || 'Hero' })}
         </h1>
         <p className="text-sm text-muted-foreground">
-          {"Here's your quest status for today"}
+          {t('subtitle')}
         </p>
       </div>
 
