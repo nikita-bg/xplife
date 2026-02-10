@@ -464,7 +464,12 @@
     "monthly": "Monthly",
     "weekly": "Weekly",
     "daily": "Daily",
-    "generateError": "Failed to generate quests. Please try again."
+    "generateError": "Failed to generate quests. Please try again.",
+    "cascadeProgress": "Generating {timeframe} quests...",
+    "cascadeComplete": "Created {yearly} yearly, {monthly} monthly, {weekly} weekly, {daily} daily quests!",
+    "cascadeFailed": "Cascade stopped. Generated quests so far have been saved.",
+    "cascadeStepDone": "{timeframe} quests created ({count})",
+    "cascadeDone": "Done"
   },
   "tasks": {
     "title": "Task Details",

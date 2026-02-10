@@ -464,7 +464,12 @@
     "monthly": "月間",
     "weekly": "週間",
     "daily": "日間",
-    "generateError": "クエストの生成に失敗しました。もう一度お試しください。"
+    "generateError": "クエストの生成に失敗しました。もう一度お試しください。",
+    "cascadeProgress": "{timeframe}クエストを生成中...",
+    "cascadeComplete": "年間{yearly}、月間{monthly}、週間{weekly}、日間{daily}クエストを作成しました！",
+    "cascadeFailed": "カスケードが停止しました。生成済みのクエストは保存されています。",
+    "cascadeStepDone": "{timeframe}クエスト作成完了 ({count})",
+    "cascadeDone": "完了"
   },
   "tasks": {
     "title": "タスク詳細",

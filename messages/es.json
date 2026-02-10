@@ -464,7 +464,12 @@
     "monthly": "Mensuales",
     "weekly": "Semanales",
     "daily": "Diarias",
-    "generateError": "Error al generar misiones. Por favor, inténtalo de nuevo."
+    "generateError": "Error al generar misiones. Por favor, inténtalo de nuevo.",
+    "cascadeProgress": "Generando misiones {timeframe}...",
+    "cascadeComplete": "Creadas {yearly} anuales, {monthly} mensuales, {weekly} semanales, {daily} diarias!",
+    "cascadeFailed": "La cascada se detuvo. Las misiones generadas se han guardado.",
+    "cascadeStepDone": "Misiones {timeframe} creadas ({count})",
+    "cascadeDone": "Listo"
   },
   "tasks": {
     "title": "Detalles de la Tarea",

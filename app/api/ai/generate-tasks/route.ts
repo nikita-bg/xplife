@@ -101,13 +101,15 @@ export async function POST(request: Request) {
   let userGoals: string | undefined
   let questTimeframe: QuestTimeframe = 'daily'
   let parentQuestId: string | undefined
-  let generationMode: 'manual' | 'from-parent' = 'manual'
+  let parentQuestIds: string[] | undefined
+  let generationMode: 'manual' | 'from-parent' | 'cascade' = 'manual'
 
   try {
     const body = await request.json()
     userGoals = body.goals
     questTimeframe = body.questTimeframe || 'daily'
     parentQuestId = body.parentQuestId
+    parentQuestIds = body.parentQuestIds
     generationMode = body.generationMode || 'manual'
   } catch {
     // no body or invalid JSON — that's fine, we'll use DB goals
@@ -230,9 +232,24 @@ export async function POST(request: Request) {
 
   console.log(`[TASK-GEN ${timestamp}] Loaded ${recentTasks?.length ?? 0} recent tasks`)
 
-  // Fetch parent quest if generating from parent
+  // Fetch parent quest(s) if generating from parent or cascade
   let parentQuest = null
-  if (parentQuestId && generationMode === 'from-parent') {
+  let parentQuests: typeof parentQuest[] = []
+
+  if (parentQuestIds && parentQuestIds.length > 0 && generationMode === 'cascade') {
+    const { data, error: parentsError } = await supabase
+      .from('tasks')
+      .select('*')
+      .in('id', parentQuestIds)
+      .eq('user_id', user.id)
+
+    if (parentsError) {
+      console.error(`[TASK-GEN ${timestamp}] Failed to fetch parent quests:`, parentQuestIds, parentsError)
+    } else {
+      parentQuests = data || []
+      console.log(`[TASK-GEN ${timestamp}] Loaded ${parentQuests.length} parent quests for cascade`)
+    }
+  } else if (parentQuestId && generationMode === 'from-parent') {
     const { data, error: parentError } = await supabase
       .from('tasks')
       .select('*')
@@ -325,6 +342,7 @@ export async function POST(request: Request) {
       questTimeframe,
       generationMode,
       parentQuest,
+      parentQuests: parentQuests.length > 0 ? parentQuests : undefined,
       neurotransmitterScores: {
         dopamine: profile?.dopamine_score ?? 0,
         acetylcholine: profile?.acetylcholine_score ?? 0,
@@ -450,7 +468,7 @@ export async function POST(request: Request) {
         xp_reward: task.xp_reward ?? 50,
         status: 'pending',
         quest_timeframe: questTimeframe,
-        parent_quest_id: parentQuestId ?? null,
+        parent_quest_id: generationMode === 'cascade' ? null : (parentQuestId ?? null),
       }))
 
       console.log(`[TASK-GEN ${timestamp}] Inserting ${taskInserts.length} tasks into database`)

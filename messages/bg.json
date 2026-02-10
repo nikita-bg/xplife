@@ -464,7 +464,12 @@
     "monthly": "Месечни",
     "weekly": "Седмични",
     "daily": "Дневни",
-    "generateError": "Неуспешно генериране на квестове. Моля, опитайте отново."
+    "generateError": "Неуспешно генериране на квестове. Моля, опитайте отново.",
+    "cascadeProgress": "Генериране на {timeframe} квестове...",
+    "cascadeComplete": "Създадени {yearly} годишни, {monthly} месечни, {weekly} седмични, {daily} дневни квестове!",
+    "cascadeFailed": "Каскадата спря. Генерираните квестове са запазени.",
+    "cascadeStepDone": "{timeframe} квестове създадени ({count})",
+    "cascadeDone": "Готово"
   },
   "tasks": {
     "title": "Детайли за Задачата",

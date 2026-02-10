@@ -464,7 +464,12 @@
     "monthly": "月度",
     "weekly": "每周",
     "daily": "每日",
-    "generateError": "生成任务失败，请重试。"
+    "generateError": "生成任务失败，请重试。",
+    "cascadeProgress": "正在生成{timeframe}任务...",
+    "cascadeComplete": "已创建{yearly}个年度、{monthly}个月度、{weekly}个每周、{daily}个每日任务！",
+    "cascadeFailed": "级联已停止。已生成的任务已保存。",
+    "cascadeStepDone": "{timeframe}任务已创建 ({count})",
+    "cascadeDone": "完成"
   },
   "tasks": {
     "title": "任务详情",
