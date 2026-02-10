@@ -1,48 +1,48 @@
 {
   "metadata": {
-    "title": "XPLife - Level Up Your Life",
-    "description": "Turn your goals into epic quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization."
+    "title": "XPLife - Sube de Nivel Tu Vida",
+    "description": "Convierte tus metas en misiones épicas RPG. Gana XP. Mantén rachas. Conviértete en tu mejor versión con optimización de vida impulsada por IA."
   },
   "common": {
-    "loading": "Loading...",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "submit": "Submit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "continue": "Continue",
-    "confirm": "Confirm",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "submit": "Enviar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "continue": "Continuar",
+    "confirm": "Confirmar",
     "error": "Error",
-    "success": "Success"
+    "success": "Éxito"
   },
   "navbar": {
-    "features": "Features",
-    "howItWorks": "How It Works",
-    "pricing": "Pricing",
-    "login": "Log In",
-    "signup": "Start Your Journey"
+    "features": "Características",
+    "howItWorks": "Cómo Funciona",
+    "pricing": "Precios",
+    "login": "Iniciar Sesión",
+    "signup": "Comienza Tu Viaje"
   },
   "hero": {
-    "badge": "Join 1,000+ players leveling up right now",
-    "title": "Level Up",
-    "titleHighlight": "Your Life",
-    "description": "Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.",
-    "cta": "Start Playing Free",
-    "ctaSecondary": "How It Works",
-    "heroUser": "HERO_USER",
-    "heroRole": "Life Optimizer",
-    "xpLabel": "Experience Points",
+    "badge": "Únete a más de 1,000 jugadores subiendo de nivel ahora",
+    "title": "Sube de Nivel",
+    "titleHighlight": "Tu Vida",
+    "description": "Transforma metas aburridas en misiones épicas RPG. La IA crea tus misiones diarias. Gana XP. Sube de nivel de verdad.",
+    "cta": "Juega Gratis",
+    "ctaSecondary": "Cómo Funciona",
+    "heroUser": "USUARIO_HÉROE",
+    "heroRole": "Optimizador de Vida",
+    "xpLabel": "Puntos de Experiencia",
     "xpProgress": "{current} / {total} XP",
-    "questMorningMeditation": "Morning Meditation",
-    "questDeepWork": "30min Deep Work",
-    "questEveningReview": "Evening Review",
-    "statStreak": "Streak",
-    "statQuests": "Quests",
-    "statRank": "Rank",
-    "level": "LVL {level}"
+    "questMorningMeditation": "Meditación Matutina",
+    "questDeepWork": "30min Trabajo Profundo",
+    "questEveningReview": "Revisión Nocturna",
+    "statStreak": "Racha",
+    "statQuests": "Misiones",
+    "statRank": "Rango",
+    "level": "NIV {level}"
   },
   "quiz": {
     "questions": [

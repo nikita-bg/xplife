@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { ArrowDown, Shield, Sword, Trophy } from "lucide-react"
 
 export function Hero() {
+  const pathname = usePathname()
+  const locale = pathname.split('/')[1] || 'en'
+  const t = useTranslations('hero')
   const [xpAnimated, setXpAnimated] = useState(false)
   const [level, setLevel] = useState(42)
   const [mounted, setMounted] = useState(false)
@@ -48,32 +53,32 @@ export function Hero() {
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
             <span className="h-2 w-2 animate-pulse rounded-full bg-accent" />
-            <span className="text-xs font-medium text-accent">Join 1,000+ players leveling up right now</span>
+            <span className="text-xs font-medium text-accent">{t('badge')}</span>
           </div>
 
           <h1 className="text-balance font-display text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
-            <span className="text-foreground">Level Up</span>
+            <span className="text-foreground">{t('title')}</span>
             <br />
-            <span className="gradient-text">Your Life</span>
+            <span className="gradient-text">{t('titleHighlight')}</span>
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.
+            {t('description')}
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
-              href="/signup"
+              href={`/${locale}/signup`}
               className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/30 animate-pulse-glow"
             >
               <Sword className="h-4 w-4" />
-              Start Playing Free
+              {t('cta')}
             </Link>
             <a
               href="#how-it-works"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-secondary px-8 py-3.5 text-sm font-medium text-secondary-foreground transition-all hover:border-primary/50 hover:bg-secondary/80"
             >
-              How It Works
+              {t('ctaSecondary')}
               <ArrowDown className="h-4 w-4" />
             </a>
           </div>
@@ -90,21 +95,21 @@ export function Hero() {
                     <Shield className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="font-display text-sm font-bold text-foreground">HERO_USER</p>
-                    <p className="text-xs text-muted-foreground">Life Optimizer</p>
+                    <p className="font-display text-sm font-bold text-foreground">{t('heroUser')}</p>
+                    <p className="text-xs text-muted-foreground">{t('heroRole')}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 rounded-lg bg-accent/10 px-3 py-1">
                   <Trophy className="h-3.5 w-3.5 text-accent" />
-                  <span className="font-display text-sm font-bold text-accent tabular-nums w-[70px] text-right">LVL {level}</span>
+                  <span className="font-display text-sm font-bold text-accent tabular-nums w-[70px] text-right">{t('level', { level })}</span>
                 </div>
               </div>
 
               {/* XP Bar */}
               <div className="mb-4">
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="text-muted-foreground">Experience Points</span>
-                  <span className="font-display text-primary">8,500 / 10,000 XP</span>
+                  <span className="text-muted-foreground">{t('xpLabel')}</span>
+                  <span className="font-display text-primary">{t('xpProgress', { current: '8,500', total: '10,000' })}</span>
                 </div>
                 <div className="h-3 overflow-hidden rounded-full bg-muted">
                   <div
@@ -116,16 +121,16 @@ export function Hero() {
 
               {/* Quest list */}
               <div className="flex flex-col gap-2">
-                <QuestItem title="Morning Meditation" xp={150} completed />
-                <QuestItem title="30min Deep Work" xp={300} completed />
-                <QuestItem title="Evening Review" xp={200} completed={false} />
+                <QuestItem title={t('questMorningMeditation')} xp={150} completed />
+                <QuestItem title={t('questDeepWork')} xp={300} completed />
+                <QuestItem title={t('questEveningReview')} xp={200} completed={false} />
               </div>
 
               {/* Stats */}
               <div className="mt-4 grid grid-cols-3 gap-2">
-                <StatBox label="Streak" value="14d" />
-                <StatBox label="Quests" value="247" />
-                <StatBox label="Rank" value="#12" />
+                <StatBox label={t('statStreak')} value="14d" />
+                <StatBox label={t('statQuests')} value="247" />
+                <StatBox label={t('statRank')} value="#12" />
               </div>
             </div>
           </div>

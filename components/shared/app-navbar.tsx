@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
 import { LayoutDashboard, Trophy, User, LogOut, Menu, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { LanguageSwitcher } from '@/components/i18n/language-switcher'
 
 interface AppNavbarProps {
   displayName: string
@@ -57,6 +58,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
           </div>
 
           <div className="hidden items-center gap-4 md:flex">
+            <LanguageSwitcher />
             <Link href={`/${locale}/profile`} className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                 {avatarUrl ? (
@@ -96,6 +98,9 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
       {mobileOpen && (
         <div className="border-t border-border/50 glass-card md:hidden">
           <div className="flex flex-col gap-2 px-4 py-4">
+            <div className="mb-2">
+              <LanguageSwitcher />
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
