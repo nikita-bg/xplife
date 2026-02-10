@@ -527,6 +527,21 @@
       }
     }
   },
+  "upgradeBanner": {
+    "premiumPlan": "高级版计划",
+    "lifetimePlan": "终身版计划",
+    "active": "已激活",
+    "upgradeToPremium": "升级至高级版",
+    "unlimitedTasks": "无限AI任务及更多",
+    "upgradeYourPlan": "升级您的计划",
+    "unlockFeatures": "解锁无限AI任务、3个并行目标、辅导等更多功能。",
+    "premiumButton": "高级版 — €4.99/月",
+    "lifetimeButton": "终身版 — €49"
+  },
+  "levelTitles": {
+    "novice": "新手",
+    "legend": "传奇"
+  },
   "footer": {
     "tagline": "一次一个任务，提升你的生活水平。",
     "copyright": "© 2025 XPLife。保留所有权利。",

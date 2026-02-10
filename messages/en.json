@@ -523,6 +523,21 @@
       }
     }
   },
+  "upgradeBanner": {
+    "premiumPlan": "Premium Plan",
+    "lifetimePlan": "Lifetime Plan",
+    "active": "Active",
+    "upgradeToPremium": "Upgrade to Premium",
+    "unlimitedTasks": "Unlimited AI tasks & more",
+    "upgradeYourPlan": "Upgrade Your Plan",
+    "unlockFeatures": "Unlock unlimited AI tasks, 3 parallel goals, coaching & more.",
+    "premiumButton": "Premium — €4.99/mo",
+    "lifetimeButton": "Lifetime — €49"
+  },
+  "levelTitles": {
+    "novice": "Novice",
+    "legend": "Legend"
+  },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",
     "copyright": "© 2025 XPLife. All rights reserved.",

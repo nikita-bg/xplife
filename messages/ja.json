@@ -527,6 +527,21 @@
       }
     }
   },
+  "upgradeBanner": {
+    "premiumPlan": "プレミアムプラン",
+    "lifetimePlan": "ライフタイムプラン",
+    "active": "有効",
+    "upgradeToPremium": "プレミアムにアップグレード",
+    "unlimitedTasks": "無制限AIタスク＆その他",
+    "upgradeYourPlan": "プランをアップグレード",
+    "unlockFeatures": "無制限のAIタスク、3つの並行目標、コーチングなどをアンロック。",
+    "premiumButton": "プレミアム — €4.99/月",
+    "lifetimeButton": "ライフタイム — €49"
+  },
+  "levelTitles": {
+    "novice": "初心者",
+    "legend": "伝説"
+  },
   "footer": {
     "tagline": "一度に一つのクエストで、あなたの人生をレベルアップ。",
     "copyright": "© 2025 XPLife。全著作権所有。",

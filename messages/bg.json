@@ -527,6 +527,21 @@
       }
     }
   },
+  "upgradeBanner": {
+    "premiumPlan": "Премиум План",
+    "lifetimePlan": "Пожизнен План",
+    "active": "Активен",
+    "upgradeToPremium": "Надградете до Премиум",
+    "unlimitedTasks": "Неограничени AI задачи и повече",
+    "upgradeYourPlan": "Надградете Плана Си",
+    "unlockFeatures": "Отключете неограничени AI задачи, 3 паралелни цели, коучинг и повече.",
+    "premiumButton": "Премиум — €4.99/месец",
+    "lifetimeButton": "Пожизнен — €49"
+  },
+  "levelTitles": {
+    "novice": "Начинаещ",
+    "legend": "Легенда"
+  },
   "footer": {
     "tagline": "Повишавайте нивото на живота си, по един квест наведнъж.",
     "copyright": "© 2025 XPLife. Всички права запазени.",
