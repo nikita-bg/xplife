@@ -4,127 +4,127 @@
     "description": "将目标转化为史诗任务。赚取经验值。追踪连胜。通过AI驱动的生活优化成为最好的自己。"
   },
   "common": {
-    "loading": "Loading...",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "submit": "Submit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "continue": "Continue",
-    "confirm": "Confirm",
-    "error": "Error",
-    "success": "Success"
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "submit": "提交",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "continue": "继续",
+    "confirm": "确认",
+    "error": "错误",
+    "success": "成功"
   },
   "navbar": {
-    "features": "Features",
-    "howItWorks": "How It Works",
-    "pricing": "Pricing",
-    "login": "Log In",
-    "signup": "Start Your Journey"
+    "features": "功能特色",
+    "howItWorks": "如何运作",
+    "pricing": "价格",
+    "login": "登录",
+    "signup": "开始你的旅程"
   },
   "hero": {
-    "badge": "Join 1,000+ players leveling up right now",
-    "title": "Level Up",
-    "titleHighlight": "Your Life",
-    "description": "Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.",
-    "cta": "Start Playing Free",
-    "ctaSecondary": "How It Works",
-    "heroUser": "HERO_USER",
-    "heroRole": "Life Optimizer",
-    "xpLabel": "Experience Points",
+    "badge": "加入1000多名正在提升等级的玩家",
+    "title": "提升",
+    "titleHighlight": "你的生活",
+    "description": "将无聊的目标转化为史诗级RPG任务。AI构建你的每日任务。赚取经验值。真正升级。",
+    "cta": "免费开始游戏",
+    "ctaSecondary": "如何运作",
+    "heroUser": "英雄玩家",
+    "heroRole": "生活优化师",
+    "xpLabel": "经验点数",
     "xpProgress": "{current} / {total} XP",
-    "questMorningMeditation": "Morning Meditation",
-    "questDeepWork": "30min Deep Work",
-    "questEveningReview": "Evening Review",
-    "statStreak": "Streak",
-    "statQuests": "Quests",
-    "statRank": "Rank",
-    "level": "LVL {level}"
+    "questMorningMeditation": "晨间冥想",
+    "questDeepWork": "30分钟深度工作",
+    "questEveningReview": "晚间回顾",
+    "statStreak": "连胜",
+    "statQuests": "任务",
+    "statRank": "排名",
+    "level": "等级 {level}"
   },
   "quiz": {
     "questions": [
       {
-        "question": "When you wake up, what energizes you most?",
+        "question": "当你醒来时，什么最能给你能量？",
         "options": [
-          "A thrilling new challenge or adventure",
-          "Learning something new or creative work",
-          "A calm, structured morning routine",
-          "Connecting with loved ones or community"
+          "激动人心的新挑战或冒险",
+          "学习新事物或创意工作",
+          "平静而有条理的早晨例行程序",
+          "与亲人或社区联系"
         ]
       },
       {
-        "question": "How do you prefer to handle stress?",
+        "question": "你更喜欢如何处理压力？",
         "options": [
-          "Intense physical activity or competition",
-          "Journaling, reading, or problem-solving",
-          "Meditation, yoga, or deep breathing",
-          "Talking it out with friends or family"
+          "高强度体育活动或竞赛",
+          "写日记、阅读或解决问题",
+          "冥想、瑜伽或深呼吸",
+          "与朋友或家人倾诉"
         ]
       },
       {
-        "question": "What type of goals excite you the most?",
+        "question": "什么类型的目标最让你兴奋？",
         "options": [
-          "Bold, ambitious goals with big rewards",
-          "Skills mastery and intellectual growth",
-          "Stability, consistency, and inner peace",
-          "Building relationships and helping others"
+          "大胆雄心的目标，回报丰厚",
+          "技能掌握和智力成长",
+          "稳定、一致和内心平静",
+          "建立关系和帮助他人"
         ]
       },
       {
-        "question": "How would your friends describe you?",
+        "question": "你的朋友会如何描述你？",
         "options": [
-          "Energetic, bold, and spontaneous",
-          "Curious, creative, and thoughtful",
-          "Calm, reliable, and grounded",
-          "Warm, empathetic, and supportive"
+          "精力充沛、大胆、自发",
+          "好奇、有创造力、深思熟虑",
+          "冷静、可靠、踏实",
+          "温暖、善解人意、支持他人"
         ]
       },
       {
-        "question": "What is your ideal way to recharge?",
+        "question": "你理想的充电方式是什么？",
         "options": [
-          "Trying something exciting and new",
-          "Deep focus on a passion project",
-          "Rest, nature, and quiet time",
-          "Quality time with people I care about"
+          "尝试令人兴奋的新事物",
+          "深度专注于激情项目",
+          "休息、亲近自然、安静时光",
+          "与我关心的人共度美好时光"
         ]
       }
     ]
   },
   "personalities": {
     "dopamine": {
-      "title": "The Adventurer",
-      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+      "title": "冒险家",
+      "description": "你在兴奋、新奇和大胆的挑战中茁壮成长。你的任务将专注于突破界限和实现雄心壮志的目标。"
     },
     "acetylcholine": {
-      "title": "The Thinker",
-      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+      "title": "思想家",
+      "description": "你热爱学习、创造力和深度专注。你的任务将围绕技能掌握和智力成长。"
     },
     "gaba": {
-      "title": "The Guardian",
-      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+      "title": "守护者",
+      "description": "你重视稳定、一致和内心平静。你的任务将建立强大的习惯并促进平衡。"
     },
     "serotonin": {
-      "title": "The Connector",
-      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+      "title": "连接者",
+      "description": "你从关系和社区中汲取能量。你的任务将加强联系并促进有意义的关系。"
     }
   },
   "taskCategories": {
-    "fitness": "Fitness",
-    "mindfulness": "Mindfulness",
-    "learning": "Learning",
-    "productivity": "Productivity",
-    "social": "Social",
-    "health": "Health",
-    "creativity": "Creativity"
+    "fitness": "健身",
+    "mindfulness": "正念",
+    "learning": "学习",
+    "productivity": "生产力",
+    "social": "社交",
+    "health": "健康",
+    "creativity": "创造力"
   },
   "taskDifficulties": {
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
-    "epic": "Epic"
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "epic": "史诗"
   },
   "onboarding": {
     "welcome": {
@@ -267,38 +267,38 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
-      "subtitle": "Log in to continue your journey",
-      "email": "Email",
+      "title": "欢迎回来",
+      "subtitle": "登录以继续您的旅程",
+      "email": "电子邮件",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "密码",
       "passwordPlaceholder": "输入您的密码",
-      "submit": "Log In",
+      "submit": "登录",
       "loggingIn": "登录中...",
-      "noAccount": "Don't have an account?",
+      "noAccount": "还没有账户？",
       "signupLink": "注册",
       "invalidCredentials": "无效的电子邮件或密码",
       "emailNotConfirmed": "您的电子邮件尚未确认。请检查您的收件箱或重新发送确认链接。",
-      "error": "Invalid email or password"
+      "error": "无效的电子邮件或密码"
     },
     "signup": {
-      "title": "Start Your Journey",
-      "subtitle": "Create your account to begin",
-      "email": "Email",
+      "title": "开始您的旅程",
+      "subtitle": "创建您的账户以开始",
+      "email": "电子邮件",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "密码",
       "passwordPlaceholder": "创建密码",
-      "confirmPassword": "Confirm Password",
+      "confirmPassword": "确认密码",
       "confirmPasswordPlaceholder": "确认您的密码",
-      "submit": "Create Account",
+      "submit": "创建账户",
       "creating": "创建账户中...",
-      "hasAccount": "Already have an account?",
+      "hasAccount": "已有账户？",
       "loginLink": "登录",
       "checkEmailTitle": "检查您的电子邮件",
       "checkEmailMessage": "我们已向您的电子邮件发送了确认链接。点击它以激活您的账户并开始您的任务。",
-      "login": "Log in",
-      "error": "Failed to create account",
-      "passwordMismatch": "Passwords do not match"
+      "login": "登录",
+      "error": "创建账户失败",
+      "passwordMismatch": "密码不匹配"
     },
     "socialLogin": {
       "continueWithGoogle": "使用 Google 继续",
@@ -308,7 +308,7 @@
   "dashboard": {
     "welcome": "欢迎回来，{name}",
     "subtitle": "这是您今天的任务状态",
-    "level": "Level {level}",
+    "level": "等级 {level}",
     "xp": "{current} / {next} XP",
     "stats": {
       "totalXP": "总经验值",
@@ -339,10 +339,10 @@
       "noQuestsDescription": "点击\"生成\"创建AI驱动的{timeframe}任务。",
       "completed": "已完成"
     },
-    "activeQuests": "Active Quests",
-    "noQuests": "No active quests",
-    "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All",
+    "activeQuests": "活跃任务",
+    "noQuests": "暂无活跃任务",
+    "generateQuests": "生成今日任务",
+    "viewAll": "查看全部",
     "dailyTasks": {
       "title": "今日任务",
       "generateQuests": "生成任务",
@@ -398,22 +398,22 @@
     }
   },
   "leaderboard": {
-    "title": "Leaderboard",
-    "subtitle": "Top players this week",
-    "rank": "Rank",
-    "player": "Player",
-    "xp": "XP",
-    "level": "Level"
+    "title": "排行榜",
+    "subtitle": "本周顶级玩家",
+    "rank": "排名",
+    "player": "玩家",
+    "xp": "经验值",
+    "level": "等级"
   },
   "tasks": {
-    "title": "Task Details",
-    "description": "Description",
-    "category": "Category",
-    "difficulty": "Difficulty",
+    "title": "任务详情",
+    "description": "描述",
+    "category": "类别",
+    "difficulty": "难度",
     "xpReward": "+{xp} XP",
-    "markComplete": "Mark as Complete",
-    "completed": "Completed!",
-    "back": "Back to Dashboard"
+    "markComplete": "标记为完成",
+    "completed": "已完成！",
+    "back": "返回仪表板"
   },
   "landing": {
     "features": {
@@ -528,13 +528,13 @@
     }
   },
   "footer": {
-    "tagline": "Level up your life, one quest at a time.",
-    "copyright": "© 2025 XPLife. All rights reserved.",
+    "tagline": "一次一个任务，提升你的生活水平。",
+    "copyright": "© 2025 XPLife。保留所有权利。",
     "links": {
-      "about": "About",
-      "contact": "Contact",
-      "privacy": "Privacy",
-      "terms": "Terms"
+      "about": "关于",
+      "contact": "联系",
+      "privacy": "隐私",
+      "terms": "条款"
     }
   }
 }

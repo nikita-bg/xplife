@@ -4,127 +4,127 @@
     "description": "目標を壮大なクエストに変えましょう。XPを獲得。連勝記録を追跡。AI駆動の人生最適化で最高の自分になろう。"
   },
   "common": {
-    "loading": "Loading...",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "submit": "Submit",
-    "close": "Close",
-    "back": "Back",
-    "next": "Next",
-    "continue": "Continue",
-    "confirm": "Confirm",
-    "error": "Error",
-    "success": "Success"
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "submit": "送信",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "continue": "続ける",
+    "confirm": "確認",
+    "error": "エラー",
+    "success": "成功"
   },
   "navbar": {
-    "features": "Features",
-    "howItWorks": "How It Works",
-    "pricing": "Pricing",
-    "login": "Log In",
-    "signup": "Start Your Journey"
+    "features": "機能",
+    "howItWorks": "使い方",
+    "pricing": "価格",
+    "login": "ログイン",
+    "signup": "旅を始める"
   },
   "hero": {
-    "badge": "Join 1,000+ players leveling up right now",
-    "title": "Level Up",
-    "titleHighlight": "Your Life",
-    "description": "Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.",
-    "cta": "Start Playing Free",
-    "ctaSecondary": "How It Works",
-    "heroUser": "HERO_USER",
-    "heroRole": "Life Optimizer",
-    "xpLabel": "Experience Points",
+    "badge": "今すぐレベルアップしている1,000人以上のプレイヤーに参加",
+    "title": "レベルアップ",
+    "titleHighlight": "あなたの人生",
+    "description": "退屈な目標を壮大なRPGクエストに変えましょう。AIが毎日のミッションを作成。XPを獲得。本当にレベルアップ。",
+    "cta": "無料でプレイ開始",
+    "ctaSecondary": "使い方",
+    "heroUser": "ヒーロープレイヤー",
+    "heroRole": "ライフオプティマイザー",
+    "xpLabel": "経験値ポイント",
     "xpProgress": "{current} / {total} XP",
-    "questMorningMeditation": "Morning Meditation",
-    "questDeepWork": "30min Deep Work",
-    "questEveningReview": "Evening Review",
-    "statStreak": "Streak",
-    "statQuests": "Quests",
-    "statRank": "Rank",
-    "level": "LVL {level}"
+    "questMorningMeditation": "朝の瞑想",
+    "questDeepWork": "30分ディープワーク",
+    "questEveningReview": "夜の振り返り",
+    "statStreak": "連続",
+    "statQuests": "クエスト",
+    "statRank": "ランク",
+    "level": "レベル {level}"
   },
   "quiz": {
     "questions": [
       {
-        "question": "When you wake up, what energizes you most?",
+        "question": "目覚めたとき、最もエネルギーを与えてくれるものは何ですか？",
         "options": [
-          "A thrilling new challenge or adventure",
-          "Learning something new or creative work",
-          "A calm, structured morning routine",
-          "Connecting with loved ones or community"
+          "スリリングな新しいチャレンジや冒険",
+          "新しいことを学ぶことや創造的な仕事",
+          "穏やかで構造化された朝のルーティン",
+          "愛する人やコミュニティとのつながり"
         ]
       },
       {
-        "question": "How do you prefer to handle stress?",
+        "question": "ストレスにどう対処することを好みますか？",
         "options": [
-          "Intense physical activity or competition",
-          "Journaling, reading, or problem-solving",
-          "Meditation, yoga, or deep breathing",
-          "Talking it out with friends or family"
+          "激しい身体活動や競争",
+          "日記、読書、問題解決",
+          "瞑想、ヨガ、深呼吸",
+          "友人や家族と話し合う"
         ]
       },
       {
-        "question": "What type of goals excite you the most?",
+        "question": "どのような目標が最もあなたを興奮させますか？",
         "options": [
-          "Bold, ambitious goals with big rewards",
-          "Skills mastery and intellectual growth",
-          "Stability, consistency, and inner peace",
-          "Building relationships and helping others"
+          "大きな報酬を伴う大胆で野心的な目標",
+          "スキルの習得と知的成長",
+          "安定性、一貫性、内なる平和",
+          "人間関係を築き、他者を助ける"
         ]
       },
       {
-        "question": "How would your friends describe you?",
+        "question": "友人はあなたをどのように表現しますか？",
         "options": [
-          "Energetic, bold, and spontaneous",
-          "Curious, creative, and thoughtful",
-          "Calm, reliable, and grounded",
-          "Warm, empathetic, and supportive"
+          "エネルギッシュ、大胆、自発的",
+          "好奇心旺盛、創造的、思慮深い",
+          "穏やか、信頼できる、地に足がついている",
+          "温かい、共感的、支援的"
         ]
       },
       {
-        "question": "What is your ideal way to recharge?",
+        "question": "理想的な充電方法は何ですか？",
         "options": [
-          "Trying something exciting and new",
-          "Deep focus on a passion project",
-          "Rest, nature, and quiet time",
-          "Quality time with people I care about"
+          "エキサイティングで新しいことに挑戦する",
+          "情熱的なプロジェクトに深く集中する",
+          "休息、自然、静かな時間",
+          "大切な人と質の高い時間を過ごす"
         ]
       }
     ]
   },
   "personalities": {
     "dopamine": {
-      "title": "The Adventurer",
-      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+      "title": "冒険家",
+      "description": "あなたは興奮、新奇性、大胆な挑戦で成長します。あなたのクエストは境界を押し広げ、野心的な目標を達成することに焦点を当てます。"
     },
     "acetylcholine": {
-      "title": "The Thinker",
-      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+      "title": "思想家",
+      "description": "あなたは学習、創造性、深い集中を愛します。あなたのクエストはスキルの習得と知的成長を中心に展開します。"
     },
     "gaba": {
-      "title": "The Guardian",
-      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+      "title": "守護者",
+      "description": "あなたは安定性、一貫性、内なる平和を大切にします。あなたのクエストは強い習慣を構築し、バランスを促進します。"
     },
     "serotonin": {
-      "title": "The Connector",
-      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+      "title": "つながり手",
+      "description": "あなたは人間関係やコミュニティからエネルギーを得ます。あなたのクエストは絆を強化し、有意義なつながりを促進します。"
     }
   },
   "taskCategories": {
-    "fitness": "Fitness",
-    "mindfulness": "Mindfulness",
-    "learning": "Learning",
-    "productivity": "Productivity",
-    "social": "Social",
-    "health": "Health",
-    "creativity": "Creativity"
+    "fitness": "フィットネス",
+    "mindfulness": "マインドフルネス",
+    "learning": "学習",
+    "productivity": "生産性",
+    "social": "ソーシャル",
+    "health": "健康",
+    "creativity": "創造性"
   },
   "taskDifficulties": {
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
-    "epic": "Epic"
+    "easy": "簡単",
+    "medium": "中級",
+    "hard": "難しい",
+    "epic": "エピック"
   },
   "onboarding": {
     "welcome": {
@@ -267,38 +267,38 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
-      "subtitle": "Log in to continue your journey",
-      "email": "Email",
+      "title": "おかえりなさい",
+      "subtitle": "ログインして旅を続けましょう",
+      "email": "メールアドレス",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "パスワード",
       "passwordPlaceholder": "パスワードを入力",
-      "submit": "Log In",
+      "submit": "ログイン",
       "loggingIn": "ログイン中...",
-      "noAccount": "Don't have an account?",
+      "noAccount": "アカウントをお持ちでないですか？",
       "signupLink": "サインアップ",
       "invalidCredentials": "無効なメールアドレスまたはパスワード",
       "emailNotConfirmed": "メールアドレスがまだ確認されていません。受信トレイを確認するか、確認リンクを再送信してください。",
-      "error": "Invalid email or password"
+      "error": "無効なメールアドレスまたはパスワード"
     },
     "signup": {
-      "title": "Start Your Journey",
-      "subtitle": "Create your account to begin",
-      "email": "Email",
+      "title": "旅を始めましょう",
+      "subtitle": "アカウントを作成して始めましょう",
+      "email": "メールアドレス",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "パスワード",
       "passwordPlaceholder": "パスワードを作成",
-      "confirmPassword": "Confirm Password",
+      "confirmPassword": "パスワード確認",
       "confirmPasswordPlaceholder": "パスワードを確認",
-      "submit": "Create Account",
+      "submit": "アカウント作成",
       "creating": "アカウント作成中...",
-      "hasAccount": "Already have an account?",
+      "hasAccount": "すでにアカウントをお持ちですか？",
       "loginLink": "ログイン",
       "checkEmailTitle": "メールを確認してください",
       "checkEmailMessage": "確認リンクをメールに送信しました。クリックしてアカウントを有効化し、クエストを開始してください。",
-      "login": "Log in",
-      "error": "Failed to create account",
-      "passwordMismatch": "Passwords do not match"
+      "login": "ログイン",
+      "error": "アカウントの作成に失敗しました",
+      "passwordMismatch": "パスワードが一致しません"
     },
     "socialLogin": {
       "continueWithGoogle": "Googleで続ける",
@@ -308,7 +308,7 @@
   "dashboard": {
     "welcome": "おかえりなさい、{name}",
     "subtitle": "今日のクエスト状況です",
-    "level": "Level {level}",
+    "level": "レベル {level}",
     "xp": "{current} / {next} XP",
     "stats": {
       "totalXP": "総経験値",
@@ -339,10 +339,10 @@
       "noQuestsDescription": "「生成」をクリックして、AI駆動の{timeframe}クエストを作成してください。",
       "completed": "完了"
     },
-    "activeQuests": "Active Quests",
-    "noQuests": "No active quests",
-    "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All",
+    "activeQuests": "アクティブなクエスト",
+    "noQuests": "アクティブなクエストはありません",
+    "generateQuests": "今日のクエストを生成",
+    "viewAll": "すべて表示",
     "dailyTasks": {
       "title": "今日のクエスト",
       "generateQuests": "クエストを生成",
@@ -398,22 +398,22 @@
     }
   },
   "leaderboard": {
-    "title": "Leaderboard",
-    "subtitle": "Top players this week",
-    "rank": "Rank",
-    "player": "Player",
-    "xp": "XP",
-    "level": "Level"
+    "title": "リーダーボード",
+    "subtitle": "今週のトッププレイヤー",
+    "rank": "ランク",
+    "player": "プレイヤー",
+    "xp": "経験値",
+    "level": "レベル"
   },
   "tasks": {
-    "title": "Task Details",
-    "description": "Description",
-    "category": "Category",
-    "difficulty": "Difficulty",
+    "title": "タスク詳細",
+    "description": "説明",
+    "category": "カテゴリー",
+    "difficulty": "難易度",
     "xpReward": "+{xp} XP",
-    "markComplete": "Mark as Complete",
-    "completed": "Completed!",
-    "back": "Back to Dashboard"
+    "markComplete": "完了としてマーク",
+    "completed": "完了！",
+    "back": "ダッシュボードに戻る"
   },
   "landing": {
     "features": {
@@ -528,13 +528,13 @@
     }
   },
   "footer": {
-    "tagline": "Level up your life, one quest at a time.",
-    "copyright": "© 2025 XPLife. All rights reserved.",
+    "tagline": "一度に一つのクエストで、あなたの人生をレベルアップ。",
+    "copyright": "© 2025 XPLife。全著作権所有。",
     "links": {
-      "about": "About",
-      "contact": "Contact",
-      "privacy": "Privacy",
-      "terms": "Terms"
+      "about": "について",
+      "contact": "お問い合わせ",
+      "privacy": "プライバシー",
+      "terms": "利用規約"
     }
   }
 }

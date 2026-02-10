@@ -32,7 +32,7 @@
     "description": "Transforma metas aburridas en misiones épicas RPG. La IA crea tus misiones diarias. Gana XP. Sube de nivel de verdad.",
     "cta": "Juega Gratis",
     "ctaSecondary": "Cómo Funciona",
-    "heroUser": "USUARIO_HÉROE",
+    "heroUser": "USUARIO HÉROE",
     "heroRole": "Optimizador de Vida",
     "xpLabel": "Puntos de Experiencia",
     "xpProgress": "{current} / {total} XP",
@@ -42,89 +42,89 @@
     "statStreak": "Racha",
     "statQuests": "Misiones",
     "statRank": "Rango",
-    "level": "NIV {level}"
+    "level": "Nivel {level}"
   },
   "quiz": {
     "questions": [
       {
-        "question": "When you wake up, what energizes you most?",
+        "question": "Cuando te despiertas, ¿qué te da más energía?",
         "options": [
-          "A thrilling new challenge or adventure",
-          "Learning something new or creative work",
-          "A calm, structured morning routine",
-          "Connecting with loved ones or community"
+          "Un emocionante nuevo desafío o aventura",
+          "Aprender algo nuevo o trabajo creativo",
+          "Una rutina matutina tranquila y estructurada",
+          "Conectar con seres queridos o la comunidad"
         ]
       },
       {
-        "question": "How do you prefer to handle stress?",
+        "question": "¿Cómo prefieres manejar el estrés?",
         "options": [
-          "Intense physical activity or competition",
-          "Journaling, reading, or problem-solving",
-          "Meditation, yoga, or deep breathing",
-          "Talking it out with friends or family"
+          "Actividad física intensa o competición",
+          "Escribir en un diario, leer o resolver problemas",
+          "Meditación, yoga o respiración profunda",
+          "Hablarlo con amigos o familia"
         ]
       },
       {
-        "question": "What type of goals excite you the most?",
+        "question": "¿Qué tipo de metas te emocionan más?",
         "options": [
-          "Bold, ambitious goals with big rewards",
-          "Skills mastery and intellectual growth",
-          "Stability, consistency, and inner peace",
-          "Building relationships and helping others"
+          "Metas audaces y ambiciosas con grandes recompensas",
+          "Dominio de habilidades y crecimiento intelectual",
+          "Estabilidad, consistencia y paz interior",
+          "Construir relaciones y ayudar a otros"
         ]
       },
       {
-        "question": "How would your friends describe you?",
+        "question": "¿Cómo te describirían tus amigos?",
         "options": [
-          "Energetic, bold, and spontaneous",
-          "Curious, creative, and thoughtful",
-          "Calm, reliable, and grounded",
-          "Warm, empathetic, and supportive"
+          "Enérgico, audaz y espontáneo",
+          "Curioso, creativo y reflexivo",
+          "Calmado, confiable y centrado",
+          "Cálido, empático y solidario"
         ]
       },
       {
-        "question": "What is your ideal way to recharge?",
+        "question": "¿Cuál es tu forma ideal de recargar energías?",
         "options": [
-          "Trying something exciting and new",
-          "Deep focus on a passion project",
-          "Rest, nature, and quiet time",
-          "Quality time with people I care about"
+          "Probar algo emocionante y nuevo",
+          "Enfoque profundo en un proyecto apasionante",
+          "Descanso, naturaleza y tiempo tranquilo",
+          "Tiempo de calidad con personas que me importan"
         ]
       }
     ]
   },
   "personalities": {
     "dopamine": {
-      "title": "The Adventurer",
-      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+      "title": "El Aventurero",
+      "description": "Prosperas con emoción, novedad y desafíos audaces. Tus misiones se centrarán en superar límites y lograr metas ambiciosas."
     },
     "acetylcholine": {
-      "title": "The Thinker",
-      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+      "title": "El Pensador",
+      "description": "Amas el aprendizaje, la creatividad y el enfoque profundo. Tus misiones se centrarán en el dominio de habilidades y el crecimiento intelectual."
     },
     "gaba": {
-      "title": "The Guardian",
-      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+      "title": "El Guardián",
+      "description": "Valoras la estabilidad, la consistencia y la paz interior. Tus misiones construirán hábitos fuertes y promoverán el equilibrio."
     },
     "serotonin": {
-      "title": "The Connector",
-      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+      "title": "El Conector",
+      "description": "Obtienes energía de las relaciones y la comunidad. Tus misiones fortalecerán los lazos y promoverán conexiones significativas."
     }
   },
   "taskCategories": {
     "fitness": "Fitness",
-    "mindfulness": "Mindfulness",
-    "learning": "Learning",
-    "productivity": "Productivity",
+    "mindfulness": "Atención Plena",
+    "learning": "Aprendizaje",
+    "productivity": "Productividad",
     "social": "Social",
-    "health": "Health",
-    "creativity": "Creativity"
+    "health": "Salud",
+    "creativity": "Creatividad"
   },
   "taskDifficulties": {
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
-    "epic": "Epic"
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil",
+    "epic": "Épico"
   },
   "onboarding": {
     "welcome": {
@@ -267,38 +267,38 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
-      "subtitle": "Log in to continue your journey",
-      "email": "Email",
+      "title": "Bienvenido de Vuelta",
+      "subtitle": "Inicia sesión para continuar tu viaje",
+      "email": "Correo Electrónico",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "Contraseña",
       "passwordPlaceholder": "Ingresa tu contraseña",
-      "submit": "Log In",
+      "submit": "Iniciar Sesión",
       "loggingIn": "Iniciando sesión...",
-      "noAccount": "Don't have an account?",
+      "noAccount": "¿No tienes una cuenta?",
       "signupLink": "Regístrate",
       "invalidCredentials": "Correo electrónico o contraseña inválidos",
       "emailNotConfirmed": "Tu correo electrónico aún no está confirmado. Por favor, revisa tu bandeja de entrada o reenvía el enlace de confirmación.",
-      "error": "Invalid email or password"
+      "error": "Correo electrónico o contraseña inválidos"
     },
     "signup": {
-      "title": "Start Your Journey",
-      "subtitle": "Create your account to begin",
-      "email": "Email",
+      "title": "Comienza Tu Viaje",
+      "subtitle": "Crea tu cuenta para comenzar",
+      "email": "Correo Electrónico",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "Contraseña",
       "passwordPlaceholder": "Crea una contraseña",
-      "confirmPassword": "Confirm Password",
+      "confirmPassword": "Confirmar Contraseña",
       "confirmPasswordPlaceholder": "Confirma tu contraseña",
-      "submit": "Create Account",
+      "submit": "Crear Cuenta",
       "creating": "Creando cuenta...",
-      "hasAccount": "Already have an account?",
+      "hasAccount": "¿Ya tienes una cuenta?",
       "loginLink": "Inicia sesión",
       "checkEmailTitle": "Revisa tu Correo Electrónico",
       "checkEmailMessage": "Enviamos un enlace de confirmación a tu correo electrónico. Haz clic en él para activar tu cuenta y comenzar tu misión.",
-      "login": "Log in",
-      "error": "Failed to create account",
-      "passwordMismatch": "Passwords do not match"
+      "login": "Iniciar sesión",
+      "error": "Error al crear la cuenta",
+      "passwordMismatch": "Las contraseñas no coinciden"
     },
     "socialLogin": {
       "continueWithGoogle": "Continuar con Google",
@@ -308,7 +308,7 @@
   "dashboard": {
     "welcome": "Bienvenido de nuevo, {name}",
     "subtitle": "Aquí está el estado de tus misiones para hoy",
-    "level": "Level {level}",
+    "level": "Nivel {level}",
     "xp": "{current} / {next} XP",
     "stats": {
       "totalXP": "XP Total",
@@ -339,10 +339,10 @@
       "noQuestsDescription": "Haz clic en \"Generar\" para crear misiones {timeframe} impulsadas por IA.",
       "completed": "Completado"
     },
-    "activeQuests": "Active Quests",
-    "noQuests": "No active quests",
-    "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All",
+    "activeQuests": "Misiones Activas",
+    "noQuests": "No hay misiones activas",
+    "generateQuests": "Generar Misiones de Hoy",
+    "viewAll": "Ver Todas",
     "dailyTasks": {
       "title": "Misiones de Hoy",
       "generateQuests": "Generar Misiones",
@@ -398,22 +398,22 @@
     }
   },
   "leaderboard": {
-    "title": "Leaderboard",
-    "subtitle": "Top players this week",
-    "rank": "Rank",
-    "player": "Player",
+    "title": "Clasificación",
+    "subtitle": "Mejores jugadores esta semana",
+    "rank": "Rango",
+    "player": "Jugador",
     "xp": "XP",
-    "level": "Level"
+    "level": "Nivel"
   },
   "tasks": {
-    "title": "Task Details",
-    "description": "Description",
-    "category": "Category",
-    "difficulty": "Difficulty",
+    "title": "Detalles de la Tarea",
+    "description": "Descripción",
+    "category": "Categoría",
+    "difficulty": "Dificultad",
     "xpReward": "+{xp} XP",
-    "markComplete": "Mark as Complete",
-    "completed": "Completed!",
-    "back": "Back to Dashboard"
+    "markComplete": "Marcar como Completado",
+    "completed": "¡Completado!",
+    "back": "Volver al Panel"
   },
   "landing": {
     "features": {
@@ -528,13 +528,13 @@
     }
   },
   "footer": {
-    "tagline": "Level up your life, one quest at a time.",
-    "copyright": "© 2025 XPLife. All rights reserved.",
+    "tagline": "Sube de nivel tu vida, una misión a la vez.",
+    "copyright": "© 2025 XPLife. Todos los derechos reservados.",
     "links": {
-      "about": "About",
-      "contact": "Contact",
-      "privacy": "Privacy",
-      "terms": "Terms"
+      "about": "Acerca de",
+      "contact": "Contacto",
+      "privacy": "Privacidad",
+      "terms": "Términos"
     }
   }
 }

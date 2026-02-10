@@ -32,7 +32,7 @@
     "description": "Превърни скучните цели в епични RPG квестове. AI създава твоите дневни мисии. Събирай XP. Повишавай нивото за истина.",
     "cta": "Започни Безплатно",
     "ctaSecondary": "Как Работи",
-    "heroUser": "ГЕРОЙ_ПОТРЕБИТЕЛ",
+    "heroUser": "ГЕРОЙ ИГРАЧ",
     "heroRole": "Оптимизатор на Живота",
     "xpLabel": "Точки Опит",
     "xpProgress": "{current} / {total} XP",
@@ -42,89 +42,89 @@
     "statStreak": "Серия",
     "statQuests": "Квестове",
     "statRank": "Ранг",
-    "level": "НВО {level}"
+    "level": "Ниво {level}"
   },
   "quiz": {
     "questions": [
       {
-        "question": "When you wake up, what energizes you most?",
+        "question": "Когато се събудиш, какво те зарежда най-много с енергия?",
         "options": [
-          "A thrilling new challenge or adventure",
-          "Learning something new or creative work",
-          "A calm, structured morning routine",
-          "Connecting with loved ones or community"
+          "Вълнуващо ново предизвикателство или приключение",
+          "Учене на нещо ново или творческа работа",
+          "Спокойна, структурирана сутрешна рутина",
+          "Връзка с близки или общността"
         ]
       },
       {
-        "question": "How do you prefer to handle stress?",
+        "question": "Как предпочиташ да се справяш със стреса?",
         "options": [
-          "Intense physical activity or competition",
-          "Journaling, reading, or problem-solving",
-          "Meditation, yoga, or deep breathing",
-          "Talking it out with friends or family"
+          "Интензивна физическа активност или състезание",
+          "Водене на дневник, четене или решаване на проблеми",
+          "Медитация, йога или дълбоко дишане",
+          "Разговор с приятели или семейство"
         ]
       },
       {
-        "question": "What type of goals excite you the most?",
+        "question": "Какъв тип цели те вълнуват най-много?",
         "options": [
-          "Bold, ambitious goals with big rewards",
-          "Skills mastery and intellectual growth",
-          "Stability, consistency, and inner peace",
-          "Building relationships and helping others"
+          "Смели, амбициозни цели с големи награди",
+          "Овладяване на умения и интелектуален растеж",
+          "Стабилност, последователност и вътрешен мир",
+          "Изграждане на взаимоотношения и помагане на другите"
         ]
       },
       {
-        "question": "How would your friends describe you?",
+        "question": "Как биха те описали приятелите ти?",
         "options": [
-          "Energetic, bold, and spontaneous",
-          "Curious, creative, and thoughtful",
-          "Calm, reliable, and grounded",
-          "Warm, empathetic, and supportive"
+          "Енергичен, смел и спонтанен",
+          "Любопитен, креативен и замислен",
+          "Спокоен, надежден и стабилен",
+          "Топъл, съпричастен и подкрепящ"
         ]
       },
       {
-        "question": "What is your ideal way to recharge?",
+        "question": "Какъв е идеалният ти начин да се презаредиш?",
         "options": [
-          "Trying something exciting and new",
-          "Deep focus on a passion project",
-          "Rest, nature, and quiet time",
-          "Quality time with people I care about"
+          "Опитване на нещо вълнуващо и ново",
+          "Дълбока концентрация върху проект на страстта",
+          "Почивка, природа и тихо време",
+          "Качествено време с хора, които обичам"
         ]
       }
     ]
   },
   "personalities": {
     "dopamine": {
-      "title": "The Adventurer",
-      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+      "title": "Авантюристът",
+      "description": "Ти процъфтяваш в вълнението, новостта и смелите предизвикателства. Твоите квестове ще се фокусират върху преодоляването на граници и постигането на амбициозни цели."
     },
     "acetylcholine": {
-      "title": "The Thinker",
-      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+      "title": "Мислителят",
+      "description": "Ти обичаш ученето, креативността и дълбокото съсредоточаване. Твоите квестове ще се въртят около овладяване на умения и интелектуален растеж."
     },
     "gaba": {
-      "title": "The Guardian",
-      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+      "title": "Пазителят",
+      "description": "Ти ценишстабилността, последователността и вътрешния мир. Твоите квестове ще изградят силни навици и ще насърчат баланса."
     },
     "serotonin": {
-      "title": "The Connector",
-      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+      "title": "Свързващият",
+      "description": "Ти черпиш енергия от взаимоотношенията и общността. Твоите квестове ще укрепят връзките и ще насърчат смислени отношения."
     }
   },
   "taskCategories": {
-    "fitness": "Fitness",
-    "mindfulness": "Mindfulness",
-    "learning": "Learning",
-    "productivity": "Productivity",
-    "social": "Social",
-    "health": "Health",
-    "creativity": "Creativity"
+    "fitness": "Фитнес",
+    "mindfulness": "Осъзнатост",
+    "learning": "Учене",
+    "productivity": "Продуктивност",
+    "social": "Социални",
+    "health": "Здраве",
+    "creativity": "Креативност"
   },
   "taskDifficulties": {
-    "easy": "Easy",
-    "medium": "Medium",
-    "hard": "Hard",
-    "epic": "Epic"
+    "easy": "Лесно",
+    "medium": "Средно",
+    "hard": "Трудно",
+    "epic": "Епично"
   },
   "onboarding": {
     "welcome": {
@@ -267,38 +267,38 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
-      "subtitle": "Log in to continue your journey",
-      "email": "Email",
+      "title": "Добре Дошъл Обратно",
+      "subtitle": "Влезте, за да продължите вашето пътешествие",
+      "email": "Имейл",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "Парола",
       "passwordPlaceholder": "Въведете паролата си",
-      "submit": "Log In",
+      "submit": "Вход",
       "loggingIn": "Влизане...",
-      "noAccount": "Don't have an account?",
+      "noAccount": "Нямате акаунт?",
       "signupLink": "Регистрирай се",
       "invalidCredentials": "Невалиден имейл или парола",
       "emailNotConfirmed": "Вашият имейл все още не е потвърден. Моля, проверете входящата си поща или изпратете отново линка за потвърждение.",
-      "error": "Invalid email or password"
+      "error": "Невалиден имейл или парола"
     },
     "signup": {
-      "title": "Start Your Journey",
-      "subtitle": "Create your account to begin",
-      "email": "Email",
+      "title": "Започнете Вашето Пътешествие",
+      "subtitle": "Създайте акаунт, за да започнете",
+      "email": "Имейл",
       "emailPlaceholder": "hero@xplife.app",
-      "password": "Password",
+      "password": "Парола",
       "passwordPlaceholder": "Създайте парола",
-      "confirmPassword": "Confirm Password",
+      "confirmPassword": "Потвърдете Парола",
       "confirmPasswordPlaceholder": "Потвърдете паролата си",
-      "submit": "Create Account",
+      "submit": "Създай Акаунт",
       "creating": "Създаване на акаунт...",
-      "hasAccount": "Already have an account?",
+      "hasAccount": "Вече имате акаунт?",
       "loginLink": "Влез",
       "checkEmailTitle": "Проверете имейла си",
       "checkEmailMessage": "Изпратихме линк за потвърждение на вашия имейл. Кликнете го, за да активирате акаунта си и да започнете квеста си.",
-      "login": "Log in",
-      "error": "Failed to create account",
-      "passwordMismatch": "Passwords do not match"
+      "login": "Вход",
+      "error": "Неуспешно създаване на акаунт",
+      "passwordMismatch": "Паролите не съвпадат"
     },
     "socialLogin": {
       "continueWithGoogle": "Продължи с Google",
@@ -306,9 +306,9 @@
     }
   },
   "dashboard": {
-    "welcome": "Welcome back, {name}",
-    "subtitle": "Here's your quest status for today",
-    "level": "Level {level}",
+    "welcome": "Добре дошъл обратно, {name}",
+    "subtitle": "Ето статуса на вашите квестове за днес",
+    "level": "Ниво {level}",
     "xp": "{current} / {next} XP",
     "stats": {
       "totalXP": "Общо XP",
@@ -339,10 +339,10 @@
       "noQuestsDescription": "Кликни \"Генерирай\", за да създадеш AI {timeframe} квестове.",
       "completed": "Завършено"
     },
-    "activeQuests": "Active Quests",
-    "noQuests": "No active quests",
-    "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All",
+    "activeQuests": "Активни Квестове",
+    "noQuests": "Няма активни квестове",
+    "generateQuests": "Генерирай Днешни Квестове",
+    "viewAll": "Виж Всички",
     "dailyTasks": {
       "title": "Днешни Квестове",
       "generateQuests": "Генерирай Квестове",
@@ -398,22 +398,22 @@
     }
   },
   "leaderboard": {
-    "title": "Leaderboard",
-    "subtitle": "Top players this week",
-    "rank": "Rank",
-    "player": "Player",
+    "title": "Класация",
+    "subtitle": "Топ играчи тази седмица",
+    "rank": "Ранг",
+    "player": "Играч",
     "xp": "XP",
-    "level": "Level"
+    "level": "Ниво"
   },
   "tasks": {
-    "title": "Task Details",
-    "description": "Description",
-    "category": "Category",
-    "difficulty": "Difficulty",
+    "title": "Детайли за Задачата",
+    "description": "Описание",
+    "category": "Категория",
+    "difficulty": "Трудност",
     "xpReward": "+{xp} XP",
-    "markComplete": "Mark as Complete",
-    "completed": "Completed!",
-    "back": "Back to Dashboard"
+    "markComplete": "Маркирай като Завършено",
+    "completed": "Завършено!",
+    "back": "Назад към Таблото"
   },
   "landing": {
     "features": {
@@ -528,13 +528,13 @@
     }
   },
   "footer": {
-    "tagline": "Level up your life, one quest at a time.",
-    "copyright": "© 2025 XPLife. All rights reserved.",
+    "tagline": "Повишавайте нивото на живота си, по един квест наведнъж.",
+    "copyright": "© 2025 XPLife. Всички права запазени.",
     "links": {
-      "about": "About",
-      "contact": "Contact",
-      "privacy": "Privacy",
-      "terms": "Terms"
+      "about": "За Нас",
+      "contact": "Контакт",
+      "privacy": "Поверителност",
+      "terms": "Условия"
     }
   }
 }
