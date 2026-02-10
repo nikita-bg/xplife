@@ -3,15 +3,13 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { Menu, X } from "lucide-react"
 import { LanguageSwitcher } from "@/components/i18n/language-switcher"
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en'
+  const locale = useLocale()
   const t = useTranslations('navbar')
 
   return (

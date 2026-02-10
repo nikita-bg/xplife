@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { ArrowDown, Shield, Sword, Trophy } from "lucide-react"
 
 export function Hero() {
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en'
+  const locale = useLocale()
   const t = useTranslations('hero')
   const [xpAnimated, setXpAnimated] = useState(false)
   const [level, setLevel] = useState(42)
