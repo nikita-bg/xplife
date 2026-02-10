@@ -28,6 +28,7 @@ export interface Database {
           gold_balance: number
           preferred_currency: string
           plan: string
+          about_me: string | null
         }
         Insert: {
           id: string
@@ -47,6 +48,7 @@ export interface Database {
           gold_balance?: number
           preferred_currency?: string
           plan?: string
+          about_me?: string | null
         }
         Update: {
           id?: string
@@ -66,6 +68,7 @@ export interface Database {
           gold_balance?: number
           preferred_currency?: string
           plan?: string
+          about_me?: string | null
         }
       }
       braverman_results: {

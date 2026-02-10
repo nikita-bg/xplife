@@ -343,6 +343,7 @@ export async function POST(request: Request) {
       workSchedule: profile?.work_schedule || null,
       lifePhase: profile?.life_phase || null,
       mainChallenge: profile?.main_challenge || null,
+      aboutMe: profile?.about_me || null,
       interests: interests?.map((i) => i.interest) || [],
       recentFeedback: feedbackHistory || [],
       categoryPreferences,

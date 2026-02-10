@@ -97,6 +97,7 @@ export default async function ProfilePage({
         userId={user.id}
         currentDisplayName={profile?.display_name ?? ''}
         currentAvatarUrl={profile?.avatar_url}
+        currentAboutMe={profile?.about_me ?? ''}
       />
     </div>
   )

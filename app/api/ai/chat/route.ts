@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   // Fetch user profile for context and plan
   const { data: profile, error: profileError } = await supabase
     .from('users')
-    .select('personality_type, level, plan, display_name')
+    .select('personality_type, level, plan, display_name, about_me')
     .eq('id', user.id)
     .single()
 
@@ -145,6 +145,7 @@ export async function POST(request: NextRequest) {
           message: message.trim(),
           personalityType: profile?.personality_type,
           level: profile?.level,
+          aboutMe: profile?.about_me || null,
           recentTasks: recentTasks ?? [],
           goals: goals ?? [],
         }),

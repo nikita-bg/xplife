@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { LogOut, Upload } from 'lucide-react'
 import { AvatarCropDialog } from './avatar-crop-dialog'
@@ -14,13 +15,15 @@ interface SettingsFormProps {
   userId: string
   currentDisplayName: string
   currentAvatarUrl: string | null
+  currentAboutMe: string
 }
 
-export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: SettingsFormProps) {
+export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl, currentAboutMe }: SettingsFormProps) {
   const router = useRouter()
   const locale = useLocale()
   const t = useTranslations('profile.settings')
   const [displayName, setDisplayName] = useState(currentDisplayName)
+  const [aboutMe, setAboutMe] = useState(currentAboutMe)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -35,7 +38,7 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
     const supabase = createClient()
     const { error: updateError } = await supabase
       .from('users')
-      .update({ display_name: displayName, updated_at: new Date().toISOString() })
+      .update({ display_name: displayName, about_me: aboutMe || null, updated_at: new Date().toISOString() })
       .eq('id', userId)
 
     if (updateError) {
@@ -85,6 +88,21 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
             onChange={(e) => setDisplayName(e.target.value)}
             className="bg-background/50"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="aboutMe">{t('aboutMe')}</Label>
+          <Textarea
+            id="aboutMe"
+            value={aboutMe}
+            onChange={(e) => setAboutMe(e.target.value.slice(0, 500))}
+            placeholder={t('aboutMePlaceholder')}
+            className="bg-background/50 min-h-[100px] resize-none"
+            maxLength={500}
+          />
+          <p className="text-xs text-muted-foreground text-right">
+            {t('aboutMeChars', { count: aboutMe.length })}
+          </p>
         </div>
 
         <div>
