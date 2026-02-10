@@ -1,13 +1,14 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { LogOut, Upload } from 'lucide-react'
 import { AvatarCropDialog } from './avatar-crop-dialog'
+import { useTranslations, useLocale } from 'next-intl'
 
 interface SettingsFormProps {
   userId: string
@@ -17,8 +18,8 @@ interface SettingsFormProps {
 
 export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: SettingsFormProps) {
   const router = useRouter()
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
+  const locale = useLocale()
+  const t = useTranslations('profile.settings')
   const [displayName, setDisplayName] = useState(currentDisplayName)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -73,11 +74,11 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
 
   return (
     <div className="glass-card rounded-2xl p-6">
-      <h2 className="mb-4 font-display text-lg font-bold text-foreground">Settings</h2>
+      <h2 className="mb-4 font-display text-lg font-bold text-foreground">{t('title')}</h2>
 
       <div className="flex flex-col gap-4">
         <div className="space-y-2">
-          <Label htmlFor="displayName">Display Name</Label>
+          <Label htmlFor="displayName">{t('displayName')}</Label>
           <Input
             id="displayName"
             value={displayName}
@@ -88,7 +89,7 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
 
         <div>
           <div className="flex items-center gap-3">
-            <Label>Avatar</Label>
+            <Label>{t('avatar')}</Label>
             <Button
               variant="outline"
               size="sm"
@@ -96,7 +97,7 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
               onClick={() => fileRef.current?.click()}
             >
               <Upload className="h-4 w-4" />
-              Upload Avatar
+              {t('uploadAvatar')}
             </Button>
           </div>
           <input
@@ -112,11 +113,11 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
           <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</div>
         )}
         {saved && (
-          <div className="rounded-lg bg-accent/10 p-3 text-sm text-accent">Changes saved successfully!</div>
+          <div className="rounded-lg bg-accent/10 p-3 text-sm text-accent">{t('saveSuccess')}</div>
         )}
 
         <Button onClick={handleSave} disabled={saving} className="w-full">
-          {saving ? 'Saving...' : 'Save Changes'}
+          {saving ? t('saving') : t('save')}
         </Button>
 
         <div className="border-t border-border pt-4">
@@ -126,7 +127,7 @@ export function SettingsForm({ userId, currentDisplayName, currentAvatarUrl }: S
             className="w-full gap-2 text-destructive hover:text-destructive"
           >
             <LogOut className="h-4 w-4" />
-            Log Out
+            {t('logout')}
           </Button>
         </div>
       </div>

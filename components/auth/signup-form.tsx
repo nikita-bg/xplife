@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -12,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SocialLoginButtons } from './social-login-buttons'
+import { useTranslations, useLocale } from 'next-intl'
 
 const signupSchema = z.object({
   email: z.string().email('Please enter a valid email'),
@@ -25,8 +25,8 @@ const signupSchema = z.object({
 type SignupFormData = z.infer<typeof signupSchema>
 
 export function SignupForm() {
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
+  const locale = useLocale()
+  const t = useTranslations('auth.signup')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -90,12 +90,12 @@ export function SignupForm() {
             <Zap className="h-7 w-7 text-accent" />
           </div>
         </div>
-        <h2 className="font-display text-xl font-bold text-foreground">Check Your Email</h2>
+        <h2 className="font-display text-xl font-bold text-foreground">{t('checkEmailTitle')}</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          We sent a confirmation link to your email. Click it to activate your account and start your quest.
+          {t('checkEmailMessage')}
         </p>
         <Link href={`/${locale}/login`} className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
-          Back to login
+          {t('loginLink')}
         </Link>
       </div>
     )
@@ -107,8 +107,8 @@ export function SignupForm() {
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
           <Zap className="h-7 w-7 text-primary-foreground" />
         </div>
-        <h1 className="font-display text-2xl font-bold text-foreground">Create Account</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Begin your journey to leveling up</p>
+        <h1 className="font-display text-2xl font-bold text-foreground">{t('title')}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t('subtitle')}</p>
       </div>
 
       <SocialLoginButtons />
@@ -121,11 +121,11 @@ export function SignupForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('email')}</Label>
           <Input
             id="email"
             type="email"
-            placeholder="hero@xplife.app"
+            placeholder={t('emailPlaceholder')}
             {...register('email')}
             className="bg-background/50"
           />
@@ -135,11 +135,11 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('password')}</Label>
           <Input
             id="password"
             type="password"
-            placeholder="Create a password"
+            placeholder={t('passwordPlaceholder')}
             {...register('password')}
             className="bg-background/50"
           />
@@ -149,11 +149,11 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
           <Input
             id="confirmPassword"
             type="password"
-            placeholder="Confirm your password"
+            placeholder={t('confirmPasswordPlaceholder')}
             {...register('confirmPassword')}
             className="bg-background/50"
           />
@@ -169,14 +169,14 @@ export function SignupForm() {
         )}
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Creating account...' : 'Create Account'}
+          {loading ? t('creating') : t('submit')}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        Already have an account?{' '}
+        {t('hasAccount')}{' '}
         <Link href={`/${locale}/login`} className="font-medium text-primary hover:underline">
-          Log in
+          {t('loginLink')}
         </Link>
       </p>
     </div>

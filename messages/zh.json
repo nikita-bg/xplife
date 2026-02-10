@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "XPLife - Level Up Your Life",
-    "description": "Turn your goals into epic quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization."
+    "title": "XPLife - 提升你的生活水平",
+    "description": "将目标转化为史诗任务。赚取经验值。追踪连胜。通过AI驱动的生活优化成为最好的自己。"
   },
   "common": {
     "loading": "Loading...",
@@ -135,28 +135,50 @@
     "result": "You are...",
     "continue": "Continue to Dashboard"
   },
+  "navigation": {
+    "dashboard": "仪表板",
+    "leaderboard": "排行榜",
+    "profile": "个人资料",
+    "logout": "退出登录"
+  },
   "auth": {
     "login": {
       "title": "Welcome Back",
       "subtitle": "Log in to continue your journey",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "输入您的密码",
       "submit": "Log In",
+      "loggingIn": "登录中...",
       "noAccount": "Don't have an account?",
-      "signup": "Sign up",
+      "signupLink": "注册",
+      "invalidCredentials": "无效的电子邮件或密码",
+      "emailNotConfirmed": "您的电子邮件尚未确认。请检查您的收件箱或重新发送确认链接。",
       "error": "Invalid email or password"
     },
     "signup": {
       "title": "Start Your Journey",
       "subtitle": "Create your account to begin",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "创建密码",
       "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "确认您的密码",
       "submit": "Create Account",
+      "creating": "创建账户中...",
       "hasAccount": "Already have an account?",
+      "loginLink": "登录",
+      "checkEmailTitle": "检查您的电子邮件",
+      "checkEmailMessage": "我们已向您的电子邮件发送了确认链接。点击它以激活您的账户并开始您的任务。",
       "login": "Log in",
       "error": "Failed to create account",
       "passwordMismatch": "Passwords do not match"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithGithub": "使用 GitHub 继续"
     }
   },
   "dashboard": {
@@ -173,7 +195,18 @@
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
     "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "今日任务",
+      "generateQuests": "生成任务",
+      "generating": "生成中...",
+      "describeGoals": "描述您的目标",
+      "placeholder": "例如：我想多运动、学习西班牙语、每天阅读20页...",
+      "generate": "生成",
+      "noQuestsTitle": "暂无任务",
+      "noQuestsDescription": "点击\"生成任务\"以获取您的个性化每日挑战。",
+      "completed": "已完成"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -182,7 +215,17 @@
     "email": "Email",
     "personality": "Personality Type",
     "stats": "Statistics",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "settings": {
+      "title": "设置",
+      "displayName": "显示名称",
+      "avatar": "头像",
+      "uploadAvatar": "上传头像",
+      "save": "保存更改",
+      "saving": "保存中...",
+      "saveSuccess": "更改保存成功！",
+      "logout": "退出登录"
+    }
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -201,6 +244,46 @@
     "markComplete": "Mark as Complete",
     "completed": "Completed!",
     "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "强化道具",
+      "title": "您的",
+      "titleHighlight": "成长",
+      "description": "将日常生活转变为值得游戏的冒险所需的一切。",
+      "aiPowered": {
+        "title": "AI驱动的任务",
+        "description": "基于您的激素类型和心理的个性化每日任务。每个任务都旨在推动您前进。"
+      },
+      "trackProgress": {
+        "title": "追踪您的进度",
+        "description": "赚取经验值，保持连胜，攀登排行榜。看着您的真实生活数据随着完成任务而增长。"
+      },
+      "deepPersonalization": {
+        "title": "深度个性化",
+        "description": "整合Braverman测试，提供符合您大脑化学的任务。没有一刀切的方法。"
+      }
+    },
+    "pricing": {
+      "subtitle": "选择您的道路",
+      "title": "选择您的",
+      "titleHighlight": "职业",
+      "description": "无需信用卡。随时升级。",
+      "free": {
+        "name": "免费开始",
+        "cta": "免费开始游戏"
+      },
+      "premium": {
+        "name": "高级版",
+        "badge": "最受欢迎",
+        "cta": "升级至高级版"
+      },
+      "lifetime": {
+        "name": "终身版",
+        "badge": "限时优惠",
+        "cta": "锁定终身访问"
+      }
+    }
   },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",

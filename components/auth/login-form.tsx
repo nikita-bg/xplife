@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SocialLoginButtons } from './social-login-buttons'
+import { useTranslations, useLocale } from 'next-intl'
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email'),
@@ -22,8 +23,8 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const router = useRouter()
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
+  const locale = useLocale()
+  const t = useTranslations('auth.login')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [needsConfirmation, setNeedsConfirmation] = useState(false)
@@ -53,9 +54,9 @@ export function LoginForm() {
       if (error.message.toLowerCase().includes('not confirmed') || error.message.toLowerCase().includes('email not confirmed')) {
         setNeedsConfirmation(true)
         setPendingEmail(data.email)
-        setError('Your email is not confirmed yet. Please check your inbox or resend the confirmation link.')
+        setError(t('emailNotConfirmed'))
       } else {
-        setError(error.message)
+        setError(t('invalidCredentials'))
       }
       setLoading(false)
       return
@@ -71,8 +72,8 @@ export function LoginForm() {
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
           <Zap className="h-7 w-7 text-primary-foreground" />
         </div>
-        <h1 className="font-display text-2xl font-bold text-foreground">Welcome Back</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Log in to continue your quest</p>
+        <h1 className="font-display text-2xl font-bold text-foreground">{t('title')}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t('subtitle')}</p>
       </div>
 
       <SocialLoginButtons />
@@ -85,11 +86,11 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('email')}</Label>
           <Input
             id="email"
             type="email"
-            placeholder="hero@xplife.app"
+            placeholder={t('emailPlaceholder')}
             {...register('email')}
             className="bg-background/50"
           />
@@ -99,11 +100,11 @@ export function LoginForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('password')}</Label>
           <Input
             id="password"
             type="password"
-            placeholder="Enter your password"
+            placeholder={t('passwordPlaceholder')}
             {...register('password')}
             className="bg-background/50"
           />
@@ -141,14 +142,14 @@ export function LoginForm() {
         )}
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Logging in...' : 'Log In'}
+          {loading ? t('loggingIn') : t('submit')}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        {"Don't have an account? "}
+        {t('noAccount')}{' '}
         <Link href={`/${locale}/signup`} className="font-medium text-primary hover:underline">
-          Sign up
+          {t('signupLink')}
         </Link>
       </p>
     </div>

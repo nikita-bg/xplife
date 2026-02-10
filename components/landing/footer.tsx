@@ -1,11 +1,17 @@
+'use client'
+
 import Link from "next/link"
 import { Github, Instagram, Twitter, Zap } from "lucide-react"
+import { useTranslations, useLocale } from 'next-intl'
 
 export function Footer() {
+  const t = useTranslations('footer')
+  const locale = useLocale()
+
   return (
     <footer className="border-t border-border/50 py-12 px-4">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 md:flex-row md:justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href={`/${locale}`} className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <Zap className="h-5 w-5 text-primary-foreground" />
           </div>
@@ -15,17 +21,17 @@ export function Footer() {
         </Link>
 
         <nav className="flex flex-wrap items-center justify-center gap-6">
-          <Link href="/about" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            About
+          <Link href={`/${locale}/about`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            {t('links.about')}
           </Link>
-          <Link href="/privacy" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            Privacy
+          <Link href={`/${locale}/privacy`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            {t('links.privacy')}
           </Link>
-          <Link href="/terms" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            Terms
+          <Link href={`/${locale}/terms`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            {t('links.terms')}
           </Link>
-          <Link href="/contact" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            Contact
+          <Link href={`/${locale}/contact`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            {t('links.contact')}
           </Link>
         </nav>
 
@@ -44,7 +50,7 @@ export function Footer() {
 
       <div className="mx-auto mt-8 max-w-6xl border-t border-border/50 pt-8 text-center">
         <p className="text-xs text-muted-foreground">
-          {"© 2026 XPLife. Built for achievers."}
+          {t('copyright')}
         </p>
       </div>
     </footer>

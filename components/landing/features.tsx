@@ -1,27 +1,32 @@
-import { Brain, Crosshair, TrendingUp } from "lucide-react"
+'use client'
 
-const features = [
-  {
-    icon: Crosshair,
-    title: "AI-Powered Tasks",
-    description: "Personalized daily quests based on your hormonal type and psychology. Every task is crafted to push you forward.",
-    gradient: "from-primary to-primary/60",
-  },
-  {
-    icon: TrendingUp,
-    title: "Track Your Progress",
-    description: "Earn XP, maintain streaks, climb the leaderboard. Watch your real-life stats grow as you complete quests.",
-    gradient: "from-accent to-accent/60",
-  },
-  {
-    icon: Brain,
-    title: "Deep Personalization",
-    description: "Braverman test integration for tasks that match YOUR brain chemistry. No one-size-fits-all approach.",
-    gradient: "from-primary to-accent",
-  },
-]
+import { Brain, Crosshair, TrendingUp } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export function Features() {
+  const t = useTranslations('landing.features')
+
+  const features = [
+    {
+      icon: Crosshair,
+      title: t('aiPowered.title'),
+      description: t('aiPowered.description'),
+      gradient: "from-primary to-primary/60",
+    },
+    {
+      icon: TrendingUp,
+      title: t('trackProgress.title'),
+      description: t('trackProgress.description'),
+      gradient: "from-accent to-accent/60",
+    },
+    {
+      icon: Brain,
+      title: t('deepPersonalization.title'),
+      description: t('deepPersonalization.description'),
+      gradient: "from-primary to-accent",
+    },
+  ]
+
   return (
     <section id="features" className="relative py-24 px-4">
       <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-accent/10 blur-[120px]" />
@@ -29,13 +34,13 @@ export function Features() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 text-center">
           <p className="mb-3 font-display text-xs font-bold uppercase tracking-widest text-accent">
-            Power-Ups
+            {t('subtitle')}
           </p>
           <h2 className="text-balance font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-            Your Arsenal of <span className="gradient-text">Growth</span>
+            {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground leading-relaxed">
-            Everything you need to transform your daily routine into an adventure worth playing.
+            {t('description')}
           </p>
         </div>
 

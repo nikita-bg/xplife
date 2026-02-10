@@ -135,28 +135,50 @@
     "result": "You are...",
     "continue": "Continue to Dashboard"
   },
+  "navigation": {
+    "dashboard": "Табло",
+    "leaderboard": "Класация",
+    "profile": "Профил",
+    "logout": "Изход"
+  },
   "auth": {
     "login": {
       "title": "Welcome Back",
       "subtitle": "Log in to continue your journey",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Въведете паролата си",
       "submit": "Log In",
+      "loggingIn": "Влизане...",
       "noAccount": "Don't have an account?",
-      "signup": "Sign up",
+      "signupLink": "Регистрирай се",
+      "invalidCredentials": "Невалиден имейл или парола",
+      "emailNotConfirmed": "Вашият имейл все още не е потвърден. Моля, проверете входящата си поща или изпратете отново линка за потвърждение.",
       "error": "Invalid email or password"
     },
     "signup": {
       "title": "Start Your Journey",
       "subtitle": "Create your account to begin",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Създайте парола",
       "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Потвърдете паролата си",
       "submit": "Create Account",
+      "creating": "Създаване на акаунт...",
       "hasAccount": "Already have an account?",
+      "loginLink": "Влез",
+      "checkEmailTitle": "Проверете имейла си",
+      "checkEmailMessage": "Изпратихме линк за потвърждение на вашия имейл. Кликнете го, за да активирате акаунта си и да започнете квеста си.",
       "login": "Log in",
       "error": "Failed to create account",
       "passwordMismatch": "Passwords do not match"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Продължи с Google",
+      "continueWithGithub": "Продължи с GitHub"
     }
   },
   "dashboard": {
@@ -173,7 +195,18 @@
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
     "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "Днешни Квестове",
+      "generateQuests": "Генерирай Квестове",
+      "generating": "Генериране...",
+      "describeGoals": "Опишете целите си",
+      "placeholder": "Напр. искам да тренирам повече, да науча испански, да чета 20 страници дневно...",
+      "generate": "Генерирай",
+      "noQuestsTitle": "Все още няма квестове",
+      "noQuestsDescription": "Кликнете \"Генерирай Квестове\", за да получите персонализираните си дневни предизвикателства.",
+      "completed": "Завършено"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -182,7 +215,17 @@
     "email": "Email",
     "personality": "Personality Type",
     "stats": "Statistics",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "settings": {
+      "title": "Настройки",
+      "displayName": "Показвано Име",
+      "avatar": "Аватар",
+      "uploadAvatar": "Качи Аватар",
+      "save": "Запази Промените",
+      "saving": "Записване...",
+      "saveSuccess": "Промените са запазени успешно!",
+      "logout": "Изход"
+    }
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -201,6 +244,46 @@
     "markComplete": "Mark as Complete",
     "completed": "Completed!",
     "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "Усилвания",
+      "title": "Вашият Арсенал от",
+      "titleHighlight": "Растеж",
+      "description": "Всичко необходимо, за да превърнете ежедневната си рутина в приключение, което си заслужава да играете.",
+      "aiPowered": {
+        "title": "AI Задачи",
+        "description": "Персонализирани дневни квестове, базирани на вашия хормонален тип и психология. Всяка задача е създадена, за да ви изтласка напред."
+      },
+      "trackProgress": {
+        "title": "Следете Прогреса Си",
+        "description": "Печелете XP, поддържайте серии, качвайте се по класацията. Гледайте как реалните ви статистики растат, докато завършвате квестове."
+      },
+      "deepPersonalization": {
+        "title": "Дълбока Персонализация",
+        "description": "Интеграция на Braverman теста за задачи, които отговарят на ВАШАТА мозъчна химия. Без универсален подход."
+      }
+    },
+    "pricing": {
+      "subtitle": "Изберете Пътя Си",
+      "title": "Изберете",
+      "titleHighlight": "Класа",
+      "description": "Не се изисква кредитна карта. Надградете по всяко време.",
+      "free": {
+        "name": "Започнете Безплатно",
+        "cta": "Започнете Да Играете Безплатно"
+      },
+      "premium": {
+        "name": "Премиум",
+        "badge": "Най-Популярен",
+        "cta": "Станете Премиум"
+      },
+      "lifetime": {
+        "name": "Пожизнен",
+        "badge": "Ограничена Оферта",
+        "cta": "Заключете Пожизнен Достъп"
+      }
+    }
   },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",

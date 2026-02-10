@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "XPLife - Level Up Your Life",
-    "description": "Turn your goals into epic quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization."
+    "title": "XPLife - 人生をレベルアップ",
+    "description": "目標を壮大なクエストに変えましょう。XPを獲得。連勝記録を追跡。AI駆動の人生最適化で最高の自分になろう。"
   },
   "common": {
     "loading": "Loading...",
@@ -135,28 +135,50 @@
     "result": "You are...",
     "continue": "Continue to Dashboard"
   },
+  "navigation": {
+    "dashboard": "ダッシュボード",
+    "leaderboard": "リーダーボード",
+    "profile": "プロフィール",
+    "logout": "ログアウト"
+  },
   "auth": {
     "login": {
       "title": "Welcome Back",
       "subtitle": "Log in to continue your journey",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "パスワードを入力",
       "submit": "Log In",
+      "loggingIn": "ログイン中...",
       "noAccount": "Don't have an account?",
-      "signup": "Sign up",
+      "signupLink": "サインアップ",
+      "invalidCredentials": "無効なメールアドレスまたはパスワード",
+      "emailNotConfirmed": "メールアドレスがまだ確認されていません。受信トレイを確認するか、確認リンクを再送信してください。",
       "error": "Invalid email or password"
     },
     "signup": {
       "title": "Start Your Journey",
       "subtitle": "Create your account to begin",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "パスワードを作成",
       "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "パスワードを確認",
       "submit": "Create Account",
+      "creating": "アカウント作成中...",
       "hasAccount": "Already have an account?",
+      "loginLink": "ログイン",
+      "checkEmailTitle": "メールを確認してください",
+      "checkEmailMessage": "確認リンクをメールに送信しました。クリックしてアカウントを有効化し、クエストを開始してください。",
       "login": "Log in",
       "error": "Failed to create account",
       "passwordMismatch": "Passwords do not match"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Googleで続ける",
+      "continueWithGithub": "GitHubで続ける"
     }
   },
   "dashboard": {
@@ -173,7 +195,18 @@
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
     "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "今日のクエスト",
+      "generateQuests": "クエストを生成",
+      "generating": "生成中...",
+      "describeGoals": "目標を説明してください",
+      "placeholder": "例：もっと運動したい、スペイン語を学びたい、毎日20ページ読みたい...",
+      "generate": "生成",
+      "noQuestsTitle": "クエストがありません",
+      "noQuestsDescription": "「クエストを生成」をクリックして、パーソナライズされた毎日のチャレンジを取得してください。",
+      "completed": "完了"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -182,7 +215,17 @@
     "email": "Email",
     "personality": "Personality Type",
     "stats": "Statistics",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "settings": {
+      "title": "設定",
+      "displayName": "表示名",
+      "avatar": "アバター",
+      "uploadAvatar": "アバターをアップロード",
+      "save": "変更を保存",
+      "saving": "保存中...",
+      "saveSuccess": "変更が正常に保存されました！",
+      "logout": "ログアウト"
+    }
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -201,6 +244,46 @@
     "markComplete": "Mark as Complete",
     "completed": "Completed!",
     "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "パワーアップ",
+      "title": "あなたの",
+      "titleHighlight": "成長",
+      "description": "日常のルーティンを冒険に変えるために必要なすべて。",
+      "aiPowered": {
+        "title": "AI駆動のタスク",
+        "description": "ホルモンタイプと心理に基づいたパーソナライズされた毎日のクエスト。すべてのタスクはあなたを前進させるように作られています。"
+      },
+      "trackProgress": {
+        "title": "進捗を追跡",
+        "description": "XPを獲得し、連勝を維持し、リーダーボードを登りましょう。クエストを完了するにつれて、実際の統計が成長するのを見守りましょう。"
+      },
+      "deepPersonalization": {
+        "title": "深いパーソナライゼーション",
+        "description": "Bravermanテスト統合により、あなたの脳化学に合ったタスクを提供。万能なアプローチはありません。"
+      }
+    },
+    "pricing": {
+      "subtitle": "道を選ぶ",
+      "title": "あなたの",
+      "titleHighlight": "クラス",
+      "description": "クレジットカード不要。いつでもアップグレード可能。",
+      "free": {
+        "name": "無料で始める",
+        "cta": "無料でプレイ開始"
+      },
+      "premium": {
+        "name": "プレミアム",
+        "badge": "最も人気",
+        "cta": "プレミアムにする"
+      },
+      "lifetime": {
+        "name": "ライフタイム",
+        "badge": "期間限定オファー",
+        "cta": "ライフタイムアクセスをロック"
+      }
+    }
   },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",

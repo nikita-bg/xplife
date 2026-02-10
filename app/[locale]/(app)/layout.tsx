@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppNavbar } from '@/components/shared/app-navbar'
 import { ChatWidget } from '@/components/chat/chat-widget'
+import { setRequestLocale } from 'next-intl/server'
 
 export default async function AppLayout({
   children,
@@ -10,6 +11,8 @@ export default async function AppLayout({
   children: React.ReactNode
   params: { locale: string }
 }) {
+  setRequestLocale(params.locale)
+
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 

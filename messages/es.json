@@ -135,28 +135,50 @@
     "result": "You are...",
     "continue": "Continue to Dashboard"
   },
+  "navigation": {
+    "dashboard": "Panel",
+    "leaderboard": "Clasificación",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión"
+  },
   "auth": {
     "login": {
       "title": "Welcome Back",
       "subtitle": "Log in to continue your journey",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Ingresa tu contraseña",
       "submit": "Log In",
+      "loggingIn": "Iniciando sesión...",
       "noAccount": "Don't have an account?",
-      "signup": "Sign up",
+      "signupLink": "Regístrate",
+      "invalidCredentials": "Correo electrónico o contraseña inválidos",
+      "emailNotConfirmed": "Tu correo electrónico aún no está confirmado. Por favor, revisa tu bandeja de entrada o reenvía el enlace de confirmación.",
       "error": "Invalid email or password"
     },
     "signup": {
       "title": "Start Your Journey",
       "subtitle": "Create your account to begin",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Crea una contraseña",
       "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirma tu contraseña",
       "submit": "Create Account",
+      "creating": "Creando cuenta...",
       "hasAccount": "Already have an account?",
+      "loginLink": "Inicia sesión",
+      "checkEmailTitle": "Revisa tu Correo Electrónico",
+      "checkEmailMessage": "Enviamos un enlace de confirmación a tu correo electrónico. Haz clic en él para activar tu cuenta y comenzar tu misión.",
       "login": "Log in",
       "error": "Failed to create account",
       "passwordMismatch": "Passwords do not match"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Continuar con Google",
+      "continueWithGithub": "Continuar con GitHub"
     }
   },
   "dashboard": {
@@ -173,7 +195,18 @@
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
     "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "Misiones de Hoy",
+      "generateQuests": "Generar Misiones",
+      "generating": "Generando...",
+      "describeGoals": "Describe tus objetivos",
+      "placeholder": "Ej. Quiero hacer más ejercicio, aprender español, leer 20 páginas diarias...",
+      "generate": "Generar",
+      "noQuestsTitle": "Aún No Hay Misiones",
+      "noQuestsDescription": "Haz clic en \"Generar Misiones\" para obtener tus desafíos diarios personalizados.",
+      "completed": "Completado"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -182,7 +215,17 @@
     "email": "Email",
     "personality": "Personality Type",
     "stats": "Statistics",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "settings": {
+      "title": "Configuración",
+      "displayName": "Nombre para Mostrar",
+      "avatar": "Avatar",
+      "uploadAvatar": "Subir Avatar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "saveSuccess": "¡Cambios guardados exitosamente!",
+      "logout": "Cerrar Sesión"
+    }
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -201,6 +244,46 @@
     "markComplete": "Mark as Complete",
     "completed": "Completed!",
     "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "Potenciadores",
+      "title": "Tu Arsenal de",
+      "titleHighlight": "Crecimiento",
+      "description": "Todo lo que necesitas para transformar tu rutina diaria en una aventura que vale la pena jugar.",
+      "aiPowered": {
+        "title": "Tareas Potenciadas por IA",
+        "description": "Misiones diarias personalizadas basadas en tu tipo hormonal y psicología. Cada tarea está diseñada para impulsarte hacia adelante."
+      },
+      "trackProgress": {
+        "title": "Rastrea tu Progreso",
+        "description": "Gana XP, mantén rachas, escala la clasificación. Observa cómo crecen tus estadísticas de la vida real mientras completas misiones."
+      },
+      "deepPersonalization": {
+        "title": "Personalización Profunda",
+        "description": "Integración del test de Braverman para tareas que se ajustan a TU química cerebral. Sin enfoque único para todos."
+      }
+    },
+    "pricing": {
+      "subtitle": "Elige Tu Camino",
+      "title": "Selecciona Tu",
+      "titleHighlight": "Clase",
+      "description": "No se necesita tarjeta de crédito. Mejora en cualquier momento.",
+      "free": {
+        "name": "Comienza Gratis",
+        "cta": "Juega Gratis"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Más Popular",
+        "cta": "Hazte Premium"
+      },
+      "lifetime": {
+        "name": "Vitalicio",
+        "badge": "Oferta Limitada",
+        "cta": "Asegura Acceso Vitalicio"
+      }
+    }
   },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",

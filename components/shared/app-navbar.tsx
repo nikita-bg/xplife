@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { LayoutDashboard, Trophy, User, LogOut, Menu, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { LanguageSwitcher } from '@/components/i18n/language-switcher'
+import { useTranslations, useLocale } from 'next-intl'
 
 interface AppNavbarProps {
   displayName: string
@@ -16,8 +17,8 @@ interface AppNavbarProps {
 
 export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
   const router = useRouter()
-  const pathname = usePathname()
-  const locale = pathname.split('/')[1] || 'en' // Extract locale from path
+  const locale = useLocale()
+  const t = useTranslations('navigation')
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -28,9 +29,9 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
   }
 
   const navLinks = [
-    { href: `/${locale}/dashboard`, label: 'Dashboard', icon: LayoutDashboard },
-    { href: `/${locale}/leaderboard`, label: 'Leaderboard', icon: Trophy },
-    { href: `/${locale}/profile`, label: 'Profile', icon: User },
+    { href: `/${locale}/dashboard`, label: t('dashboard'), icon: LayoutDashboard },
+    { href: `/${locale}/leaderboard`, label: t('leaderboard'), icon: Trophy },
+    { href: `/${locale}/profile`, label: t('profile'), icon: User },
   ]
 
   return (
@@ -120,7 +121,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <LogOut className="h-4 w-4" />
-              Log Out
+              {t('logout')}
             </button>
           </div>
         </div>

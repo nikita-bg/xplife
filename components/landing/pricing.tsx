@@ -1,53 +1,58 @@
+'use client'
+
 import Link from "next/link"
 import Script from "next/script"
 import { Check, Crown, Zap, Gem } from "lucide-react"
 import { PLANS, LIFETIME_SPOTS } from "@/lib/constants/pricing"
+import { useTranslations } from 'next-intl'
 
 const spotsLeft = LIFETIME_SPOTS.total - LIFETIME_SPOTS.claimed
 const spotsPercent = (LIFETIME_SPOTS.claimed / LIFETIME_SPOTS.total) * 100
 
-const tiers = [
-  {
-    name: "Start Free",
-    price: "\u20AC0",
-    period: "forever",
-    description: PLANS.free.description,
-    features: PLANS.free.features,
-    cta: "Start Playing Free",
-    href: "/signup",
-    highlighted: false,
-    accent: "default" as const,
-    icon: Zap,
-  },
-  {
-    name: "Premium",
-    price: "\u20AC4.99",
-    period: "/month",
-    description: PLANS.premium.description,
-    badge: "Most Popular",
-    features: PLANS.premium.features,
-    cta: "Go Premium",
-    href: PLANS.premium.checkoutUrl,
-    highlighted: true,
-    accent: "default" as const,
-    icon: Crown,
-  },
-  {
-    name: "Lifetime",
-    price: "\u20AC49",
-    period: "one-time",
-    description: PLANS.lifetime.description,
-    badge: "Limited Offer",
-    features: PLANS.lifetime.features,
-    cta: "Lock In Lifetime Access",
-    href: PLANS.lifetime.checkoutUrl,
-    highlighted: false,
-    accent: "gold" as const,
-    icon: Gem,
-  },
-]
-
 export function Pricing() {
+  const t = useTranslations('landing.pricing')
+
+  const tiers = [
+    {
+      name: t('free.name'),
+      price: "\u20AC0",
+      period: "forever",
+      description: PLANS.free.description,
+      features: PLANS.free.features,
+      cta: t('free.cta'),
+      href: "/signup",
+      highlighted: false,
+      accent: "default" as const,
+      icon: Zap,
+    },
+    {
+      name: t('premium.name'),
+      price: "\u20AC4.99",
+      period: "/month",
+      description: PLANS.premium.description,
+      badge: t('premium.badge'),
+      features: PLANS.premium.features,
+      cta: t('premium.cta'),
+      href: PLANS.premium.checkoutUrl,
+      highlighted: true,
+      accent: "default" as const,
+      icon: Crown,
+    },
+    {
+      name: t('lifetime.name'),
+      price: "\u20AC49",
+      period: "one-time",
+      description: PLANS.lifetime.description,
+      badge: t('lifetime.badge'),
+      features: PLANS.lifetime.features,
+      cta: t('lifetime.cta'),
+      href: PLANS.lifetime.checkoutUrl,
+      highlighted: false,
+      accent: "gold" as const,
+      icon: Gem,
+    },
+  ]
+
   return (
     <section id="pricing" className="relative py-24 px-4">
       <div className="pointer-events-none absolute right-1/4 top-0 h-[400px] w-[400px] rounded-full bg-primary/10 blur-[120px]" />
@@ -55,13 +60,13 @@ export function Pricing() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-16 text-center">
           <p className="mb-3 font-display text-xs font-bold uppercase tracking-widest text-accent">
-            Choose Your Path
+            {t('subtitle')}
           </p>
           <h2 className="text-balance font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-            Select Your <span className="gradient-text">Class</span>
+            {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground leading-relaxed">
-            No credit card needed. Upgrade anytime — or lock in lifetime access before spots run out.
+            {t('description')}
           </p>
         </div>
 

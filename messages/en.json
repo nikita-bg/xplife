@@ -135,28 +135,46 @@
     "result": "You are...",
     "continue": "Continue to Dashboard"
   },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "logout": "Log Out"
+  },
   "auth": {
     "login": {
       "title": "Welcome Back",
-      "subtitle": "Log in to continue your journey",
+      "subtitle": "Log in to continue your quest",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Enter your password",
       "submit": "Log In",
+      "loggingIn": "Logging in...",
       "noAccount": "Don't have an account?",
-      "signup": "Sign up",
-      "error": "Invalid email or password"
+      "signupLink": "Sign up",
+      "invalidCredentials": "Invalid email or password",
+      "emailNotConfirmed": "Your email is not confirmed yet. Please check your inbox or resend the confirmation link."
     },
     "signup": {
-      "title": "Start Your Journey",
-      "subtitle": "Create your account to begin",
+      "title": "Create Account",
+      "subtitle": "Begin your journey to leveling up",
       "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
       "password": "Password",
+      "passwordPlaceholder": "Create a password",
       "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
       "submit": "Create Account",
+      "creating": "Creating account...",
       "hasAccount": "Already have an account?",
-      "login": "Log in",
-      "error": "Failed to create account",
-      "passwordMismatch": "Passwords do not match"
+      "loginLink": "Log in",
+      "checkEmailTitle": "Check Your Email",
+      "checkEmailMessage": "We sent a confirmation link to your email. Click it to activate your account and start your quest."
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGithub": "Continue with GitHub"
     }
   },
   "dashboard": {
@@ -173,7 +191,18 @@
     "activeQuests": "Active Quests",
     "noQuests": "No active quests",
     "generateQuests": "Generate Today's Quests",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "Today's Quests",
+      "generateQuests": "Generate Quests",
+      "generating": "Generating...",
+      "describeGoals": "Describe your goals",
+      "placeholder": "E.g. I want to exercise more, learn Spanish, read 20 pages daily...",
+      "generate": "Generate",
+      "noQuestsTitle": "No Quests Yet",
+      "noQuestsDescription": "Click \"Generate Quests\" to get your personalized daily challenges.",
+      "completed": "Completed"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -182,7 +211,17 @@
     "email": "Email",
     "personality": "Personality Type",
     "stats": "Statistics",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "settings": {
+      "title": "Settings",
+      "displayName": "Display Name",
+      "avatar": "Avatar",
+      "uploadAvatar": "Upload Avatar",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "saveSuccess": "Changes saved successfully!",
+      "logout": "Log Out"
+    }
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -201,6 +240,46 @@
     "markComplete": "Mark as Complete",
     "completed": "Completed!",
     "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "Power-Ups",
+      "title": "Your Arsenal of",
+      "titleHighlight": "Growth",
+      "description": "Everything you need to transform your daily routine into an adventure worth playing.",
+      "aiPowered": {
+        "title": "AI-Powered Tasks",
+        "description": "Personalized daily quests based on your hormonal type and psychology. Every task is crafted to push you forward."
+      },
+      "trackProgress": {
+        "title": "Track Your Progress",
+        "description": "Earn XP, maintain streaks, climb the leaderboard. Watch your real-life stats grow as you complete quests."
+      },
+      "deepPersonalization": {
+        "title": "Deep Personalization",
+        "description": "Braverman test integration for tasks that match YOUR brain chemistry. No one-size-fits-all approach."
+      }
+    },
+    "pricing": {
+      "subtitle": "Choose Your Path",
+      "title": "Select Your",
+      "titleHighlight": "Class",
+      "description": "No credit card needed. Upgrade anytime.",
+      "free": {
+        "name": "Start Free",
+        "cta": "Start Playing Free"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Most Popular",
+        "cta": "Go Premium"
+      },
+      "lifetime": {
+        "name": "Lifetime",
+        "badge": "Limited Offer",
+        "cta": "Lock In Lifetime Access"
+      }
+    }
   },
   "footer": {
     "tagline": "Level up your life, one quest at a time.",
