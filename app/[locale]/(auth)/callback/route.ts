@@ -1,18 +1,22 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
-function sanitizeRedirectPath(path: string): string {
+function sanitizeRedirectPath(path: string, locale: string): string {
   // Must start with exactly one slash and not contain protocol-relative URLs
   if (!path.startsWith('/') || path.startsWith('//') || path.includes('://')) {
-    return '/dashboard'
+    return `/${locale}/dashboard`
   }
   return path
 }
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+  { params }: { params: { locale: string } }
+) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const next = sanitizeRedirectPath(searchParams.get('next') ?? '/dashboard')
+  const locale = params.locale
+  const next = sanitizeRedirectPath(searchParams.get('next') ?? `/${locale}/dashboard`, locale)
 
   if (code) {
     const supabase = createClient()
@@ -22,5 +26,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?error=auth_callback_error`)
+  return NextResponse.redirect(`${origin}/${locale}/login?error=auth_callback_error`)
 }

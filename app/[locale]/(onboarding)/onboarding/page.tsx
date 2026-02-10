@@ -3,12 +3,16 @@ import { createClient } from '@/lib/supabase/server'
 import { OnboardingFlow } from '@/components/onboarding/onboarding-flow'
 import { getPlanLimits } from '@/lib/plan-limits'
 
-export default async function OnboardingPage() {
+export default async function OnboardingPage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/login')
+    redirect(`/${params.locale}/login`)
   }
 
   const { data: profile } = await supabase
@@ -18,7 +22,7 @@ export default async function OnboardingPage() {
     .single()
 
   if (profile?.onboarding_completed) {
-    redirect('/dashboard')
+    redirect(`/${params.locale}/dashboard`)
   }
 
   const planLimits = getPlanLimits(profile?.plan)

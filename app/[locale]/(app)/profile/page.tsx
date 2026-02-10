@@ -6,11 +6,15 @@ import { StatsCard } from '@/components/profile/stats-card'
 import { BalanceCard } from '@/components/profile/balance-card'
 import { UpgradeBanner } from '@/components/shared/upgrade-banner'
 
-export default async function ProfilePage() {
+export default async function ProfilePage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/login')
+  if (!user) redirect(`/${params.locale}/login`)
 
   const { data: profile } = await supabase
     .from('users')

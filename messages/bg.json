@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "title": "XPLife - Level Up Your Life",
+    "description": "Turn your goals into epic quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization."
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success"
+  },
+  "navbar": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "login": "Log In",
+    "signup": "Start Your Journey"
+  },
+  "hero": {
+    "badge": "Join 1,000+ players leveling up right now",
+    "title": "Level Up",
+    "titleHighlight": "Your Life",
+    "description": "Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.",
+    "cta": "Start Playing Free",
+    "ctaSecondary": "How It Works",
+    "heroUser": "HERO_USER",
+    "heroRole": "Life Optimizer",
+    "xpLabel": "Experience Points",
+    "xpProgress": "{current} / {total} XP",
+    "questMorningMeditation": "Morning Meditation",
+    "questDeepWork": "30min Deep Work",
+    "questEveningReview": "Evening Review",
+    "statStreak": "Streak",
+    "statQuests": "Quests",
+    "statRank": "Rank",
+    "level": "LVL {level}"
+  },
+  "quiz": {
+    "questions": [
+      {
+        "question": "When you wake up, what energizes you most?",
+        "options": [
+          "A thrilling new challenge or adventure",
+          "Learning something new or creative work",
+          "A calm, structured morning routine",
+          "Connecting with loved ones or community"
+        ]
+      },
+      {
+        "question": "How do you prefer to handle stress?",
+        "options": [
+          "Intense physical activity or competition",
+          "Journaling, reading, or problem-solving",
+          "Meditation, yoga, or deep breathing",
+          "Talking it out with friends or family"
+        ]
+      },
+      {
+        "question": "What type of goals excite you the most?",
+        "options": [
+          "Bold, ambitious goals with big rewards",
+          "Skills mastery and intellectual growth",
+          "Stability, consistency, and inner peace",
+          "Building relationships and helping others"
+        ]
+      },
+      {
+        "question": "How would your friends describe you?",
+        "options": [
+          "Energetic, bold, and spontaneous",
+          "Curious, creative, and thoughtful",
+          "Calm, reliable, and grounded",
+          "Warm, empathetic, and supportive"
+        ]
+      },
+      {
+        "question": "What is your ideal way to recharge?",
+        "options": [
+          "Trying something exciting and new",
+          "Deep focus on a passion project",
+          "Rest, nature, and quiet time",
+          "Quality time with people I care about"
+        ]
+      }
+    ]
+  },
+  "personalities": {
+    "dopamine": {
+      "title": "The Adventurer",
+      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+    },
+    "acetylcholine": {
+      "title": "The Thinker",
+      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+    },
+    "gaba": {
+      "title": "The Guardian",
+      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+    },
+    "serotonin": {
+      "title": "The Connector",
+      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+    }
+  },
+  "taskCategories": {
+    "fitness": "Fitness",
+    "mindfulness": "Mindfulness",
+    "learning": "Learning",
+    "productivity": "Productivity",
+    "social": "Social",
+    "health": "Health",
+    "creativity": "Creativity"
+  },
+  "taskDifficulties": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "epic": "Epic"
+  },
+  "onboarding": {
+    "welcome": "Welcome to XPLife",
+    "title": "Discover Your Player Type",
+    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
+    "question": "Question {current} of {total}",
+    "calculating": "Analyzing your answers...",
+    "result": "You are...",
+    "continue": "Continue to Dashboard"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Log in to continue your journey",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "noAccount": "Don't have an account?",
+      "signup": "Sign up",
+      "error": "Invalid email or password"
+    },
+    "signup": {
+      "title": "Start Your Journey",
+      "subtitle": "Create your account to begin",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "login": "Log in",
+      "error": "Failed to create account",
+      "passwordMismatch": "Passwords do not match"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}!",
+    "subtitle": "Ready to level up today?",
+    "level": "Level {level}",
+    "xp": "{current} / {next} XP",
+    "stats": {
+      "totalXP": "Total XP",
+      "completedQuests": "Completed",
+      "currentStreak": "Streak",
+      "days": "{count}d"
+    },
+    "activeQuests": "Active Quests",
+    "noQuests": "No active quests",
+    "generateQuests": "Generate Today's Quests",
+    "viewAll": "View All"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "displayName": "Display Name",
+    "email": "Email",
+    "personality": "Personality Type",
+    "stats": "Statistics",
+    "save": "Save Changes"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "subtitle": "Top players this week",
+    "rank": "Rank",
+    "player": "Player",
+    "xp": "XP",
+    "level": "Level"
+  },
+  "tasks": {
+    "title": "Task Details",
+    "description": "Description",
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "xpReward": "+{xp} XP",
+    "markComplete": "Mark as Complete",
+    "completed": "Completed!",
+    "back": "Back to Dashboard"
+  },
+  "footer": {
+    "tagline": "Level up your life, one quest at a time.",
+    "copyright": "© 2025 XPLife. All rights reserved.",
+    "links": {
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  }
+}

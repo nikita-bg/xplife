@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { getLocaleFromPathname } from '@/lib/i18n/middleware'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -33,22 +34,28 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const protectedPaths = ['/dashboard', '/onboarding', '/profile', '/leaderboard', '/tasks']
+  const protectedPaths = ['/dashboard', '/onboarding', '/profile', '/leaderboard', '/tasks', '/braverman']
   const authPaths = ['/login', '/signup']
 
   const pathname = request.nextUrl.pathname
 
-  // Redirect unauthenticated users from protected paths to /login
-  if (!user && protectedPaths.some((path) => pathname.startsWith(path))) {
+  // Extract locale from pathname
+  const locale = getLocaleFromPathname(pathname)
+
+  // Strip locale prefix from pathname for comparison
+  const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/'
+
+  // Redirect unauthenticated users from protected paths to /{locale}/login
+  if (!user && protectedPaths.some((path) => pathnameWithoutLocale.startsWith(path))) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = `/${locale}/login`
     return NextResponse.redirect(url)
   }
 
-  // Redirect authenticated users from auth paths to /dashboard
-  if (user && authPaths.some((path) => pathname.startsWith(path))) {
+  // Redirect authenticated users from auth paths to /{locale}/dashboard
+  if (user && authPaths.some((path) => pathnameWithoutLocale.startsWith(path))) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = `/${locale}/dashboard`
     return NextResponse.redirect(url)
   }
 

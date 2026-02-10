@@ -5,14 +5,16 @@ import { ChatWidget } from '@/components/chat/chat-widget'
 
 export default async function AppLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: { locale: string }
 }) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/login')
+    redirect(`/${params.locale}/login`)
   }
 
   const { data: profile } = await supabase

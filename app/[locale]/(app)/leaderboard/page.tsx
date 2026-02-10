@@ -2,11 +2,15 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
 
-export default async function LeaderboardPage() {
+export default async function LeaderboardPage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/login')
+  if (!user) redirect(`/${params.locale}/login`)
 
   // Fetch top 100 from leaderboard view/table
   const { data: entries } = await supabase

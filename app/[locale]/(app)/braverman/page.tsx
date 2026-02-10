@@ -6,11 +6,15 @@ import { BravermanResults } from '@/components/braverman/braverman-results'
 import { BRAVERMAN_UNLOCK_LEVEL } from '@/lib/constants/braverman-questions'
 import type { PersonalityType } from '@/lib/types'
 
-export default async function BravermanPage() {
+export default async function BravermanPage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/login')
+  if (!user) redirect(`/${params.locale}/login`)
 
   const { data: profile } = await supabase
     .from('users')

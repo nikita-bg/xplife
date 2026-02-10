@@ -1,41 +1,29 @@
-import React from 'react'
-import type { Metadata, Viewport } from 'next'
-import { Inter, Orbitron } from 'next/font/google'
+import React from 'react';
+import type { Viewport } from 'next';
+import { Inter, Orbitron } from 'next/font/google';
+import { redirect } from 'next/navigation';
 
-import './globals.css'
+import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' })
-
-export const metadata: Metadata = {
-  title: 'XPLife - Level Up Your Life',
-  description: 'Turn your goals into epic quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization.',
-  manifest: '/manifest.json',
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent',
-    title: 'XPLife',
-  },
-}
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' });
 
 export const viewport: Viewport = {
   themeColor: '#0d0d14',
-}
+};
 
+// Root layout - redirects to default locale
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
+  // This layout should only be hit when accessing the root path without locale
+  // Redirect to default locale
+  redirect('/en');
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <body suppressHydrationWarning className={`${inter.variable} ${orbitron.variable} font-sans antialiased`}>
         {children}
         <script
@@ -45,5 +33,5 @@ export default function RootLayout({
         />
       </body>
     </html>
-  )
+  );
 }

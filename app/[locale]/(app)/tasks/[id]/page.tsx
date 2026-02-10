@@ -2,11 +2,11 @@ import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TaskDetail } from '@/components/task/task-detail'
 
-export default async function TaskPage({ params }: { params: { id: string } }) {
+export default async function TaskPage({ params }: { params: { id: string; locale: string } }) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/login')
+  if (!user) redirect(`/${params.locale}/login`)
 
   const { data: task } = await supabase
     .from('tasks')

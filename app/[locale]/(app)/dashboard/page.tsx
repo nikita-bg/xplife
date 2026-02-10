@@ -9,11 +9,15 @@ import { OnboardingBanner } from '@/components/dashboard/onboarding-banner'
 import { BravermanBanner } from '@/components/dashboard/braverman-banner'
 import { UpgradeBanner } from '@/components/shared/upgrade-banner'
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  params,
+}: {
+  params: { locale: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/login')
+  if (!user) redirect(`/${params.locale}/login`)
 
   const { data: profile } = await supabase
     .from('users')
