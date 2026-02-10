@@ -5,9 +5,10 @@ export default async function AuthLayout({
   params,
 }: {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
-  setRequestLocale(params.locale)
+  const { locale } = await params
+  setRequestLocale(locale)
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4">

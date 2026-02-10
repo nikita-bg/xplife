@@ -9,15 +9,16 @@ export default async function AppLayout({
   params,
 }: {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
-  setRequestLocale(params.locale)
+  const { locale } = await params
+  setRequestLocale(locale)
 
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect(`/${params.locale}/login`)
+    redirect(`/${locale}/login`)
   }
 
   const { data: profile } = await supabase

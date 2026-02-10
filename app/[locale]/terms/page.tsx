@@ -2,7 +2,8 @@ import { setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
-export default function TermsPage({ params: { locale } }: { params: { locale: string } }) {
+export default async function TermsPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   setRequestLocale(locale)
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">

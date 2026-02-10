@@ -7,14 +7,15 @@ import { getPlanLimits } from '@/lib/plan-limits'
 export default async function OnboardingPage({
   params,
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }) {
-  setRequestLocale(params.locale)
+  const { locale } = await params
+  setRequestLocale(locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect(`/${params.locale}/login`)
+    redirect(`/${locale}/login`)
   }
 
   const { data: profile } = await supabase
@@ -24,7 +25,7 @@ export default async function OnboardingPage({
     .single()
 
   if (profile?.onboarding_completed) {
-    redirect(`/${params.locale}/dashboard`)
+    redirect(`/${locale}/dashboard`)
   }
 
   const planLimits = getPlanLimits(profile?.plan)

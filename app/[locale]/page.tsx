@@ -8,7 +8,8 @@ import { SocialProof } from "@/components/landing/social-proof"
 import { FinalCTA } from "@/components/landing/final-cta"
 import { Footer } from "@/components/landing/footer"
 
-export default function Page({ params: { locale } }: { params: { locale: string } }) {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   // Enable static rendering
   setRequestLocale(locale)
 

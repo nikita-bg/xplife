@@ -3,17 +3,18 @@ import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { TaskDetail } from '@/components/task/task-detail'
 
-export default async function TaskPage({ params }: { params: { id: string; locale: string } }) {
-  setRequestLocale(params.locale)
+export default async function TaskPage({ params }: { params: Promise<{ id: string; locale: string }> }) {
+  const { locale, id } = await params
+  setRequestLocale(locale)
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect(`/${params.locale}/login`)
+  if (!user) redirect(`/${locale}/login`)
 
   const { data: task } = await supabase
     .from('tasks')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('user_id', user.id)
     .single()
 

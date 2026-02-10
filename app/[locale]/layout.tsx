@@ -7,7 +7,7 @@ import { locales, type Locale } from '@/i18n';
 
 type Props = {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export function generateStaticParams() {
@@ -15,10 +15,11 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { locale }
+  params
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   return {
@@ -52,8 +53,10 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: Props) {
+  const { locale } = await params;
+
   // Validate locale
   if (!locales.includes(locale as Locale)) {
     notFound();
@@ -63,10 +66,10 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   // Load messages for this locale
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages} locale={locale}>
       {children}
     </NextIntlClientProvider>
   );
