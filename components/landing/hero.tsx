@@ -54,13 +54,13 @@ export function Hero() {
             <span className="text-xs font-medium text-accent">{t('badge')}</span>
           </div>
 
-          <h1 className="text-balance font-display text-5xl font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="text-balance font-display text-5xl font-bold leading-snug sm:text-6xl lg:text-7xl">
             <span className="text-foreground">{t('title')}</span>
             <br />
             <span className="gradient-text">{t('titleHighlight')}</span>
           </h1>
 
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 max-w-lg text-lg leading-loose text-muted-foreground">
             {t('description')}
           </p>
 

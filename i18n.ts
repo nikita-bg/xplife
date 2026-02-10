@@ -8,13 +8,12 @@ export type Locale = (typeof locales)[number];
 // Default locale
 export const defaultLocale: Locale = 'en';
 
-export default getRequestConfig(async ({ locale }) => {
-  // Validate that the incoming `locale` parameter is valid
-  const validatedLocale = locale || defaultLocale;
-
-  if (!locales.includes(validatedLocale as Locale)) {
-    notFound();
-  }
+export default getRequestConfig(async ({ requestLocale }) => {
+  // Validate that the incoming locale parameter is valid
+  const requested = await requestLocale;
+  const validatedLocale = requested && locales.includes(requested as Locale)
+    ? requested
+    : defaultLocale;
 
   return {
     locale: validatedLocale,
