@@ -56,59 +56,40 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
 ]
 
 // Function to get translated quiz questions
-export function getQuizQuestions(t: (key: string) => string, tArray: (key: string) => any): QuizQuestion[] {
-  return [
-    {
-      id: 1,
-      question: t('questions.0.question'),
-      options: [
-        { label: tArray('questions.0.options')[0], value: 'a', personality: 'dopamine' },
-        { label: tArray('questions.0.options')[1], value: 'b', personality: 'acetylcholine' },
-        { label: tArray('questions.0.options')[2], value: 'c', personality: 'gaba' },
-        { label: tArray('questions.0.options')[3], value: 'd', personality: 'serotonin' },
-      ],
-    },
-    {
-      id: 2,
-      question: t('questions.1.question'),
-      options: [
-        { label: tArray('questions.1.options')[0], value: 'a', personality: 'dopamine' },
-        { label: tArray('questions.1.options')[1], value: 'b', personality: 'acetylcholine' },
-        { label: tArray('questions.1.options')[2], value: 'c', personality: 'gaba' },
-        { label: tArray('questions.1.options')[3], value: 'd', personality: 'serotonin' },
-      ],
-    },
-    {
-      id: 3,
-      question: t('questions.2.question'),
-      options: [
-        { label: tArray('questions.2.options')[0], value: 'a', personality: 'dopamine' },
-        { label: tArray('questions.2.options')[1], value: 'b', personality: 'acetylcholine' },
-        { label: tArray('questions.2.options')[2], value: 'c', personality: 'gaba' },
-        { label: tArray('questions.2.options')[3], value: 'd', personality: 'serotonin' },
-      ],
-    },
-    {
-      id: 4,
-      question: t('questions.3.question'),
-      options: [
-        { label: tArray('questions.3.options')[0], value: 'a', personality: 'dopamine' },
-        { label: tArray('questions.3.options')[1], value: 'b', personality: 'acetylcholine' },
-        { label: tArray('questions.3.options')[2], value: 'c', personality: 'gaba' },
-        { label: tArray('questions.3.options')[3], value: 'd', personality: 'serotonin' },
-      ],
-    },
-    {
-      id: 5,
-      question: t('questions.4.question'),
-      options: [
-        { label: tArray('questions.4.options')[0], value: 'a', personality: 'dopamine' },
-        { label: tArray('questions.4.options')[1], value: 'b', personality: 'acetylcholine' },
-        { label: tArray('questions.4.options')[2], value: 'c', personality: 'gaba' },
-        { label: tArray('questions.4.options')[3], value: 'd', personality: 'serotonin' },
-      ],
-    },
-  ]
+export function getQuizQuestions(quizMessages: any): QuizQuestion[] {
+  const questions = quizMessages?.questions || QUIZ_QUESTIONS
+
+  // If translations are not available or malformed, fall back to English
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return QUIZ_QUESTIONS
+  }
+
+  return questions.map((q: any, index: number) => ({
+    id: index + 1,
+    question: q.question || QUIZ_QUESTIONS[index]?.question || '',
+    options: [
+      {
+        label: q.options?.[0] || QUIZ_QUESTIONS[index]?.options[0]?.label || '',
+        value: 'a',
+        personality: 'dopamine' as const
+      },
+      {
+        label: q.options?.[1] || QUIZ_QUESTIONS[index]?.options[1]?.label || '',
+        value: 'b',
+        personality: 'acetylcholine' as const
+      },
+      {
+        label: q.options?.[2] || QUIZ_QUESTIONS[index]?.options[2]?.label || '',
+        value: 'c',
+        personality: 'gaba' as const
+      },
+      {
+        label: q.options?.[3] || QUIZ_QUESTIONS[index]?.options[3]?.label || '',
+        value: 'd',
+        personality: 'serotonin' as const
+      },
+    ],
+  }))
 }
 
 export const XP_REWARDS: Record<TaskDifficulty, number> = {
