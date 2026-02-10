@@ -83,12 +83,6 @@ export function GenerateQuestDialog({
 
   const isCascading = cascadeStep !== null
 
-  const CHILD_TIMEFRAME: Record<string, QuestTimeframe> = {
-    yearly: 'monthly',
-    monthly: 'weekly',
-    weekly: 'daily',
-  }
-
   async function fetchQuestsByTimeframe(tf: QuestTimeframe): Promise<Task[]> {
     const supabase = createClient()
     const { data } = await supabase
