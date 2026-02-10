@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n';
 
@@ -58,6 +58,9 @@ export default async function LocaleLayout({
   if (!locales.includes(locale as Locale)) {
     notFound();
   }
+
+  // Enable static rendering and set locale context
+  setRequestLocale(locale);
 
   // Load messages for this locale
   const messages = await getMessages();
