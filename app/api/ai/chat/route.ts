@@ -202,19 +202,27 @@ export async function POST(request: NextRequest) {
         if (Array.isArray(obj.createTasks)) createdTasks = obj.createTasks as ChatTask[]
       }
 
-      if (typeof raw === 'object' && raw !== null && 'reply' in raw) {
-        extractFromParsed(raw as Record<string, unknown>)
-      } else if (typeof raw === 'string') {
-        const parsed = JSON.parse(extractJson(raw))
-        extractFromParsed(parsed)
-      } else if (Array.isArray(raw) && raw[0]?.output) {
-        const output = raw[0].output
-        if (typeof output === 'string') {
-          const parsed = JSON.parse(extractJson(output))
-          extractFromParsed(parsed)
-        } else if (typeof output === 'object') {
-          extractFromParsed(output)
+      // Extract content from various response formats
+      let content: unknown = raw
+
+      if (Array.isArray(raw) && raw.length > 0) {
+        const first = raw[0]
+        if (first?.message?.content) {
+          content = first.message.content
+        } else if (first?.output) {
+          content = first.output
+        } else if (first?.text) {
+          content = first.text
         }
+      }
+
+      if (typeof content === 'object' && content !== null && 'reply' in content) {
+        extractFromParsed(content as Record<string, unknown>)
+      } else if (typeof content === 'string') {
+        const parsed = JSON.parse(extractJson(content))
+        extractFromParsed(parsed)
+      } else if (typeof content === 'object' && content !== null) {
+        extractFromParsed(content as Record<string, unknown>)
       }
     } catch (parseErr) {
       console.error(`[AI-CHAT ${timestamp}] Failed to parse N8N chat response:`, parseErr, raw)

@@ -209,7 +209,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ $json.message ? $json.message.content : $json.output }}",
+        "responseBody": "={{ JSON.stringify([$json]) }}",
         "options": {}
       },
       "id": "respond-1",

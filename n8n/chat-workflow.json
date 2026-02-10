@@ -95,7 +95,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ $json.output }}",
+        "responseBody": "={{ JSON.stringify([$json]) }}",
         "options": {}
       },
       "id": "respond-chat-1",
