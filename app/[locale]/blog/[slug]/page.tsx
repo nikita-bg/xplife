@@ -46,9 +46,16 @@ function estimateReadTime(html: string): number {
 }
 
 function optimizeContentImages(html: string): string {
+  // Strip inline width/height styles and add lazy loading + size constraints
   return html.replace(
     /<img([^>]*?)>/gi,
-    '<img$1 loading="lazy" decoding="async">'
+    (match, attrs) => {
+      const cleaned = attrs
+        .replace(/style="[^"]*"/gi, '')
+        .replace(/width="[^"]*"/gi, '')
+        .replace(/height="[^"]*"/gi, '')
+      return `<img${cleaned} loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:0.75rem;">`
+    }
   )
 }
 

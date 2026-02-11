@@ -104,6 +104,16 @@ html {
   background-clip: text;
 }
 
+/* Blog content — force constrain images from external HTML */
+.prose img {
+  max-width: 100% !important;
+  height: auto !important;
+  width: auto !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .gradient-border {
   position: relative;
 }
