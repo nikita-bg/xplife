@@ -6,12 +6,17 @@
   "start_url": "/dashboard",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0d0d14",
   "theme_color": "#0d0d14",
   "orientation": "portrait-primary",
   "lang": "en",
   "dir": "ltr",
   "categories": ["productivity", "lifestyle", "health"],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon-48.png",
@@ -61,6 +66,64 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.jpg",
+      "sizes": "1080x2197",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Dashboard - Your quest status and level"
+    },
+    {
+      "src": "/screenshots/stats.jpg",
+      "sizes": "1080x2166",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Stats - XP, streaks and gold balance"
+    },
+    {
+      "src": "/screenshots/quests.jpg",
+      "sizes": "1080x2163",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Daily Quests - AI-powered task generation"
+    },
+    {
+      "src": "/screenshots/generate.jpg",
+      "sizes": "1080x2174",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Generate Quests - Create personalized goals"
+    },
+    {
+      "src": "/screenshots/profile.jpg",
+      "sizes": "1080x2191",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Profile - Your gamer card and stats"
+    },
+    {
+      "src": "/screenshots/leaderboard.jpg",
+      "sizes": "1080x2143",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Leaderboard - Compete with other players"
+    },
+    {
+      "src": "/screenshots/premium.jpg",
+      "sizes": "1080x2198",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Upgrade - Premium and Lifetime plans"
+    },
+    {
+      "src": "/screenshots/settings.jpg",
+      "sizes": "1080x2190",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Settings - Customize your profile"
     }
   ],
   "shortcuts": [
