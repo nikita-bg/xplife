@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xplife-v2'
+const CACHE_NAME = 'xplife-v3'
 const OFFLINE_URL = '/offline.html'
 
 self.addEventListener('install', (event) => {
@@ -39,5 +39,53 @@ self.addEventListener('fetch', (event) => {
         return response
       })
       .catch(() => caches.match(event.request))
+  )
+})
+
+// Periodic Background Sync — refresh cached data when browser allows
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'xplife-sync') {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.add('/dashboard').catch(() => {})
+      )
+    )
+  }
+})
+
+// Background Sync — retry failed requests when back online
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'xplife-background-sync') {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.add('/dashboard').catch(() => {})
+      )
+    )
+  }
+})
+
+// Push Notifications — handle incoming push messages
+self.addEventListener('push', (event) => {
+  const data = event.data ? event.data.json() : {}
+  const title = data.title || 'XPLife'
+  const options = {
+    body: data.body || 'You have a new quest!',
+    icon: '/icon-192.png',
+    badge: '/icon-96.png',
+    data: { url: data.url || '/dashboard' },
+  }
+  event.waitUntil(self.registration.showNotification(title, options))
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const url = event.notification.data?.url || '/dashboard'
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then((windowClients) => {
+      for (const client of windowClients) {
+        if (client.url.includes(url) && 'focus' in client) return client.focus()
+      }
+      return clients.openWindow(url)
+    })
   )
 })

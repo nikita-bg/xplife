@@ -6,17 +6,40 @@
   "start_url": "/dashboard",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#0d0d14",
   "theme_color": "#0d0d14",
   "orientation": "portrait-primary",
   "lang": "en",
   "dir": "ltr",
   "categories": ["productivity", "lifestyle", "health"],
+  "iarc_rating_id": "",
   "launch_handler": {
     "client_mode": "focus-existing"
   },
   "prefer_related_applications": false,
+  "related_applications": [],
+  "scope_extensions": [
+    { "origin": "https://xplife.app" }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+xplife",
+      "url": "/dashboard?quest=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/dashboard",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
   "icons": [
     {
       "src": "/icon-48.png",
