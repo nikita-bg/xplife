@@ -45,18 +45,43 @@ function estimateReadTime(html: string): number {
   return Math.max(1, Math.ceil(words / 200))
 }
 
-function optimizeContentImages(html: string): string {
-  // Strip inline width/height styles and add lazy loading + size constraints
-  return html.replace(
+function sanitizeBlogContent(html: string): string {
+  let content = html
+
+  // Extract only the body content if it's a full HTML document
+  const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
+  if (bodyMatch) {
+    content = bodyMatch[1]
+  }
+
+  // Remove everything before the first real content tag if no body found
+  if (!bodyMatch) {
+    content = content
+      .replace(/<!DOCTYPE[^>]*>/gi, '')
+      .replace(/<html[^>]*>/gi, '')
+      .replace(/<\/html>/gi, '')
+      .replace(/<head>[\s\S]*?<\/head>/gi, '')
+      .replace(/<body[^>]*>/gi, '')
+      .replace(/<\/body>/gi, '')
+  }
+
+  // Remove <style> blocks
+  content = content.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+
+  // Strip inline styles from ALL elements
+  content = content.replace(/\sstyle="[^"]*"/gi, '')
+
+  // Strip width/height attributes from all elements
+  content = content.replace(/\swidth="[^"]*"/gi, '')
+  content = content.replace(/\sheight="[^"]*"/gi, '')
+
+  // Add lazy loading and sizing to images
+  content = content.replace(
     /<img([^>]*?)>/gi,
-    (match, attrs) => {
-      const cleaned = attrs
-        .replace(/style="[^"]*"/gi, '')
-        .replace(/width="[^"]*"/gi, '')
-        .replace(/height="[^"]*"/gi, '')
-      return `<img${cleaned} loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:0.75rem;">`
-    }
+    '<img$1 loading="lazy" decoding="async">'
   )
+
+  return content.trim()
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
@@ -138,7 +163,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
             prose-pre:bg-muted prose-pre:border prose-pre:border-border/50
             prose-li:text-muted-foreground
             prose-hr:border-border/50"
-          dangerouslySetInnerHTML={{ __html: optimizeContentImages(typedPost.content) }}
+          dangerouslySetInnerHTML={{ __html: sanitizeBlogContent(typedPost.content) }}
         />
 
         <div className="mt-12 glass-card gradient-border rounded-2xl p-8 text-center">
