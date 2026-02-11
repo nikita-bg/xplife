@@ -3,8 +3,16 @@ import { intlMiddleware } from '@/lib/i18n/middleware'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  // Skip i18n for API routes — only run Supabase session refresh
-  if (request.nextUrl.pathname.startsWith('/api')) {
+  const { pathname } = request.nextUrl
+
+  // Skip i18n for API routes and static PWA files — only run Supabase session refresh
+  if (
+    pathname.startsWith('/api') ||
+    pathname === '/manifest.json' ||
+    pathname === '/sw.js' ||
+    pathname === '/offline.html' ||
+    pathname.startsWith('/.well-known')
+  ) {
     return updateSession(request)
   }
 
