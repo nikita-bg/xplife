@@ -39,7 +39,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href={`/${locale}/dashboard`} className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="XPLife" width={32} height={32} className="rounded-lg" />
+            <Image src="/logo.svg" alt="XPLife" width={36} height={36} className="rounded-full" />
             <span className="font-display text-lg font-bold tracking-wider text-foreground">
               XPLife
             </span>

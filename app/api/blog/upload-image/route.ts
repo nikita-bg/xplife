@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { randomUUID } from 'crypto'
+import sharp from 'sharp'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,16 +15,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const contentType = request.headers.get('content-type') || 'image/png'
-    const ext = contentType.includes('jpeg') || contentType.includes('jpg') ? 'jpg' : 'png'
-    const filename = `${randomUUID()}.${ext}`
+    const rawBuffer = Buffer.from(await request.arrayBuffer())
 
-    const buffer = Buffer.from(await request.arrayBuffer())
+    // Convert to WebP with quality 80, max width 1200px
+    const webpBuffer = await sharp(rawBuffer)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toBuffer()
+
+    const filename = `${randomUUID()}.webp`
 
     const { error } = await supabase.storage
       .from('blog-images')
-      .upload(filename, buffer, {
-        contentType,
+      .upload(filename, webpBuffer, {
+        contentType: 'image/webp',
         cacheControl: '31536000',
         upsert: false,
       })

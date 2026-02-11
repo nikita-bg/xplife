@@ -45,6 +45,13 @@ function estimateReadTime(html: string): number {
   return Math.max(1, Math.ceil(words / 200))
 }
 
+function optimizeContentImages(html: string): string {
+  return html.replace(
+    /<img([^>]*?)>/gi,
+    '<img$1 loading="lazy" decoding="async">'
+  )
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
@@ -105,6 +112,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
               src={typedPost.cover_image_url}
               alt={typedPost.title}
               fill
+              sizes="(max-width: 896px) 100vw, 896px"
               className="object-cover"
               priority
             />
@@ -123,7 +131,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
             prose-pre:bg-muted prose-pre:border prose-pre:border-border/50
             prose-li:text-muted-foreground
             prose-hr:border-border/50"
-          dangerouslySetInnerHTML={{ __html: typedPost.content }}
+          dangerouslySetInnerHTML={{ __html: optimizeContentImages(typedPost.content) }}
         />
 
         <div className="mt-12 glass-card gradient-border rounded-2xl p-8 text-center">
