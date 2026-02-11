@@ -26,6 +26,7 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="iMF7KfylAIJLEsTxYpEIpjUuZ5TkMV5Dji9BDphMOvM" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body suppressHydrationWarning className={`${inter.variable} ${orbitron.variable} font-sans antialiased`}>
         {children}
