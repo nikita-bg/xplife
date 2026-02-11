@@ -577,9 +577,11 @@
     "features": {
       "free": {
         "feature1": "1 meta activa",
-        "feature2": "3 tareas generadas por IA por semana",
+        "feature2": "15 tareas generadas por IA por semana",
         "feature3": "Acceso básico a la clasificación",
-        "feature4": "Soporte de la comunidad"
+        "feature4": "Soporte de la comunidad",
+        "feature5": "15 mensajes de chat IA por día",
+        "feature6": "3 misiones anuales"
       },
       "premium": {
         "feature1": "Tareas de IA ilimitadas diarias",
@@ -587,7 +589,9 @@
         "feature3": "Coaching e insights completos de IA",
         "feature4": "Congelación de rachas (3/mes)",
         "feature5": "Clasificación prioritaria",
-        "feature6": "Análisis avanzados"
+        "feature6": "Análisis avanzados",
+        "feature7": "Chat IA ilimitado",
+        "feature8": "5 misiones anuales"
       },
       "lifetime": {
         "feature1": "Todo en Premium, para siempre",

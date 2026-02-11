@@ -577,9 +577,11 @@
     "features": {
       "free": {
         "feature1": "1 active goal",
-        "feature2": "3 AI-generated tasks per week",
+        "feature2": "15 AI-generated tasks per week",
         "feature3": "Basic leaderboard access",
-        "feature4": "Community support"
+        "feature4": "Community support",
+        "feature5": "15 AI chat messages per day",
+        "feature6": "3 yearly quests"
       },
       "premium": {
         "feature1": "Unlimited AI tasks daily",
@@ -587,7 +589,9 @@
         "feature3": "Full AI coaching & insights",
         "feature4": "Streak freezes (3/month)",
         "feature5": "Priority leaderboard",
-        "feature6": "Advanced analytics"
+        "feature6": "Advanced analytics",
+        "feature7": "Unlimited AI chat",
+        "feature8": "5 yearly quests"
       },
       "lifetime": {
         "feature1": "Everything in Premium, forever",

@@ -9,6 +9,8 @@ export const PLAN_FEATURES_KEYS = {
     'features.free.feature2',
     'features.free.feature3',
     'features.free.feature4',
+    'features.free.feature5',
+    'features.free.feature6',
   ],
   premium: [
     'features.premium.feature1',
@@ -17,6 +19,8 @@ export const PLAN_FEATURES_KEYS = {
     'features.premium.feature4',
     'features.premium.feature5',
     'features.premium.feature6',
+    'features.premium.feature7',
+    'features.premium.feature8',
   ],
   lifetime: [
     'features.lifetime.feature1',
@@ -34,9 +38,11 @@ export const PLANS = {
     description: 'Everything you need to start leveling up',
     features: [
       '1 active goal',
-      '3 AI-generated tasks per week',
+      '15 AI-generated tasks per week',
       'Basic leaderboard access',
       'Community support',
+      '15 AI chat messages per day',
+      '3 yearly quests',
     ],
   },
   premium: {
@@ -52,6 +58,8 @@ export const PLANS = {
       'Streak freezes (3/month)',
       'Priority leaderboard',
       'Advanced analytics',
+      'Unlimited AI chat',
+      '5 yearly quests',
     ],
   },
   lifetime: {

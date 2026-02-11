@@ -577,9 +577,11 @@
     "features": {
       "free": {
         "feature1": "1个活跃目标",
-        "feature2": "每周3个AI生成的任务",
+        "feature2": "每周15个AI生成的任务",
         "feature3": "基本排行榜访问",
-        "feature4": "社区支持"
+        "feature4": "社区支持",
+        "feature5": "每天15条AI聊天消息",
+        "feature6": "3个年度任务"
       },
       "premium": {
         "feature1": "每日无限AI任务",
@@ -587,7 +589,9 @@
         "feature3": "完整的AI辅导和洞察",
         "feature4": "连胜冻结（3次/月）",
         "feature5": "优先排行榜",
-        "feature6": "高级分析"
+        "feature6": "高级分析",
+        "feature7": "无限AI聊天",
+        "feature8": "5个年度任务"
       },
       "lifetime": {
         "feature1": "永久享有高级版所有功能",

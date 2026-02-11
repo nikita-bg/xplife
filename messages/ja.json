@@ -577,9 +577,11 @@
     "features": {
       "free": {
         "feature1": "1つのアクティブな目標",
-        "feature2": "週3つのAI生成タスク",
+        "feature2": "週15のAI生成タスク",
         "feature3": "基本的なリーダーボードアクセス",
-        "feature4": "コミュニティサポート"
+        "feature4": "コミュニティサポート",
+        "feature5": "1日15回のAIチャットメッセージ",
+        "feature6": "3つの年間クエスト"
       },
       "premium": {
         "feature1": "毎日無制限のAIタスク",
@@ -587,7 +589,9 @@
         "feature3": "完全なAIコーチングと洞察",
         "feature4": "連続記録凍結（月3回）",
         "feature5": "優先リーダーボード",
-        "feature6": "高度な分析"
+        "feature6": "高度な分析",
+        "feature7": "無制限AIチャット",
+        "feature8": "5つの年間クエスト"
       },
       "lifetime": {
         "feature1": "プレミアムのすべて、永久に",
