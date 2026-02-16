@@ -19,17 +19,18 @@ export default async function ProfilePage({
 
   if (!user) redirect(`/${locale}/login`)
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  const { data: streak } = await supabase
-    .from('streaks')
-    .select('*')
-    .eq('user_id', user.id)
-    .single()
+  // Fetch independent data in parallel to avoid waterfall
+  const [
+    { data: profile },
+    { data: streak },
+    { count: totalTasks },
+    { data: userInterests }
+  ] = await Promise.all([
+    supabase.from('users').select('*').eq('id', user.id).single(),
+    supabase.from('streaks').select('*').eq('user_id', user.id).single(),
+    supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'completed'),
+    supabase.from('user_interests').select('interest').eq('user_id', user.id)
+  ])
 
   // Check and reset streak if inactive for more than 1 day
   if (streak && streak.last_activity_date) {
@@ -57,23 +58,12 @@ export default async function ProfilePage({
     }
   }
 
+  // Fetch level config (depends on profile)
   const { data: levelConfig } = await supabase
     .from('level_config')
     .select('title')
     .eq('level', profile?.level ?? 1)
     .single()
-
-  const { count: totalTasks } = await supabase
-    .from('tasks')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-    .eq('user_id', user.id)
-    .eq('status', 'completed')
-
-  const { data: userInterests } = await supabase
-    .from('user_interests')
-    .select('interest')
-    .eq('user_id', user.id)
 
   const interestList = userInterests?.map(i => i.interest) || []
 
