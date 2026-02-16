@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   setRequestLocale(locale)
 
   return (
-    <main className="min-h-screen overflow-hidden">
+    <main id="main-content" className="min-h-screen overflow-hidden">
       <Navbar />
       <Hero />
       <Features />

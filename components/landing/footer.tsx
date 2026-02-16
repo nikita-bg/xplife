@@ -42,7 +42,7 @@ export function Footer() {
           <a href="https://x.com/XPlife_App" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Twitter">
             <Twitter className="h-5 w-5" />
           </a>
-          <a href="https://instagram.com/xplifeapp" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
+          <a href="https://instagram.com/xplife.app" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
             <Instagram className="h-5 w-5" />
           </a>
           <a href="https://github.com/nikita-bg/xplife" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="GitHub">

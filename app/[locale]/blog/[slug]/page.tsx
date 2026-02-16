@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
   const readTime = estimateReadTime(typedPost.content)
 
   return (
-    <main className="min-h-screen overflow-hidden">
+    <main id="main-content" className="min-h-screen overflow-hidden">
       <Navbar />
 
       <article className="mx-auto max-w-4xl px-4 pt-28 pb-16">
@@ -136,6 +136,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
                 '@id': `https://xplife.app/${locale}/blog/${slug}`,
               },
               inLanguage: locale,
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: `https://xplife.app/${locale}`,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: 'Blog',
+                  item: `https://xplife.app/${locale}/blog`,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: typedPost.title,
+                  item: `https://xplife.app/${locale}/blog/${slug}`,
+                },
+              ],
             }),
           }}
         />
