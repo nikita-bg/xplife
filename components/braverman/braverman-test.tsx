@@ -196,6 +196,7 @@ export function BravermanTest() {
                     ? 'border-primary bg-primary/10 text-primary'
                     : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground'
                 }`}
+                aria-label={label}
               >
                 {label}
               </button>
@@ -261,6 +262,7 @@ export function BravermanTest() {
                   : 'bg-muted-foreground/30'
             }`}
             title={t('questionTooltip', { number: i + 1 })}
+            aria-label={t('questionTooltip', { number: i + 1 })}
           />
         ))}
       </div>

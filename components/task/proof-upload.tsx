@@ -72,6 +72,7 @@ export function ProofUpload({ taskId, userId, onUpload }: ProofUploadProps) {
           <button
             onClick={handleRemove}
             className="absolute -right-2 -top-2 rounded-full bg-destructive p-1 text-destructive-foreground"
+            aria-label="Remove proof image"
           >
             <X className="h-3 w-3" />
           </button>

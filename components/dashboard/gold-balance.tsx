@@ -82,12 +82,14 @@ export function GoldBalance({ balance: initialBalance, currency }: GoldBalancePr
             onClick={handleAdd}
             disabled={loading}
             className="flex h-8 w-8 items-center justify-center rounded-md bg-accent text-white transition-colors hover:bg-accent/80 disabled:opacity-50"
+            aria-label="Confirm amount"
           >
             <Check className="h-4 w-4" />
           </button>
           <button
             onClick={() => { setAdding(false); setAmount('') }}
             className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors hover:bg-muted/80"
+            aria-label="Cancel adding balance"
           >
             <X className="h-4 w-4" />
           </button>

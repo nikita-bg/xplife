@@ -80,6 +80,7 @@ export function TaskFeedbackDialog({
             type="button"
             onClick={() => onChange(rating)}
             className="group flex flex-col items-center gap-1"
+            aria-label={`Rate ${rating} out of 5: ${labels[rating - 1]}`}
           >
             <Star
               className={`h-8 w-8 transition-all ${
@@ -87,6 +88,7 @@ export function TaskFeedbackDialog({
                   ? 'fill-primary text-primary'
                   : 'text-muted-foreground group-hover:text-primary/50'
               }`}
+              aria-hidden="true"
             />
             <span className="text-xs text-muted-foreground">{labels[rating - 1]}</span>
           </button>

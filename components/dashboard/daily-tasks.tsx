@@ -138,6 +138,7 @@ export function DailyTasks({ tasks, userId }: DailyTasksProps) {
             <button
               onClick={handleCancel}
               className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Close goal input"
             >
               <X className="h-4 w-4" />
             </button>

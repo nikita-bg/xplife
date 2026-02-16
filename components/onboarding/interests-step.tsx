@@ -88,6 +88,7 @@ export function InterestsStep({ onComplete }: InterestsStepProps) {
                   ? 'border-primary bg-primary/10 text-foreground'
                   : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
               }`}
+              aria-label={`${isSelected ? 'Remove' : 'Add'} ${interestLabel} interest`}
             >
               {isSelected && <Heart className="h-3 w-3 fill-primary text-primary" />}
               {interestLabel}

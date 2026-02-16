@@ -82,6 +82,7 @@ export function BalanceCard({ balance: initialBalance, currency: initialCurrency
           <button
             onClick={() => setCurrencyOpen(!currencyOpen)}
             className="flex items-center gap-1 rounded-lg border border-border bg-muted px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-muted/80"
+            aria-label="Select currency"
           >
             {curr.symbol} {currency}
             <ChevronDown className={`h-3.5 w-3.5 transition-transform ${currencyOpen ? 'rotate-180' : ''}`} />
@@ -139,12 +140,14 @@ export function BalanceCard({ balance: initialBalance, currency: initialCurrency
               onClick={handleAdd}
               disabled={loading}
               className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-white transition-colors hover:bg-accent/80 disabled:opacity-50"
+              aria-label="Confirm amount"
             >
               <Check className="h-4 w-4" />
             </button>
             <button
               onClick={() => { setAdding(false); setAmount('') }}
               className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors hover:bg-muted/80"
+              aria-label="Cancel adding earnings"
             >
               <X className="h-4 w-4" />
             </button>

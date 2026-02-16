@@ -64,7 +64,7 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                 {avatarUrl ? (
                   <div className="relative h-full w-full">
-                    <Image src={avatarUrl} alt="" fill className="rounded-full object-cover" />
+                    <Image src={avatarUrl} alt={displayName ? `${displayName}'s avatar` : 'User avatar'} fill className="rounded-full object-cover" />
                   </div>
                 ) : (
                   displayName[0]?.toUpperCase()

@@ -39,13 +39,13 @@ export function Footer() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <a href="#" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Twitter">
+          <a href="https://x.com/XPlife_App" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Twitter">
             <Twitter className="h-5 w-5" />
           </a>
-          <a href="#" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
+          <a href="https://instagram.com/xplifeapp" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
             <Instagram className="h-5 w-5" />
           </a>
-          <a href="#" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="GitHub">
+          <a href="https://github.com/nikita-bg/xplife" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="GitHub">
             <Github className="h-5 w-5" />
           </a>
         </div>

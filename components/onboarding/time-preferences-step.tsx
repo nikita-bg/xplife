@@ -70,6 +70,7 @@ export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option.label}: ${option.description}`}
               >
                 <Icon className={`h-5 w-5 flex-shrink-0 ${isSelected ? 'text-primary' : ''}`} />
                 <div>
@@ -103,6 +104,7 @@ export function TimePreferencesStep({ onComplete }: TimePreferencesStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option.label}: ${option.description}`}
               >
                 <Icon className={`h-5 w-5 flex-shrink-0 ${isSelected ? 'text-primary' : ''}`} />
                 <div>

@@ -380,6 +380,7 @@ export function SettingsForm({
                 size="icon"
                 onClick={addCustomInterest}
                 disabled={!newInterest || interests.includes(newInterest)}
+                aria-label="Add custom interest"
               >
                 <Plus className="h-4 w-4" />
               </Button>

@@ -70,6 +70,7 @@ export function GoalSettingStep({ onComplete, loading, maxGoals = 1 }: GoalSetti
                   ? 'border-primary bg-primary/10 text-foreground'
                   : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
               }`}
+              aria-label={`${isSelected ? 'Remove' : 'Add'} ${tCategories(cat.value)} category`}
             >
               <Target className={`h-5 w-5 ${isSelected ? 'text-primary' : ''}`} />
               <span className="text-xs font-medium">{tCategories(cat.value)}</span>

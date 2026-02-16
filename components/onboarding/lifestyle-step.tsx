@@ -96,6 +96,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option} as occupation`}
               >
                 {option}
               </button>
@@ -123,6 +124,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option} as work schedule`}
               >
                 {option}
               </button>
@@ -150,6 +152,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option} as life phase`}
               >
                 {option}
               </button>
@@ -177,6 +180,7 @@ export function LifestyleStep({ onComplete }: LifestyleStepProps) {
                     ? 'border-primary bg-primary/10 text-foreground'
                     : 'border-border bg-background/50 text-muted-foreground hover:border-primary/50'
                 }`}
+                aria-label={`Select ${option} as main challenge`}
               >
                 {option}
               </button>

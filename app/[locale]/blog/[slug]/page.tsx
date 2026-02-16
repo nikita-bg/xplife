@@ -107,6 +107,39 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
       <Navbar />
 
       <article className="mx-auto max-w-4xl px-4 pt-28 pb-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: typedPost.title,
+              description: typedPost.excerpt || typedPost.title,
+              image: typedPost.cover_image_url || 'https://xplife.app/og-image.png',
+              datePublished: typedPost.created_at,
+              dateModified: typedPost.updated_at || typedPost.created_at,
+              author: {
+                '@type': 'Organization',
+                name: 'XPLife Team',
+                url: 'https://xplife.app',
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'XPLife',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://xplife.app/og-image.png',
+                },
+              },
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://xplife.app/${locale}/blog/${slug}`,
+              },
+              inLanguage: locale,
+            }),
+          }}
+        />
+
         <Link
           href={`/${locale}/blog`}
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
