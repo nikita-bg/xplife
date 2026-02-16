@@ -37,7 +37,7 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: 'https://xplife.app/og-image.jpg', // Ensure this image exists in public folder
+          url: 'https://xplife.app/og-image.png',
           width: 1200,
           height: 630,
           alt: t('title'),
@@ -48,7 +48,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
-      images: ['https://xplife.app/og-image.jpg'],
+      images: ['https://xplife.app/og-image.png'],
       creator: '@xplifeapp',
     },
     manifest: '/manifest.json',
