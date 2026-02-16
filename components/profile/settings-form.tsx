@@ -59,10 +59,10 @@ export function SettingsForm({
   // Personalization State
   const [timePreference, setTimePreference] = useState(initialTimePreference || 'morning')
   const [taskDuration, setTaskDuration] = useState(initialTaskDuration || 'medium')
-  const [occupation, setOccupation] = useState(initialOccupation || '')
-  const [workSchedule, setWorkSchedule] = useState(initialWorkSchedule || '')
-  const [lifePhase, setLifePhase] = useState(initialLifePhase || '')
-  const [mainChallenge, setMainChallenge] = useState(initialMainChallenge || '')
+  const [occupation, setOccupation] = useState(initialOccupation || undefined)
+  const [workSchedule, setWorkSchedule] = useState(initialWorkSchedule || undefined)
+  const [lifePhase, setLifePhase] = useState(initialLifePhase || undefined)
+  const [mainChallenge, setMainChallenge] = useState(initialMainChallenge || undefined)
   const [interests, setInterests] = useState<string[]>(initialInterests)
   const [newInterest, setNewInterest] = useState('')
 
@@ -88,10 +88,10 @@ export function SettingsForm({
         about_me: aboutMe || null,
         time_preference: timePreference,
         preferred_task_duration: taskDuration,
-        occupation_type: occupation || null,
-        work_schedule: workSchedule || null,
-        life_phase: lifePhase || null,
-        main_challenge: mainChallenge || null,
+        occupation_type: !occupation || occupation === 'none' ? null : occupation,
+        work_schedule: !workSchedule || workSchedule === 'none' ? null : workSchedule,
+        life_phase: !lifePhase || lifePhase === 'none' ? null : lifePhase,
+        main_challenge: !mainChallenge || mainChallenge === 'none' ? null : mainChallenge,
         updated_at: new Date().toISOString()
       })
       .eq('id', userId)
@@ -288,7 +288,7 @@ export function SettingsForm({
                   <SelectItem value="Entrepreneur">{t('personalization.occupationOptions.entrepreneur')}</SelectItem>
                   <SelectItem value="Retired">{t('personalization.occupationOptions.retired')}</SelectItem>
                   <SelectItem value="Other">{t('personalization.occupationOptions.other')}</SelectItem>
-                  <SelectItem value="">{t('personalization.preferNotToSay')}</SelectItem>
+                  <SelectItem value="none">{t('personalization.preferNotToSay')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -305,7 +305,7 @@ export function SettingsForm({
                   <SelectItem value="Shift Work">{t('personalization.scheduleOptions.shiftWork')}</SelectItem>
                   <SelectItem value="Part-time">{t('personalization.scheduleOptions.partTime')}</SelectItem>
                   <SelectItem value="Irregular">{t('personalization.scheduleOptions.irregular')}</SelectItem>
-                  <SelectItem value="">{t('personalization.preferNotToSay')}</SelectItem>
+                  <SelectItem value="none">{t('personalization.preferNotToSay')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -340,7 +340,7 @@ export function SettingsForm({
                   <SelectItem value="Focus">{t('personalization.challengeOptions.focus')}</SelectItem>
                   <SelectItem value="Motivation">{t('personalization.challengeOptions.motivation')}</SelectItem>
                   <SelectItem value="Consistency">{t('personalization.challengeOptions.consistency')}</SelectItem>
-                  <SelectItem value="">{t('personalization.preferNotToSay')}</SelectItem>
+                  <SelectItem value="none">{t('personalization.preferNotToSay')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
