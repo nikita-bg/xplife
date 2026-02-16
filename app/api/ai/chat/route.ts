@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   // Fetch user profile for context and plan
   const { data: profile, error: profileError } = await supabase
     .from('users')
-    .select('personality_type, level, plan, display_name, about_me')
+    .select('personality_type, level, plan, display_name, about_me, time_preference, preferred_task_duration, occupation_type, work_schedule, life_phase, main_challenge, dopamine_score, acetylcholine_score, gaba_score, serotonin_score')
     .eq('id', user.id)
     .single()
 
@@ -117,18 +117,23 @@ export async function POST(request: NextRequest) {
       webhookHeaders['X-Webhook-Secret'] = webhookSecret
     }
 
-    // Fetch recent tasks and goals for context
-    const { data: recentTasks } = await supabase
-      .from('tasks')
-      .select('title, category, status, quest_timeframe')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(10)
-
-    const { data: goals } = await supabase
-      .from('goals')
-      .select('title, category')
-      .eq('user_id', user.id)
+    // Fetch recent tasks, goals, and interests for context
+    const [{ data: recentTasks }, { data: goals }, { data: interests }] = await Promise.all([
+      supabase
+        .from('tasks')
+        .select('title, category, status, quest_timeframe')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10),
+      supabase
+        .from('goals')
+        .select('title, category')
+        .eq('user_id', user.id),
+      supabase
+        .from('user_interests')
+        .select('interest')
+        .eq('user_id', user.id),
+    ])
 
     console.log(`[AI-CHAT ${timestamp}] Calling N8N chat webhook`)
 
@@ -148,6 +153,19 @@ export async function POST(request: NextRequest) {
           aboutMe: profile?.about_me || null,
           recentTasks: recentTasks ?? [],
           goals: goals ?? [],
+          interests: interests?.map((i) => i.interest) || [],
+          timePreference: profile?.time_preference || null,
+          preferredTaskDuration: profile?.preferred_task_duration || null,
+          occupation: profile?.occupation_type || null,
+          workSchedule: profile?.work_schedule || null,
+          lifePhase: profile?.life_phase || null,
+          mainChallenge: profile?.main_challenge || null,
+          neurotransmitterScores: {
+            dopamine: profile?.dopamine_score ?? 0,
+            acetylcholine: profile?.acetylcholine_score ?? 0,
+            gaba: profile?.gaba_score ?? 0,
+            serotonin: profile?.serotonin_score ?? 0,
+          },
         }),
         signal: controller.signal,
       })
