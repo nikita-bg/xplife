@@ -25,6 +25,32 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('description'),
+    applicationName: 'XPLife',
+    authors: [{ name: 'XPLife Team' }],
+    keywords: ['gamification', 'productivity', 'RPG per life', 'ADHD tools', 'habit tracker', 'life rpg', 'креативност', 'продуктивност', 'навици'],
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: `https://xplife.app/${locale}`,
+      siteName: 'XPLife',
+      locale: locale,
+      type: 'website',
+      images: [
+        {
+          url: 'https://xplife.app/og-image.jpg', // Ensure this image exists in public folder
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: ['https://xplife.app/og-image.jpg'],
+      creator: '@xplifeapp',
+    },
     manifest: '/manifest.json',
     icons: {
       icon: [
@@ -40,13 +66,13 @@ export async function generateMetadata({
       title: 'XPLife',
     },
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `https://xplife.app/${locale}`,
       languages: {
-        'en': '/en',
-        'bg': '/bg',
-        'es': '/es',
-        'zh': '/zh',
-        'ja': '/ja',
+        'en': 'https://xplife.app/en',
+        'bg': 'https://xplife.app/bg',
+        'es': 'https://xplife.app/es',
+        'zh': 'https://xplife.app/zh',
+        'ja': 'https://xplife.app/ja',
       },
     },
   };

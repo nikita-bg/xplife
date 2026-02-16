@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Shield, Crown, Gem } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -18,8 +19,9 @@ export function ProfileHeader({ displayName, avatarUrl, level, levelTitle, plan 
       <div className="mb-4 flex justify-center">
         <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-2xl font-bold text-primary-foreground">
           {avatarUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={avatarUrl} alt="" className="h-full w-full rounded-full object-cover" />
+            <div className="relative h-full w-full">
+              <Image src={avatarUrl} alt={displayName} fill className="rounded-full object-cover" />
+            </div>
           ) : (
             displayName[0]?.toUpperCase()
           )}

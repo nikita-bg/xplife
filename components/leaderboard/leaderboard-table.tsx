@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Flame, Zap, Crown, Gem } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { RankBadge } from './rank-badge'
@@ -109,8 +110,9 @@ export function LeaderboardTable({ entries, currentUserId, myRank }: Leaderboard
 
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                     {entry.avatar_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={entry.avatar_url} alt="" className="h-full w-full rounded-full object-cover" />
+                      <div className="relative h-full w-full">
+                        <Image src={entry.avatar_url} alt="" fill className="rounded-full object-cover" />
+                      </div>
                     ) : (
                       (entry.display_name?.[0] || '?').toUpperCase()
                     )}

@@ -63,8 +63,9 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
             <Link href={`/${locale}/profile`} className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-bold text-primary-foreground">
                 {avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={avatarUrl} alt="" className="h-full w-full rounded-full object-cover" />
+                  <div className="relative h-full w-full">
+                    <Image src={avatarUrl} alt="" fill className="rounded-full object-cover" />
+                  </div>
                 ) : (
                   displayName[0]?.toUpperCase()
                 )}
