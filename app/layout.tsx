@@ -45,22 +45,7 @@ export default function RootLayout({
             __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: 'XPLife',
-              url: 'https://xplife.app',
-              sameAs: [
-                'https://twitter.com/xplifeapp',
-                'https://facebook.com/xplifeapp',
-                'https://instagram.com/xplifeapp',
-              ],
-            }),
-          }}
-        />
+
       </body>
     </html>
   );

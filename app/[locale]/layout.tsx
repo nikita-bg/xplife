@@ -27,7 +27,7 @@ export async function generateMetadata({
     description: t('description'),
     applicationName: 'XPLife',
     authors: [{ name: 'XPLife Team' }],
-    keywords: ['gamification', 'productivity', 'RPG per life', 'ADHD tools', 'habit tracker', 'life rpg', 'креативност', 'продуктивност', 'навици'],
+
     openGraph: {
       title: t('title'),
       description: t('description'),
@@ -73,8 +73,17 @@ export async function generateMetadata({
         'es': 'https://xplife.app/es',
         'zh': 'https://xplife.app/zh',
         'ja': 'https://xplife.app/ja',
+        'x-default': 'https://xplife.app/en',
       },
     },
+
+    // Enhanced keywords for better discoverability
+    keywords: [
+      'gamification', 'productivity app', 'RPG life', 'ADHD tools', 'habit tracker',
+      'goal setting', 'personal development', 'life rpg', 'quest tracker', 'level up life',
+      'креативност', 'продуктивност', 'навици', 'самоусъвършенстване', 'игровизация',
+      'management', 'focus'
+    ],
   };
 }
 
@@ -97,6 +106,32 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'XPLife',
+            applicationCategory: 'ProductivityApplication',
+            operatingSystem: 'Web, Android',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+            },
+            description: 'Turn your life into an RPG. Gamify your tasks, habits, and goals to level up your real life.',
+            inLanguage: locale,
+            url: `https://xplife.app/${locale}`,
+            author: {
+              '@type': 'Organization',
+              name: 'XPLife Team',
+              url: 'https://xplife.app',
+            },
+            screenshot: 'https://xplife.app/og-image.png',
+          }),
+        }}
+      />
       {children}
     </NextIntlClientProvider>
   );
