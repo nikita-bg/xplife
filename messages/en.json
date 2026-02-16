@@ -414,7 +414,70 @@
       "save": "Save Changes",
       "saving": "Saving...",
       "saveSuccess": "Changes saved successfully!",
-      "logout": "Log Out"
+      "logout": "Log Out",
+      "tabs": {
+        "general": "General",
+        "personalization": "Personalization"
+      },
+      "personalization": {
+        "timePreference": "Time Preference",
+        "timeOptions": {
+          "morning": "Morning Person",
+          "afternoon": "Afternoon Energy",
+          "evening": "Evening Focus",
+          "night": "Night Owl"
+        },
+        "taskDuration": "Task Duration",
+        "durationOptions": {
+          "quick": "Quick Wins (5-15m)",
+          "medium": "Balanced (15-45m)",
+          "deep": "Deep Dive (1h+)"
+        },
+        "occupation": "Occupation",
+        "selectOccupation": "Select occupation",
+        "occupationOptions": {
+          "student": "Student",
+          "officeWorker": "Office Worker",
+          "remoteWorker": "Remote Worker",
+          "freelancer": "Freelancer",
+          "stayAtHomeParent": "Stay-at-home Parent",
+          "entrepreneur": "Entrepreneur",
+          "retired": "Retired",
+          "other": "Other"
+        },
+        "workSchedule": "Work Schedule",
+        "selectSchedule": "Select schedule",
+        "scheduleOptions": {
+          "standard": "Standard 9-to-5",
+          "flexible": "Flexible Hours",
+          "shiftWork": "Shift Work",
+          "partTime": "Part-time",
+          "irregular": "Irregular"
+        },
+        "lifePhase": "Life Phase",
+        "selectLifePhase": "Select life phase",
+        "lifePhaseOptions": {
+          "highSchool": "High School",
+          "university": "University",
+          "earlyCareer": "Early Career",
+          "midCareer": "Mid Career",
+          "parent": "Parent",
+          "careerChange": "Career Change",
+          "retired": "Retired"
+        },
+        "mainChallenge": "Main Challenge",
+        "selectChallenge": "Select challenge",
+        "challengeOptions": {
+          "time": "Finding Time",
+          "energy": "Low Energy",
+          "focus": "Maintaining Focus",
+          "motivation": "Staying Motivated",
+          "consistency": "Consistency"
+        },
+        "interests": "Interests & Hobbies ({count}/10)",
+        "addCustomInterest": "Add custom interest...",
+        "preferNotToSay": "Prefer not to say"
+      }
     }
   },
   "leaderboard": {

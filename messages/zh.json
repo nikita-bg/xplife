@@ -414,7 +414,70 @@
       "save": "保存更改",
       "saving": "保存中...",
       "saveSuccess": "更改保存成功！",
-      "logout": "退出登录"
+      "logout": "退出登录",
+      "tabs": {
+        "general": "常规",
+        "personalization": "个性化"
+      },
+      "personalization": {
+        "timePreference": "时间偏好",
+        "timeOptions": {
+          "morning": "早起型",
+          "afternoon": "午后型",
+          "evening": "晚间型",
+          "night": "夜猫子"
+        },
+        "taskDuration": "任务时长",
+        "durationOptions": {
+          "quick": "快速 (5-15分钟)",
+          "medium": "适中 (15-45分钟)",
+          "deep": "深度 (1小时+)"
+        },
+        "occupation": "职业",
+        "selectOccupation": "选择职业",
+        "occupationOptions": {
+          "student": "学生",
+          "officeWorker": "上班族",
+          "remoteWorker": "远程工作者",
+          "freelancer": "自由职业者",
+          "stayAtHomeParent": "全职父母",
+          "entrepreneur": "创业者",
+          "retired": "退休人员",
+          "other": "其他"
+        },
+        "workSchedule": "工作时间",
+        "selectSchedule": "选择时间",
+        "scheduleOptions": {
+          "standard": "标准朝九晚五",
+          "flexible": "弹性工作",
+          "shiftWork": "轮班制",
+          "partTime": "兼职",
+          "irregular": "不固定"
+        },
+        "lifePhase": "人生阶段",
+        "selectLifePhase": "选择阶段",
+        "lifePhaseOptions": {
+          "highSchool": "高中",
+          "university": "大学",
+          "earlyCareer": "职业初期",
+          "midCareer": "职业中期",
+          "parent": "为人父母",
+          "careerChange": "职业转型",
+          "retired": "退休"
+        },
+        "mainChallenge": "主要挑战",
+        "selectChallenge": "选择挑战",
+        "challengeOptions": {
+          "time": "时间不够",
+          "energy": "精力不足",
+          "focus": "保持专注",
+          "motivation": "保持动力",
+          "consistency": "坚持不懈"
+        },
+        "interests": "兴趣爱好 ({count}/10)",
+        "addCustomInterest": "添加自定义兴趣...",
+        "preferNotToSay": "不想透露"
+      }
     }
   },
   "leaderboard": {

@@ -414,7 +414,70 @@
       "save": "変更を保存",
       "saving": "保存中...",
       "saveSuccess": "変更が正常に保存されました！",
-      "logout": "ログアウト"
+      "logout": "ログアウト",
+      "tabs": {
+        "general": "一般",
+        "personalization": "パーソナライズ"
+      },
+      "personalization": {
+        "timePreference": "時間帯の好み",
+        "timeOptions": {
+          "morning": "朝型",
+          "afternoon": "午後型",
+          "evening": "夜型",
+          "night": "深夜型"
+        },
+        "taskDuration": "タスクの長さ",
+        "durationOptions": {
+          "quick": "短時間 (5-15分)",
+          "medium": "バランス (15-45分)",
+          "deep": "じっくり (1時間+)"
+        },
+        "occupation": "職業",
+        "selectOccupation": "職業を選択",
+        "occupationOptions": {
+          "student": "学生",
+          "officeWorker": "会社員",
+          "remoteWorker": "リモートワーカー",
+          "freelancer": "フリーランス",
+          "stayAtHomeParent": "専業主婦/主夫",
+          "entrepreneur": "起業家",
+          "retired": "退職者",
+          "other": "その他"
+        },
+        "workSchedule": "勤務スケジュール",
+        "selectSchedule": "スケジュールを選択",
+        "scheduleOptions": {
+          "standard": "標準 9-17時",
+          "flexible": "フレックス",
+          "shiftWork": "シフト制",
+          "partTime": "パートタイム",
+          "irregular": "不定期"
+        },
+        "lifePhase": "ライフステージ",
+        "selectLifePhase": "ステージを選択",
+        "lifePhaseOptions": {
+          "highSchool": "高校生",
+          "university": "大学生",
+          "earlyCareer": "キャリア初期",
+          "midCareer": "キャリア中期",
+          "parent": "子育て中",
+          "careerChange": "キャリアチェンジ",
+          "retired": "退職"
+        },
+        "mainChallenge": "主な課題",
+        "selectChallenge": "課題を選択",
+        "challengeOptions": {
+          "time": "時間が足りない",
+          "energy": "エネルギー不足",
+          "focus": "集中力の維持",
+          "motivation": "モチベーション維持",
+          "consistency": "継続性"
+        },
+        "interests": "趣味・興味 ({count}/10)",
+        "addCustomInterest": "カスタム興味を追加...",
+        "preferNotToSay": "回答しない"
+      }
     }
   },
   "leaderboard": {

@@ -414,7 +414,70 @@
       "save": "Guardar Cambios",
       "saving": "Guardando...",
       "saveSuccess": "¡Cambios guardados exitosamente!",
-      "logout": "Cerrar Sesión"
+      "logout": "Cerrar Sesión",
+      "tabs": {
+        "general": "General",
+        "personalization": "Personalización"
+      },
+      "personalization": {
+        "timePreference": "Preferencia Horaria",
+        "timeOptions": {
+          "morning": "Madrugador",
+          "afternoon": "Energía Vespertina",
+          "evening": "Enfoque Nocturno",
+          "night": "Noctámbulo"
+        },
+        "taskDuration": "Duración de Tareas",
+        "durationOptions": {
+          "quick": "Rápidas (5-15m)",
+          "medium": "Equilibradas (15-45m)",
+          "deep": "Profundas (1h+)"
+        },
+        "occupation": "Ocupación",
+        "selectOccupation": "Seleccionar ocupación",
+        "occupationOptions": {
+          "student": "Estudiante",
+          "officeWorker": "Oficinista",
+          "remoteWorker": "Trabajo Remoto",
+          "freelancer": "Freelancer",
+          "stayAtHomeParent": "Padre/Madre en Casa",
+          "entrepreneur": "Emprendedor",
+          "retired": "Jubilado",
+          "other": "Otro"
+        },
+        "workSchedule": "Horario Laboral",
+        "selectSchedule": "Seleccionar horario",
+        "scheduleOptions": {
+          "standard": "Estándar 9-17",
+          "flexible": "Horario Flexible",
+          "shiftWork": "Turnos",
+          "partTime": "Medio Tiempo",
+          "irregular": "Irregular"
+        },
+        "lifePhase": "Etapa de Vida",
+        "selectLifePhase": "Seleccionar etapa",
+        "lifePhaseOptions": {
+          "highSchool": "Secundaria",
+          "university": "Universidad",
+          "earlyCareer": "Inicio de Carrera",
+          "midCareer": "Media Carrera",
+          "parent": "Padre/Madre",
+          "careerChange": "Cambio de Carrera",
+          "retired": "Jubilado"
+        },
+        "mainChallenge": "Desafío Principal",
+        "selectChallenge": "Seleccionar desafío",
+        "challengeOptions": {
+          "time": "Encontrar Tiempo",
+          "energy": "Baja Energía",
+          "focus": "Mantener el Enfoque",
+          "motivation": "Mantener la Motivación",
+          "consistency": "Consistencia"
+        },
+        "interests": "Intereses y Pasatiempos ({count}/10)",
+        "addCustomInterest": "Agregar interés personalizado...",
+        "preferNotToSay": "Prefiero no decir"
+      }
     }
   },
   "leaderboard": {

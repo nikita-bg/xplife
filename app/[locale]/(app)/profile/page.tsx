@@ -67,7 +67,15 @@ export default async function ProfilePage({
     .from('tasks')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', user.id)
+    .eq('user_id', user.id)
     .eq('status', 'completed')
+
+  const { data: userInterests } = await supabase
+    .from('user_interests')
+    .select('interest')
+    .eq('user_id', user.id)
+
+  const interestList = userInterests?.map(i => i.interest) || []
 
   return (
     <div className="mx-auto max-w-2xl flex flex-col gap-6">
@@ -98,6 +106,15 @@ export default async function ProfilePage({
         currentDisplayName={profile?.display_name ?? ''}
         currentAvatarUrl={profile?.avatar_url}
         currentAboutMe={profile?.about_me ?? ''}
+        // Personalization Data
+        initialTimePreference={profile?.time_preference}
+        initialTaskDuration={profile?.preferred_task_duration}
+        initialOccupation={profile?.occupation_type}
+        initialWorkSchedule={profile?.work_schedule}
+        initialLifePhase={profile?.life_phase}
+        initialMainChallenge={profile?.main_challenge}
+        // We need to fetch interests separately
+        initialInterests={interestList}
       />
     </div>
   )

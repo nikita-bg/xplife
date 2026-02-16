@@ -414,7 +414,70 @@
       "save": "Запази Промените",
       "saving": "Записване...",
       "saveSuccess": "Промените са запазени успешно!",
-      "logout": "Изход"
+      "logout": "Изход",
+      "tabs": {
+        "general": "Общи",
+        "personalization": "Персонализация"
+      },
+      "personalization": {
+        "timePreference": "Предпочитано Време",
+        "timeOptions": {
+          "morning": "Сутрешен Тип",
+          "afternoon": "Следобедна Енергия",
+          "evening": "Вечерен Фокус",
+          "night": "Нощна Птица"
+        },
+        "taskDuration": "Продължителност на Задачи",
+        "durationOptions": {
+          "quick": "Бързи Победи (5-15м)",
+          "medium": "Балансирани (15-45м)",
+          "deep": "Задълбочени (1ч+)"
+        },
+        "occupation": "Занятие",
+        "selectOccupation": "Избери занятие",
+        "occupationOptions": {
+          "student": "Студент",
+          "officeWorker": "Офис Служител",
+          "remoteWorker": "Дистанционен Работник",
+          "freelancer": "Фрийлансър",
+          "stayAtHomeParent": "Родител у Дома",
+          "entrepreneur": "Предприемач",
+          "retired": "Пенсионер",
+          "other": "Друго"
+        },
+        "workSchedule": "Работен График",
+        "selectSchedule": "Избери график",
+        "scheduleOptions": {
+          "standard": "Стандартен 9-17",
+          "flexible": "Гъвкави Часове",
+          "shiftWork": "На Смени",
+          "partTime": "Непълно Работно Време",
+          "irregular": "Нередовен"
+        },
+        "lifePhase": "Житейски Етап",
+        "selectLifePhase": "Избери етап",
+        "lifePhaseOptions": {
+          "highSchool": "Гимназия",
+          "university": "Университет",
+          "earlyCareer": "Начало на Кариера",
+          "midCareer": "Средата на Кариера",
+          "parent": "Родител",
+          "careerChange": "Смяна на Кариера",
+          "retired": "Пенсиониран"
+        },
+        "mainChallenge": "Основно Предизвикателство",
+        "selectChallenge": "Избери предизвикателство",
+        "challengeOptions": {
+          "time": "Намиране на Време",
+          "energy": "Ниска Енергия",
+          "focus": "Поддържане на Фокус",
+          "motivation": "Запазване на Мотивация",
+          "consistency": "Постоянство"
+        },
+        "interests": "Интереси и Хобита ({count}/10)",
+        "addCustomInterest": "Добави свой интерес...",
+        "preferNotToSay": "Предпочитам да не казвам"
+      }
     }
   },
   "leaderboard": {
