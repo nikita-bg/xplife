@@ -115,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
               '@type': 'Article',
               headline: typedPost.title,
               description: typedPost.excerpt || typedPost.title,
-              image: typedPost.cover_image_url || 'https://xplife.app/og-image.png',
+              image: typedPost.cover_image_url || 'https://xplife.app/og-image.jpg',
               datePublished: typedPost.created_at,
               dateModified: typedPost.updated_at || typedPost.created_at,
               author: {
@@ -128,7 +128,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
                 name: 'XPLife',
                 logo: {
                   '@type': 'ImageObject',
-                  url: 'https://xplife.app/og-image.png',
+                  url: 'https://xplife.app/og-image.jpg',
                 },
               },
               mainEntityOfPage: {

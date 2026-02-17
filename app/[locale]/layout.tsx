@@ -46,7 +46,7 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: 'https://xplife.app/og-image.png',
+          url: 'https://xplife.app/og-image.jpg',
           width: 1200,
           height: 630,
           alt: t('title'),
@@ -57,7 +57,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
-      images: ['https://xplife.app/og-image.png'],
+      images: ['https://xplife.app/og-image.jpg'],
       creator: '@xplifeapp',
     },
     manifest: '/manifest.json',
@@ -144,7 +144,7 @@ export default async function LocaleLayout({
                   name: 'XPLife Team',
                   url: 'https://xplife.app',
                 },
-                screenshot: 'https://xplife.app/og-image.png',
+                screenshot: 'https://xplife.app/og-image.jpg',
               }),
             }}
           />
