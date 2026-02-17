@@ -142,7 +142,7 @@ export default async function DashboardPage({
     .eq('user_id', user.id)
     .single()
 
-  const showBravermanBanner = (profile?.level ?? 1) >= 2 && !bravermanResult
+  const showBravermanBanner = !bravermanResult
 
   // Get current level config
   const { data: currentLevel } = await supabase

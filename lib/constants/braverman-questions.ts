@@ -1,7 +1,7 @@
 import type { BravermanQuestion } from '@/lib/types'
 
 export const BRAVERMAN_XP_REWARD = 500
-export const BRAVERMAN_UNLOCK_LEVEL = 2
+export const BRAVERMAN_UNLOCK_LEVEL = 1
 
 /**
  * Braverman Nature Assessment — 140 questions (35 per neurotransmitter).
