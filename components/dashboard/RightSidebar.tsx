@@ -18,12 +18,12 @@ export function RightSidebar() {
 
     return (
         <motion.div
+            className="hidden md:flex"
             style={{
                 position: 'absolute',
                 right: '40px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                display: 'flex',
                 flexDirection: 'column',
                 gap: '16px',
                 zIndex: 10,

@@ -5,7 +5,7 @@ import { ParticleBackground } from '@/components/ui/ParticleBackground'
 import { ChatWidget } from '@/components/chat/chat-widget'
 import { Toaster } from '@/components/ui/sonner'
 import { setRequestLocale } from 'next-intl/server'
-import { getRankFromLevel } from '@/lib/xpUtils'
+import { getRankFromLevel, getLevelFromTotalXP } from '@/lib/xpUtils'
 
 export default async function AppLayout({
   children,
@@ -30,7 +30,7 @@ export default async function AppLayout({
     .eq('id', user.id)
     .single()
 
-  const level = profile?.level || 1
+  const level = getLevelFromTotalXP(profile?.total_xp || 0)
   const rank = getRankFromLevel(level)
 
   const navbarUser = {

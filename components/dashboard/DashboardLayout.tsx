@@ -36,7 +36,7 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
                 inset: 0,
                 zIndex: 100,
                 background: 'var(--bg-base)',
-                overflow: 'hidden',
+                overflow: 'auto',
             }}
         >
             <ParticleBackground />
@@ -52,6 +52,8 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    padding: '16px',
+                    overflowY: 'auto',
                     zIndex: 10,
                 }}
             >

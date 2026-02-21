@@ -79,7 +79,7 @@ export default async function ProfilePage({
       <ProfileHeader
         displayName={profile?.display_name || user.email?.split('@')[0] || 'Hero'}
         avatarUrl={profile?.avatar_url}
-        level={profile?.level ?? 1}
+        level={level}
         levelTitle={levelConfig?.title ?? 'Novice'}
         plan={profile?.plan ?? 'free'}
       />

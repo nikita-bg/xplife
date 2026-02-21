@@ -34,6 +34,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
             initial={{ y: 72, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
+            className="flex items-center justify-between md:justify-between justify-center gap-4 px-4 md:px-10"
             style={{
                 position: 'fixed',
                 bottom: 0,
@@ -41,10 +42,6 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                 right: 0,
                 height: '72px',
                 zIndex: 40,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0 40px',
                 background: 'rgba(8, 11, 26, 0.9)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
@@ -72,6 +69,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                         0
                     </span>
                     <span
+                        className="hidden sm:inline"
                         style={{
                             fontFamily: 'var(--font-orbitron), sans-serif',
                             fontSize: '13px',
@@ -85,8 +83,8 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                 </div>
             </div>
 
-            {/* Center — Progress */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            {/* Center — Progress (hidden on very small screens) */}
+            <div className="hidden sm:flex" style={{ flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                     <span
                         style={{
@@ -131,8 +129,8 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                 onClick={() => router.push(`/${locale}/quests`)}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
+                className="w-auto sm:w-[200px]"
                 style={{
-                    width: '200px',
                     height: '48px',
                     borderRadius: '24px',
                     background: 'linear-gradient(135deg, #00C8FF, #00F5FF)',
@@ -148,6 +146,8 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '6px',
+                    padding: '0 20px',
+                    flexShrink: 0,
                 }}
             >
                 START QUEST →

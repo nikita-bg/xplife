@@ -43,7 +43,7 @@ function CharacterFallback() {
         <div
             style={{
                 width: '100%',
-                height: '280px',
+                height: '340px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -87,9 +87,14 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
             initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5, type: 'spring', stiffness: 150, damping: 20 }}
-            style={{ position: 'relative', zIndex: 10 }}
+            style={{
+                position: 'relative',
+                zIndex: 10,
+                width: '90vw',
+                maxWidth: '560px',
+            }}
         >
-            <GradientBorderCard style={{ width: '560px', minHeight: '520px' }}>
+            <GradientBorderCard>
                 <div
                     style={{
                         padding: '28px 28px 24px',
@@ -98,7 +103,6 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
                         alignItems: 'center',
                         gap: '16px',
                         position: 'relative',
-                        minHeight: '520px',
                     }}
                 >
                     <div style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 5 }}>
@@ -110,7 +114,7 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
                         onMouseMove={handleMouseMove}
                         style={{
                             width: '100%',
-                            height: '280px',
+                            height: '340px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
