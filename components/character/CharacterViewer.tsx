@@ -17,6 +17,8 @@ interface CharacterViewerProps {
   config: CharacterConfig
   registry?: CharacterPart[]
   className?: string
+  /** Show debug grid and part labels */
+  debug?: boolean
 }
 
 /**
@@ -28,6 +30,7 @@ export default function CharacterViewer({
   config,
   registry = [],
   className = '',
+  debug = false,
 }: CharacterViewerProps) {
   const zoneRef = useRef<HTMLDivElement>(null)
   const characterRef = useRef<CharacterSVGHandle>(null)
@@ -72,6 +75,7 @@ export default function CharacterViewer({
           config={config}
           registry={registry}
           className="w-full h-full"
+          debug={debug}
         />
       </CharacterErrorBoundary>
     </div>

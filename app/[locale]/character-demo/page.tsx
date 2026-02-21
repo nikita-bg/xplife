@@ -15,6 +15,7 @@ import { RANK_CONFIG, RANK_TIERS_SORTED } from '@/lib/character/rankColors'
 export default function CharacterDemoPage() {
   const [selectedClass, setSelectedClass] = useState<ClassType>('adventurer')
   const [selectedRank, setSelectedRank] = useState<RankTier>('iron')
+  const [debug, setDebug] = useState(false)
 
   const config: CharacterConfig = useMemo(() => {
     const classColors = CLASS_CONFIG[selectedClass]
@@ -77,6 +78,18 @@ export default function CharacterDemoPage() {
             )
           })}
         </select>
+
+        {/* Debug toggle */}
+        <button
+          onClick={() => setDebug((d) => !d)}
+          className={`ml-4 px-3 py-2 rounded-lg text-sm font-medium border transition-all duration-200 ${
+            debug
+              ? 'bg-green-600/20 border-green-500 text-green-400'
+              : 'bg-[#1a1a2e] border-[#2a2a3e] text-[#666]'
+          }`}
+        >
+          Debug
+        </button>
       </div>
 
       {/* Main content area */}
@@ -104,6 +117,7 @@ export default function CharacterDemoPage() {
             <CharacterViewer
               config={config}
               className="w-full h-full"
+              debug={debug}
             />
           </div>
         </div>

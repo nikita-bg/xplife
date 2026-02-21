@@ -1,7 +1,7 @@
 /**
  * CharacterSVG — SVG renderer with dynamic part injection.
  * Applies CSS custom properties, glow filters, and exposes refs
- * for the tracking hook.
+ * for the tracking hook. Includes optional debug overlay.
  */
 
 'use client'
@@ -28,6 +28,8 @@ interface CharacterSVGProps {
   config: CharacterConfig
   registry?: CharacterPart[]
   className?: string
+  /** When true, renders grid lines, bounding boxes, and part labels */
+  debug?: boolean
 }
 
 /**
@@ -35,7 +37,10 @@ interface CharacterSVGProps {
  * glow filter, and halo background. Exposes element refs via imperative handle.
  */
 const CharacterSVG = forwardRef<CharacterSVGHandle, CharacterSVGProps>(
-  function CharacterSVG({ config, registry = [], className = '' }, ref) {
+  function CharacterSVG(
+    { config, registry = [], className = '', debug = false },
+    ref
+  ) {
     const containerRef = useRef<HTMLDivElement>(null)
     const svgRootRef = useRef<SVGSVGElement | null>(null)
     const pupilsRef = useRef<SVGGElement | null>(null)
@@ -47,16 +52,14 @@ const CharacterSVG = forwardRef<CharacterSVGHandle, CharacterSVGProps>(
       eyesRef,
     }))
 
-    // Assemble SVG content (memoized)
     const svgContent = useMemo(() => {
       try {
-        return assembleCharacter(config, registry)
+        return assembleCharacter(config, registry, debug)
       } catch {
         return FALLBACK_SVG
       }
-    }, [config, registry])
+    }, [config, registry, debug])
 
-    // Capture refs from injected SVG
     const captureRefs = useCallback(() => {
       const container = containerRef.current
       if (!container) return
@@ -65,23 +68,22 @@ const CharacterSVG = forwardRef<CharacterSVGHandle, CharacterSVGProps>(
       if (svg) {
         svgRootRef.current = svg as unknown as SVGSVGElement
 
-        const charRoot = svg.querySelector('#character-root') as SVGGElement | null
+        const charRoot = svg.querySelector(
+          '#character-root'
+        ) as SVGGElement | null
         if (charRoot) {
-          // Apply idle float animation via CSS
-          charRoot.style.animation = 'character-idle-float 3s ease-in-out infinite'
+          charRoot.style.animation =
+            'character-idle-float 3s ease-in-out infinite'
           charRoot.style.transformOrigin = 'center'
         }
       }
 
-      const pupils = container.querySelector('#pupils') as SVGGElement | null
-      if (pupils) {
-        pupilsRef.current = pupils
-      }
-
-      const eyes = container.querySelector('#eyes') as SVGGElement | null
-      if (eyes) {
-        eyesRef.current = eyes
-      }
+      pupilsRef.current = container.querySelector(
+        '#pupils'
+      ) as SVGGElement | null
+      eyesRef.current = container.querySelector(
+        '#eyes'
+      ) as SVGGElement | null
     }, [])
 
     useEffect(() => {
