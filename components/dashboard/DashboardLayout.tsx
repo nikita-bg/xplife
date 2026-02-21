@@ -59,15 +59,14 @@ export function DashboardLayout({ character, user, locale = 'en', quests }: Dash
 
             {/* Scrollable content area */}
             <div
+                className="pb-[64px] md:pb-[72px]"
                 style={{
                     position: 'relative',
                     marginTop: '64px',
-                    marginBottom: '72px',
-                    minHeight: 'calc(100vh - 136px)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '16px',
+                    padding: '16px 12px',
                     zIndex: 10,
                 }}
             >
