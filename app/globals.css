@@ -10,6 +10,34 @@
 
 @layer base {
   :root {
+    /* ── XPLife Dashboard Design Tokens ── */
+    --bg-base: #080B1A;
+    --bg-surface: #0D1128;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --bg-card-hover: rgba(255, 255, 255, 0.07);
+
+    --accent-purple: #7B2FBE;
+    --accent-purple-mid: #9D4EDD;
+    --accent-cyan: #00F5FF;
+    --accent-cyan-dim: rgba(0, 245, 255, 0.15);
+    --accent-gold: #FFB800;
+
+    --gradient-primary: linear-gradient(135deg, #7B2FBE, #00F5FF);
+    --gradient-border: linear-gradient(135deg, #9D4EDD 0%, #00F5FF 100%);
+    --gradient-xp-bar: linear-gradient(90deg, #6B21A8, #7B2FBE, #9D4EDD);
+
+    --rank-gold-color: #FFB800;
+    --rank-gold-glow: rgba(255, 184, 0, 0.4);
+
+    --glass-border: rgba(155, 78, 221, 0.3);
+    --glass-border-cyan: rgba(0, 245, 255, 0.3);
+
+    --text-primary: #FFFFFF;
+    --text-secondary: #8892B0;
+    --text-cyan: #00F5FF;
+    --text-gold: #FFB800;
+
+    /* ── Shadcn/Radix tokens ── */
     --background: 240 15% 5%;
     --foreground: 210 20% 95%;
     --card: 240 12% 8%;
@@ -50,6 +78,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -60,23 +89,134 @@ html {
 }
 
 @keyframes xp-fill {
-  from { width: 0%; }
-  to { width: 85%; }
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 85%;
+  }
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.2;
+  }
+
+  25% {
+    transform: translateY(-8vh) translateX(12px);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-16vh) translateX(-8px);
+    opacity: 0.3;
+  }
+
+  75% {
+    transform: translateY(-24vh) translateX(10px);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-32vh) translateX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 55px rgba(0, 245, 255, 0.75);
+  }
+}
+
+@keyframes lvl-ring-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes badge-dot-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.4);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+  }
 }
 
 @keyframes grid-move {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(40px); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(40px);
+  }
 }
 
 .animate-xp-fill {

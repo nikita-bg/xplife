@@ -14,6 +14,10 @@ const config: Config = {
         display: ['var(--font-orbitron)', 'system-ui', 'sans-serif'],
       },
       colors: {
+        'xp-purple': 'var(--accent-purple)',
+        'xp-purple-mid': 'var(--accent-purple-mid)',
+        'xp-cyan': 'var(--accent-cyan)',
+        'xp-gold': 'var(--accent-gold)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
