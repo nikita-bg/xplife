@@ -9,11 +9,11 @@ export function Footer() {
   const locale = useLocale()
 
   return (
-    <footer className="border-t border-border/50 py-12 px-4">
+    <footer className="py-12 px-4" style={{ borderTop: '1px solid var(--glass-border)' }}>
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 md:flex-row md:justify-between">
         <Link href={`/${locale}`} className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Zap className="h-5 w-5 text-primary-foreground" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: 'var(--gradient-brand)' }}>
+            <Zap className="h-5 w-5 text-white" />
           </div>
           <span className="font-display text-lg font-bold tracking-wider text-foreground">
             XPLife
@@ -21,38 +21,28 @@ export function Footer() {
         </Link>
 
         <nav className="flex flex-wrap items-center justify-center gap-6">
-          <Link href={`/${locale}/about`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            {t('links.about')}
-          </Link>
-          <Link href={`/${locale}/blog`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            {t('links.blog')}
-          </Link>
-          <Link href={`/${locale}/privacy`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            {t('links.privacy')}
-          </Link>
-          <Link href={`/${locale}/terms`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            {t('links.terms')}
-          </Link>
-          <Link href={`/${locale}/contact`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-            {t('links.contact')}
-          </Link>
+          {['about', 'blog', 'privacy', 'terms', 'contact'].map((link) => (
+            <Link key={link} href={`/${locale}/${link}`} className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }}>
+              {t(`links.${link}`)}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-4">
-          <a href="https://x.com/XPlife_App" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Twitter">
-            <Twitter className="h-5 w-5" />
-          </a>
-          <a href="https://instagram.com/xplife.app" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
-            <Instagram className="h-5 w-5" />
-          </a>
-          <a href="https://github.com/nikita-bg/xplife" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="GitHub">
-            <Github className="h-5 w-5" />
-          </a>
+          {[
+            { href: "https://x.com/XPlife_App", icon: Twitter, label: "Twitter" },
+            { href: "https://instagram.com/xplife.app", icon: Instagram, label: "Instagram" },
+            { href: "https://github.com/nikita-bg/xplife", icon: Github, label: "GitHub" },
+          ].map(({ href, icon: Icon, label }) => (
+            <a key={label} href={href} className="transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }} aria-label={label}>
+              <Icon className="h-5 w-5" />
+            </a>
+          ))}
         </div>
       </div>
 
-      <div className="mx-auto mt-8 max-w-6xl border-t border-border/50 pt-8 text-center">
-        <p className="text-xs text-muted-foreground">
+      <div className="mx-auto mt-8 max-w-6xl pt-8 text-center" style={{ borderTop: '1px solid var(--glass-border)' }}>
+        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
           {t('copyright')}
         </p>
       </div>

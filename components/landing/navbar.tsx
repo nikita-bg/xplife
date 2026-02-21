@@ -13,7 +13,11 @@ export function Navbar() {
   const t = useTranslations('navbar')
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50" style={{
+      background: 'var(--glass-bg)',
+      borderBottom: '1px solid var(--glass-border)',
+      backdropFilter: 'blur(20px)',
+    }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href={`/${locale}`} className="flex items-center gap-2">
@@ -24,22 +28,26 @@ export function Navbar() {
           </Link>
 
           <div className="hidden items-center gap-6 md:flex">
-            <a href="#features" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <a href="#features" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }}>
               {t('features')}
             </a>
-            <a href="#how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <a href="#how-it-works" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }}>
               {t('howItWorks')}
             </a>
-            <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <a href="#pricing" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }}>
               {t('pricing')}
             </a>
             <LanguageSwitcher />
-            <Link href={`/${locale}/login`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <Link href={`/${locale}/login`} className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }}>
               {t('login')}
             </Link>
             <Link
               href={`/${locale}/signup`}
-              className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 hover:shadow-lg hover:shadow-primary/25"
+              className="rounded-lg px-5 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:scale-105"
+              style={{
+                background: 'var(--gradient-brand)',
+                boxShadow: '0 0 20px var(--accent-purple-dim)',
+              }}
             >
               {t('signup')}
             </Link>
@@ -57,26 +65,31 @@ export function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-border/50 glass-card md:hidden">
+        <div className="md:hidden" style={{
+          borderTop: '1px solid var(--glass-border)',
+          background: 'var(--glass-bg)',
+          backdropFilter: 'blur(20px)',
+        }}>
           <div className="flex flex-col gap-4 px-4 py-6">
-            <a href="#features" className="text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setMobileOpen(false)}>
+            <a href="#features" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }} onClick={() => setMobileOpen(false)}>
               {t('features')}
             </a>
-            <a href="#how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setMobileOpen(false)}>
+            <a href="#how-it-works" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }} onClick={() => setMobileOpen(false)}>
               {t('howItWorks')}
             </a>
-            <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setMobileOpen(false)}>
+            <a href="#pricing" className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }} onClick={() => setMobileOpen(false)}>
               {t('pricing')}
             </a>
             <div className="py-2">
               <LanguageSwitcher />
             </div>
-            <Link href={`/${locale}/login`} className="text-sm text-muted-foreground transition-colors hover:text-foreground" onClick={() => setMobileOpen(false)}>
+            <Link href={`/${locale}/login`} className="text-sm transition-colors hover:text-foreground" style={{ color: 'var(--text-secondary)' }} onClick={() => setMobileOpen(false)}>
               {t('login')}
             </Link>
             <Link
               href={`/${locale}/signup`}
-              className="rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
+              className="rounded-lg px-5 py-2.5 text-center text-sm font-semibold text-white transition-all"
+              style={{ background: 'var(--gradient-brand)' }}
               onClick={() => setMobileOpen(false)}
             >
               {t('signup')}
