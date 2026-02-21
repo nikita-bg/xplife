@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ParticleBackground } from '@/components/ui/ParticleBackground'
-import { Navbar } from '@/components/dashboard/Navbar'
+import { UnifiedNavbar } from '@/components/shared/UnifiedNavbar'
 import { LeftSidebar } from '@/components/dashboard/LeftSidebar'
 import { RightSidebar } from '@/components/dashboard/RightSidebar'
 import { CharacterCard } from '@/components/dashboard/CharacterCard'
@@ -40,7 +40,7 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
             }}
         >
             <ParticleBackground />
-            <Navbar user={user} locale={locale} />
+            <UnifiedNavbar user={user} locale={locale} />
 
             <div
                 style={{

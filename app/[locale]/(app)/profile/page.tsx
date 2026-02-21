@@ -75,7 +75,7 @@ export default async function ProfilePage({
     })
 
   return (
-    <div className="mx-auto max-w-2xl flex flex-col gap-6">
+    <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8 flex flex-col gap-6">
       <ProfileHeader
         displayName={profile?.display_name || user.email?.split('@')[0] || 'Hero'}
         avatarUrl={profile?.avatar_url}

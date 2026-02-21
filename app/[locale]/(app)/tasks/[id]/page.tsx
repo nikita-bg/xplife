@@ -33,6 +33,7 @@ export default async function TaskPage({ params }: { params: Promise<{ id: strin
     .single()
 
   return (
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <TaskDetail
       task={task}
       userId={user.id}
@@ -41,5 +42,6 @@ export default async function TaskPage({ params }: { params: Promise<{ id: strin
       nextLevelXp={nextLevel?.xp_required ?? null}
       nextLevelTitle={nextLevel?.title ?? null}
     />
+    </div>
   )
 }

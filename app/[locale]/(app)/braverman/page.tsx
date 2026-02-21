@@ -28,7 +28,7 @@ export default async function BravermanPage({
 
   if (!profile || profile.level < BRAVERMAN_UNLOCK_LEVEL) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-20">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-4">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
           <Lock className="h-8 w-8 text-muted-foreground" />
         </div>
@@ -51,7 +51,7 @@ export default async function BravermanPage({
 
   if (existingResult) {
     return (
-      <div className="flex flex-col gap-6">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             {t('resultsTitle')}
@@ -74,7 +74,7 @@ export default async function BravermanPage({
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
           {t('title')}

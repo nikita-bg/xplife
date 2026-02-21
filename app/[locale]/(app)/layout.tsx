@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { AppNavbar } from '@/components/shared/app-navbar'
+import { UnifiedNavbar } from '@/components/shared/UnifiedNavbar'
+import { ParticleBackground } from '@/components/ui/ParticleBackground'
 import { ChatWidget } from '@/components/chat/chat-widget'
 import { setRequestLocale } from 'next-intl/server'
+import { getRankFromLevel } from '@/lib/xpUtils'
 
 export default async function AppLayout({
   children,
@@ -27,14 +29,22 @@ export default async function AppLayout({
     .eq('id', user.id)
     .single()
 
+  const level = profile?.level || 1
+  const rank = getRankFromLevel(level)
+
+  const navbarUser = {
+    avatar: profile?.avatar_url,
+    username: profile?.display_name || user.email?.split('@')[0] || 'Hero',
+    totalXP: profile?.total_xp || 0,
+    rank,
+    level,
+  }
+
   return (
-    <div className="min-h-screen">
-      <AppNavbar
-        displayName={profile?.display_name || user.email?.split('@')[0] || 'Hero'}
-        avatarUrl={profile?.avatar_url}
-        level={profile?.level || 1}
-      />
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div style={{ background: 'var(--bg-base)', minHeight: '100vh' }}>
+      <ParticleBackground />
+      <UnifiedNavbar user={navbarUser} locale={locale} />
+      <main style={{ paddingTop: '64px', position: 'relative', zIndex: 10 }}>
         {children}
       </main>
       <ChatWidget userId={user.id} />
