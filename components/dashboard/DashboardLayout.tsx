@@ -18,6 +18,10 @@ interface DashboardUser {
     streak?: number
     dailyCompleted?: number
     dailyTotal?: number
+    weeklyCompleted?: number
+    weeklyTotal?: number
+    monthlyCompleted?: number
+    monthlyTotal?: number
 }
 
 interface DashboardLayoutProps {
@@ -42,6 +46,7 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
             <ParticleBackground />
             <UnifiedNavbar user={user} locale={locale} />
 
+            {/* Center content — card fills width, sidebars float over it */}
             <div
                 style={{
                     position: 'absolute',
@@ -57,15 +62,16 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
                     zIndex: 10,
                 }}
             >
-                <LeftSidebar activeQuest={activeQuest} onQuestChange={setActiveQuest} />
                 <CharacterCard character={character} user={user} />
+                <LeftSidebar activeQuest={activeQuest} onQuestChange={setActiveQuest} />
                 <RightSidebar />
             </div>
 
             <BottomBar
                 streak={user?.streak ?? 0}
-                completed={user?.dailyCompleted ?? 0}
-                total={user?.dailyTotal ?? 5}
+                daily={{ completed: user?.dailyCompleted ?? 0, total: user?.dailyTotal ?? 5 }}
+                weekly={{ completed: user?.weeklyCompleted ?? 0, total: user?.weeklyTotal ?? 3 }}
+                monthly={{ completed: user?.monthlyCompleted ?? 0, total: user?.monthlyTotal ?? 1 }}
                 locale={locale}
             />
         </div>

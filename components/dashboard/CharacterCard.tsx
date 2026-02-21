@@ -43,7 +43,9 @@ function CharacterFallback() {
         <div
             style={{
                 width: '100%',
-                height: '340px',
+                height: 'calc(100vh - 64px - 72px - 200px)',
+                minHeight: '300px',
+                maxHeight: '500px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -90,8 +92,9 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
             style={{
                 position: 'relative',
                 zIndex: 10,
-                width: '90vw',
-                maxWidth: '560px',
+                width: '100%',
+                maxWidth: '900px',
+                margin: '0 auto',
             }}
         >
             <GradientBorderCard>
@@ -114,7 +117,9 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
                         onMouseMove={handleMouseMove}
                         style={{
                             width: '100%',
-                            height: '340px',
+                            height: 'calc(100vh - 64px - 72px - 200px)',
+                            minHeight: '300px',
+                            maxHeight: '500px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',

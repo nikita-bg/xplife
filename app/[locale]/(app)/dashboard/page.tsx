@@ -78,17 +78,37 @@ export default async function DashboardPage({
     .eq('status', 'pending')
     .lt('created_at', thisMonthStart)
 
-  // ── Daily quest count ────────────────────────────────────────
-  const { data: dailyQuests } = await supabase
-    .from('tasks')
-    .select('status')
-    .eq('user_id', user.id)
-    .eq('quest_timeframe', 'daily')
-    .gte('created_at', todayStart)
+  // ── Quest counts per timeframe ───────────────────────────────
+  const [{ data: dailyQuests }, { data: weeklyQuests }, { data: monthlyQuests }] = await Promise.all([
+    supabase
+      .from('tasks')
+      .select('status')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'daily')
+      .gte('created_at', todayStart),
+    supabase
+      .from('tasks')
+      .select('status')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'weekly')
+      .gte('created_at', thisMonday.toISOString()),
+    supabase
+      .from('tasks')
+      .select('status')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'monthly')
+      .gte('created_at', thisMonthStart),
+  ])
 
   const dailyCompleted =
     dailyQuests?.filter((q) => q.status === 'completed').length ?? 0
   const dailyTotal = Math.max(dailyQuests?.length ?? 5, 5)
+  const weeklyCompleted =
+    weeklyQuests?.filter((q) => q.status === 'completed').length ?? 0
+  const weeklyTotal = Math.max(weeklyQuests?.length ?? 3, 3)
+  const monthlyCompleted =
+    monthlyQuests?.filter((q) => q.status === 'completed').length ?? 0
+  const monthlyTotal = Math.max(monthlyQuests?.length ?? 1, 1)
 
   // ── XP / Level / Rank (formula-based, not level_config) ─────
   const totalXP = profile?.total_xp ?? 0
@@ -125,6 +145,10 @@ export default async function DashboardPage({
     streak: streak?.current_streak ?? 0,
     dailyCompleted,
     dailyTotal,
+    weeklyCompleted,
+    weeklyTotal,
+    monthlyCompleted,
+    monthlyTotal,
   }
 
   return (

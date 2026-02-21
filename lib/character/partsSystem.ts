@@ -22,15 +22,15 @@ import { isRankAtLeast } from './rankColors'
 // ─── Isometric Constants ────────────────────────────────────────────────────
 
 /** Half tile width — controls horizontal spread */
-const TW = 10
+const TW = 24
 /** Half tile height — TW/2 for true 2:1 isometric */
-const TH = 5
+const TH = 12
 /** Pixels per Y-unit (block height) */
-const BH = 10
+const BH = 24
 /** SVG center X */
 const CX = 150
 /** SVG ground-level Y (character bottom) */
-const CY = 260
+const CY = 320
 
 // ─── Color Utilities ────────────────────────────────────────────────────────
 
@@ -357,7 +357,7 @@ function generateDebugOverlay(): string {
 
 // ─── Fallback SVG ───────────────────────────────────────────────────────────
 
-export const FALLBACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340" width="100%" height="100%">
+export const FALLBACK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="100%" height="100%">
   <g transform="translate(150, 170)">
     <circle cx="0" cy="-50" r="20" fill="none" stroke="#666" stroke-width="2"/>
     <line x1="0" y1="-30" x2="0" y2="30" stroke="#666" stroke-width="2"/>
@@ -388,7 +388,7 @@ export function assembleCharacter(
     registryMap.set(part.id, part)
   }
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340" width="100%" height="100%">\n`
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="100%" height="100%">\n`
   svg += `<defs>\n`
   svg += `  <filter id="${filterId}" x="-50%" y="-50%" width="200%" height="200%">\n`
   svg += `    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>\n`

@@ -4,14 +4,34 @@ import { useEffect, useRef } from 'react'
 import { motion, animate } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 
+interface QuestProgress {
+    completed: number
+    total: number
+}
+
 interface BottomBarProps {
     streak?: number
-    completed?: number
-    total?: number
+    daily?: QuestProgress
+    weekly?: QuestProgress
+    monthly?: QuestProgress
     locale?: string
 }
 
-export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en' }: BottomBarProps) {
+function progressColor(completed: number, total: number): string {
+    if (total === 0) return 'var(--text-muted)'
+    const ratio = completed / total
+    if (ratio >= 1) return '#4ADE80'   // green
+    if (ratio > 0) return '#FBBF24'    // yellow
+    return '#F87171'                    // red
+}
+
+export function BottomBar({
+    streak = 0,
+    daily = { completed: 0, total: 5 },
+    weekly = { completed: 0, total: 3 },
+    monthly = { completed: 0, total: 1 },
+    locale = 'en',
+}: BottomBarProps) {
     const streakRef = useRef<HTMLSpanElement>(null)
     const router = useRouter()
 
@@ -29,12 +49,15 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
         return () => controls.stop()
     }, [streak])
 
+    const totalCompleted = daily.completed + weekly.completed + monthly.completed
+    const totalAll = daily.total + weekly.total + monthly.total
+
     return (
         <motion.div
             initial={{ y: 72, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
-            className="flex items-center justify-between md:justify-between justify-center gap-4 px-4 md:px-10"
+            className="flex items-center justify-between gap-4 px-4 md:px-10"
             style={{
                 position: 'fixed',
                 bottom: 0,
@@ -53,7 +76,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
             }}
         >
             {/* Left — Streak */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
                 <span style={{ fontSize: '28px', lineHeight: 1 }}>🔥</span>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                     <span
@@ -83,40 +106,52 @@ export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en'
                 </div>
             </div>
 
-            {/* Center — Progress (hidden on very small screens) */}
-            <div className="hidden sm:flex" style={{ flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                    <span
-                        style={{
-                            fontFamily: 'var(--font-orbitron), sans-serif',
-                            fontSize: '20px',
-                            fontWeight: 700,
-                            color: 'var(--text-primary)',
-                        }}
-                    >
-                        {completed}/{total}
-                    </span>
-                    <span
-                        style={{
-                            fontFamily: 'var(--font-inter), sans-serif',
-                            fontSize: '13px',
-                            color: 'var(--text-secondary)',
-                            letterSpacing: '0.04em',
-                        }}
-                    >
-                        COMPLETED
-                    </span>
+            {/* Center — Quest Breakdown */}
+            <div className="hidden sm:flex" style={{ flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    {[
+                        { label: 'Daily', data: daily },
+                        { label: 'Weekly', data: weekly },
+                        { label: 'Monthly', data: monthly },
+                    ].map((q, i) => (
+                        <div key={q.label} style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+                            {i > 0 && (
+                                <span style={{ color: 'var(--text-muted)', margin: '0 2px', fontSize: '11px' }}>·</span>
+                            )}
+                            <span
+                                style={{
+                                    fontFamily: 'var(--font-orbitron), sans-serif',
+                                    fontSize: '11px',
+                                    letterSpacing: '0.06em',
+                                    color: progressColor(q.data.completed, q.data.total),
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                {q.label}
+                            </span>
+                            <span
+                                style={{
+                                    fontFamily: 'var(--font-orbitron), sans-serif',
+                                    fontSize: '14px',
+                                    fontWeight: 700,
+                                    color: 'var(--text-primary)',
+                                }}
+                            >
+                                {q.data.completed}/{q.data.total}
+                            </span>
+                        </div>
+                    ))}
                 </div>
-                <div style={{ display: 'flex', gap: '6px' }}>
-                    {Array.from({ length: total }, (_, i) => (
+                <div style={{ display: 'flex', gap: '4px' }}>
+                    {Array.from({ length: Math.min(totalAll, 12) }, (_, i) => (
                         <div
                             key={i}
                             style={{
-                                width: '8px',
-                                height: '8px',
+                                width: '6px',
+                                height: '6px',
                                 borderRadius: '50%',
-                                background: i < completed ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.15)',
-                                boxShadow: i < completed ? '0 0 6px var(--accent-cyan)' : 'none',
+                                background: i < totalCompleted ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.15)',
+                                boxShadow: i < totalCompleted ? '0 0 4px var(--accent-cyan)' : 'none',
                                 transition: 'all 0.3s ease',
                             }}
                         />
