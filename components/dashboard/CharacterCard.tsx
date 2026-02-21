@@ -44,7 +44,7 @@ function CharacterFallback() {
         <div
             style={{
                 width: '100%',
-                height: 'calc(100vh - 64px - 72px - 200px)',
+                height: 'calc(100vh - 72px - 200px)',
                 minHeight: '300px',
                 maxHeight: '500px',
                 display: 'flex',
@@ -120,8 +120,8 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
                         onMouseMove={handleMouseMove}
                         style={{
                             width: '100%',
-                            height: 'calc(100vh - 64px - 72px - 200px)',
-                            minHeight: '300px',
+                            height: 'calc(100vh - 72px - 200px)',
+                            minHeight: '260px',
                             maxHeight: '500px',
                             display: 'flex',
                             alignItems: 'center',
@@ -162,7 +162,7 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
                         <h2
                             style={{
                                 fontFamily: 'var(--font-orbitron), sans-serif',
-                                fontSize: '22px',
+                                fontSize: 'clamp(16px, 4vw, 22px)',
                                 fontWeight: 800,
                                 textTransform: 'uppercase',
                                 color: 'var(--accent-gold)',

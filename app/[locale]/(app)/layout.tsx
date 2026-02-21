@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { UnifiedNavbar } from '@/components/shared/UnifiedNavbar'
 import { ParticleBackground } from '@/components/ui/ParticleBackground'
+import { BottomBar } from '@/components/dashboard/BottomBar'
 import { ChatWidget } from '@/components/chat/chat-widget'
 import { Toaster } from '@/components/ui/sonner'
 import { setRequestLocale } from 'next-intl/server'
@@ -45,9 +46,11 @@ export default async function AppLayout({
     <div style={{ background: 'var(--bg-base)', minHeight: '100vh' }}>
       <ParticleBackground />
       <UnifiedNavbar user={navbarUser} locale={locale} />
-      <main style={{ paddingTop: '64px', position: 'relative', zIndex: 10 }}>
+      {/* pt-0 on mobile (no top bar), pt-16 (64px) on desktop */}
+      <main className="pt-0 md:pt-16 pb-[72px] md:pb-0" style={{ position: 'relative', zIndex: 10 }}>
         {children}
       </main>
+      <BottomBar locale={locale} />
       <ChatWidget userId={user.id} />
       <Toaster position="bottom-right" />
     </div>
