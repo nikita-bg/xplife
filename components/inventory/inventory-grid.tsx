@@ -102,10 +102,25 @@ function ItemCard({ item, onClick }: { item: InventoryItem; onClick: () => void 
                 style={{ background: `${rarityColor}15` }}>
                 {i.thumbnail_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={i.thumbnail_url} alt={i.name} className="h-16 w-16 object-contain" />
+                    <img
+                        src={i.thumbnail_url}
+                        alt={i.name}
+                        className="h-16 w-16 object-contain"
+                        onError={(e) => {
+                            const target = e.currentTarget
+                            target.style.display = 'none'
+                            const parent = target.parentElement
+                            if (parent) {
+                                const fallback = document.createElement('div')
+                                fallback.className = 'text-3xl opacity-50'
+                                fallback.textContent = i.type === 'head' ? '🪖' : i.type === 'body' ? '🛡️' : i.type === 'weapon' ? '⚔️' : i.type === 'arm' ? '🧤' : i.type === 'leg' ? '🦿' : '📦'
+                                parent.appendChild(fallback)
+                            }
+                        }}
+                    />
                 ) : (
                     <div className="text-3xl opacity-50">
-                        {i.type === 'head' ? '🪖' : i.type === 'body' ? '🛡️' : i.type === 'weapon' ? '⚔️' : '📦'}
+                        {i.type === 'head' ? '🪖' : i.type === 'body' ? '🛡️' : i.type === 'weapon' ? '⚔️' : i.type === 'arm' ? '🧤' : i.type === 'leg' ? '🦿' : '📦'}
                     </div>
                 )}
             </div>

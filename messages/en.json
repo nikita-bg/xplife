@@ -275,7 +275,11 @@
     "monthlyQuest": "Monthly Quest",
     "daily": "Daily",
     "weekly": "Weekly",
-    "monthly": "Monthly"
+    "monthly": "Monthly",
+    "classAdventurer": "THE ADVENTURER",
+    "classThinker": "THE THINKER",
+    "classGuardian": "THE GUARDIAN",
+    "classConnector": "THE CONNECTOR"
   },
   "auth": {
     "login": {

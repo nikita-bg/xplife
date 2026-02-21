@@ -275,7 +275,11 @@
     "monthlyQuest": "Месечен Куест",
     "daily": "Дневни",
     "weekly": "Седмични",
-    "monthly": "Месечни"
+    "monthly": "Месечни",
+    "classAdventurer": "АВАНТЮРИСТЪТ",
+    "classThinker": "МИСЛИТЕЛЯТ",
+    "classGuardian": "ПАЗИТЕЛЯТ",
+    "classConnector": "СВЪРЗВАЩИЯТ"
   },
   "auth": {
     "login": {

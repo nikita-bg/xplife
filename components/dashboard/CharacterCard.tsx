@@ -6,15 +6,16 @@ import { GradientBorderCard } from '@/components/ui/GradientBorderCard'
 import { LevelBadge } from '@/components/ui/LevelBadge'
 import { RankBadge } from '@/components/ui/RankBadge'
 import { XPProgressBar } from '@/components/ui/XPProgressBar'
+import { useTranslations } from 'next-intl'
 import type { CharacterConfig } from '@/components/character/CharacterConfig'
 
 const CharacterSVG = lazy(() => import('@/components/character/CharacterSVG'))
 
-const CLASS_LABELS: Record<string, string> = {
-    adventurer: 'THE ADVENTURER',
-    thinker: 'THE THINKER',
-    guardian: 'THE GUARDIAN',
-    connector: 'THE CONNECTOR',
+const CLASS_TRANSLATION_KEYS: Record<string, string> = {
+    adventurer: 'classAdventurer',
+    thinker: 'classThinker',
+    guardian: 'classGuardian',
+    connector: 'classConnector',
 }
 
 const RANK_COLORS: Record<string, string> = {
@@ -69,7 +70,9 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
     const trackingZoneRef = useRef<HTMLDivElement>(null)
 
     const rankColor = RANK_COLORS[character?.rank] ?? RANK_COLORS.gold
-    const classLabel = CLASS_LABELS[character?.class] ?? 'THE ADVENTURER'
+    const t = useTranslations('navigation')
+    const classKey = character?.class ?? 'adventurer'
+    const classLabel = t(CLASS_TRANSLATION_KEYS[classKey] ?? 'classAdventurer')
 
     const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const zone = trackingZoneRef.current

@@ -227,18 +227,18 @@ function generatePlatform(
 
 function generateRightLeg(primary: string, rankColor: string): string {
   let svg = '<g id="right-leg">\n'
-  svg += buildCube({ x: 1, y: 0, z: -0.5, w: 1, h: 3, d: 1, color: primary, id: 'right-leg-base' })
+  svg += buildCube({ x: 0.3, y: 0, z: -0.5, w: 0.9, h: 3, d: 1, color: primary, id: 'right-leg-base' })
   // Boot trim
-  svg += '\n' + buildCube({ x: 0.95, y: 0, z: -0.55, w: 1.1, h: 0.6, d: 1.1, color: rankColor, id: 'right-leg-trim' })
+  svg += '\n' + buildCube({ x: 0.25, y: 0, z: -0.55, w: 1, h: 0.6, d: 1.1, color: rankColor, id: 'right-leg-trim' })
   svg += '\n</g>'
   return svg
 }
 
 function generateLeftLeg(primary: string, rankColor: string): string {
   let svg = '<g id="left-leg">\n'
-  svg += buildCube({ x: -2, y: 0, z: -0.5, w: 1, h: 3, d: 1, color: primary, id: 'left-leg-base' })
+  svg += buildCube({ x: -1.2, y: 0, z: -0.5, w: 0.9, h: 3, d: 1, color: primary, id: 'left-leg-base' })
   // Boot trim
-  svg += '\n' + buildCube({ x: -2.05, y: 0, z: -0.55, w: 1.1, h: 0.6, d: 1.1, color: rankColor, id: 'left-leg-trim' })
+  svg += '\n' + buildCube({ x: -1.25, y: 0, z: -0.55, w: 1, h: 0.6, d: 1.1, color: rankColor, id: 'left-leg-trim' })
   svg += '\n</g>'
   return svg
 }
@@ -261,18 +261,18 @@ function generateBody(
 
 function generateRightArm(primary: string, rankColor: string): string {
   let svg = '<g id="right-arm">\n'
-  svg += buildCube({ x: 1, y: 3, z: -0.5, w: 1, h: 4, d: 1, color: primary, id: 'right-arm-base' })
+  svg += buildCube({ x: 1.1, y: 4, z: -0.4, w: 0.8, h: 3, d: 0.8, color: primary, id: 'right-arm-base' })
   // Shoulder trim
-  svg += '\n' + buildCube({ x: 0.95, y: 6.4, z: -0.55, w: 1.1, h: 0.6, d: 1.1, color: rankColor, id: 'right-arm-trim' })
+  svg += '\n' + buildCube({ x: 1.05, y: 6.4, z: -0.45, w: 0.9, h: 0.6, d: 0.9, color: rankColor, id: 'right-arm-trim' })
   svg += '\n</g>'
   return svg
 }
 
 function generateLeftArm(primary: string, rankColor: string): string {
   let svg = '<g id="left-arm">\n'
-  svg += buildCube({ x: -2, y: 3, z: -0.5, w: 1, h: 4, d: 1, color: primary, id: 'left-arm-base' })
+  svg += buildCube({ x: -1.9, y: 4, z: -0.4, w: 0.8, h: 3, d: 0.8, color: primary, id: 'left-arm-base' })
   // Shoulder trim
-  svg += '\n' + buildCube({ x: -2.05, y: 6.4, z: -0.55, w: 1.1, h: 0.6, d: 1.1, color: rankColor, id: 'left-arm-trim' })
+  svg += '\n' + buildCube({ x: -1.95, y: 6.4, z: -0.45, w: 0.9, h: 0.6, d: 0.9, color: rankColor, id: 'left-arm-trim' })
   svg += '\n</g>'
   return svg
 }

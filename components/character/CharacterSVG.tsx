@@ -58,7 +58,8 @@ const CharacterSVG = forwardRef<CharacterSVGHandle, CharacterSVGProps>(
       } catch {
         return FALLBACK_SVG
       }
-    }, [config, registry, debug])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [config.class, config.rank, config.colors.primary, config.colors.accent, config.colors.rankColor, config.colors.glowColor, config.userId, registry, debug])
 
     const captureRefs = useCallback(() => {
       const container = containerRef.current

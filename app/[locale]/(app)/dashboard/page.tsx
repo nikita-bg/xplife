@@ -42,17 +42,9 @@ export default async function DashboardPage({
       .eq('equipped', true),
   ])
 
-  // ── Stale task cleanup ───────────────────────────────────────
+  // ── Stale task cleanup (non-blocking parallel) ─────────────
   const now = new Date()
   const todayStart = `${now.toISOString().split('T')[0]}T00:00:00`
-
-  await supabase
-    .from('tasks')
-    .update({ status: 'skipped' })
-    .eq('user_id', user.id)
-    .eq('quest_timeframe', 'daily')
-    .eq('status', 'pending')
-    .lt('created_at', todayStart)
 
   const dayOfWeek = now.getDay()
   const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1
@@ -62,26 +54,37 @@ export default async function DashboardPage({
     now.getDate() - mondayOffset
   )
   thisMonday.setHours(0, 0, 0, 0)
-  await supabase
-    .from('tasks')
-    .update({ status: 'skipped' })
-    .eq('user_id', user.id)
-    .eq('quest_timeframe', 'weekly')
-    .eq('status', 'pending')
-    .lt('created_at', thisMonday.toISOString())
 
   const thisMonthStart = new Date(
     now.getFullYear(),
     now.getMonth(),
     1
   ).toISOString()
-  await supabase
-    .from('tasks')
-    .update({ status: 'skipped' })
-    .eq('user_id', user.id)
-    .eq('quest_timeframe', 'monthly')
-    .eq('status', 'pending')
-    .lt('created_at', thisMonthStart)
+
+  // Fire all cleanup writes in parallel — don't block page render
+  void Promise.all([
+    supabase
+      .from('tasks')
+      .update({ status: 'skipped' })
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'daily')
+      .eq('status', 'pending')
+      .lt('created_at', todayStart),
+    supabase
+      .from('tasks')
+      .update({ status: 'skipped' })
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'weekly')
+      .eq('status', 'pending')
+      .lt('created_at', thisMonday.toISOString()),
+    supabase
+      .from('tasks')
+      .update({ status: 'skipped' })
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'monthly')
+      .eq('status', 'pending')
+      .lt('created_at', thisMonthStart),
+  ])
 
   // ── Quest counts per timeframe ───────────────────────────────
   const [{ data: dailyQuests }, { data: weeklyQuests }, { data: monthlyQuests }] = await Promise.all([
