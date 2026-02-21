@@ -4,13 +4,17 @@ import { motion } from 'framer-motion'
 import { Brain, CalendarDays, BookOpen } from 'lucide-react'
 import { GlassButton } from '@/components/ui/GlassButton'
 
+interface RightSidebarProps {
+    onToolSelect?: (key: string) => void
+}
+
 const BUTTONS = [
-    { icon: Brain, label: 'Braverman Test', key: 'braverman', href: '/braverman' },
+    { icon: Brain, label: 'Braverman Test', key: 'braverman' },
     { icon: CalendarDays, label: 'Weekly Review', key: 'review' },
     { icon: BookOpen, label: 'Class Guide', key: 'guide' },
 ]
 
-export function RightSidebar({ onToolSelect }) {
+export function RightSidebar({ onToolSelect }: RightSidebarProps) {
     return (
         <motion.div
             style={{

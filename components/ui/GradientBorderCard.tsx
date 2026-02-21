@@ -1,6 +1,14 @@
 'use client'
 
-export function GradientBorderCard({ children, style = {}, className = '' }) {
+import type { CSSProperties, ReactNode } from 'react'
+
+interface GradientBorderCardProps {
+    children: ReactNode
+    style?: CSSProperties
+    className?: string
+}
+
+export function GradientBorderCard({ children, style = {}, className = '' }: GradientBorderCardProps) {
     return (
         <div
             style={{

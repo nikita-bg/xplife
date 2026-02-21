@@ -4,13 +4,18 @@ import { motion } from 'framer-motion'
 import { Sword, Shield, Crown } from 'lucide-react'
 import { GlassButton } from '@/components/ui/GlassButton'
 
+interface LeftSidebarProps {
+    activeQuest?: string
+    onQuestChange?: (key: string) => void
+}
+
 const BUTTONS = [
     { icon: Sword, label: 'Daily Quest', key: 'daily' },
     { icon: Shield, label: 'Weekly Quest', key: 'weekly' },
     { icon: Crown, label: 'Monthly Quest', key: 'monthly' },
 ]
 
-export function LeftSidebar({ activeQuest = 'daily', onQuestChange }) {
+export function LeftSidebar({ activeQuest = 'daily', onQuestChange }: LeftSidebarProps) {
     return (
         <motion.div
             style={{

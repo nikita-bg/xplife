@@ -2,7 +2,12 @@
 
 import { motion } from 'framer-motion'
 
-export function LevelBadge({ level, delay = 0.8 }) {
+interface LevelBadgeProps {
+    level: number
+    delay?: number
+}
+
+export function LevelBadge({ level, delay = 0.8 }: LevelBadgeProps) {
     return (
         <motion.div
             initial={{ rotate: -180, scale: 0, opacity: 0 }}
@@ -17,7 +22,6 @@ export function LevelBadge({ level, delay = 0.8 }) {
                 justifyContent: 'center',
             }}
         >
-            {/* Outer rotating ring */}
             <div
                 style={{
                     position: 'absolute',
@@ -30,7 +34,6 @@ export function LevelBadge({ level, delay = 0.8 }) {
                     opacity: 0.7,
                 }}
             />
-            {/* Second ring (counter-rotate for visual interest) */}
             <div
                 style={{
                     position: 'absolute',
@@ -43,21 +46,16 @@ export function LevelBadge({ level, delay = 0.8 }) {
                     opacity: 0.5,
                 }}
             />
-
-            {/* Hexagon body via clip-path */}
             <div
                 style={{
                     width: '80px',
                     height: '80px',
                     clipPath: 'polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)',
                     background: 'radial-gradient(circle at center, rgba(123, 47, 190, 0.9) 0%, rgba(8,11,26,0.95) 100%)',
-                    border: '2px solid rgba(0,245,255,0.5)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0px',
-                    boxShadow: '0 0 20px rgba(0,245,255,0.3)',
                     position: 'relative',
                     zIndex: 1,
                 }}

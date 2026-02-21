@@ -3,10 +3,16 @@
 import { useEffect, useRef } from 'react'
 import { animate } from 'framer-motion'
 
-export function XPProgressBar({ current, max, animated = true }) {
-    const fillRef = useRef(null)
-    const labelRef = useRef(null)
-    const dotRef = useRef(null)
+interface XPProgressBarProps {
+    current: number
+    max: number
+    animated?: boolean
+}
+
+export function XPProgressBar({ current, max, animated = true }: XPProgressBarProps) {
+    const fillRef = useRef<HTMLDivElement>(null)
+    const labelRef = useRef<HTMLSpanElement>(null)
+    const dotRef = useRef<HTMLDivElement>(null)
     const pct = Math.min(100, Math.max(0, (current / max) * 100))
 
     useEffect(() => {
@@ -16,12 +22,11 @@ export function XPProgressBar({ current, max, animated = true }) {
         const labelEl = labelRef.current
         if (!fillEl) return
 
-        // Animate fill width from 0 to target
         const controls = animate(0, pct, {
             duration: 1.2,
             delay: 1.2,
             ease: [0.33, 1, 0.68, 1],
-            onUpdate(v) {
+            onUpdate(v: number) {
                 fillEl.style.width = `${v}%`
                 if (dotRef.current) {
                     dotRef.current.style.left = `calc(${v}% - 4px)`
@@ -29,12 +34,11 @@ export function XPProgressBar({ current, max, animated = true }) {
             },
         })
 
-        // Animate counter from 0 to current XP
         const counterControls = animate(0, current, {
             duration: 1.2,
             delay: 1.2,
             ease: [0.33, 1, 0.68, 1],
-            onUpdate(v) {
+            onUpdate(v: number) {
                 if (labelEl) {
                     labelEl.textContent = `${Math.round(v).toLocaleString()} / ${max.toLocaleString()} XP`
                 }
@@ -49,7 +53,6 @@ export function XPProgressBar({ current, max, animated = true }) {
 
     return (
         <div style={{ width: '100%', position: 'relative' }}>
-            {/* Track */}
             <div
                 style={{
                     height: '44px',
@@ -60,7 +63,6 @@ export function XPProgressBar({ current, max, animated = true }) {
                     overflow: 'hidden',
                 }}
             >
-                {/* Fill */}
                 <div
                     ref={fillRef}
                     style={{
@@ -71,11 +73,8 @@ export function XPProgressBar({ current, max, animated = true }) {
                         width: animated ? '0%' : `${pct}%`,
                         borderRadius: '22px',
                         background: 'var(--gradient-xp-bar)',
-                        transition: animated ? undefined : 'none',
                     }}
                 />
-
-                {/* Shimmer overlay */}
                 <div
                     style={{
                         position: 'absolute',
@@ -89,8 +88,6 @@ export function XPProgressBar({ current, max, animated = true }) {
                         pointerEvents: 'none',
                     }}
                 />
-
-                {/* Label centered */}
                 <div
                     style={{
                         position: 'absolute',
@@ -116,8 +113,6 @@ export function XPProgressBar({ current, max, animated = true }) {
                     </span>
                 </div>
             </div>
-
-            {/* Glow dot at fill endpoint */}
             <div
                 ref={dotRef}
                 style={{

@@ -1,6 +1,8 @@
 'use client'
 
-const RANK_STYLES = {
+import type { RankTier } from '@/components/character/CharacterConfig'
+
+const RANK_STYLES: Record<RankTier, { bg: string; border: string; color: string }> = {
     iron: { bg: 'rgba(140,140,140,0.15)', border: 'rgba(140,140,140,0.4)', color: '#9E9E9E' },
     bronze: { bg: 'rgba(205,127,50,0.15)', border: 'rgba(205,127,50,0.4)', color: '#CD7F32' },
     silver: { bg: 'rgba(192,192,192,0.15)', border: 'rgba(192,192,192,0.4)', color: '#C0C0C0' },
@@ -12,7 +14,11 @@ const RANK_STYLES = {
     challenger: { bg: 'rgba(255,215,0,0.2)', border: 'rgba(255,215,0,0.5)', color: '#FFD700' },
 }
 
-export function RankBadge({ rank }) {
+interface RankBadgeProps {
+    rank: RankTier
+}
+
+export function RankBadge({ rank }: RankBadgeProps) {
     const s = RANK_STYLES[rank] ?? RANK_STYLES.iron
     const label = rank ? rank.toUpperCase() : 'IRON'
 

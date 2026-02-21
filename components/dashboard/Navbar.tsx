@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Bell, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
+import type { RankTier } from '@/components/character/CharacterConfig'
 
 const NAV_LINKS = [
     { label: 'Dashboard', href: '/dashboard' },
@@ -12,7 +14,7 @@ const NAV_LINKS = [
     { label: 'Profile', href: '/profile' },
 ]
 
-const RANK_BORDER = {
+const RANK_BORDER: Record<RankTier, string> = {
     iron: '#9E9E9E',
     bronze: '#CD7F32',
     silver: '#C0C0C0',
@@ -24,12 +26,26 @@ const RANK_BORDER = {
     challenger: '#FFD700',
 }
 
-export function Navbar({ user, activeRoute = 'dashboard', locale = 'en' }) {
+interface NavbarUser {
+    avatar?: string | null
+    username?: string
+    totalXP?: number
+    rank?: RankTier
+    level?: number
+}
+
+interface NavbarProps {
+    user: NavbarUser
+    activeRoute?: string
+    locale?: string
+}
+
+export function Navbar({ user, activeRoute = 'dashboard', locale = 'en' }: NavbarProps) {
     const pathname = usePathname()
-    const isActive = (href) =>
+    const isActive = (href: string) =>
         pathname.includes(href.replace('/', '')) || activeRoute === href.replace('/', '')
 
-    const rankColor = RANK_BORDER[user?.rank] ?? '#9E9E9E'
+    const rankColor = user?.rank ? (RANK_BORDER[user.rank] ?? '#9E9E9E') : '#9E9E9E'
 
     return (
         <motion.nav
@@ -135,12 +151,12 @@ export function Navbar({ user, activeRoute = 'dashboard', locale = 'en' }) {
                 {/* Avatar + rank indicator */}
                 <div style={{ position: 'relative', flexShrink: 0 }}>
                     {user?.avatar ? (
-                        <img
+                        <Image
                             src={user.avatar}
                             alt={user.username || 'User'}
+                            width={40}
+                            height={40}
                             style={{
-                                width: '40px',
-                                height: '40px',
                                 borderRadius: '50%',
                                 objectFit: 'cover',
                                 border: `2px solid ${rankColor}`,
@@ -167,7 +183,6 @@ export function Navbar({ user, activeRoute = 'dashboard', locale = 'en' }) {
                             {(user?.username || 'H')[0].toUpperCase()}
                         </div>
                     )}
-                    {/* Rank mini diamond below avatar */}
                     <span
                         style={{
                             position: 'absolute',

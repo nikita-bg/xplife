@@ -3,8 +3,14 @@
 import { useEffect, useRef } from 'react'
 import { motion, animate } from 'framer-motion'
 
-export function BottomBar({ streak = 47, completed = 3, total = 5 }) {
-    const streakRef = useRef(null)
+interface BottomBarProps {
+    streak?: number
+    completed?: number
+    total?: number
+}
+
+export function BottomBar({ streak = 47, completed = 3, total = 5 }: BottomBarProps) {
+    const streakRef = useRef<HTMLSpanElement>(null)
 
     useEffect(() => {
         const el = streakRef.current
@@ -13,7 +19,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5 }) {
             duration: 0.8,
             delay: 1.4,
             ease: [0.33, 1, 0.68, 1],
-            onUpdate(v) {
+            onUpdate(v: number) {
                 el.textContent = Math.round(v).toString()
             },
         })
@@ -77,14 +83,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5 }) {
             </div>
 
             {/* Center — Progress */}
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '8px',
-                }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                     <span
                         style={{
@@ -107,8 +106,6 @@ export function BottomBar({ streak = 47, completed = 3, total = 5 }) {
                         COMPLETED
                     </span>
                 </div>
-
-                {/* Progress dots */}
                 <div style={{ display: 'flex', gap: '6px' }}>
                     {Array.from({ length: total }, (_, i) => (
                         <div

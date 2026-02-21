@@ -1,6 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import type { LucideIcon } from 'lucide-react'
+
+interface GlassButtonProps {
+    icon?: LucideIcon
+    label: string
+    accentSide?: 'left' | 'right'
+    accentColor?: 'purple' | 'cyan'
+    onClick?: () => void
+    isActive?: boolean
+    badge?: number
+}
 
 export function GlassButton({
     icon: Icon,
@@ -10,7 +21,7 @@ export function GlassButton({
     onClick,
     isActive = false,
     badge,
-}) {
+}: GlassButtonProps) {
     const isPurple = accentColor === 'purple'
 
     return (
@@ -18,10 +29,6 @@ export function GlassButton({
             onClick={onClick}
             whileHover={{ x: accentSide === 'left' ? 4 : -4 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="glass-btn"
-            data-active={isActive}
-            data-accent={accentColor}
-            data-side={accentSide}
             style={{
                 position: 'relative',
                 display: 'flex',

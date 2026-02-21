@@ -3,9 +3,10 @@ import { setRequestLocale } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { DEFAULT_PARTS } from '@/components/character/CharacterConfig'
+import type { ClassType, RankTier } from '@/components/character/CharacterConfig'
 
 // Derive rank tier from level (no rank column in DB)
-function getRankTier(level) {
+function getRankTier(level: number) {
   if (level >= 90) return 'challenger'
   if (level >= 70) return 'grandmaster'
   if (level >= 50) return 'master'
@@ -18,7 +19,7 @@ function getRankTier(level) {
 }
 
 // Derive character class from Braverman dominant type / personality_type
-function getCharacterClass(personalityType) {
+function getCharacterClass(personalityType: string | null) {
   const t = (personalityType ?? '').toLowerCase()
   if (t.includes('dopamine') || t.includes('adventurer')) return 'adventurer'
   if (t.includes('acetylcholine') || t.includes('thinker')) return 'thinker'
@@ -39,7 +40,7 @@ const RANK_COLORS = {
   challenger: { primary: '#FFD700', accent: '#FFEF80', rankColor: '#FFD700', glowColor: '#FFD70040' },
 }
 
-export default async function DashboardPage({ params }) {
+export default async function DashboardPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
   const supabase = createClient()
@@ -119,8 +120,8 @@ export default async function DashboardPage({ params }) {
   const xpForNextLevel = nextLevelData?.xp_required ?? xpForCurrentLevel + 500
 
   // ── Derive game data from profile ────────────────────────────
-  const rank = getRankTier(currentLvl)
-  const characterClass = getCharacterClass(profile?.personality_type)
+  const rank = getRankTier(currentLvl) as RankTier
+  const characterClass = getCharacterClass(profile?.personality_type) as ClassType
 
   const character = {
     class: characterClass,
@@ -129,7 +130,7 @@ export default async function DashboardPage({ params }) {
     currentXP: (profile?.total_xp ?? 0) - xpForCurrentLevel,
     maxXP: xpForNextLevel - xpForCurrentLevel,
     parts: { ...DEFAULT_PARTS },
-    colors: RANK_COLORS[rank],
+    colors: RANK_COLORS[rank] ?? RANK_COLORS.gold,
   }
 
   const dashUser = {

@@ -7,12 +7,29 @@ import { LeftSidebar } from '@/components/dashboard/LeftSidebar'
 import { RightSidebar } from '@/components/dashboard/RightSidebar'
 import { CharacterCard } from '@/components/dashboard/CharacterCard'
 import { BottomBar } from '@/components/dashboard/BottomBar'
+import type { CharacterConfig, RankTier } from '@/components/character/CharacterConfig'
 
-export function DashboardLayout({ character, user, locale = 'en' }) {
+interface DashboardUser {
+    avatar?: string | null
+    username?: string
+    totalXP?: number
+    rank?: RankTier
+    level?: number
+    streak?: number
+    dailyCompleted?: number
+    dailyTotal?: number
+}
+
+interface DashboardLayoutProps {
+    character: CharacterConfig & { currentXP?: number; maxXP?: number; level?: number }
+    user: DashboardUser
+    locale?: string
+}
+
+export function DashboardLayout({ character, user, locale = 'en' }: DashboardLayoutProps) {
     const [activeQuest, setActiveQuest] = useState('daily')
 
     return (
-        /* Fixed overlay — covers the existing (app)/layout nav and container */
         <div
             style={{
                 position: 'fixed',
@@ -22,13 +39,9 @@ export function DashboardLayout({ character, user, locale = 'en' }) {
                 overflow: 'hidden',
             }}
         >
-            {/* Layer 0 — Particles */}
             <ParticleBackground />
-
-            {/* Layer 50 — Navbar */}
             <Navbar user={user} locale={locale} />
 
-            {/* Content zone: between navbar (64px) and bottom bar (72px) */}
             <div
                 style={{
                     position: 'absolute',
@@ -42,20 +55,11 @@ export function DashboardLayout({ character, user, locale = 'en' }) {
                     zIndex: 10,
                 }}
             >
-                {/* Left sidebar — absolute within content zone */}
-                <LeftSidebar
-                    activeQuest={activeQuest}
-                    onQuestChange={setActiveQuest}
-                />
-
-                {/* Center — Character Card */}
+                <LeftSidebar activeQuest={activeQuest} onQuestChange={setActiveQuest} />
                 <CharacterCard character={character} user={user} />
-
-                {/* Right sidebar — absolute within content zone */}
                 <RightSidebar />
             </div>
 
-            {/* Layer 40 — Bottom bar */}
             <BottomBar
                 streak={user?.streak ?? 0}
                 completed={user?.dailyCompleted ?? 0}

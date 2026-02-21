@@ -6,17 +6,18 @@ import { GradientBorderCard } from '@/components/ui/GradientBorderCard'
 import { LevelBadge } from '@/components/ui/LevelBadge'
 import { RankBadge } from '@/components/ui/RankBadge'
 import { XPProgressBar } from '@/components/ui/XPProgressBar'
+import type { CharacterConfig } from '@/components/character/CharacterConfig'
 
 const CharacterSVG = lazy(() => import('@/components/character/CharacterSVG'))
 
-const CLASS_LABELS = {
+const CLASS_LABELS: Record<string, string> = {
     adventurer: 'THE ADVENTURER',
     thinker: 'THE THINKER',
     guardian: 'THE GUARDIAN',
     connector: 'THE CONNECTOR',
 }
 
-const RANK_COLORS = {
+const RANK_COLORS: Record<string, string> = {
     iron: '#9E9E9E',
     bronze: '#CD7F32',
     silver: '#C0C0C0',
@@ -26,6 +27,15 @@ const RANK_COLORS = {
     master: '#9D4EDD',
     grandmaster: '#FF4500',
     challenger: '#FFD700',
+}
+
+interface CharacterCardUser {
+    totalXP?: number
+}
+
+interface CharacterCardProps {
+    character: CharacterConfig & { currentXP?: number; maxXP?: number; level?: number }
+    user: CharacterCardUser
 }
 
 function CharacterFallback() {
@@ -53,23 +63,24 @@ function CharacterFallback() {
     )
 }
 
-export function CharacterCard({ character, user }) {
-    const trackingZoneRef = useRef(null)
-    const charRef = useRef(null)
+export function CharacterCard({ character, user }: CharacterCardProps) {
+    const trackingZoneRef = useRef<HTMLDivElement>(null)
 
     const rankColor = RANK_COLORS[character?.rank] ?? RANK_COLORS.gold
     const classLabel = CLASS_LABELS[character?.class] ?? 'THE ADVENTURER'
 
-    const handleMouseMove = useCallback((e) => {
+    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const zone = trackingZoneRef.current
         if (!zone) return
         const rect = zone.getBoundingClientRect()
         const x = (e.clientX - rect.left) / rect.width
         const y = (e.clientY - rect.top) / rect.height
-        // Expose coords for CharacterSVG's tracking hook via a data attribute
         zone.dataset.cursorX = x.toFixed(3)
         zone.dataset.cursorY = y.toFixed(3)
     }, [])
+
+    const maxXP = character?.maxXP ?? 500
+    const currentXP = user?.totalXP ?? character?.currentXP ?? 0
 
     return (
         <motion.div
@@ -78,13 +89,7 @@ export function CharacterCard({ character, user }) {
             transition={{ delay: 0.5, duration: 0.5, type: 'spring', stiffness: 150, damping: 20 }}
             style={{ position: 'relative', zIndex: 10 }}
         >
-            <GradientBorderCard
-                style={{
-                    width: '560px',
-                    minHeight: '520px',
-                }}
-            >
-                {/* Inner content */}
+            <GradientBorderCard style={{ width: '560px', minHeight: '520px' }}>
                 <div
                     style={{
                         padding: '28px 28px 24px',
@@ -96,12 +101,10 @@ export function CharacterCard({ character, user }) {
                         minHeight: '520px',
                     }}
                 >
-                    {/* LVL badge — absolute top right */}
                     <div style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 5 }}>
                         <LevelBadge level={character?.level ?? 1} delay={0.8} />
                     </div>
 
-                    {/* Character viewer zone */}
                     <div
                         ref={trackingZoneRef}
                         onMouseMove={handleMouseMove}
@@ -112,11 +115,9 @@ export function CharacterCard({ character, user }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             position: 'relative',
-                            cursor: 'none',
                             flexShrink: 0,
                         }}
                     >
-                        {/* Radial glow behind character */}
                         <div
                             aria-hidden="true"
                             style={{
@@ -126,17 +127,9 @@ export function CharacterCard({ character, user }) {
                                 pointerEvents: 'none',
                             }}
                         />
-
-                        {/* Character SVG — lazy loaded */}
                         <Suspense fallback={<CharacterFallback />}>
-                            <CharacterSVG
-                                ref={charRef}
-                                config={character}
-                                className="w-full h-full"
-                            />
+                            <CharacterSVG config={character} className="w-full h-full" />
                         </Suspense>
-
-                        {/* Aura at feet */}
                         <div
                             aria-hidden="true"
                             style={{
@@ -153,7 +146,6 @@ export function CharacterCard({ character, user }) {
                         />
                     </div>
 
-                    {/* Class label */}
                     <div style={{ textAlign: 'center', marginTop: '4px' }}>
                         <h2
                             style={{
@@ -171,16 +163,10 @@ export function CharacterCard({ character, user }) {
                         </h2>
                     </div>
 
-                    {/* Rank badge */}
                     <RankBadge rank={character?.rank ?? 'gold'} />
 
-                    {/* XP Progress Bar */}
                     <div style={{ width: '100%', marginTop: 'auto', paddingTop: '8px' }}>
-                        <XPProgressBar
-                            current={user?.totalXP ?? character?.currentXP ?? 0}
-                            max={character?.maxXP ?? 10000}
-                            animated
-                        />
+                        <XPProgressBar current={currentXP} max={maxXP} animated />
                     </div>
                 </div>
             </GradientBorderCard>
