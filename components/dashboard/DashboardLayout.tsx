@@ -7,7 +7,9 @@ import { LeftSidebar } from '@/components/dashboard/LeftSidebar'
 import { RightSidebar } from '@/components/dashboard/RightSidebar'
 import { CharacterCard } from '@/components/dashboard/CharacterCard'
 import { BottomBar } from '@/components/dashboard/BottomBar'
+import { QuestsView } from '@/components/dashboard/quests-view'
 import type { CharacterConfig, RankTier } from '@/components/character/CharacterConfig'
+import type { Task } from '@/lib/types'
 
 interface DashboardUser {
     avatar?: string | null
@@ -24,13 +26,22 @@ interface DashboardUser {
     monthlyTotal?: number
 }
 
+interface QuestsData {
+    yearly: Task[]
+    monthly: Task[]
+    weekly: Task[]
+    daily: Task[]
+    plan: string
+}
+
 interface DashboardLayoutProps {
     character: CharacterConfig & { currentXP?: number; maxXP?: number; level?: number }
     user: DashboardUser
     locale?: string
+    quests?: QuestsData
 }
 
-export function DashboardLayout({ character, user, locale = 'en' }: DashboardLayoutProps) {
+export function DashboardLayout({ character, user, locale = 'en', quests }: DashboardLayoutProps) {
     const [activeQuest, setActiveQuest] = useState('daily')
 
     return (
@@ -46,25 +57,51 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
             <ParticleBackground />
             <UnifiedNavbar user={user} locale={locale} />
 
-            {/* Center content — card fills width, sidebars float over it */}
+            {/* Scrollable content area */}
             <div
                 style={{
-                    position: 'absolute',
-                    top: '64px',
-                    bottom: '72px',
-                    left: 0,
-                    right: 0,
+                    position: 'relative',
+                    marginTop: '64px',
+                    marginBottom: '72px',
+                    minHeight: 'calc(100vh - 136px)',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
                     padding: '16px',
-                    overflowY: 'auto',
                     zIndex: 10,
                 }}
             >
-                <CharacterCard character={character} user={user} />
-                <LeftSidebar activeQuest={activeQuest} onQuestChange={setActiveQuest} />
-                <RightSidebar />
+                {/* Character + Sidebars row */}
+                <div style={{
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: '800px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <CharacterCard character={character} user={user} />
+                    <LeftSidebar activeQuest={activeQuest} onQuestChange={setActiveQuest} />
+                    <RightSidebar />
+                </div>
+
+                {/* Embedded Quests Section */}
+                {quests && (
+                    <div style={{
+                        width: '100%',
+                        maxWidth: '800px',
+                        marginTop: '24px',
+                    }}>
+                        <QuestsView
+                            yearlyQuests={quests.yearly}
+                            monthlyQuests={quests.monthly}
+                            weeklyQuests={quests.weekly}
+                            dailyQuests={quests.daily}
+                            plan={quests.plan}
+                            initialTab={activeQuest}
+                        />
+                    </div>
+                )}
             </div>
 
             <BottomBar

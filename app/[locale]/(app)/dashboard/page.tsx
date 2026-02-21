@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { DEFAULT_PARTS } from '@/components/character/CharacterConfig'
 import type { ClassType, RankTier } from '@/components/character/CharacterConfig'
+import type { Task } from '@/lib/types'
 import { getXPProgress, getRankFromLevel, getRankColors } from '@/lib/xpUtils'
 import { checkAndResetStreak } from '@/lib/streakUtils'
 
@@ -108,6 +109,42 @@ export default async function DashboardPage({
       .gte('created_at', thisMonthStart),
   ])
 
+  // ── Fetch full quest data for embedded QuestsView ─────────
+  const [
+    { data: yearlyQuests },
+    { data: monthlyQuestsFull },
+    { data: weeklyQuestsFull },
+    { data: dailyQuestsFull },
+  ] = await Promise.all([
+    supabase
+      .from('tasks')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'yearly')
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('tasks')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'monthly')
+      .neq('status', 'skipped')
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('tasks')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'weekly')
+      .neq('status', 'skipped')
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('tasks')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('quest_timeframe', 'daily')
+      .neq('status', 'skipped')
+      .order('created_at', { ascending: false }),
+  ])
+
   const dailyCompleted =
     dailyQuests?.filter((q) => q.status === 'completed').length ?? 0
   const dailyTotal = Math.max(dailyQuests?.length ?? 5, 5)
@@ -172,6 +209,13 @@ export default async function DashboardPage({
       character={character}
       user={dashUser}
       locale={locale}
+      quests={{
+        yearly: (yearlyQuests as Task[]) ?? [],
+        monthly: (monthlyQuestsFull as Task[]) ?? [],
+        weekly: (weeklyQuestsFull as Task[]) ?? [],
+        daily: (dailyQuestsFull as Task[]) ?? [],
+        plan: profile?.plan ?? 'free',
+      }}
     />
   )
 }

@@ -50,7 +50,6 @@ export function CharacterCustomization({
 
     const classConfig = CLASS_CONFIG[characterClass]
     const rankConfig = getRankConfig(rank)
-    const rankColors = { rankColor: rankConfig.color, glowColor: rankConfig.glow }
 
     const config: CharacterConfig = useMemo(() => ({
         class: characterClass,
@@ -59,10 +58,10 @@ export function CharacterCustomization({
         colors: {
             primary: classConfig?.primary ?? '#FF4500',
             accent: classConfig?.accent ?? '#FFD700',
-            rankColor: rankColors.rankColor,
-            glowColor: rankColors.glowColor,
+            rankColor: rankConfig.color,
+            glowColor: rankConfig.glow,
         },
-    }), [characterClass, rank, classConfig, rankColors])
+    }), [characterClass, rank, classConfig, rankConfig.color, rankConfig.glow])
 
     const equippedBySlot = useMemo(() => {
         const map: Record<string, EquippedItem> = {}
@@ -92,7 +91,7 @@ export function CharacterCustomization({
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                             <span className="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
-                                style={{ color: rankColors.rankColor, background: `${rankColors.rankColor}20` }}>
+                                style={{ color: rankConfig.color, background: `${rankConfig.color}20` }}>
                                 {rank}
                             </span>
                             <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>

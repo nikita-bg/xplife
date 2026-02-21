@@ -261,9 +261,25 @@
   },
   "navigation": {
     "dashboard": "Panel",
+    "quests": "Misiones",
     "leaderboard": "Clasificación",
+    "inventory": "Inventario",
+    "market": "Mercado",
     "profile": "Perfil",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "totalXp": "XP Total",
+    "dayStreak": "Racha Diaria",
+    "startQuest": "INICIAR MISIÓN →",
+    "dailyQuest": "Misión Diaria",
+    "weeklyQuest": "Misión Semanal",
+    "monthlyQuest": "Misión Mensual",
+    "daily": "Diario",
+    "weekly": "Semanal",
+    "monthly": "Mensual",
+    "classAdventurer": "EL AVENTURERO",
+    "classThinker": "EL PENSADOR",
+    "classGuardian": "EL GUARDIÁN",
+    "classConnector": "EL CONECTOR"
   },
   "auth": {
     "login": {
