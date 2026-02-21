@@ -9,15 +9,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { LanguageSwitcher } from '@/components/i18n/language-switcher'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 import type { RankTier } from '@/components/character/CharacterConfig'
 
-const NAV_LINKS = [
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Quests', href: '/quests' },
-    { label: 'Leaderboard', href: '/leaderboard' },
-    { label: 'Inventory', href: '/inventory' },
-    { label: 'Market', href: '/market' },
-    { label: 'Profile', href: '/profile' },
+const NAV_KEYS = [
+    { key: 'dashboard', href: '/dashboard' },
+    { key: 'quests', href: '/quests' },
+    { key: 'leaderboard', href: '/leaderboard' },
+    { key: 'inventory', href: '/inventory' },
+    { key: 'market', href: '/market' },
+    { key: 'profile', href: '/profile' },
 ]
 
 const RANK_BORDER: Record<RankTier, string> = {
@@ -49,6 +50,7 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
     const pathname = usePathname()
     const router = useRouter()
     const [mobileOpen, setMobileOpen] = useState(false)
+    const t = useTranslations('navigation')
 
     const isActive = (href: string) => pathname.includes(href.replace('/', ''))
 
@@ -105,7 +107,7 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
 
                 {/* Nav links — desktop */}
                 <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} className="hidden md:flex">
-                    {NAV_LINKS.map((link) => {
+                    {NAV_KEYS.map((link) => {
                         const active = isActive(link.href)
                         return (
                             <Link
@@ -125,7 +127,7 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                                     transition: 'color 0.15s ease',
                                 }}
                             >
-                                {link.label}
+                                {t(link.key)}
                                 {active && (
                                     <span
                                         style={{
@@ -166,8 +168,8 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                         <Bell size={20} style={{ color: 'var(--text-secondary)' }} />
                     </button>
 
-                    {/* Avatar + rank indicator */}
-                    <div style={{ position: 'relative', flexShrink: 0 }}>
+                    {/* Avatar + rank indicator — links to profile */}
+                    <Link href={`/${locale}/profile`} style={{ position: 'relative', flexShrink: 0, textDecoration: 'none' }}>
                         {user?.avatar ? (
                             <Image
                                 src={user.avatar}
@@ -213,7 +215,7 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                         >
                             &#9670;
                         </span>
-                    </div>
+                    </Link>
 
                     {/* Total XP display */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -225,7 +227,7 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                                 letterSpacing: '0.04em',
                             }}
                         >
-                            Total XP:
+                            {t('totalXp')}:
                         </span>
                         <span
                             style={{
@@ -273,162 +275,164 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                 >
                     {mobileOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
-            </motion.nav>
+            </motion.nav >
 
             {/* Mobile menu */}
             <AnimatePresence>
-                {mobileOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        style={{
-                            position: 'fixed',
-                            top: '64px',
-                            left: 0,
-                            right: 0,
-                            zIndex: 49,
-                            background: 'rgba(8, 11, 26, 0.95)',
-                            backdropFilter: 'blur(24px)',
-                            WebkitBackdropFilter: 'blur(24px)',
-                            borderBottom: '1px solid rgba(155, 78, 221, 0.2)',
-                            padding: '16px',
-                        }}
-                        className="md:hidden"
-                    >
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {/* User info */}
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '12px',
-                                padding: '8px 12px',
-                                marginBottom: '8px',
-                                borderBottom: '1px solid rgba(155, 78, 221, 0.15)',
-                                paddingBottom: '16px',
-                            }}>
-                                <div style={{ position: 'relative', flexShrink: 0 }}>
-                                    {user?.avatar ? (
-                                        <Image
-                                            src={user.avatar}
-                                            alt={user.username || 'User'}
-                                            width={36}
-                                            height={36}
-                                            style={{
-                                                borderRadius: '50%',
-                                                objectFit: 'cover',
-                                                border: `2px solid ${rankColor}`,
-                                            }}
-                                        />
-                                    ) : (
-                                        <div
-                                            style={{
-                                                width: '36px',
-                                                height: '36px',
-                                                borderRadius: '50%',
-                                                background: 'linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))',
-                                                border: `2px solid ${rankColor}`,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                fontFamily: 'var(--font-orbitron), sans-serif',
-                                                fontSize: '12px',
-                                                fontWeight: 700,
-                                                color: '#fff',
-                                            }}
-                                        >
-                                            {(user?.username || 'H')[0].toUpperCase()}
-                                        </div>
-                                    )}
-                                </div>
-                                <div>
-                                    <div style={{
-                                        fontFamily: 'var(--font-orbitron), sans-serif',
-                                        fontSize: '13px',
-                                        fontWeight: 700,
-                                        color: 'var(--text-primary)',
-                                    }}>
-                                        {user?.username || 'Hero'}
+                {
+                    mobileOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            style={{
+                                position: 'fixed',
+                                top: '64px',
+                                left: 0,
+                                right: 0,
+                                zIndex: 49,
+                                background: 'rgba(8, 11, 26, 0.95)',
+                                backdropFilter: 'blur(24px)',
+                                WebkitBackdropFilter: 'blur(24px)',
+                                borderBottom: '1px solid rgba(155, 78, 221, 0.2)',
+                                padding: '16px',
+                            }}
+                            className="md:hidden"
+                        >
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                {/* User info */}
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    padding: '8px 12px',
+                                    marginBottom: '8px',
+                                    borderBottom: '1px solid rgba(155, 78, 221, 0.15)',
+                                    paddingBottom: '16px',
+                                }}>
+                                    <div style={{ position: 'relative', flexShrink: 0 }}>
+                                        {user?.avatar ? (
+                                            <Image
+                                                src={user.avatar}
+                                                alt={user.username || 'User'}
+                                                width={36}
+                                                height={36}
+                                                style={{
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover',
+                                                    border: `2px solid ${rankColor}`,
+                                                }}
+                                            />
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    width: '36px',
+                                                    height: '36px',
+                                                    borderRadius: '50%',
+                                                    background: 'linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))',
+                                                    border: `2px solid ${rankColor}`,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontFamily: 'var(--font-orbitron), sans-serif',
+                                                    fontSize: '12px',
+                                                    fontWeight: 700,
+                                                    color: '#fff',
+                                                }}
+                                            >
+                                                {(user?.username || 'H')[0].toUpperCase()}
+                                            </div>
+                                        )}
                                     </div>
-                                    <div style={{
-                                        fontFamily: 'var(--font-orbitron), sans-serif',
-                                        fontSize: '12px',
-                                        fontWeight: 700,
-                                        color: 'var(--accent-cyan)',
-                                    }}>
-                                        {(user?.totalXP ?? 0).toLocaleString()} XP
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Nav links */}
-                            {NAV_LINKS.map((link) => {
-                                const active = isActive(link.href)
-                                return (
-                                    <Link
-                                        key={link.href}
-                                        href={`/${locale}${link.href}`}
-                                        onClick={() => setMobileOpen(false)}
-                                        style={{
-                                            display: 'block',
-                                            padding: '10px 12px',
-                                            borderRadius: '8px',
-                                            textDecoration: 'none',
+                                    <div>
+                                        <div style={{
                                             fontFamily: 'var(--font-orbitron), sans-serif',
                                             fontSize: '13px',
+                                            fontWeight: 700,
+                                            color: 'var(--text-primary)',
+                                        }}>
+                                            {user?.username || 'Hero'}
+                                        </div>
+                                        <div style={{
+                                            fontFamily: 'var(--font-orbitron), sans-serif',
+                                            fontSize: '12px',
+                                            fontWeight: 700,
+                                            color: 'var(--accent-cyan)',
+                                        }}>
+                                            {(user?.totalXP ?? 0).toLocaleString()} XP
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Nav links */}
+                                {NAV_KEYS.map((link) => {
+                                    const active = isActive(link.href)
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={`/${locale}${link.href}`}
+                                            onClick={() => setMobileOpen(false)}
+                                            style={{
+                                                display: 'block',
+                                                padding: '10px 12px',
+                                                borderRadius: '8px',
+                                                textDecoration: 'none',
+                                                fontFamily: 'var(--font-orbitron), sans-serif',
+                                                fontSize: '13px',
+                                                letterSpacing: '0.08em',
+                                                textTransform: 'uppercase',
+                                                color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                                fontWeight: active ? 700 : 500,
+                                                background: active ? 'rgba(155, 78, 221, 0.15)' : 'transparent',
+                                                transition: 'all 0.15s ease',
+                                            }}
+                                        >
+                                            {t(link.key)}
+                                        </Link>
+                                    )
+                                })}
+
+                                {/* Language switcher + logout */}
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    marginTop: '8px',
+                                    paddingTop: '12px',
+                                    borderTop: '1px solid rgba(155, 78, 221, 0.15)',
+                                }}>
+                                    <LanguageSwitcher />
+                                    <button
+                                        onClick={() => {
+                                            setMobileOpen(false)
+                                            handleLogout()
+                                        }}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            background: 'none',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            padding: '8px 12px',
+                                            borderRadius: '8px',
+                                            fontFamily: 'var(--font-orbitron), sans-serif',
+                                            fontSize: '12px',
                                             letterSpacing: '0.08em',
                                             textTransform: 'uppercase',
-                                            color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
-                                            fontWeight: active ? 700 : 500,
-                                            background: active ? 'rgba(155, 78, 221, 0.15)' : 'transparent',
-                                            transition: 'all 0.15s ease',
+                                            color: 'var(--text-secondary)',
                                         }}
                                     >
-                                        {link.label}
-                                    </Link>
-                                )
-                            })}
-
-                            {/* Language switcher + logout */}
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: '8px',
-                                paddingTop: '12px',
-                                borderTop: '1px solid rgba(155, 78, 221, 0.15)',
-                            }}>
-                                <LanguageSwitcher />
-                                <button
-                                    onClick={() => {
-                                        setMobileOpen(false)
-                                        handleLogout()
-                                    }}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        background: 'none',
-                                        border: 'none',
-                                        cursor: 'pointer',
-                                        padding: '8px 12px',
-                                        borderRadius: '8px',
-                                        fontFamily: 'var(--font-orbitron), sans-serif',
-                                        fontSize: '12px',
-                                        letterSpacing: '0.08em',
-                                        textTransform: 'uppercase',
-                                        color: 'var(--text-secondary)',
-                                    }}
-                                >
-                                    <LogOut size={16} />
-                                    Logout
-                                </button>
+                                        <LogOut size={16} />
+                                        {t('logout')}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        </motion.div>
+                    )
+                }
+            </AnimatePresence >
         </>
     )
 }

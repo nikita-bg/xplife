@@ -15,6 +15,7 @@ interface QuestsViewProps {
   weeklyQuests: Task[]
   dailyQuests: Task[]
   plan?: string
+  initialTab?: string
 }
 
 const AUTO_GEN_ORDER: QuestTimeframe[] = ['monthly', 'weekly', 'daily']
@@ -54,6 +55,7 @@ export function QuestsView({
   weeklyQuests,
   dailyQuests,
   plan,
+  initialTab = 'daily',
 }: QuestsViewProps) {
   const planLimits = getPlanLimits(plan)
   const t = useTranslations('dashboard.questTabs')
@@ -148,7 +150,7 @@ export function QuestsView({
   }
 
   return (
-    <Tabs defaultValue="daily" className="w-full">
+    <Tabs defaultValue={initialTab} className="w-full">
       <TabsList className="grid w-full grid-cols-4">
         <TabsTrigger value="yearly">{t('yearly')}</TabsTrigger>
         <TabsTrigger value="monthly">{t('monthly')}</TabsTrigger>

@@ -6,10 +6,13 @@ import type { Task } from '@/lib/types'
 
 export default async function QuestsPage({
     params,
+    searchParams,
 }: {
     params: Promise<{ locale: string }>
+    searchParams: Promise<{ tab?: string }>
 }) {
     const { locale } = await params
+    const { tab } = await searchParams
     setRequestLocale(locale)
     const t = await getTranslations('dashboard')
     const supabase = createClient()
@@ -108,6 +111,7 @@ export default async function QuestsPage({
                 weeklyQuests={(weeklyQuests as Task[]) ?? []}
                 dailyQuests={(dailyQuests as Task[]) ?? []}
                 plan={profile?.plan ?? 'free'}
+                initialTab={tab ?? 'daily'}
             />
         </div>
     )

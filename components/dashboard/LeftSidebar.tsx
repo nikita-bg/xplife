@@ -4,26 +4,27 @@ import { motion } from 'framer-motion'
 import { Sword, Shield, Crown } from 'lucide-react'
 import { GlassButton } from '@/components/ui/GlassButton'
 import { useRouter } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface LeftSidebarProps {
     activeQuest?: string
     onQuestChange?: (key: string) => void
 }
 
-const BUTTONS = [
-    { icon: Sword, label: 'Daily Quest', key: 'daily' },
-    { icon: Shield, label: 'Weekly Quest', key: 'weekly' },
-    { icon: Crown, label: 'Monthly Quest', key: 'monthly' },
-]
-
 export function LeftSidebar({ activeQuest = 'daily', onQuestChange }: LeftSidebarProps) {
     const router = useRouter()
     const locale = useLocale()
+    const t = useTranslations('navigation')
+
+    const BUTTONS = [
+        { icon: Sword, label: t('dailyQuest'), key: 'daily' },
+        { icon: Shield, label: t('weeklyQuest'), key: 'weekly' },
+        { icon: Crown, label: t('monthlyQuest'), key: 'monthly' },
+    ]
 
     const handleClick = (key: string) => {
         onQuestChange?.(key)
-        router.push(`/${locale}/quests`)
+        router.push(`/${locale}/quests?tab=${key}`)
     }
 
     return (

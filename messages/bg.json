@@ -266,7 +266,16 @@
     "inventory": "Инвентар",
     "market": "Маркет",
     "profile": "Профил",
-    "logout": "Изход"
+    "logout": "Изход",
+    "totalXp": "Общо XP",
+    "dayStreak": "Дни Серия",
+    "startQuest": "ЗАПОЧНИ КУЕСТ →",
+    "dailyQuest": "Дневен Куест",
+    "weeklyQuest": "Седмичен Куест",
+    "monthlyQuest": "Месечен Куест",
+    "daily": "Дневни",
+    "weekly": "Седмични",
+    "monthly": "Месечни"
   },
   "auth": {
     "login": {

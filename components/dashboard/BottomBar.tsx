@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, animate } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 interface QuestProgress {
     completed: number
@@ -34,6 +35,7 @@ export function BottomBar({
 }: BottomBarProps) {
     const streakRef = useRef<HTMLSpanElement>(null)
     const router = useRouter()
+    const t = useTranslations('navigation')
 
     useEffect(() => {
         const el = streakRef.current
@@ -101,7 +103,7 @@ export function BottomBar({
                             textTransform: 'uppercase',
                         }}
                     >
-                        Day Streak
+                        {t('dayStreak')}
                     </span>
                 </div>
             </div>
@@ -110,9 +112,9 @@ export function BottomBar({
             <div className="hidden sm:flex" style={{ flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     {[
-                        { label: 'Daily', data: daily },
-                        { label: 'Weekly', data: weekly },
-                        { label: 'Monthly', data: monthly },
+                        { label: t('daily'), data: daily },
+                        { label: t('weekly'), data: weekly },
+                        { label: t('monthly'), data: monthly },
                     ].map((q, i) => (
                         <div key={q.label} style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                             {i > 0 && (
@@ -185,7 +187,7 @@ export function BottomBar({
                     flexShrink: 0,
                 }}
             >
-                START QUEST →
+                {t('startQuest')}
             </motion.button>
         </motion.div>
     )

@@ -266,7 +266,16 @@
     "inventory": "Inventory",
     "market": "Market",
     "profile": "Profile",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "totalXp": "Total XP",
+    "dayStreak": "Day Streak",
+    "startQuest": "START QUEST →",
+    "dailyQuest": "Daily Quest",
+    "weeklyQuest": "Weekly Quest",
+    "monthlyQuest": "Monthly Quest",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly"
   },
   "auth": {
     "login": {
