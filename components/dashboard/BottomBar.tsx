@@ -2,15 +2,18 @@
 
 import { useEffect, useRef } from 'react'
 import { motion, animate } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 interface BottomBarProps {
     streak?: number
     completed?: number
     total?: number
+    locale?: string
 }
 
-export function BottomBar({ streak = 47, completed = 3, total = 5 }: BottomBarProps) {
+export function BottomBar({ streak = 47, completed = 3, total = 5, locale = 'en' }: BottomBarProps) {
     const streakRef = useRef<HTMLSpanElement>(null)
+    const router = useRouter()
 
     useEffect(() => {
         const el = streakRef.current
@@ -125,6 +128,7 @@ export function BottomBar({ streak = 47, completed = 3, total = 5 }: BottomBarPr
 
             {/* Right — CTA Button */}
             <motion.button
+                onClick={() => router.push(`/${locale}/quests`)}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 style={{

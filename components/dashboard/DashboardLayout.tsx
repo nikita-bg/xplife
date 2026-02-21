@@ -64,6 +64,7 @@ export function DashboardLayout({ character, user, locale = 'en' }: DashboardLay
                 streak={user?.streak ?? 0}
                 completed={user?.dailyCompleted ?? 0}
                 total={user?.dailyTotal ?? 5}
+                locale={locale}
             />
         </div>
     )

@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { Sword, Shield, Crown } from 'lucide-react'
 import { GlassButton } from '@/components/ui/GlassButton'
+import { useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl'
 
 interface LeftSidebarProps {
     activeQuest?: string
@@ -16,6 +18,14 @@ const BUTTONS = [
 ]
 
 export function LeftSidebar({ activeQuest = 'daily', onQuestChange }: LeftSidebarProps) {
+    const router = useRouter()
+    const locale = useLocale()
+
+    const handleClick = (key: string) => {
+        onQuestChange?.(key)
+        router.push(`/${locale}/quests`)
+    }
+
     return (
         <motion.div
             style={{
@@ -42,7 +52,7 @@ export function LeftSidebar({ activeQuest = 'daily', onQuestChange }: LeftSideba
                         accentSide="left"
                         accentColor="purple"
                         isActive={activeQuest === btn.key}
-                        onClick={() => onQuestChange?.(btn.key)}
+                        onClick={() => handleClick(btn.key)}
                     />
                 </motion.div>
             ))}

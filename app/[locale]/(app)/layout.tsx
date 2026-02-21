@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { UnifiedNavbar } from '@/components/shared/UnifiedNavbar'
 import { ParticleBackground } from '@/components/ui/ParticleBackground'
 import { ChatWidget } from '@/components/chat/chat-widget'
+import { Toaster } from '@/components/ui/sonner'
 import { setRequestLocale } from 'next-intl/server'
 import { getRankFromLevel } from '@/lib/xpUtils'
 
@@ -48,6 +49,7 @@ export default async function AppLayout({
         {children}
       </main>
       <ChatWidget userId={user.id} />
+      <Toaster position="bottom-right" />
     </div>
   )
 }

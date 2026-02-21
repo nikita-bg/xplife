@@ -3,18 +3,19 @@
 import { motion } from 'framer-motion'
 import { Brain, CalendarDays, BookOpen } from 'lucide-react'
 import { GlassButton } from '@/components/ui/GlassButton'
-
-interface RightSidebarProps {
-    onToolSelect?: (key: string) => void
-}
+import { useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl'
 
 const BUTTONS = [
-    { icon: Brain, label: 'Braverman Test', key: 'braverman' },
-    { icon: CalendarDays, label: 'Weekly Review', key: 'review' },
-    { icon: BookOpen, label: 'Class Guide', key: 'guide' },
+    { icon: Brain, label: 'Braverman Test', key: 'braverman', href: '/braverman' },
+    { icon: CalendarDays, label: 'Weekly Review', key: 'review', href: '/quests' },
+    { icon: BookOpen, label: 'Class Guide', key: 'guide', href: '/profile' },
 ]
 
-export function RightSidebar({ onToolSelect }: RightSidebarProps) {
+export function RightSidebar() {
+    const router = useRouter()
+    const locale = useLocale()
+
     return (
         <motion.div
             style={{
@@ -40,7 +41,7 @@ export function RightSidebar({ onToolSelect }: RightSidebarProps) {
                         label={btn.label}
                         accentSide="right"
                         accentColor="cyan"
-                        onClick={() => onToolSelect?.(btn.key)}
+                        onClick={() => router.push(`/${locale}${btn.href}`)}
                     />
                 </motion.div>
             ))}

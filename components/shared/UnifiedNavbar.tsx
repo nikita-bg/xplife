@@ -8,6 +8,7 @@ import { Bell, Zap, LogOut, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { LanguageSwitcher } from '@/components/i18n/language-switcher'
+import { toast } from 'sonner'
 import type { RankTier } from '@/components/character/CharacterConfig'
 
 const NAV_LINKS = [
@@ -149,21 +150,21 @@ export function UnifiedNavbar({ user, locale = 'en' }: UnifiedNavbarProps) {
                     <LanguageSwitcher />
 
                     {/* Bell with notification dot */}
-                    <div style={{ position: 'relative' }}>
+                    <button
+                        onClick={() => toast.info('Notifications coming soon!')}
+                        style={{
+                            position: 'relative',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '4px',
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        aria-label="Notifications"
+                    >
                         <Bell size={20} style={{ color: 'var(--text-secondary)' }} />
-                        <span
-                            style={{
-                                position: 'absolute',
-                                top: '-2px',
-                                right: '-2px',
-                                width: '8px',
-                                height: '8px',
-                                borderRadius: '50%',
-                                background: '#FF3B3B',
-                                animation: 'badge-dot-pulse 1.5s ease-in-out infinite',
-                            }}
-                        />
-                    </div>
+                    </button>
 
                     {/* Avatar + rank indicator */}
                     <div style={{ position: 'relative', flexShrink: 0 }}>
