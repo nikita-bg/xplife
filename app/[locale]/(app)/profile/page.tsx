@@ -6,8 +6,10 @@ import { SettingsForm } from '@/components/profile/settings-form'
 import { StatsCard } from '@/components/profile/stats-card'
 import { BalanceCard } from '@/components/profile/balance-card'
 import { UpgradeBanner } from '@/components/shared/upgrade-banner'
+import { CharacterCustomization } from '@/components/profile/character-customization'
 import { checkAndResetStreak } from '@/lib/streakUtils'
-import { getXPProgress } from '@/lib/xpUtils'
+import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils'
+import type { ClassType } from '@/components/character/CharacterConfig'
 
 export default async function ProfilePage({
   params,
@@ -26,16 +28,28 @@ export default async function ProfilePage({
     { data: profile },
     streak,
     { count: totalTasks },
-    { data: userInterests }
+    { data: userInterests },
+    { data: equippedItems },
   ] = await Promise.all([
     supabase.from('users').select('*').eq('id', user.id).single(),
     checkAndResetStreak(supabase, user.id),
     supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'completed'),
-    supabase.from('user_interests').select('interest').eq('user_id', user.id)
+    supabase.from('user_interests').select('interest').eq('user_id', user.id),
+    supabase.from('user_inventory').select('*, items(*)').eq('user_id', user.id).eq('equipped', true),
   ])
 
   // Use formula-based level calculation
   const { level } = getXPProgress(profile?.total_xp ?? 0)
+
+  // Map personality type to character class
+  const PERSONALITY_TO_CLASS: Record<string, ClassType> = {
+    dopamine: 'adventurer',
+    acetylcholine: 'thinker',
+    gaba: 'guardian',
+    serotonin: 'connector',
+  }
+  const characterClass = PERSONALITY_TO_CLASS[profile?.personality_type ?? 'dopamine'] ?? 'adventurer'
+  const rank = getRankFromLevel(level)
 
   // Get level title from config
   const { data: levelConfig } = await supabase
@@ -46,6 +60,20 @@ export default async function ProfilePage({
 
   const interestList = userInterests?.map(i => i.interest) || []
 
+  // Map equipped items for the customization panel
+  const mappedEquipped = (equippedItems ?? [])
+    .filter((e: Record<string, unknown>) => e.items)
+    .map((e: Record<string, unknown>) => {
+      const item = e.items as { id: string; name: string; type: string; rarity: string; thumbnail_url: string | null }
+      return {
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        rarity: item.rarity,
+        thumbnail_url: item.thumbnail_url,
+      }
+    })
+
   return (
     <div className="mx-auto max-w-2xl flex flex-col gap-6">
       <ProfileHeader
@@ -54,6 +82,13 @@ export default async function ProfilePage({
         level={profile?.level ?? 1}
         levelTitle={levelConfig?.title ?? 'Novice'}
         plan={profile?.plan ?? 'free'}
+      />
+
+      <CharacterCustomization
+        characterClass={characterClass}
+        rank={rank}
+        level={level}
+        equippedItems={mappedEquipped}
       />
 
       <StatsCard
