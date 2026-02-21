@@ -1,0 +1,109 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Character Schema",
+    "description": "JSON schema for the modular parts character system",
+    "type": "object",
+    "properties": {
+        "character": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "enum": [
+                        "adventurer",
+                        "thinker",
+                        "guardian",
+                        "connector"
+                    ],
+                    "description": "Character's primary class identifier"
+                },
+                "rank": {
+                    "type": "string",
+                    "enum": [
+                        "iron",
+                        "bronze",
+                        "silver",
+                        "gold",
+                        "platinum",
+                        "diamond",
+                        "master",
+                        "grandmaster",
+                        "challenger"
+                    ],
+                    "description": "Visual rank of the character"
+                },
+                "parts": {
+                    "type": "object",
+                    "properties": {
+                        "head": {
+                            "type": "string"
+                        },
+                        "eyes": {
+                            "type": "string"
+                        },
+                        "pupils": {
+                            "type": "string"
+                        },
+                        "body": {
+                            "type": "string"
+                        },
+                        "leftArm": {
+                            "type": "string"
+                        },
+                        "rightArm": {
+                            "type": "string"
+                        },
+                        "leftLeg": {
+                            "type": "string"
+                        },
+                        "rightLeg": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "head",
+                        "body",
+                        "leftArm",
+                        "rightArm",
+                        "leftLeg",
+                        "rightLeg"
+                    ],
+                    "description": "SVG group IDs referring to specific visual component parts."
+                },
+                "colors": {
+                    "type": "object",
+                    "properties": {
+                        "primary": {
+                            "type": "string",
+                            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                        },
+                        "accent": {
+                            "type": "string",
+                            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                        },
+                        "rankColor": {
+                            "type": "string",
+                            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                        },
+                        "glowColor": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "primary",
+                        "accent",
+                        "rankColor",
+                        "glowColor"
+                    ],
+                    "description": "The exact dominant color profiles injected into the SVG renderer"
+                }
+            },
+            "required": [
+                "class",
+                "rank",
+                "parts",
+                "colors"
+            ]
+        }
+    }
+}

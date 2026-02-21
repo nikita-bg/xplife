@@ -1,0 +1,40 @@
+/* isometric-character.css */
+
+/* Floating idle animation for characters */
+@keyframes character-idle-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.character-idle {
+  animation: character-idle-float 3s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* Character glow drop-shadows */
+.character-glow-iron { filter: drop-shadow(0 0 10px rgba(139, 139, 139, 0.4)); }
+.character-glow-bronze { filter: drop-shadow(0 0 10px rgba(205, 127, 50, 0.4)); }
+.character-glow-silver { filter: drop-shadow(0 0 10px rgba(192, 192, 192, 0.5)); }
+.character-glow-gold { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5)); }
+.character-glow-platinum { filter: drop-shadow(0 0 14px rgba(0, 206, 209, 0.6)); }
+.character-glow-diamond { filter: drop-shadow(0 0 16px rgba(0, 191, 255, 0.7)); }
+.character-glow-master { filter: drop-shadow(0 0 20px rgba(155, 89, 182, 0.8)); }
+.character-glow-grandmaster { filter: drop-shadow(0 0 25px rgba(255, 69, 0, 0.9)); }
+.character-glow-challenger { filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1)); }
+
+/* Base utility for dynamic glow overriding */
+.character-glow {
+  filter: drop-shadow(0 0 var(--glow-radius, 15px) var(--glow-color, rgba(255, 255, 255, 0.5)));
+}
+
+/* Pupil cursor tracking setup (smooth transition when JS moves them) */
+.pupils-track {
+  transition: transform 0.1s ease-out;
+}

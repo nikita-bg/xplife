@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="100%" height="100%">
+<defs>
+    <filter id="glow-adv-grandmaster" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+<g id="isometric-base-plate" filter="url(#glow-adv-grandmaster)"><g id="base-plate" class="">
+  <polygon points="4,218 100,266 100,258 4,210" fill="#1a1a2e" stroke="#06061a" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="196,218 100,266 100,258 196,210" fill="#000006" stroke="#000000" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="100,162 196,210 100,258 4,210" fill="#424256" stroke="#2e2e42" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<polygon points="100,162 196,210 100,258 4,210" fill="rgba(255, 69, 0, 0.6)" opacity="0.4" /><polygon points="100,169.6 180,209.6 100,249.6 20,209.6" fill="none" stroke="#FF4500" stroke-width="1.5" /></g>
+<g id="character-root" class="character-idle" style="transform-origin: center; animation: float 3s ease-in-out infinite;">
+<g id="right-arm"><g id="right-arm-base" class="">
+  <polygon points="108,174 124,182 124,134 108,126" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="140,174 124,182 124,134 140,126" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="124,118 140,126 124,134 108,126" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="right-arm-trim" class="">
+  <polygon points="107.6,174.2 124,182.4 124,174.4 107.6,166.2" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="140.8,174 124,182.4 124,174.4 140.8,166" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="124.4,157.8 140.8,166 124,174.4 107.6,166.2" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+</g>
+<g id="right-leg"><g id="right-leg-base" class="">
+  <polygon points="92,214 108,222 108,174 92,166" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="124,214 108,222 108,174 124,166" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="108,158 124,166 108,174 92,166" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="right-leg-trim" class="">
+  <polygon points="91.6,214.2 108,222.4 108,210.4 91.6,202.2" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="124.8,214 108,222.4 108,210.4 124.8,202" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="108.4,193.8 124.8,202 108,210.4 91.6,202.2" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+</g>
+<g id="left-leg"><g id="left-leg-base" class="">
+  <polygon points="76,206 92,214 92,166 76,158" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="108,206 92,214 92,166 108,158" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92,150 108,158 92,166 76,158" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="left-leg-trim" class="">
+  <polygon points="75.6,206.2 92,214.4 92,202.4 75.6,194.2" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="108.8,206 92,214.4 92,202.4 108.8,194" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92.4,185.8 108.8,194 92,202.4 75.6,194.2" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+</g>
+<g id="body"><g id="body-base" class="">
+  <polygon points="76,158 108,174 108,126 76,110" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="124,166 108,174 108,126 124,118" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92,102 124,118 108,126 76,110" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="body-accent" class="">
+  <polygon points="83.6,146.2 99.6,154.2 99.6,138.2 83.6,130.2" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="116.4,145.8 99.6,154.2 99.6,138.2 116.4,129.8" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="100.4,121.80000000000001 116.4,129.8 99.6,138.2 83.6,130.2" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="body-trim" class="">
+  <polygon points="75.2,158.4 108,174.8 108,166.8 75.2,150.4" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="125.6,166 108,174.8 108,166.8 125.6,158" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92.8,141.6 125.6,158 108,166.8 75.2,150.4" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+</g>
+<g id="head"><g id="head-base" class="">
+  <polygon points="68,114 100,130 100,98 68,82" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="132,114 100,130 100,98 132,82" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="100,66 132,82 100,98 68,82" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="head-trim" class="">
+  <polygon points="67.2,90 100,106.4 100,97.6 67.2,81.19999999999999" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="132.8,90 100,106.4 100,97.6 132.8,81.19999999999999" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="100,64.79999999999998 132.8,81.19999999999999 100,97.6 67.2,81.19999999999999" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="eyes"><polygon points="72,104 80,108 80,102 72,98" fill="#0d0d2b" /><polygon points="88,112 96,116 96,110 88,106" fill="#0d0d2b" /></g>
+<g id="pupils" class="pupils-track"><polygon points="73.6,103.19999999999999 77.6,105.19999999999999 77.6,103.19999999999999 73.6,101.19999999999999" fill="#FF4500" filter="url(#glow-adv-grandmaster)"/><polygon points="89.6,111.19999999999999 93.6,113.19999999999999 93.6,111.19999999999999 89.6,109.19999999999999" fill="#FF4500" filter="url(#glow-adv-grandmaster)"/></g>
+</g>
+<g id="left-arm"><g id="left-arm-base" class="">
+  <polygon points="60,150 76,158 76,110 60,102" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92,150 76,158 76,110 92,102" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="76,94 92,102 76,110 60,102" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+<g id="left-arm-trim" class="">
+  <polygon points="59.2,150 76,158.4 76,150.4 59.2,142" fill="#FF4500" stroke="#eb3100" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="92.8,150 76,158.4 76,150.4 92.8,142" fill="#d71d00" stroke="#c30900" stroke-width="0.5" stroke-linejoin="round"/>
+  <polygon points="76,133.6 92.8,142 76,150.4 59.2,142" fill="#ff6d28" stroke="#eb5914" stroke-width="0.5" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</svg>
