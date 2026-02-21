@@ -261,7 +261,10 @@
   },
   "navigation": {
     "dashboard": "Табло",
+    "quests": "Куестове",
     "leaderboard": "Класация",
+    "inventory": "Инвентар",
+    "market": "Маркет",
     "profile": "Профил",
     "logout": "Изход"
   },
@@ -375,7 +378,9 @@
       "yearlyTitle": "Годишни Цели",
       "monthlyTitle": "Месечни Етапи",
       "weeklyTitle": "Седмични Цели",
-      "dailyTitle": "Днешни Квестове"
+      "dailyTitle": "Днешни Квестове",
+      "questsTitle": "КУЕСТОВЕ",
+      "questsSubtitle": "Завършвай куестове, за да печелиш XP, кейсове и монети"
     },
     "autoRefresh": {
       "generating": "Автоматично генериране на квестове...",

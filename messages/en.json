@@ -261,7 +261,10 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
+    "quests": "Quests",
     "leaderboard": "Leaderboard",
+    "inventory": "Inventory",
+    "market": "Market",
     "profile": "Profile",
     "logout": "Log Out"
   },
@@ -375,7 +378,9 @@
       "yearlyTitle": "Yearly Goals",
       "monthlyTitle": "Monthly Milestones",
       "weeklyTitle": "Weekly Targets",
-      "dailyTitle": "Today's Quests"
+      "dailyTitle": "Today's Quests",
+      "questsTitle": "QUESTS",
+      "questsSubtitle": "Complete quests to earn XP, cases, and coins"
     },
     "autoRefresh": {
       "generating": "Auto-generating quests...",

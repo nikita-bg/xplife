@@ -1,6 +1,25 @@
-import { createClient } from '@/lib/supabase/client'
+/**
+ * XP Award — server-safe function to grant XP and handle level-ups.
+ * Uses formula-based calculation (not level_config table).
+ */
 
-export async function awardXp(userId: string, amount: number, source: string, taskId?: string) {
+import { createClient } from '@/lib/supabase/client'
+import { getXPProgress, getLevelFromTotalXP, xpForLevel } from '@/lib/xpUtils'
+
+interface XPAwardResult {
+  newXp: number
+  leveledUp: boolean
+  oldLevel: number
+  newLevel: number
+  levelsGained: number
+}
+
+export async function awardXp(
+  userId: string,
+  amount: number,
+  source: string,
+  taskId?: string
+): Promise<XPAwardResult | null> {
   const supabase = createClient()
 
   // Log XP
@@ -20,29 +39,39 @@ export async function awardXp(userId: string, amount: number, source: string, ta
 
   if (!user) return null
 
+  const oldLevel = user.level
   const newXp = user.total_xp + amount
 
-  // Check level up
-  const { data: nextLevel } = await supabase
-    .from('level_config')
-    .select('*')
-    .eq('level', user.level + 1)
-    .single()
-
-  const leveledUp = nextLevel && newXp >= nextLevel.xp_required
+  // Derive correct level from new total XP (handles multi-level-up)
+  const newLevel = getLevelFromTotalXP(newXp)
+  const leveledUp = newLevel > oldLevel
 
   await supabase
     .from('users')
     .update({
       total_xp: newXp,
-      ...(leveledUp ? { level: user.level + 1 } : {}),
+      level: newLevel,
     })
     .eq('id', userId)
+
+  // Update leaderboard
+  await supabase
+    .from('leaderboard')
+    .upsert(
+      {
+        user_id: userId,
+        total_xp: newXp,
+        level: newLevel,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'user_id' }
+    )
 
   return {
     newXp,
     leveledUp,
-    newLevel: leveledUp ? user.level + 1 : user.level,
-    levelTitle: leveledUp ? nextLevel!.title : null,
+    oldLevel,
+    newLevel,
+    levelsGained: newLevel - oldLevel,
   }
 }

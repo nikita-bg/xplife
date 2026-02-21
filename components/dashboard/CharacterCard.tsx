@@ -80,7 +80,7 @@ export function CharacterCard({ character, user }: CharacterCardProps) {
     }, [])
 
     const maxXP = character?.maxXP ?? 500
-    const currentXP = user?.totalXP ?? character?.currentXP ?? 0
+    const currentXP = character?.currentXP ?? 0
 
     return (
         <motion.div

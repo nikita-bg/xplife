@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { LayoutDashboard, Trophy, User, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Trophy, User, LogOut, Menu, X, Swords, Backpack, Store } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { LanguageSwitcher } from '@/components/i18n/language-switcher'
 import { useTranslations, useLocale } from 'next-intl'
@@ -30,7 +30,10 @@ export function AppNavbar({ displayName, avatarUrl, level }: AppNavbarProps) {
 
   const navLinks = [
     { href: `/${locale}/dashboard`, label: t('dashboard'), icon: LayoutDashboard },
+    { href: `/${locale}/quests`, label: t('quests', { fallback: 'Quests' }), icon: Swords },
     { href: `/${locale}/leaderboard`, label: t('leaderboard'), icon: Trophy },
+    { href: `/${locale}/inventory`, label: 'Inventory', icon: Backpack },
+    { href: `/${locale}/market`, label: 'Market', icon: Store },
     { href: `/${locale}/profile`, label: t('profile'), icon: User },
   ]
 

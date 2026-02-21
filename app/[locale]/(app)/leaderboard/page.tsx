@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
+import { LeaderboardPodium } from '@/components/leaderboard/leaderboard-podium'
 
 export default async function LeaderboardPage({
   params,
@@ -40,6 +41,9 @@ export default async function LeaderboardPage({
           {t('subtitle')}
         </p>
       </div>
+
+      {/* Top 3 Podium */}
+      <LeaderboardPodium entries={entries ?? []} />
 
       <LeaderboardTable
         entries={entries ?? []}

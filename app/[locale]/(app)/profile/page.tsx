@@ -6,6 +6,8 @@ import { SettingsForm } from '@/components/profile/settings-form'
 import { StatsCard } from '@/components/profile/stats-card'
 import { BalanceCard } from '@/components/profile/balance-card'
 import { UpgradeBanner } from '@/components/shared/upgrade-banner'
+import { checkAndResetStreak } from '@/lib/streakUtils'
+import { getXPProgress } from '@/lib/xpUtils'
 
 export default async function ProfilePage({
   params,
@@ -22,47 +24,24 @@ export default async function ProfilePage({
   // Fetch independent data in parallel to avoid waterfall
   const [
     { data: profile },
-    { data: streak },
+    streak,
     { count: totalTasks },
     { data: userInterests }
   ] = await Promise.all([
     supabase.from('users').select('*').eq('id', user.id).single(),
-    supabase.from('streaks').select('*').eq('user_id', user.id).single(),
+    checkAndResetStreak(supabase, user.id),
     supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'completed'),
     supabase.from('user_interests').select('interest').eq('user_id', user.id)
   ])
 
-  // Check and reset streak if inactive for more than 1 day
-  if (streak && streak.last_activity_date) {
-    const today = new Date().toISOString().split('T')[0]
-    const lastActivity = streak.last_activity_date
+  // Use formula-based level calculation
+  const { level } = getXPProgress(profile?.total_xp ?? 0)
 
-    if (lastActivity !== today) {
-      const lastDate = new Date(lastActivity + 'T00:00:00')
-      const todayDate = new Date(today + 'T00:00:00')
-      const diffDays = Math.round((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
-
-      // Reset streak if more than 1 day has passed
-      if (diffDays > 1) {
-        await supabase
-          .from('streaks')
-          .update({
-            current_streak: 0,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('user_id', user.id)
-
-        // Update local streak object for display
-        streak.current_streak = 0
-      }
-    }
-  }
-
-  // Fetch level config (depends on profile)
+  // Get level title from config
   const { data: levelConfig } = await supabase
     .from('level_config')
     .select('title')
-    .eq('level', profile?.level ?? 1)
+    .eq('level', level)
     .single()
 
   const interestList = userInterests?.map(i => i.interest) || []
