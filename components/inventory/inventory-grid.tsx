@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface InventoryItem {
     id: string
@@ -166,12 +167,52 @@ function CaseCard({ userCase }: { userCase: UserCase }) {
 export function InventoryGrid({ inventory, userCases }: InventoryGridProps) {
     const [activeTab, setActiveTab] = useState<TabType>('all')
     const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null)
+    const [items, setItems] = useState(inventory)
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
+
+    const handleEquip = async (item: InventoryItem) => {
+        if (loading || !item.items) return
+        setLoading(true)
+        const action = item.equipped ? 'unequip' : 'equip'
+        try {
+            const res = await fetch('/api/inventory/equip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inventoryId: item.id, action }),
+            })
+            if (res.ok) {
+                // Optimistic update
+                setItems((prev) =>
+                    prev.map((inv) => {
+                        if (inv.id === item.id) {
+                            return { ...inv, equipped: action === 'equip', equipped_slot: action === 'equip' ? inv.items?.type ?? null : null }
+                        }
+                        // Unequip any item in the same slot
+                        if (action === 'equip' && inv.equipped && inv.items?.type === item.items?.type) {
+                            return { ...inv, equipped: false, equipped_slot: null }
+                        }
+                        return inv
+                    })
+                )
+                setSelectedItem((prev) => {
+                    if (prev?.id === item.id) {
+                        return { ...prev, equipped: action === 'equip', equipped_slot: action === 'equip' ? prev.items?.type ?? null : null }
+                    }
+                    return prev
+                })
+                router.refresh()
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const filteredItems = activeTab === 'all'
-        ? inventory
+        ? items
         : activeTab === 'cases'
             ? []
-            : inventory.filter((item) => item.items?.type === activeTab)
+            : items.filter((item) => item.items?.type === activeTab)
 
     const showCases = activeTab === 'all' || activeTab === 'cases'
 
@@ -254,9 +295,12 @@ export function InventoryGrid({ inventory, userCases }: InventoryGridProps) {
                         )}
 
                         <div className="w-full flex flex-col gap-2 mt-2">
-                            <button className="w-full rounded-lg px-4 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-white transition-all hover:opacity-90"
+                            <button
+                                onClick={() => handleEquip(selectedItem)}
+                                disabled={loading}
+                                className="w-full rounded-lg px-4 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-white transition-all hover:opacity-90 disabled:opacity-50"
                                 style={{ background: 'var(--gradient-brand)' }}>
-                                {selectedItem.equipped ? 'Unequip' : 'Equip'}
+                                {loading ? '...' : selectedItem.equipped ? 'Unequip' : 'Equip'}
                             </button>
                             <button className="w-full rounded-lg px-4 py-2.5 font-display text-sm font-bold uppercase tracking-wider transition-all hover:opacity-90"
                                 style={{ background: 'var(--accent-gold-dim)', color: 'var(--coin-color)', border: '1px solid var(--coin-color)' }}>

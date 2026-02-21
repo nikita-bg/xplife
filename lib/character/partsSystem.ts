@@ -381,6 +381,7 @@ export function assembleCharacter(
   const { colors } = config
   const { primary, accent, rankColor, glowColor } = colors
   const filterId = `glow-${config.userId ?? 'char'}`
+  const weaponSvg = (config as { equippedWeaponSvg?: string | null }).equippedWeaponSvg
 
   // Build registry lookup for custom parts
   const registryMap = new Map<string, CharacterPart>()
@@ -437,6 +438,14 @@ export function assembleCharacter(
   svg += getPartSvg('leftArm', () => generateLeftArm(primary, rankColor)) + '\n'
   // 6. Head (on top of everything)
   svg += getPartSvg('head', () => generateHead(primary, accent, rankColor, filterId)) + '\n'
+
+  // 7. Weapon (if equipped — rendered after head, in right arm area)
+  if (weaponSvg) {
+    const weaponPos = isoToScreen(1.8, 4, 0) // right arm position
+    svg += `<g id="equipped-weapon" transform="translate(${weaponPos.sx - 20}, ${weaponPos.sy - 50}) scale(0.4)">\n`
+    svg += `  <image href="${weaponSvg}" width="128" height="128" />\n`
+    svg += '</g>\n'
+  }
 
   svg += `</g>\n`
   svg += `</svg>`

@@ -31,10 +31,15 @@ export default async function DashboardPage({
 
   if (!user) redirect(`/${locale}/login`)
 
-  // ── Parallel data fetching ───────────────────────────────────
-  const [{ data: profile }, streak] = await Promise.all([
+  // ── Parallel data fetching ───────────────────────────────
+  const [{ data: profile }, streak, { data: equippedItems }] = await Promise.all([
     supabase.from('users').select('*').eq('id', user.id).single(),
     checkAndResetStreak(supabase, user.id),
+    supabase
+      .from('user_inventory')
+      .select('equipped_slot, items(type, svg_content, thumbnail_url)')
+      .eq('user_id', user.id)
+      .eq('equipped', true),
   ])
 
   // ── Stale task cleanup ───────────────────────────────────────
@@ -125,6 +130,13 @@ export default async function DashboardPage({
       .eq('id', user.id)
   }
 
+  // Find equipped weapon SVG path
+  interface EquippedRow { equipped_slot: string | null; items: { type: string; svg_content: string | null; thumbnail_url: string | null } | null }
+  const equippedWeapon = (equippedItems as unknown as EquippedRow[] | null)?.find(
+    (e) => e.items?.type === 'weapon'
+  )
+  const weaponSvgUrl = equippedWeapon?.items?.thumbnail_url ?? null
+
   const character = {
     class: characterClass,
     rank,
@@ -133,6 +145,7 @@ export default async function DashboardPage({
     maxXP,
     parts: { ...DEFAULT_PARTS },
     colors,
+    equippedWeaponSvg: weaponSvgUrl,
   }
 
   const dashUser = {
