@@ -1,0 +1,226 @@
+import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import type { QuestTimeframe, TaskStatus } from '@/lib/types'
+
+/**
+ * GET /api/tasks — Fetch tasks for the authenticated user
+ * Query params: timeframe, status, limit
+ */
+export async function GET(request: Request) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const { searchParams } = new URL(request.url)
+    const timeframe = searchParams.get('timeframe') as QuestTimeframe | null
+    const status = searchParams.get('status') as TaskStatus | null
+    const limit = parseInt(searchParams.get('limit') || '50', 10)
+
+    let query = supabase
+        .from('tasks')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(Math.min(limit, 100))
+
+    if (timeframe) {
+        query = query.eq('quest_timeframe', timeframe)
+    }
+
+    if (status) {
+        query = query.eq('status', status)
+    }
+
+    const { data: tasks, error } = await query
+
+    if (error) {
+        console.error('[TASKS] Fetch error:', error)
+        return NextResponse.json({ error: 'Failed to fetch tasks' }, { status: 500 })
+    }
+
+    return NextResponse.json({ tasks: tasks || [] })
+}
+
+/**
+ * POST /api/tasks — Create a manual task
+ */
+export async function POST(request: Request) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    try {
+        const body = await request.json()
+        const { title, description, category, difficulty, xp_reward, quest_timeframe, parent_quest_id } = body
+
+        if (!title?.trim()) {
+            return NextResponse.json({ error: 'Title is required' }, { status: 400 })
+        }
+
+        const { data: task, error } = await supabase
+            .from('tasks')
+            .insert({
+                user_id: user.id,
+                title: title.trim(),
+                description: description?.trim() || null,
+                category: category || 'productivity',
+                difficulty: difficulty || 'medium',
+                xp_reward: xp_reward || 50,
+                status: 'pending',
+                quest_timeframe: quest_timeframe || 'daily',
+                parent_quest_id: parent_quest_id || null,
+            })
+            .select()
+            .single()
+
+        if (error) {
+            console.error('[TASKS] Insert error:', error)
+            return NextResponse.json({ error: 'Failed to create task' }, { status: 500 })
+        }
+
+        return NextResponse.json({ task })
+    } catch {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+    }
+}
+
+/**
+ * PATCH /api/tasks — Update task status (complete/skip)
+ */
+export async function PATCH(request: Request) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    try {
+        const body = await request.json()
+        const { id, status, proof_url } = body
+
+        if (!id) {
+            return NextResponse.json({ error: 'Task ID is required' }, { status: 400 })
+        }
+
+        // ── Double-completion guard ──
+        if (status === 'completed') {
+            const { data: existingTask } = await supabase
+                .from('tasks')
+                .select('status')
+                .eq('id', id)
+                .eq('user_id', user.id)
+                .single()
+
+            if (existingTask?.status === 'completed') {
+                return NextResponse.json({ error: 'Quest already completed' }, { status: 409 })
+            }
+        }
+
+        const updates: Record<string, unknown> = { status }
+
+        if (status === 'completed') {
+            updates.completed_at = new Date().toISOString()
+        }
+
+        if (proof_url) {
+            updates.proof_url = proof_url
+        }
+
+        const { data: task, error } = await supabase
+            .from('tasks')
+            .update(updates)
+            .eq('id', id)
+            .eq('user_id', user.id)
+            .select()
+            .single()
+
+        if (error) {
+            console.error('[TASKS] Update error:', error)
+            return NextResponse.json({ error: 'Failed to update task' }, { status: 500 })
+        }
+
+        // ── Award XP on completion ──
+        if (status === 'completed' && task) {
+            const xpAmount = task.xp_reward || 50
+
+            // Update user total XP
+            const { data: profile } = await supabase
+                .from('users')
+                .select('total_xp')
+                .eq('id', user.id)
+                .single()
+
+            if (profile) {
+                await supabase
+                    .from('users')
+                    .update({ total_xp: (profile.total_xp || 0) + xpAmount })
+                    .eq('id', user.id)
+            }
+
+            // Log XP
+            await supabase.from('xp_logs').insert({
+                user_id: user.id,
+                amount: xpAmount,
+                source: 'quest_completion',
+                task_id: id,
+            })
+
+            // ── Auto-deal boss damage ──
+            const difficultyDamage: Record<string, number> = { easy: 10, medium: 20, hard: 35, epic: 50 }
+            const damage = difficultyDamage[task.difficulty] || 15
+
+            const { data: activeBoss } = await supabase
+                .from('boss_events')
+                .select('id, current_hp, max_hp, xp_reward, gold_reward')
+                .eq('status', 'active')
+                .limit(1)
+                .single()
+
+            if (activeBoss) {
+                const newHp = Math.max(0, activeBoss.current_hp - damage)
+                const defeated = newHp === 0
+
+                const bossUpdates: Record<string, unknown> = { current_hp: newHp }
+                if (defeated) {
+                    bossUpdates.status = 'defeated'
+                    bossUpdates.defeated_at = new Date().toISOString()
+                }
+
+                await supabase.from('boss_events').update(bossUpdates).eq('id', activeBoss.id)
+
+                // Upsert contribution
+                const { data: existingContrib } = await supabase
+                    .from('boss_contributions')
+                    .select('id, damage_dealt, tasks_completed')
+                    .eq('boss_id', activeBoss.id)
+                    .eq('user_id', user.id)
+                    .single()
+
+                if (existingContrib) {
+                    await supabase.from('boss_contributions').update({
+                        damage_dealt: existingContrib.damage_dealt + damage,
+                        tasks_completed: existingContrib.tasks_completed + 1,
+                    }).eq('id', existingContrib.id)
+                } else {
+                    await supabase.from('boss_contributions').insert({
+                        boss_id: activeBoss.id,
+                        user_id: user.id,
+                        damage_dealt: damage,
+                        tasks_completed: 1,
+                    })
+                }
+            }
+        }
+
+        return NextResponse.json({ task })
+    } catch {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+    }
+}

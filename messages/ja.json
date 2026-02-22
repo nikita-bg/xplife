@@ -1,0 +1,907 @@
+{
+  "metadata": {
+    "title": "XPLife - 人生をレベルアップ",
+    "description": "目標を壮大なクエストに変えましょう。XPを獲得。連勝記録を追跡。AI駆動の人生最適化で最高の自分になろう。"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "submit": "送信",
+    "close": "閉じる",
+    "back": "戻る",
+    "next": "次へ",
+    "continue": "続ける",
+    "confirm": "確認",
+    "error": "エラー",
+    "success": "成功"
+  },
+  "navbar": {
+    "features": "機能",
+    "howItWorks": "使い方",
+    "pricing": "価格",
+    "login": "ログイン",
+    "signup": "旅を始める"
+  },
+  "hero": {
+    "badge": "今すぐレベルアップしている1,000人以上のプレイヤーに参加",
+    "title": "レベルアップ",
+    "titleHighlight": "あなたの人生",
+    "description": "退屈な目標を壮大なRPGクエストに変えましょう。AIが毎日のミッションを作成。XPを獲得。本当にレベルアップ。",
+    "cta": "無料でプレイ開始",
+    "ctaSecondary": "使い方",
+    "heroUser": "ヒーロープレイヤー",
+    "heroRole": "ライフオプティマイザー",
+    "xpLabel": "経験値ポイント",
+    "xpProgress": "{current} / {total} XP",
+    "questMorningMeditation": "朝の瞑想",
+    "questDeepWork": "30分ディープワーク",
+    "questEveningReview": "夜の振り返り",
+    "statStreak": "連続",
+    "statQuests": "クエスト",
+    "statRank": "ランク",
+    "level": "レベル {level}"
+  },
+  "quiz": {
+    "questions": [
+      {
+        "question": "目覚めたとき、最もエネルギーを与えてくれるものは何ですか？",
+        "options": [
+          "スリリングな新しいチャレンジや冒険",
+          "新しいことを学ぶことや創造的な仕事",
+          "穏やかで構造化された朝のルーティン",
+          "愛する人やコミュニティとのつながり"
+        ]
+      },
+      {
+        "question": "ストレスにどう対処することを好みますか？",
+        "options": [
+          "激しい身体活動や競争",
+          "日記、読書、問題解決",
+          "瞑想、ヨガ、深呼吸",
+          "友人や家族と話し合う"
+        ]
+      },
+      {
+        "question": "どのような目標が最もあなたを興奮させますか？",
+        "options": [
+          "大きな報酬を伴う大胆で野心的な目標",
+          "スキルの習得と知的成長",
+          "安定性、一貫性、内なる平和",
+          "人間関係を築き、他者を助ける"
+        ]
+      },
+      {
+        "question": "友人はあなたをどのように表現しますか？",
+        "options": [
+          "エネルギッシュ、大胆、自発的",
+          "好奇心旺盛、創造的、思慮深い",
+          "穏やか、信頼できる、地に足がついている",
+          "温かい、共感的、支援的"
+        ]
+      },
+      {
+        "question": "理想的な充電方法は何ですか？",
+        "options": [
+          "エキサイティングで新しいことに挑戦する",
+          "情熱的なプロジェクトに深く集中する",
+          "休息、自然、静かな時間",
+          "大切な人と質の高い時間を過ごす"
+        ]
+      }
+    ]
+  },
+  "personalities": {
+    "dopamine": {
+      "title": "冒険家",
+      "description": "あなたは興奮、新奇性、大胆な挑戦で成長します。あなたのクエストは境界を押し広げ、野心的な目標を達成することに焦点を当てます。"
+    },
+    "acetylcholine": {
+      "title": "思想家",
+      "description": "あなたは学習、創造性、深い集中を愛します。あなたのクエストはスキルの習得と知的成長を中心に展開します。"
+    },
+    "gaba": {
+      "title": "守護者",
+      "description": "あなたは安定性、一貫性、内なる平和を大切にします。あなたのクエストは強い習慣を構築し、バランスを促進します。"
+    },
+    "serotonin": {
+      "title": "つながり手",
+      "description": "あなたは人間関係やコミュニティからエネルギーを得ます。あなたのクエストは絆を強化し、有意義なつながりを促進します。"
+    }
+  },
+  "taskCategories": {
+    "fitness": "フィットネス",
+    "mindfulness": "マインドフルネス",
+    "learning": "学習",
+    "productivity": "生産性",
+    "social": "ソーシャル",
+    "health": "健康",
+    "creativity": "創造性"
+  },
+  "taskDifficulties": {
+    "easy": "簡単",
+    "medium": "中級",
+    "hard": "難しい",
+    "epic": "エピック"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "ようこそ",
+      "description": "あなたは最高の自分になるための壮大なクエストに乗り出そうとしています。完璧なチャレンジを作成するために、まずあなたについて学びましょう。",
+      "beginQuest": "クエスト開始",
+      "duration": "約2分かかります"
+    },
+    "title": "あなたのプレイヤータイプを発見",
+    "subtitle": "5つの簡単な質問に答えて、パーソナライズされたクエストシステムをアンロック",
+    "question": "質問 {current} / {total}",
+    "calculating": "回答を分析中...",
+    "result": "あなたは...",
+    "continue": "ダッシュボードへ続く",
+    "timePreferences": {
+      "subtitle": "体験をパーソナライズ",
+      "title": "いつ最も効率よく働けますか？",
+      "description": "最高のパフォーマンスタイムにタスクをスケジュールするのを手伝ってください",
+      "energyQuestion": "いつ最もエネルギーがありますか？",
+      "durationQuestion": "希望するタスクの長さは？",
+      "continue": "続ける",
+      "timeOptions": {
+        "morning": {
+          "label": "朝型人間",
+          "description": "朝が最もエネルギッシュ"
+        },
+        "afternoon": {
+          "label": "午後がピーク",
+          "description": "昼食後が最も集中できる"
+        },
+        "evening": {
+          "label": "夕方のエネルギー",
+          "description": "夕方が生産的"
+        },
+        "night": {
+          "label": "夜型人間",
+          "description": "夜が最も効率的"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "クイック勝利",
+          "description": "5〜15分のタスク"
+        },
+        "medium": {
+          "label": "バランスタスク",
+          "description": "15〜45分のタスク"
+        },
+        "deep": {
+          "label": "ディープワーク",
+          "description": "1時間以上のセッション"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "あなたについて教えてください",
+      "title": "あなたのライフスタイルコンテキスト",
+      "description": "これにより、あなたの日常生活に合ったタスクを作成できます",
+      "occupationQuestion": "あなたを最もよく表すものは？",
+      "scheduleQuestion": "勤務スケジュール（オプション）",
+      "phaseQuestion": "現在の人生の段階（オプション）",
+      "challengeQuestion": "あなたの最大の課題は何ですか？",
+      "continue": "続ける",
+      "occupationOptions": {
+        "student": "学生",
+        "officeWorker": "会社員",
+        "remoteWorker": "リモートワーカー",
+        "entrepreneur": "起業家",
+        "freelancer": "フリーランサー",
+        "healthcare": "医療従事者",
+        "creative": "クリエイティブ",
+        "other": "その他"
+      },
+      "scheduleOptions": {
+        "fullTime": "フルタイム",
+        "partTime": "パートタイム",
+        "flexible": "フレキシブル",
+        "shiftWork": "シフト勤務"
+      },
+      "phaseOptions": {
+        "buildingCareer": "キャリア構築中",
+        "workLifeBalance": "ワークライフバランス",
+        "studentLife": "学生生活",
+        "exploring": "探索中"
+      },
+      "challengeOptions": {
+        "findingTime": "時間を見つける",
+        "lowEnergy": "エネルギー不足",
+        "stayingFocused": "集中を維持する",
+        "motivation": "モチベーション",
+        "beingConsistent": "一貫性を保つ"
+      }
+    },
+    "interests": {
+      "subtitle": "オプション",
+      "title": "あなたの興味は何ですか？",
+      "description": "タスクをパーソナライズするために最大10の興味を選択してください",
+      "selected": "{count}/10 選択済み",
+      "youSelected": "選択したもの：",
+      "skip": "スキップ",
+      "continue": "続ける",
+      "options": {
+        "yoga": "ヨガ",
+        "running": "ランニング",
+        "meditation": "瞑想",
+        "reading": "読書",
+        "writing": "執筆",
+        "coding": "プログラミング",
+        "painting": "絵画",
+        "music": "音楽",
+        "gaming": "ゲーム",
+        "cooking": "料理",
+        "photography": "写真",
+        "languages": "言語",
+        "hiking": "ハイキング",
+        "gardening": "ガーデニング",
+        "dancing": "ダンス",
+        "cycling": "サイクリング",
+        "swimming": "水泳",
+        "drawing": "描画",
+        "journaling": "日記",
+        "podcasts": "ポッドキャスト"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "目標を設定",
+      "title": "クエストラインを選択",
+      "description": "{maxGoals} を選択し、それぞれの目標を書いてください",
+      "goalLabel": "{category} の目標",
+      "goalPlaceholder": "例：「30分以内に5K走る」",
+      "settingUp": "クエストを設定中...",
+      "startAdventure": "冒険を始める"
+    }
+  },
+  "navigation": {
+    "dashboard": "ダッシュボード",
+    "quests": "クエスト",
+    "leaderboard": "リーダーボード",
+    "inventory": "インベントリ",
+    "market": "マーケット",
+    "profile": "プロフィール",
+    "logout": "ログアウト",
+    "totalXp": "合計XP",
+    "dayStreak": "連続日数",
+    "startQuest": "クエスト開始 →",
+    "dailyQuest": "デイリークエスト",
+    "weeklyQuest": "ウィークリークエスト",
+    "monthlyQuest": "マンスリークエスト",
+    "daily": "デイリー",
+    "weekly": "ウィークリー",
+    "monthly": "マンスリー",
+    "classAdventurer": "冒険家",
+    "classThinker": "思想家",
+    "classGuardian": "守護者",
+    "classConnector": "繋ぎ手"
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "ログインして旅を続けましょう",
+      "email": "メールアドレス",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを入力",
+      "submit": "ログイン",
+      "loggingIn": "ログイン中...",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signupLink": "サインアップ",
+      "invalidCredentials": "無効なメールアドレスまたはパスワード",
+      "emailNotConfirmed": "メールアドレスがまだ確認されていません。受信トレイを確認するか、確認リンクを再送信してください。",
+      "error": "無効なメールアドレスまたはパスワード"
+    },
+    "signup": {
+      "title": "旅を始めましょう",
+      "subtitle": "アカウントを作成して始めましょう",
+      "email": "メールアドレス",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "パスワード",
+      "passwordPlaceholder": "パスワードを作成",
+      "confirmPassword": "パスワード確認",
+      "confirmPasswordPlaceholder": "パスワードを確認",
+      "submit": "アカウント作成",
+      "creating": "アカウント作成中...",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "loginLink": "ログイン",
+      "checkEmailTitle": "メールを確認してください",
+      "checkEmailMessage": "確認リンクをメールに送信しました。クリックしてアカウントを有効化し、クエストを開始してください。",
+      "login": "ログイン",
+      "error": "アカウントの作成に失敗しました",
+      "passwordMismatch": "パスワードが一致しません"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Googleで続ける",
+      "continueWithGithub": "GitHubで続ける"
+    }
+  },
+  "dashboard": {
+    "welcome": "おかえりなさい、{name}",
+    "subtitle": "今日のクエスト状況です",
+    "level": "レベル {level}",
+    "xp": "{current} / {next} XP",
+    "stats": {
+      "totalXP": "総経験値",
+      "completedQuests": "完了済み",
+      "currentStreak": "連続記録",
+      "days": "{count}日",
+      "best": "最高: {streak}日",
+      "experience": "経験値",
+      "xpToNextLevel": "次のレベルまで{current} / {required} XP",
+      "goldBalance": "ゴールド残高",
+      "add": "追加"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "クエスト設定を完了しましょう！",
+        "description": "いくつかの質問に答えて、毎日のクエストとXP報酬をパーソナライズしましょう。",
+        "startQuiz": "クイズを始める"
+      },
+      "braverman": {
+        "title": "深い性格洞察をアンロック",
+        "description": "Braverman評価を受けて+500 XPとパーソナライズされたクエストを獲得"
+      }
+    },
+    "questSection": {
+      "generate": "生成",
+      "upgradeForMore": "アップグレードしてさらに",
+      "noQuestsTitle": "クエストがありません",
+      "noQuestsDescription": "「生成」をクリックして、AI駆動の{timeframe}クエストを作成してください。",
+      "completed": "完了"
+    },
+    "activeQuests": "アクティブなクエスト",
+    "noQuests": "アクティブなクエストはありません",
+    "generateQuests": "今日のクエストを生成",
+    "viewAll": "すべて表示",
+    "dailyTasks": {
+      "title": "今日のクエスト",
+      "generateQuests": "クエストを生成",
+      "generating": "生成中...",
+      "describeGoals": "目標を説明してください",
+      "placeholder": "例：もっと運動したい、スペイン語を学びたい、毎日20ページ読みたい...",
+      "emptyGoalsError": "クエストを生成する前に目標を入力してください。",
+      "tryAgain": "再試行",
+      "upgradePlan": "プランをアップグレード",
+      "completeProfile": "プロフィールを完成",
+      "cancel": "キャンセル",
+      "generate": "生成",
+      "noQuestsTitle": "クエストがありません",
+      "noQuestsDescription": "「クエストを生成」をクリックして、パーソナライズされた毎日のチャレンジを取得してください。",
+      "completed": "完了"
+    },
+    "questProgress": {
+      "noQuests": "まだクエストがありません",
+      "progress": "{timeframe}の進捗",
+      "completed": "{completed}/{total} 完了"
+    },
+    "questTimer": {
+      "expired": "期限切れ"
+    },
+    "questTabs": {
+      "yearly": "年間",
+      "monthly": "月間",
+      "weekly": "週間",
+      "daily": "毎日",
+      "yearlyTitle": "年間目標",
+      "monthlyTitle": "月間マイルストーン",
+      "weeklyTitle": "週間ターゲット",
+      "dailyTitle": "今日のクエスト"
+    },
+    "autoRefresh": {
+      "generating": "クエストを自動生成中...",
+      "generatingDescription": "目標に基づいてパーソナライズされたクエストを作成しています。少々お待ちください。"
+    }
+  },
+  "profile": {
+    "title": "プロフィール",
+    "personalInfo": "個人情報",
+    "displayName": "表示名",
+    "email": "メールアドレス",
+    "personality": "性格タイプ",
+    "stats": {
+      "title": "統計",
+      "totalXp": "総経験値",
+      "questsDone": "完了したクエスト",
+      "streak": "連続記録"
+    },
+    "balance": {
+      "title": "ゴールド残高",
+      "addEarnings": "収入を追加"
+    },
+    "planNames": {
+      "premium": "プレミアム",
+      "lifetime": "ライフタイム"
+    },
+    "save": "変更を保存",
+    "settings": {
+      "title": "設定",
+      "displayName": "表示名",
+      "avatar": "アバター",
+      "uploadAvatar": "アバターをアップロード",
+      "aboutMe": "自己紹介",
+      "aboutMePlaceholder": "自分について教えてください — ビジネス、目標、状況など。AIがより関連性の高いクエストを生成するために使用します。",
+      "aboutMeChars": "{count}/500",
+      "save": "変更を保存",
+      "saving": "保存中...",
+      "saveSuccess": "変更が正常に保存されました！",
+      "logout": "ログアウト",
+      "tabs": {
+        "general": "一般",
+        "personalization": "パーソナライズ"
+      },
+      "personalization": {
+        "timePreference": "時間帯の好み",
+        "timeOptions": {
+          "morning": "朝型",
+          "afternoon": "午後型",
+          "evening": "夜型",
+          "night": "深夜型"
+        },
+        "taskDuration": "タスクの長さ",
+        "durationOptions": {
+          "quick": "短時間 (5-15分)",
+          "medium": "バランス (15-45分)",
+          "deep": "じっくり (1時間+)"
+        },
+        "occupation": "職業",
+        "selectOccupation": "職業を選択",
+        "occupationOptions": {
+          "student": "学生",
+          "officeWorker": "会社員",
+          "remoteWorker": "リモートワーカー",
+          "freelancer": "フリーランス",
+          "stayAtHomeParent": "専業主婦/主夫",
+          "entrepreneur": "起業家",
+          "retired": "退職者",
+          "other": "その他"
+        },
+        "workSchedule": "勤務スケジュール",
+        "selectSchedule": "スケジュールを選択",
+        "scheduleOptions": {
+          "standard": "標準 9-17時",
+          "flexible": "フレックス",
+          "shiftWork": "シフト制",
+          "partTime": "パートタイム",
+          "irregular": "不定期"
+        },
+        "lifePhase": "ライフステージ",
+        "selectLifePhase": "ステージを選択",
+        "lifePhaseOptions": {
+          "highSchool": "高校生",
+          "university": "大学生",
+          "earlyCareer": "キャリア初期",
+          "midCareer": "キャリア中期",
+          "parent": "子育て中",
+          "careerChange": "キャリアチェンジ",
+          "retired": "退職"
+        },
+        "mainChallenge": "主な課題",
+        "selectChallenge": "課題を選択",
+        "challengeOptions": {
+          "time": "時間が足りない",
+          "energy": "エネルギー不足",
+          "focus": "集中力の維持",
+          "motivation": "モチベーション維持",
+          "consistency": "継続性"
+        },
+        "interests": "趣味・興味 ({count}/10)",
+        "addCustomInterest": "カスタム興味を追加...",
+        "preferNotToSay": "回答しない"
+      }
+    }
+  },
+  "leaderboard": {
+    "title": "リーダーボード",
+    "subtitle": "栄光を競うトッププレイヤー",
+    "rank": "ランク",
+    "player": "プレイヤー",
+    "xp": "経験値",
+    "level": "レベル",
+    "streak": "連続",
+    "lvl": "LV {level}",
+    "noRankingsTitle": "ランキングはまだありません",
+    "noRankingsDescription": "クエストを完了してリーダーボードに登場しましょう。",
+    "yourRank": "あなたのランク：",
+    "anonymous": "匿名",
+    "you": "（あなた）"
+  },
+  "levelUp": {
+    "title": "レベルアップ！",
+    "description": "おめでとうございます！新しいレベルに到達しました。",
+    "level": "レベル {level}",
+    "continue": "続ける"
+  },
+  "chat": {
+    "closeChat": "チャットを閉じる",
+    "openChat": "チャットを開く",
+    "title": "AIクエストアドバイザー",
+    "messagesLeft": "今日の残りメッセージ {remaining}/50",
+    "emptyState": "クエストや目標について何でも聞いてください！",
+    "thinking": "考え中...",
+    "placeholder": "メッセージを入力...",
+    "errorDefault": "問題が発生しました。",
+    "errorSend": "送信に失敗しました。もう一度お試しください。",
+    "tasksCreated": "{count}件のタスクがクエストに追加されました！"
+  },
+  "generateQuestDialog": {
+    "title": "{timeframe}クエストを生成",
+    "description": "目標に合わせたAIクエストを作成します。",
+    "customGoal": "カスタム目標",
+    "fromQuest": "{timeframe}クエストから",
+    "selectQuest": "{timeframe}クエストを選択",
+    "emptyGoalsError": "クエストを生成する前に目標を入力してください。",
+    "selectParentError": "親クエストを選択してください。",
+    "tryAgain": "再試行",
+    "upgradePlan": "プランをアップグレード",
+    "generate": "生成",
+    "generateFromQuest": "クエストから生成",
+    "generating": "生成中...",
+    "placeholder": "例：もっと運動したい、スペイン語を学びたい、毎日20ページ読みたい...",
+    "yearly": "年間",
+    "monthly": "月間",
+    "weekly": "週間",
+    "daily": "日間",
+    "generateError": "クエストの生成に失敗しました。もう一度お試しください。",
+    "cascadeProgress": "{timeframe}クエストを生成中...",
+    "cascadeComplete": "年間{yearly}、月間{monthly}、週間{weekly}、日間{daily}クエストを作成しました！",
+    "cascadeFailed": "カスケードが停止しました。生成済みのクエストは保存されています。",
+    "cascadeStepDone": "{timeframe}クエスト作成完了 ({count})",
+    "cascadeDone": "完了"
+  },
+  "tasks": {
+    "title": "タスク詳細",
+    "description": "説明",
+    "category": "カテゴリー",
+    "difficulty": "難易度",
+    "xpReward": "+{xp} XP",
+    "markComplete": "完了としてマーク",
+    "completed": "完了！",
+    "back": "ダッシュボードに戻る"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "パワーアップ",
+      "title": "あなたの",
+      "titleHighlight": "成長",
+      "description": "日常のルーティンを冒険に変えるために必要なすべて。",
+      "aiPowered": {
+        "title": "AI駆動のタスク",
+        "description": "ホルモンタイプと心理に基づいたパーソナライズされた毎日のクエスト。すべてのタスクはあなたを前進させるように作られています。"
+      },
+      "trackProgress": {
+        "title": "進捗を追跡",
+        "description": "XPを獲得し、連勝を維持し、リーダーボードを登りましょう。クエストを完了するにつれて、実際の統計が成長するのを見守りましょう。"
+      },
+      "deepPersonalization": {
+        "title": "深いパーソナライゼーション",
+        "description": "Bravermanテスト統合により、あなたの脳化学に合ったタスクを提供。万能なアプローチはありません。"
+      }
+    },
+    "howItWorks": {
+      "subtitle": "クエストガイド",
+      "title": "使い方",
+      "titleHighlight": "ガイド",
+      "description": "サインアップからレベルアップまで、3つの簡単なステップ。",
+      "step1": {
+        "step": "01",
+        "title": "サインアップ＆クイッククイズ",
+        "description": "ライフスタイル、目標、脳のタイプについていくつかの質問に答えてください。わずか2分です。"
+      },
+      "step2": {
+        "step": "02",
+        "title": "毎日のAIタスクを取得",
+        "description": "AIがあなたの独自のプロフィールと進捗に基づいて、毎日パーソナライズされたクエストを作成します。"
+      },
+      "step3": {
+        "step": "03",
+        "title": "完了してレベルアップ",
+        "description": "クエストを完了してXPを獲得し、実績をアンロックし、グローバルリーダーボードを登りましょう。"
+      }
+    },
+    "socialProof": {
+      "badge": "1,000人以上の人々が人生をレベルアップしています",
+      "title": "プレイヤーの",
+      "titleHighlight": "レビュー",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "ソフトウェアエンジニア",
+        "quote": "あらゆる生産性アプリを試してきました。XPLifeは実際に習慣を続けられた最初のアプリです。RPGメカニクスは天才的です。"
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "学生",
+        "quote": "AIタスクは恐ろしいほど正確です。自分の脳の働き方を本当に理解してくれるライフコーチを持っているようです。60日連続達成しました！"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "フリーランサー",
+        "quote": "リーダーボードで友達と競い合うことで、怠惰な朝が生産的なパワーアワーに変わりました。今月だけで3レベル上がりました。"
+      }
+    },
+    "finalCta": {
+      "title": "クエストを",
+      "titleHighlight": "始めませんか？",
+      "description": "待つ日々は二度と獲得できないXPです。今日無料のクエストを始めましょう。",
+      "button": "クエストを始める — 無料",
+      "disclaimer": "クレジットカード不要。永久無料、いつでもアップグレード可能。"
+    },
+    "pricing": {
+      "subtitle": "道を選ぶ",
+      "title": "あなたの",
+      "titleHighlight": "クラス",
+      "description": "クレジットカード不要。いつでもアップグレード可能。",
+      "free": {
+        "name": "無料で始める",
+        "cta": "無料でプレイ開始"
+      },
+      "premium": {
+        "name": "プレミアム",
+        "badge": "最も人気",
+        "cta": "プレミアムにする"
+      },
+      "lifetime": {
+        "name": "ライフタイム",
+        "badge": "期間限定オファー",
+        "cta": "ライフタイムアクセスをロック"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1つのアクティブな目標",
+        "feature2": "週15のAI生成タスク",
+        "feature3": "基本的なリーダーボードアクセス",
+        "feature4": "コミュニティサポート",
+        "feature5": "1日15回のAIチャットメッセージ",
+        "feature6": "3つの年間クエスト"
+      },
+      "premium": {
+        "feature1": "毎日無制限のAIタスク",
+        "feature2": "3つの並行目標",
+        "feature3": "完全なAIコーチングと洞察",
+        "feature4": "連続記録凍結（月3回）",
+        "feature5": "優先リーダーボード",
+        "feature6": "高度な分析",
+        "feature7": "無制限AIチャット",
+        "feature8": "5つの年間クエスト"
+      },
+      "lifetime": {
+        "feature1": "プレミアムのすべて、永久に",
+        "feature2": "定期的な支払いなし",
+        "feature3": "創設メンバーバッジ",
+        "feature4": "新機能への早期アクセス"
+      }
+    }
+  },
+  "upgradeBanner": {
+    "premiumPlan": "プレミアムプラン",
+    "lifetimePlan": "ライフタイムプラン",
+    "active": "有効",
+    "upgradeToPremium": "プレミアムにアップグレード",
+    "unlimitedTasks": "無制限AIタスク＆その他",
+    "upgradeYourPlan": "プランをアップグレード",
+    "unlockFeatures": "無制限のAIタスク、3つの並行目標、コーチングなどをアンロック。",
+    "premiumButton": "プレミアム — €4.99/月",
+    "lifetimeButton": "ライフタイム — €49"
+  },
+  "levelTitles": {
+    "novice": "初心者",
+    "legend": "伝説"
+  },
+  "blog": {
+    "metaTitle": "ブログ | XPLife",
+    "metaDescription": "ゲーミフィケーション生産性、習慣づくり、リアルライフのレベルアップに関するヒント、戦略、インサイト。",
+    "badge": "クエストログ",
+    "title": "",
+    "titleHighlight": "クエストログ",
+    "subtitle": "ゲーミフィケーション生産性とリアルライフのレベルアップに関するヒント、戦略、インサイト。",
+    "emptyTitle": "まだ投稿がありません",
+    "emptyDescription": "新しいクエストを準備中です。すぐにまたチェックしてください！",
+    "readMore": "続きを読む",
+    "backToBlog": "ブログに戻る",
+    "readTime": "{minutes}分で読める",
+    "ctaTitle": "レベルアップの準備はできましたか？",
+    "ctaDescription": "読むだけで終わりにしない。プレイを始めよう。クエストが待っています。",
+    "ctaButton": "無料で始める"
+  },
+  "footer": {
+    "tagline": "一度に一つのクエストで、あなたの人生をレベルアップ。",
+    "copyright": "© 2025 XPLife。全著作権所有。",
+    "links": {
+      "about": "について",
+      "blog": "ブログ",
+      "contact": "お問い合わせ",
+      "privacy": "プライバシー",
+      "terms": "利用規約"
+    }
+  },
+  "braverman": {
+    "page": {
+      "locked": "ロック中",
+      "lockedDescription": "Braverman性質評価はレベル{level}でアンロックされます。デイリークエストを完了してXPを獲得し、レベルアップしましょう！",
+      "title": "Braverman性質評価",
+      "subtitle": "140の質問であなたの神経伝達物質プロフィールを発見。完了で500 XP獲得。",
+      "resultsTitle": "Braverman評価",
+      "resultsSubtitle": "あなたの性格プロフィール結果"
+    },
+    "test": {
+      "sectionDopamine": "パート1：ドーパミン",
+      "sectionAcetylcholine": "パート2：アセチルコリン",
+      "sectionGaba": "パート3：GABA",
+      "sectionSerotonin": "パート4：セロトニン",
+      "never": "まったくない",
+      "sometimes": "時々",
+      "often": "よくある",
+      "always": "常にある",
+      "progress": "{current} / {total}",
+      "previous": "前へ",
+      "next": "次へ",
+      "submit": "評価を送信",
+      "submitting": "送信中...",
+      "error": "送信前にすべての{count}問に回答してください。",
+      "xpEarned": "+{xp} XP 獲得！",
+      "levelUp": "レベルアップ！現在レベル{level}です",
+      "questionTooltip": "質問 {number}"
+    },
+    "questions": [
+      "日中に疲れやだるさを感じる。",
+      "朝起きるためにカフェインが必要だ。",
+      "集中力や注意力に問題がある。",
+      "頭がぼんやりして思考が遅いと感じる。",
+      "タスクを始めたり完了したりする意欲が欠けている。",
+      "甘いものや炭水化物の多い食べ物が欲しくなる。",
+      "性欲が低い。",
+      "無関心で感情が平坦に感じる。",
+      "朝起きるのが困難だ。",
+      "重要な仕事を先延ばしにする傾向がある。",
+      "会議や講義中に集中を保つのが難しい。",
+      "すぐに退屈を感じる。",
+      "決断を下すのが難しい。",
+      "体力やスタミナが低い。",
+      "自分の潜在能力を発揮できていないと感じる。",
+      "手と目の協調性が悪い。",
+      "手の震えを経験する。",
+      "常に刺激や興奮を求めていると感じる。",
+      "食事を変えていないのに体重が増えた。",
+      "エナジードリンク、サプリメント、または興奮剤に頼っている。",
+      "始めたプロジェクトを終わらせるのが困難だ。",
+      "依存傾向（食べ物、画面、物質）に苦しんでいる。",
+      "以前楽しんでいた活動から離れた感覚がある。",
+      "抽象的思考や問題解決が困難だ。",
+      "身体的に弱いと感じるか、筋肉の張りが足りない。",
+      "反射神経や反応時間が遅い。",
+      "人生に不満を感じることが多い。",
+      "約束を守り通すのが難しい。",
+      "頻繁に昼寝をする必要を感じる。",
+      "チョコレートや甘いものへの強い欲求がある。",
+      "「上の空」や距離を置いているように見えると言われたことがある。",
+      "急に立ち上がるとめまいを感じる。",
+      "血圧が低い。",
+      "身体的な活動よりも座って行う活動を好む。",
+      "複数のタスクを同時にこなすのが難しい。",
+      "物（鍵、電話、財布）をどこに置いたか忘れる。",
+      "会った人の名前を覚えるのが難しい。",
+      "話している途中で思考の流れを失う。",
+      "最近の会話を思い出すのが難しい。",
+      "新しい情報を素早く学ぶのが困難だ。",
+      "読んだ内容を読み取り保持するのが難しい。",
+      "心の中で物事をイメージするのが困難だ。",
+      "方向感覚が悪い。",
+      "過去の出来事の詳細を簡単に思い出せない。",
+      "言葉の流暢さや適切な言葉を見つけるのが難しい。",
+      "複雑な指示に従うのが難しい。",
+      "創造力が衰えたと感じる。",
+      "精神的な処理速度が遅い。",
+      "長時間注意力を維持するのが困難だ。",
+      "見慣れた顔を認識するのが難しい。",
+      "「喉まで出かかっている」という状態を頻繁に経験する。",
+      "暗算が困難だ。",
+      "以前より誤字や書き間違いが増えた。",
+      "抽象的な概念を理解するのが難しい。",
+      "同年代の人より記憶力が悪いと感じる。",
+      "事実や数字を思い出すのが困難だ。",
+      "読書中に集中するのが難しい。",
+      "段落を理解するために読み返す必要がある。",
+      "以前より精神的に鋭くないと感じる。",
+      "空間認識やパズルが苦手だ。",
+      "予約やスケジュールされたイベントを忘れる。",
+      "新しいことを学ぶ興味が減った。",
+      "語彙力が縮小したと感じる。",
+      "映画や本のストーリーを追うのが難しい。",
+      "視覚的想像力を必要とするタスクが苦手だ。",
+      "手書きやタイピングの速度に問題がある。",
+      "理解力が低下したと感じる。",
+      "効果的にマルチタスクするのが難しい。",
+      "リストや順序を覚えるのが難しい。",
+      "全般的な精神的霧やぼんやり感がある。",
+      "明確な理由なく不安や緊張を感じる。",
+      "動悸や心臓のドキドキを経験する。",
+      "筋肉が緊張して硬い。",
+      "自由時間があってもリラックスするのが難しい。",
+      "落ち着かない、または気が張っていると感じる。",
+      "頭が活発で眠りにつけない。",
+      "突然の音に驚きやすい。",
+      "日常のタスクに圧倒される。",
+      "物事について過度に心配する。",
+      "ストレスの多い瞬間に息切れを経験する。",
+      "ストレスに関連する消化器の問題がある（胃の不調、IBS）。",
+      "顎を食いしばったり歯ぎしりをする。",
+      "じっと座っているのが難しい。",
+      "パニック発作や強い不安の急上昇を経験する。",
+      "これ以上のことに対処できないと感じる。",
+      "手が冷たいまたは汗ばんでいる。",
+      "感情的に不安定だと感じる。",
+      "緊張やストレスに関連する頭痛を経験する。",
+      "恐怖感や差し迫った破滅感を感じる。",
+      "忍耐力を持つのが難しい。",
+      "イライラしたり不満を感じやすい。",
+      "落ち着くためにアルコール、食べ物、または物質に頼る。",
+      "整理整頓が苦手だ。",
+      "社会的な場面で緊張する。",
+      "緊張による腰痛や体の痛みを経験する。",
+      "寝汗をかいたり不安な気持ちで目が覚める。",
+      "神経系が常に「オン」のように感じる。",
+      "他の人にタスクを委任するのが難しい。",
+      "リラックスする時間を取ると罪悪感を感じる。",
+      "耳鳴りがある。",
+      "ストレスを感じると声が震える。",
+      "新しい環境で警戒心が高まる。",
+      "人に「いいえ」と言うのが難しい。",
+      "不安な時に頻尿を経験する。",
+      "ストレスレベルがほとんどの人より高いと感じる。",
+      "明確な理由なく悲しみや落ち込みを感じる。",
+      "眠りにつくことや眠り続けることが難しい。",
+      "炭水化物、パン、パスタが欲しくなる。",
+      "自己肯定感や自信が低い。",
+      "イライラしやすいか気分の変動がある。",
+      "将来に希望がないと感じる。",
+      "以前楽しんでいた活動への興味が減った。",
+      "批判に過度に敏感だ。",
+      "他の人とのつながりを感じられない。",
+      "食欲をコントロールするのが難しい。",
+      "午後のエネルギー低下を経験する。",
+      "強迫的または反復的な思考がある。",
+      "一日の終わりに緊張してリラックスできない。",
+      "快楽を感じるのが難しい。",
+      "物事が正しくないと動揺する完璧主義者だ。",
+      "否定的な内なる声や自己対話がある。",
+      "自分や他の人を許すのが難しい。",
+      "他の人と一緒よりも一人でいることを好む。",
+      "慢性的な痛みや線維筋痛症の症状がある。",
+      "季節による気分の変化を経験する（冬に悪化）。",
+      "自己疑念のために決断を下すのが難しい。",
+      "必要以上に怒りや恨みを感じる。",
+      "過食や暴食の傾向がある。",
+      "PMS、ホルモンによる気分変動、またはホットフラッシュを経験する。",
+      "衝動制御が難しい。",
+      "感情的に麻痺しているか離れていると感じる。",
+      "便秘や不規則な消化がある。",
+      "早く目が覚めて再び眠れない。",
+      "病気やケガからの回復が遅い。",
+      "食べ物や食事のことを必要以上に考える。",
+      "親密さや身体的な愛情への興味を失った。",
+      "自傷行為や無価値感の思考がある。",
+      "ルーティンや習慣を維持するのが難しい。",
+      "説明のつかない泣き発作を経験する。",
+      "人生に意味や目的がないと感じる。"
+    ],
+    "results": {
+      "dominantType": "あなたの優勢タイプ：",
+      "deficiencyScores": "欠乏スコア",
+      "deficiencyDescription": "スコアが高いほど欠乏が大きいことを示します — クエストはこれらの領域をターゲットにします。",
+      "dominant": "（優勢）",
+      "backToDashboard": "ダッシュボードに戻る",
+      "dopamine": "ドーパミン",
+      "acetylcholine": "アセチルコリン",
+      "gaba": "GABA",
+      "serotonin": "セロトニン"
+    }
+  }
+}

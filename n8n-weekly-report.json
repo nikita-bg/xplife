@@ -1,0 +1,159 @@
+{
+    "name": "XPLife Weekly Report (Sunday 18:00)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "triggerAtHour": 18,
+                            "triggerAtMinute": 0,
+                            "triggerAtDay": 7
+                        }
+                    ]
+                }
+            },
+            "id": "weekly-cron",
+            "name": "Every Sunday 18:00",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.XPLIFE_API_URL }}/api/notifications/weekly-report",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer {{ $env.N8N_WEBHOOK_SECRET }}"
+                        }
+                    ]
+                },
+                "options": {
+                    "timeout": 60000
+                }
+            },
+            "id": "fetch-reports",
+            "name": "Fetch Weekly Stats",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                420,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "conditions": [
+                        {
+                            "id": "has-users",
+                            "leftValue": "={{ $json.count }}",
+                            "rightValue": "0",
+                            "operator": {
+                                "type": "number",
+                                "operation": "gt"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "check-users",
+            "name": "Has Reports?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                640,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fieldToSplitOut": "users",
+                "options": {}
+            },
+            "id": "split-users",
+            "name": "Split Users",
+            "type": "n8n-nodes-base.splitOut",
+            "typeVersion": 1,
+            "position": [
+                860,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "quests@xplife.app",
+                "toEmail": "={{ $json.email }}",
+                "subject": "📊 {{ $json.displayName }}'s Weekly Quest Report",
+                "emailFormat": "html",
+                "html": "<h2>Your Week in Review, {{ $json.displayName }}! 📊</h2><table style='width:100%;border-collapse:collapse'><tr><td style='padding:8px;border-bottom:1px solid #eee'><strong>Quests Completed</strong></td><td style='padding:8px;border-bottom:1px solid #eee;text-align:right'>{{ $json.weeklyStats.questsCompleted }}</td></tr><tr><td style='padding:8px;border-bottom:1px solid #eee'><strong>XP Earned</strong></td><td style='padding:8px;border-bottom:1px solid #eee;text-align:right'>{{ $json.weeklyStats.xpEarned }}</td></tr><tr><td style='padding:8px;border-bottom:1px solid #eee'><strong>Top Category</strong></td><td style='padding:8px;border-bottom:1px solid #eee;text-align:right'>{{ $json.weeklyStats.topCategory || 'N/A' }}</td></tr><tr><td style='padding:8px'><strong>Boss Damage</strong></td><td style='padding:8px;text-align:right'>{{ $json.weeklyStats.bossDamage }}</td></tr></table><p style='margin-top:16px'>Current Level: <strong>{{ $json.level }}</strong> | Total XP: <strong>{{ $json.totalXp }}</strong></p><p>Keep pushing, hero! 🚀</p>"
+            },
+            "id": "send-email",
+            "name": "Send Weekly Report",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2.1,
+            "position": [
+                1080,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Every Sunday 18:00": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch Weekly Stats",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch Weekly Stats": {
+            "main": [
+                [
+                    {
+                        "node": "Has Reports?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Has Reports?": {
+            "main": [
+                [
+                    {
+                        "node": "Split Users",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        },
+        "Split Users": {
+            "main": [
+                [
+                    {
+                        "node": "Send Weekly Report",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    }
+}

@@ -1,0 +1,907 @@
+{
+  "metadata": {
+    "title": "XPLife - Sube de Nivel Tu Vida",
+    "description": "Convierte tus metas en misiones épicas RPG. Gana XP. Mantén rachas. Conviértete en tu mejor versión con optimización de vida impulsada por IA."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "submit": "Enviar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "continue": "Continuar",
+    "confirm": "Confirmar",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "navbar": {
+    "features": "Características",
+    "howItWorks": "Cómo Funciona",
+    "pricing": "Precios",
+    "login": "Iniciar Sesión",
+    "signup": "Comienza Tu Viaje"
+  },
+  "hero": {
+    "badge": "Únete a más de 1,000 jugadores subiendo de nivel ahora",
+    "title": "Sube de Nivel",
+    "titleHighlight": "Tu Vida",
+    "description": "Transforma metas aburridas en misiones épicas RPG. La IA crea tus misiones diarias. Gana XP. Sube de nivel de verdad.",
+    "cta": "Juega Gratis",
+    "ctaSecondary": "Cómo Funciona",
+    "heroUser": "USUARIO HÉROE",
+    "heroRole": "Optimizador de Vida",
+    "xpLabel": "Puntos de Experiencia",
+    "xpProgress": "{current} / {total} XP",
+    "questMorningMeditation": "Meditación Matutina",
+    "questDeepWork": "30min Trabajo Profundo",
+    "questEveningReview": "Revisión Nocturna",
+    "statStreak": "Racha",
+    "statQuests": "Misiones",
+    "statRank": "Rango",
+    "level": "Nivel {level}"
+  },
+  "quiz": {
+    "questions": [
+      {
+        "question": "Cuando te despiertas, ¿qué te da más energía?",
+        "options": [
+          "Un emocionante nuevo desafío o aventura",
+          "Aprender algo nuevo o trabajo creativo",
+          "Una rutina matutina tranquila y estructurada",
+          "Conectar con seres queridos o la comunidad"
+        ]
+      },
+      {
+        "question": "¿Cómo prefieres manejar el estrés?",
+        "options": [
+          "Actividad física intensa o competición",
+          "Escribir en un diario, leer o resolver problemas",
+          "Meditación, yoga o respiración profunda",
+          "Hablarlo con amigos o familia"
+        ]
+      },
+      {
+        "question": "¿Qué tipo de metas te emocionan más?",
+        "options": [
+          "Metas audaces y ambiciosas con grandes recompensas",
+          "Dominio de habilidades y crecimiento intelectual",
+          "Estabilidad, consistencia y paz interior",
+          "Construir relaciones y ayudar a otros"
+        ]
+      },
+      {
+        "question": "¿Cómo te describirían tus amigos?",
+        "options": [
+          "Enérgico, audaz y espontáneo",
+          "Curioso, creativo y reflexivo",
+          "Calmado, confiable y centrado",
+          "Cálido, empático y solidario"
+        ]
+      },
+      {
+        "question": "¿Cuál es tu forma ideal de recargar energías?",
+        "options": [
+          "Probar algo emocionante y nuevo",
+          "Enfoque profundo en un proyecto apasionante",
+          "Descanso, naturaleza y tiempo tranquilo",
+          "Tiempo de calidad con personas que me importan"
+        ]
+      }
+    ]
+  },
+  "personalities": {
+    "dopamine": {
+      "title": "El Aventurero",
+      "description": "Prosperas con emoción, novedad y desafíos audaces. Tus misiones se centrarán en superar límites y lograr metas ambiciosas."
+    },
+    "acetylcholine": {
+      "title": "El Pensador",
+      "description": "Amas el aprendizaje, la creatividad y el enfoque profundo. Tus misiones se centrarán en el dominio de habilidades y el crecimiento intelectual."
+    },
+    "gaba": {
+      "title": "El Guardián",
+      "description": "Valoras la estabilidad, la consistencia y la paz interior. Tus misiones construirán hábitos fuertes y promoverán el equilibrio."
+    },
+    "serotonin": {
+      "title": "El Conector",
+      "description": "Obtienes energía de las relaciones y la comunidad. Tus misiones fortalecerán los lazos y promoverán conexiones significativas."
+    }
+  },
+  "taskCategories": {
+    "fitness": "Fitness",
+    "mindfulness": "Atención Plena",
+    "learning": "Aprendizaje",
+    "productivity": "Productividad",
+    "social": "Social",
+    "health": "Salud",
+    "creativity": "Creatividad"
+  },
+  "taskDifficulties": {
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil",
+    "epic": "Épico"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenido a",
+      "description": "Estás a punto de embarcarte en una misión épica para convertirte en tu mejor versión. Comencemos aprendiendo sobre ti para crear los desafíos perfectos.",
+      "beginQuest": "Comenzar Misión",
+      "duration": "Toma alrededor de 2 minutos"
+    },
+    "title": "Descubre Tu Tipo de Jugador",
+    "subtitle": "Responde 5 preguntas rápidas para desbloquear tu sistema de misiones personalizado",
+    "question": "Pregunta {current} de {total}",
+    "calculating": "Analizando tus respuestas...",
+    "result": "Eres...",
+    "continue": "Continuar al Panel",
+    "timePreferences": {
+      "subtitle": "Personaliza Tu Experiencia",
+      "title": "¿Cuándo Trabajas Mejor?",
+      "description": "Ayúdanos a programar tareas en tus momentos de máximo rendimiento",
+      "energyQuestion": "¿Cuándo tienes más energía?",
+      "durationQuestion": "¿Duración de tarea preferida?",
+      "continue": "Continuar",
+      "timeOptions": {
+        "morning": {
+          "label": "Persona Matutina",
+          "description": "Más energético por la mañana"
+        },
+        "afternoon": {
+          "label": "Pico de Tarde",
+          "description": "Mejor enfoque después del almuerzo"
+        },
+        "evening": {
+          "label": "Energía Vespertina",
+          "description": "Productivo por la tarde"
+        },
+        "night": {
+          "label": "Búho Nocturno",
+          "description": "Trabaja mejor de noche"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "Victorias Rápidas",
+          "description": "Tareas de 5-15 minutos"
+        },
+        "medium": {
+          "label": "Tareas Equilibradas",
+          "description": "Tareas de 15-45 minutos"
+        },
+        "deep": {
+          "label": "Trabajo Profundo",
+          "description": "Sesiones de 1+ hora"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "Cuéntanos Sobre Ti",
+      "title": "Tu Contexto de Vida",
+      "description": "Esto nos ayuda a crear tareas que se ajusten a tu vida diaria",
+      "occupationQuestion": "¿Qué te describe mejor?",
+      "scheduleQuestion": "Horario de trabajo (opcional)",
+      "phaseQuestion": "Fase actual de vida (opcional)",
+      "challengeQuestion": "¿Cuál es tu mayor desafío?",
+      "continue": "Continuar",
+      "occupationOptions": {
+        "student": "Estudiante",
+        "officeWorker": "Trabajador de Oficina",
+        "remoteWorker": "Trabajador Remoto",
+        "entrepreneur": "Emprendedor",
+        "freelancer": "Freelancer",
+        "healthcare": "Salud",
+        "creative": "Creativo",
+        "other": "Otro"
+      },
+      "scheduleOptions": {
+        "fullTime": "Tiempo completo",
+        "partTime": "Medio tiempo",
+        "flexible": "Flexible",
+        "shiftWork": "Por turnos"
+      },
+      "phaseOptions": {
+        "buildingCareer": "Construyendo carrera",
+        "workLifeBalance": "Balance trabajo-vida",
+        "studentLife": "Vida estudiantil",
+        "exploring": "Explorando"
+      },
+      "challengeOptions": {
+        "findingTime": "Encontrar tiempo",
+        "lowEnergy": "Poca energía",
+        "stayingFocused": "Mantener el enfoque",
+        "motivation": "Motivación",
+        "beingConsistent": "Ser consistente"
+      }
+    },
+    "interests": {
+      "subtitle": "Opcional",
+      "title": "¿Cuáles Son Tus Intereses?",
+      "description": "Selecciona hasta 10 intereses para personalizar tus tareas",
+      "selected": "{count}/10 seleccionados",
+      "youSelected": "Seleccionaste:",
+      "skip": "Omitir",
+      "continue": "Continuar",
+      "options": {
+        "yoga": "Yoga",
+        "running": "Correr",
+        "meditation": "Meditación",
+        "reading": "Lectura",
+        "writing": "Escritura",
+        "coding": "Programación",
+        "painting": "Pintura",
+        "music": "Música",
+        "gaming": "Videojuegos",
+        "cooking": "Cocina",
+        "photography": "Fotografía",
+        "languages": "Idiomas",
+        "hiking": "Senderismo",
+        "gardening": "Jardinería",
+        "dancing": "Baile",
+        "cycling": "Ciclismo",
+        "swimming": "Natación",
+        "drawing": "Dibujo",
+        "journaling": "Diario",
+        "podcasts": "Podcasts"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "Establece Tus Metas",
+      "title": "Elige Tus Líneas de Misión",
+      "description": "Selecciona {maxGoals} y escribe una meta para cada una",
+      "goalLabel": "Meta de {category}",
+      "goalPlaceholder": "ej., \"Correr 5K en menos de 30 minutos\"",
+      "settingUp": "Configurando tu misión...",
+      "startAdventure": "Comenzar Tu Aventura"
+    }
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "quests": "Misiones",
+    "leaderboard": "Clasificación",
+    "inventory": "Inventario",
+    "market": "Mercado",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "totalXp": "XP Total",
+    "dayStreak": "Racha Diaria",
+    "startQuest": "INICIAR MISIÓN →",
+    "dailyQuest": "Misión Diaria",
+    "weeklyQuest": "Misión Semanal",
+    "monthlyQuest": "Misión Mensual",
+    "daily": "Diario",
+    "weekly": "Semanal",
+    "monthly": "Mensual",
+    "classAdventurer": "EL AVENTURERO",
+    "classThinker": "EL PENSADOR",
+    "classGuardian": "EL GUARDIÁN",
+    "classConnector": "EL CONECTOR"
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de Vuelta",
+      "subtitle": "Inicia sesión para continuar tu viaje",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "submit": "Iniciar Sesión",
+      "loggingIn": "Iniciando sesión...",
+      "noAccount": "¿No tienes una cuenta?",
+      "signupLink": "Regístrate",
+      "invalidCredentials": "Correo electrónico o contraseña inválidos",
+      "emailNotConfirmed": "Tu correo electrónico aún no está confirmado. Por favor, revisa tu bandeja de entrada o reenvía el enlace de confirmación.",
+      "error": "Correo electrónico o contraseña inválidos"
+    },
+    "signup": {
+      "title": "Comienza Tu Viaje",
+      "subtitle": "Crea tu cuenta para comenzar",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirma tu contraseña",
+      "submit": "Crear Cuenta",
+      "creating": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "loginLink": "Inicia sesión",
+      "checkEmailTitle": "Revisa tu Correo Electrónico",
+      "checkEmailMessage": "Enviamos un enlace de confirmación a tu correo electrónico. Haz clic en él para activar tu cuenta y comenzar tu misión.",
+      "login": "Iniciar sesión",
+      "error": "Error al crear la cuenta",
+      "passwordMismatch": "Las contraseñas no coinciden"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Continuar con Google",
+      "continueWithGithub": "Continuar con GitHub"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de nuevo, {name}",
+    "subtitle": "Aquí está el estado de tus misiones para hoy",
+    "level": "Nivel {level}",
+    "xp": "{current} / {next} XP",
+    "stats": {
+      "totalXP": "XP Total",
+      "completedQuests": "Completadas",
+      "currentStreak": "Racha",
+      "days": "{count}d",
+      "best": "Mejor: {streak}d",
+      "experience": "Experiencia",
+      "xpToNextLevel": "{current} / {required} XP al siguiente nivel",
+      "goldBalance": "Balance de Oro",
+      "add": "Añadir"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "¡Completa la configuración de tu misión!",
+        "description": "Responde algunas preguntas para que podamos personalizar tus misiones diarias y recompensas de XP.",
+        "startQuiz": "Iniciar Test"
+      },
+      "braverman": {
+        "title": "Desbloquea Información Profunda de Personalidad",
+        "description": "Realiza la Evaluación Braverman por +500 XP y misiones personalizadas"
+      }
+    },
+    "questSection": {
+      "generate": "Generar",
+      "upgradeForMore": "Mejora para más",
+      "noQuestsTitle": "Aún No Hay Misiones",
+      "noQuestsDescription": "Haz clic en \"Generar\" para crear misiones {timeframe} impulsadas por IA.",
+      "completed": "Completado"
+    },
+    "activeQuests": "Misiones Activas",
+    "noQuests": "No hay misiones activas",
+    "generateQuests": "Generar Misiones de Hoy",
+    "viewAll": "Ver Todas",
+    "dailyTasks": {
+      "title": "Misiones de Hoy",
+      "generateQuests": "Generar Misiones",
+      "generating": "Generando...",
+      "describeGoals": "Describe tus objetivos",
+      "placeholder": "Ej. Quiero hacer más ejercicio, aprender español, leer 20 páginas diarias...",
+      "emptyGoalsError": "Por favor, describe tus objetivos antes de generar misiones.",
+      "tryAgain": "Intentar de Nuevo",
+      "upgradePlan": "Mejorar Plan",
+      "completeProfile": "Completar Perfil",
+      "cancel": "Cancelar",
+      "generate": "Generar",
+      "noQuestsTitle": "Aún No Hay Misiones",
+      "noQuestsDescription": "Haz clic en \"Generar Misiones\" para obtener tus desafíos diarios personalizados.",
+      "completed": "Completado"
+    },
+    "questProgress": {
+      "noQuests": "Aún no hay misiones",
+      "progress": "Progreso {timeframe}",
+      "completed": "{completed}/{total} completadas"
+    },
+    "questTimer": {
+      "expired": "Expirado"
+    },
+    "questTabs": {
+      "yearly": "Anuales",
+      "monthly": "Mensuales",
+      "weekly": "Semanales",
+      "daily": "Diarias",
+      "yearlyTitle": "Metas Anuales",
+      "monthlyTitle": "Hitos Mensuales",
+      "weeklyTitle": "Objetivos Semanales",
+      "dailyTitle": "Misiones de Hoy"
+    },
+    "autoRefresh": {
+      "generating": "Generando misiones automáticamente...",
+      "generatingDescription": "Creando misiones personalizadas basadas en tus objetivos. Esto puede tomar un momento."
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Información Personal",
+    "displayName": "Nombre para Mostrar",
+    "email": "Correo Electrónico",
+    "personality": "Tipo de Personalidad",
+    "stats": {
+      "title": "Estadísticas",
+      "totalXp": "XP Total",
+      "questsDone": "Misiones Completadas",
+      "streak": "Racha"
+    },
+    "balance": {
+      "title": "Balance de Oro",
+      "addEarnings": "Añadir Ganancias"
+    },
+    "planNames": {
+      "premium": "Premium",
+      "lifetime": "Vitalicio"
+    },
+    "save": "Guardar Cambios",
+    "settings": {
+      "title": "Configuración",
+      "displayName": "Nombre para Mostrar",
+      "avatar": "Avatar",
+      "uploadAvatar": "Subir Avatar",
+      "aboutMe": "Sobre Mí",
+      "aboutMePlaceholder": "Cuéntanos sobre ti — tu negocio, objetivos, situación... La IA usará esto para generar misiones más relevantes.",
+      "aboutMeChars": "{count}/500",
+      "save": "Guardar Cambios",
+      "saving": "Guardando...",
+      "saveSuccess": "¡Cambios guardados exitosamente!",
+      "logout": "Cerrar Sesión",
+      "tabs": {
+        "general": "General",
+        "personalization": "Personalización"
+      },
+      "personalization": {
+        "timePreference": "Preferencia Horaria",
+        "timeOptions": {
+          "morning": "Madrugador",
+          "afternoon": "Energía Vespertina",
+          "evening": "Enfoque Nocturno",
+          "night": "Noctámbulo"
+        },
+        "taskDuration": "Duración de Tareas",
+        "durationOptions": {
+          "quick": "Rápidas (5-15m)",
+          "medium": "Equilibradas (15-45m)",
+          "deep": "Profundas (1h+)"
+        },
+        "occupation": "Ocupación",
+        "selectOccupation": "Seleccionar ocupación",
+        "occupationOptions": {
+          "student": "Estudiante",
+          "officeWorker": "Oficinista",
+          "remoteWorker": "Trabajo Remoto",
+          "freelancer": "Freelancer",
+          "stayAtHomeParent": "Padre/Madre en Casa",
+          "entrepreneur": "Emprendedor",
+          "retired": "Jubilado",
+          "other": "Otro"
+        },
+        "workSchedule": "Horario Laboral",
+        "selectSchedule": "Seleccionar horario",
+        "scheduleOptions": {
+          "standard": "Estándar 9-17",
+          "flexible": "Horario Flexible",
+          "shiftWork": "Turnos",
+          "partTime": "Medio Tiempo",
+          "irregular": "Irregular"
+        },
+        "lifePhase": "Etapa de Vida",
+        "selectLifePhase": "Seleccionar etapa",
+        "lifePhaseOptions": {
+          "highSchool": "Secundaria",
+          "university": "Universidad",
+          "earlyCareer": "Inicio de Carrera",
+          "midCareer": "Media Carrera",
+          "parent": "Padre/Madre",
+          "careerChange": "Cambio de Carrera",
+          "retired": "Jubilado"
+        },
+        "mainChallenge": "Desafío Principal",
+        "selectChallenge": "Seleccionar desafío",
+        "challengeOptions": {
+          "time": "Encontrar Tiempo",
+          "energy": "Baja Energía",
+          "focus": "Mantener el Enfoque",
+          "motivation": "Mantener la Motivación",
+          "consistency": "Consistencia"
+        },
+        "interests": "Intereses y Pasatiempos ({count}/10)",
+        "addCustomInterest": "Agregar interés personalizado...",
+        "preferNotToSay": "Prefiero no decir"
+      }
+    }
+  },
+  "leaderboard": {
+    "title": "Clasificación",
+    "subtitle": "Los mejores jugadores compitiendo por la gloria",
+    "rank": "Rango",
+    "player": "Jugador",
+    "xp": "XP",
+    "level": "Nivel",
+    "streak": "Racha",
+    "lvl": "NVL {level}",
+    "noRankingsTitle": "Sin Clasificación Aún",
+    "noRankingsDescription": "Completa misiones para aparecer en la clasificación.",
+    "yourRank": "Tu rango:",
+    "anonymous": "Anónimo",
+    "you": "(Tú)"
+  },
+  "levelUp": {
+    "title": "¡Subiste de Nivel!",
+    "description": "¡Felicidades! Has alcanzado un nuevo nivel.",
+    "level": "Nivel {level}",
+    "continue": "Continuar"
+  },
+  "chat": {
+    "closeChat": "Cerrar chat",
+    "openChat": "Abrir chat",
+    "title": "Consejero de Misiones AI",
+    "messagesLeft": "{remaining}/50 mensajes restantes hoy",
+    "emptyState": "¡Pregúntame lo que quieras sobre tus misiones y objetivos!",
+    "thinking": "Pensando...",
+    "placeholder": "Escribe un mensaje...",
+    "errorDefault": "Algo salió mal.",
+    "errorSend": "Error al enviar. Por favor, inténtalo de nuevo.",
+    "tasksCreated": "¡{count} tarea(s) añadida(s) a tus misiones!"
+  },
+  "generateQuestDialog": {
+    "title": "Generar Misiones {timeframe}",
+    "description": "Crea misiones con IA adaptadas a tus objetivos.",
+    "customGoal": "Objetivo Personalizado",
+    "fromQuest": "Desde Misión {timeframe}",
+    "selectQuest": "Selecciona una misión {timeframe}",
+    "emptyGoalsError": "Por favor, describe tus objetivos antes de generar misiones.",
+    "selectParentError": "Por favor, selecciona una misión principal.",
+    "tryAgain": "Intentar de Nuevo",
+    "upgradePlan": "Mejorar Plan",
+    "generate": "Generar",
+    "generateFromQuest": "Generar desde Misión",
+    "generating": "Generando...",
+    "placeholder": "Ej. quiero hacer más ejercicio, aprender español, leer 20 páginas al día...",
+    "yearly": "Anuales",
+    "monthly": "Mensuales",
+    "weekly": "Semanales",
+    "daily": "Diarias",
+    "generateError": "Error al generar misiones. Por favor, inténtalo de nuevo.",
+    "cascadeProgress": "Generando misiones {timeframe}...",
+    "cascadeComplete": "Creadas {yearly} anuales, {monthly} mensuales, {weekly} semanales, {daily} diarias!",
+    "cascadeFailed": "La cascada se detuvo. Las misiones generadas se han guardado.",
+    "cascadeStepDone": "Misiones {timeframe} creadas ({count})",
+    "cascadeDone": "Listo"
+  },
+  "tasks": {
+    "title": "Detalles de la Tarea",
+    "description": "Descripción",
+    "category": "Categoría",
+    "difficulty": "Dificultad",
+    "xpReward": "+{xp} XP",
+    "markComplete": "Marcar como Completado",
+    "completed": "¡Completado!",
+    "back": "Volver al Panel"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "Potenciadores",
+      "title": "Tu Arsenal de",
+      "titleHighlight": "Crecimiento",
+      "description": "Todo lo que necesitas para transformar tu rutina diaria en una aventura que vale la pena jugar.",
+      "aiPowered": {
+        "title": "Tareas Potenciadas por IA",
+        "description": "Misiones diarias personalizadas basadas en tu tipo hormonal y psicología. Cada tarea está diseñada para impulsarte hacia adelante."
+      },
+      "trackProgress": {
+        "title": "Rastrea tu Progreso",
+        "description": "Gana XP, mantén rachas, escala la clasificación. Observa cómo crecen tus estadísticas de la vida real mientras completas misiones."
+      },
+      "deepPersonalization": {
+        "title": "Personalización Profunda",
+        "description": "Integración del test de Braverman para tareas que se ajustan a TU química cerebral. Sin enfoque único para todos."
+      }
+    },
+    "howItWorks": {
+      "subtitle": "Guía de Misiones",
+      "title": "Cómo",
+      "titleHighlight": "Funciona",
+      "description": "Desde el registro hasta subir de nivel en tres simples pasos.",
+      "step1": {
+        "step": "01",
+        "title": "Regístrate y Haz un Test Rápido",
+        "description": "Responde algunas preguntas sobre tu estilo de vida, objetivos y tipo de cerebro. Solo toma 2 minutos."
+      },
+      "step2": {
+        "step": "02",
+        "title": "Recibe Tareas Diarias de IA",
+        "description": "Nuestra IA crea misiones personalizadas todos los días basadas en tu perfil único y progreso."
+      },
+      "step3": {
+        "step": "03",
+        "title": "Completa y Sube de Nivel",
+        "description": "Termina misiones para ganar XP, desbloquear logros y escalar la clasificación global."
+      }
+    },
+    "socialProof": {
+      "badge": "Únete a más de 1,000 personas subiendo de nivel en sus vidas",
+      "title": "Reseñas de",
+      "titleHighlight": "Jugadores",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "Ingeniero de Software",
+        "quote": "He probado todas las aplicaciones de productividad que existen. XPLife es la primera que realmente me hizo mantener mis hábitos. Las mecánicas RPG son geniales."
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "Estudiante",
+        "quote": "Las tareas de IA son aterradoramente precisas. Es como tener un coach de vida que realmente entiende cómo funciona mi cerebro. ¡Alcancé una racha de 60 días!"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "Freelancer",
+        "quote": "Competir con amigos en la clasificación convirtió mis mañanas perezosas en horas productivas de poder. Subí 3 niveles solo este mes."
+      }
+    },
+    "finalCta": {
+      "title": "¿Listo para Comenzar tu",
+      "titleHighlight": "Misión?",
+      "description": "Cada día que esperas es XP que nunca ganarás. Comienza tu misión gratuita hoy.",
+      "button": "Comienza Tu Misión — Es Gratis",
+      "disclaimer": "No se requiere tarjeta de crédito. Gratis para siempre, actualiza en cualquier momento."
+    },
+    "pricing": {
+      "subtitle": "Elige Tu Camino",
+      "title": "Selecciona Tu",
+      "titleHighlight": "Clase",
+      "description": "No se necesita tarjeta de crédito. Mejora en cualquier momento.",
+      "free": {
+        "name": "Comienza Gratis",
+        "cta": "Juega Gratis"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Más Popular",
+        "cta": "Hazte Premium"
+      },
+      "lifetime": {
+        "name": "Vitalicio",
+        "badge": "Oferta Limitada",
+        "cta": "Asegura Acceso Vitalicio"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1 meta activa",
+        "feature2": "15 tareas generadas por IA por semana",
+        "feature3": "Acceso básico a la clasificación",
+        "feature4": "Soporte de la comunidad",
+        "feature5": "15 mensajes de chat IA por día",
+        "feature6": "3 misiones anuales"
+      },
+      "premium": {
+        "feature1": "Tareas de IA ilimitadas diarias",
+        "feature2": "3 metas paralelas",
+        "feature3": "Coaching e insights completos de IA",
+        "feature4": "Congelación de rachas (3/mes)",
+        "feature5": "Clasificación prioritaria",
+        "feature6": "Análisis avanzados",
+        "feature7": "Chat IA ilimitado",
+        "feature8": "5 misiones anuales"
+      },
+      "lifetime": {
+        "feature1": "Todo en Premium, para siempre",
+        "feature2": "Sin pagos recurrentes",
+        "feature3": "Insignia de miembro fundador",
+        "feature4": "Acceso anticipado a nuevas funciones"
+      }
+    }
+  },
+  "upgradeBanner": {
+    "premiumPlan": "Plan Premium",
+    "lifetimePlan": "Plan Vitalicio",
+    "active": "Activo",
+    "upgradeToPremium": "Actualizar a Premium",
+    "unlimitedTasks": "Tareas de IA ilimitadas y más",
+    "upgradeYourPlan": "Mejora Tu Plan",
+    "unlockFeatures": "Desbloquea tareas de IA ilimitadas, 3 objetivos paralelos, coaching y más.",
+    "premiumButton": "Premium — €4.99/mes",
+    "lifetimeButton": "Vitalicio — €49"
+  },
+  "levelTitles": {
+    "novice": "Novato",
+    "legend": "Leyenda"
+  },
+  "blog": {
+    "metaTitle": "Blog | XPLife",
+    "metaDescription": "Consejos, estrategias e ideas sobre productividad gamificada, creación de hábitos y subir de nivel en la vida real.",
+    "badge": "Registro de Misiones",
+    "title": "El Registro",
+    "titleHighlight": "de Misiones",
+    "subtitle": "Consejos, estrategias e ideas sobre productividad gamificada y subir de nivel en la vida real.",
+    "emptyTitle": "Aún No Hay Publicaciones",
+    "emptyDescription": "Se están escribiendo nuevas misiones. ¡Vuelve pronto!",
+    "readMore": "Leer Más",
+    "backToBlog": "Volver al Blog",
+    "readTime": "{minutes} min de lectura",
+    "ctaTitle": "¿Listo para Subir de Nivel?",
+    "ctaDescription": "Deja de leer sobre ello. Empieza a jugar. Tus misiones te esperan.",
+    "ctaButton": "Empieza Gratis"
+  },
+  "footer": {
+    "tagline": "Sube de nivel tu vida, una misión a la vez.",
+    "copyright": "© 2025 XPLife. Todos los derechos reservados.",
+    "links": {
+      "about": "Acerca de",
+      "blog": "Blog",
+      "contact": "Contacto",
+      "privacy": "Privacidad",
+      "terms": "Términos"
+    }
+  },
+  "braverman": {
+    "page": {
+      "locked": "Bloqueado",
+      "lockedDescription": "La Evaluación de Naturaleza Braverman se desbloquea en el Nivel {level}. ¡Completa misiones diarias para ganar XP y subir de nivel!",
+      "title": "Evaluación de Naturaleza Braverman",
+      "subtitle": "140 preguntas para descubrir tu perfil de neurotransmisores. Gana 500 XP al completarla.",
+      "resultsTitle": "Evaluación Braverman",
+      "resultsSubtitle": "Resultados de tu perfil de personalidad"
+    },
+    "test": {
+      "sectionDopamine": "Parte 1: Dopamina",
+      "sectionAcetylcholine": "Parte 2: Acetilcolina",
+      "sectionGaba": "Parte 3: GABA",
+      "sectionSerotonin": "Parte 4: Serotonina",
+      "never": "Nunca",
+      "sometimes": "A veces",
+      "often": "A menudo",
+      "always": "Siempre",
+      "progress": "{current} de {total}",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "submit": "Enviar Evaluación",
+      "submitting": "Enviando...",
+      "error": "Por favor responde las {count} preguntas antes de enviar.",
+      "xpEarned": "+{xp} XP Ganados!",
+      "levelUp": "¡Subiste de Nivel! Ahora eres Nivel {level}",
+      "questionTooltip": "Pregunta {number}"
+    },
+    "results": {
+      "dominantType": "Tu Tipo Dominante:",
+      "deficiencyScores": "Puntuaciones de Deficiencia",
+      "deficiencyDescription": "Las puntuaciones más altas indican mayor deficiencia — tus misiones se enfocarán en estas áreas.",
+      "dominant": "(Dominante)",
+      "backToDashboard": "Volver al Panel",
+      "dopamine": "Dopamina",
+      "acetylcholine": "Acetilcolina",
+      "gaba": "GABA",
+      "serotonin": "Serotonina"
+    },
+    "questions": [
+      "Me siento cansado/a o fatigado/a durante el día.",
+      "Necesito cafeína para arrancar por la mañana.",
+      "Tengo dificultad para concentrarme o enfocarme.",
+      "Me siento aletargado/a o mentalmente lento/a.",
+      "Me falta motivación para comenzar o completar tareas.",
+      "Tengo antojos de alimentos azucarados o altos en carbohidratos.",
+      "Tengo poco deseo sexual.",
+      "Me siento indiferente o emocionalmente plano/a.",
+      "Tengo problemas para despertarme por la mañana.",
+      "Tiendo a procrastinar en tareas importantes.",
+      "Me cuesta mantenerme alerta durante reuniones o conferencias.",
+      "Me aburro fácilmente.",
+      "Tengo dificultad para tomar decisiones.",
+      "Tengo poca energía física o resistencia.",
+      "Siento que no estoy alcanzando mi potencial.",
+      "Tengo mala coordinación mano-ojo.",
+      "Experimento temblores o manos temblorosas.",
+      "Siento necesidad de estimulación o emoción constante.",
+      "He ganado peso sin cambiar mi dieta.",
+      "Dependo de bebidas energéticas, suplementos o estimulantes.",
+      "Tengo problemas para terminar proyectos que empiezo.",
+      "Lucho con tendencias adictivas (comida, pantallas, sustancias).",
+      "Me siento desconectado/a de actividades que solía disfrutar.",
+      "Tengo dificultad con el pensamiento abstracto o la resolución de problemas.",
+      "Me siento físicamente débil o falto/a de tono muscular.",
+      "Tengo reflejos lentos o tiempo de reacción lento.",
+      "A menudo me siento insatisfecho/a con la vida.",
+      "Tengo dificultad para cumplir con mis compromisos.",
+      "Siento la necesidad de tomar siestas frecuentes.",
+      "Tengo antojos intensos de chocolate o dulces.",
+      "Me han dicho que parezco \"ausente\" o distante.",
+      "Me siento mareado/a cuando me levanto rápidamente.",
+      "Tengo presión arterial baja.",
+      "Prefiero actividades sedentarias sobre las físicas.",
+      "Tengo dificultad para manejar múltiples tareas a la vez.",
+      "Olvido dónde pongo las cosas (llaves, teléfono, cartera).",
+      "Tengo dificultad para recordar nombres de personas que conozco.",
+      "Pierdo el hilo de mis pensamientos a mitad de frase.",
+      "Tengo problemas para recordar conversaciones recientes.",
+      "Me resulta difícil aprender información nueva rápidamente.",
+      "Tengo dificultad para leer y retener lo que leo.",
+      "Me cuesta visualizar cosas en mi mente.",
+      "Tengo mal sentido de orientación.",
+      "No puedo recordar fácilmente detalles de eventos pasados.",
+      "Tengo dificultad con la fluidez verbal o encontrar la palabra correcta.",
+      "Tengo problemas para seguir instrucciones complejas.",
+      "Siento que mi creatividad ha disminuido.",
+      "Tengo velocidad de procesamiento mental lenta.",
+      "Me cuesta mantener la atención por períodos largos.",
+      "Tengo dificultad para reconocer caras familiares.",
+      "Experimento frecuentes momentos de \"lo tengo en la punta de la lengua\".",
+      "Tengo problemas para hacer cálculos mentales.",
+      "Cometo más errores ortográficos o de escritura que antes.",
+      "Tengo dificultad para entender conceptos abstractos.",
+      "Siento que mi memoria es peor que la de otros de mi edad.",
+      "Me cuesta recordar datos y cifras.",
+      "Tengo problemas para concentrarme al leer.",
+      "Necesito releer párrafos para entenderlos.",
+      "Me siento menos agudo/a mentalmente que antes.",
+      "Tengo dificultad con el razonamiento espacial o rompecabezas.",
+      "Olvido citas o eventos programados.",
+      "Tengo menos interés en aprender cosas nuevas.",
+      "Siento que mi vocabulario se ha reducido.",
+      "Tengo dificultad para seguir tramas de películas o libros.",
+      "Me cuesta con tareas que requieren imaginación visual.",
+      "Tengo dificultad con la escritura a mano o velocidad de tecleo.",
+      "Siento que mi comprensión ha disminuido.",
+      "Tengo problemas para hacer múltiples tareas eficazmente.",
+      "Tengo dificultad para recordar listas o secuencias.",
+      "Siento una neblina o bruma mental general.",
+      "Me siento ansioso/a o nervioso/a sin una razón clara.",
+      "Experimento palpitaciones o corazón acelerado.",
+      "Tengo músculos tensos o rígidos.",
+      "Tengo dificultad para relajarme incluso cuando tengo tiempo libre.",
+      "Me siento inquieto/a o al límite.",
+      "Tengo problemas para dormirme porque mi mente no para.",
+      "Me asusto fácilmente con ruidos repentinos.",
+      "Me siento abrumado/a por las tareas cotidianas.",
+      "Me preocupo excesivamente por las cosas.",
+      "Experimento falta de aire durante momentos estresantes.",
+      "Tengo problemas digestivos relacionados con el estrés (malestar estomacal, SII).",
+      "Aprieto la mandíbula o rechino los dientes.",
+      "Tengo dificultad para quedarme quieto/a.",
+      "Experimento ataques de pánico o picos intensos de ansiedad.",
+      "Siento que no puedo manejar una cosa más.",
+      "Tengo manos frías o sudorosas.",
+      "Me siento inestable emocionalmente.",
+      "Experimento dolores de cabeza relacionados con tensión o estrés.",
+      "Siento una sensación de pavor o fatalidad inminente.",
+      "Tengo dificultad para ser paciente.",
+      "Me irrito o frustro fácilmente.",
+      "Dependo del alcohol, comida o sustancias para calmarme.",
+      "Tengo problemas con la organización y mantener el orden.",
+      "Me siento nervioso/a en situaciones sociales.",
+      "Experimento dolor de espalda o dolores corporales por tensión.",
+      "Tengo sudores nocturnos o me despierto sintiéndome ansioso/a.",
+      "Siento que mi sistema nervioso está siempre \"encendido\".",
+      "Tengo dificultad para delegar tareas a otros.",
+      "Me siento culpable cuando me tomo tiempo para relajarme.",
+      "Tengo zumbido en los oídos (tinnitus).",
+      "Tengo voz temblorosa cuando estoy estresado/a.",
+      "Me siento en alerta máxima en ambientes nuevos.",
+      "Tengo dificultad para decir \"no\" a la gente.",
+      "Experimento micción frecuente cuando estoy ansioso/a.",
+      "Siento que mis niveles de estrés son más altos que los de la mayoría.",
+      "Me siento triste o decaído/a sin razón aparente.",
+      "Tengo dificultad para dormirme o mantener el sueño.",
+      "Tengo antojos de carbohidratos, pan o pasta.",
+      "Tengo baja autoestima o confianza.",
+      "Me irrito fácilmente o tengo cambios de humor.",
+      "Me siento sin esperanza sobre el futuro.",
+      "Tengo menos interés en actividades que antes disfrutaba.",
+      "Soy demasiado sensible a las críticas.",
+      "Me siento desconectado/a de los demás.",
+      "Tengo dificultad para controlar mi apetito.",
+      "Experimento bajones de energía por la tarde.",
+      "Tengo pensamientos obsesivos o repetitivos.",
+      "Me siento tenso/a o incapaz de relajarme al final del día.",
+      "Tengo dificultad para experimentar placer.",
+      "Soy perfeccionista y me molesto cuando las cosas no están bien.",
+      "Tengo una voz interior negativa o autocrítica.",
+      "Me resulta difícil perdonarme a mí mismo/a o a otros.",
+      "Prefiero estar solo/a en lugar de con otros.",
+      "Tengo dolor crónico o síntomas de fibromialgia.",
+      "Experimento cambios de humor estacionales (peor en invierno).",
+      "Tengo dificultad para tomar decisiones por inseguridad.",
+      "Me siento enojado/a o resentido/a más de lo que debería.",
+      "Tengo tendencia a comer en exceso o atracones.",
+      "Experimento SPM, cambios de humor hormonales o sofocos.",
+      "Tengo dificultad con el control de impulsos.",
+      "Me siento emocionalmente adormecido/a o desconectado/a.",
+      "Tengo estreñimiento o digestión irregular.",
+      "Me despierto demasiado temprano y no puedo volver a dormirme.",
+      "Me recupero más lentamente de enfermedades o lesiones.",
+      "Pienso en comida o en comer más de lo que debería.",
+      "He perdido interés en la intimidad o el afecto físico.",
+      "Tengo pensamientos de autolesión o inutilidad.",
+      "Tengo dificultad para mantener rutinas o hábitos.",
+      "Experimento episodios de llanto sin explicación.",
+      "Siento que la vida carece de significado o propósito."
+    ]
+  }
+}

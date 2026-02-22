@@ -1,0 +1,158 @@
+{
+    "name": "XPLife Daily Reminder (09:00)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "triggerAtHour": 9,
+                            "triggerAtMinute": 0
+                        }
+                    ]
+                }
+            },
+            "id": "daily-cron",
+            "name": "Every Day 09:00",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.XPLIFE_API_URL }}/api/notifications/daily-reminder",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer {{ $env.N8N_WEBHOOK_SECRET }}"
+                        }
+                    ]
+                },
+                "options": {
+                    "timeout": 30000
+                }
+            },
+            "id": "fetch-reminders",
+            "name": "Fetch Pending Quests",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                420,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "conditions": [
+                        {
+                            "id": "has-users",
+                            "leftValue": "={{ $json.count }}",
+                            "rightValue": "0",
+                            "operator": {
+                                "type": "number",
+                                "operation": "gt"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "check-users",
+            "name": "Has Users?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                640,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fieldToSplitOut": "users",
+                "options": {}
+            },
+            "id": "split-users",
+            "name": "Split Users",
+            "type": "n8n-nodes-base.splitOut",
+            "typeVersion": 1,
+            "position": [
+                860,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "quests@xplife.app",
+                "toEmail": "={{ $json.email }}",
+                "subject": "🗡️ {{ $json.displayName }}, you have {{ $json.pendingCount }} quests waiting!",
+                "emailFormat": "html",
+                "html": "<h2>Good morning, {{ $json.displayName }}!</h2><p>You have <strong>{{ $json.pendingCount }}</strong> quests pending today worth <strong>{{ $json.totalXp }} XP</strong>.</p><p>Complete them to keep your streak alive! 🔥</p>"
+            },
+            "id": "send-email",
+            "name": "Send Reminder Email",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2.1,
+            "position": [
+                1080,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Every Day 09:00": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch Pending Quests",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch Pending Quests": {
+            "main": [
+                [
+                    {
+                        "node": "Has Users?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Has Users?": {
+            "main": [
+                [
+                    {
+                        "node": "Split Users",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        },
+        "Split Users": {
+            "main": [
+                [
+                    {
+                        "node": "Send Reminder Email",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    }
+}

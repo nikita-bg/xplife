@@ -1,0 +1,158 @@
+{
+    "name": "XPLife Streak Warning (20:00)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "triggerAtHour": 20,
+                            "triggerAtMinute": 0
+                        }
+                    ]
+                }
+            },
+            "id": "streak-cron",
+            "name": "Every Day 20:00",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.XPLIFE_API_URL }}/api/notifications/streak-check",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer {{ $env.N8N_WEBHOOK_SECRET }}"
+                        }
+                    ]
+                },
+                "options": {
+                    "timeout": 30000
+                }
+            },
+            "id": "fetch-streaks",
+            "name": "Fetch At-Risk Streaks",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                420,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "conditions": [
+                        {
+                            "id": "has-users",
+                            "leftValue": "={{ $json.count }}",
+                            "rightValue": "0",
+                            "operator": {
+                                "type": "number",
+                                "operation": "gt"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "check-users",
+            "name": "Has At-Risk Users?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                640,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fieldToSplitOut": "users",
+                "options": {}
+            },
+            "id": "split-users",
+            "name": "Split Users",
+            "type": "n8n-nodes-base.splitOut",
+            "typeVersion": 1,
+            "position": [
+                860,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "quests@xplife.app",
+                "toEmail": "={{ $json.email }}",
+                "subject": "🔥 {{ $json.displayName }}, your {{ $json.currentStreak }}-day streak is at risk!",
+                "emailFormat": "html",
+                "html": "<h2>Don't break your streak, {{ $json.displayName }}! 🔥</h2><p>Your <strong>{{ $json.currentStreak }}-day streak</strong> will reset at midnight if you don't complete a quest today.</p><p>Even a quick easy quest counts — keep the momentum going!</p>"
+            },
+            "id": "send-email",
+            "name": "Send Streak Warning",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2.1,
+            "position": [
+                1080,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Every Day 20:00": {
+            "main": [
+                [
+                    {
+                        "node": "Fetch At-Risk Streaks",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Fetch At-Risk Streaks": {
+            "main": [
+                [
+                    {
+                        "node": "Has At-Risk Users?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Has At-Risk Users?": {
+            "main": [
+                [
+                    {
+                        "node": "Split Users",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        },
+        "Split Users": {
+            "main": [
+                [
+                    {
+                        "node": "Send Streak Warning",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    }
+}

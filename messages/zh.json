@@ -1,0 +1,907 @@
+{
+  "metadata": {
+    "title": "XPLife - 提升你的生活水平",
+    "description": "将目标转化为史诗任务。赚取经验值。追踪连胜。通过AI驱动的生活优化成为最好的自己。"
+  },
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "submit": "提交",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "continue": "继续",
+    "confirm": "确认",
+    "error": "错误",
+    "success": "成功"
+  },
+  "navbar": {
+    "features": "功能特色",
+    "howItWorks": "如何运作",
+    "pricing": "价格",
+    "login": "登录",
+    "signup": "开始你的旅程"
+  },
+  "hero": {
+    "badge": "加入1000多名正在提升等级的玩家",
+    "title": "提升",
+    "titleHighlight": "你的生活",
+    "description": "将无聊的目标转化为史诗级RPG任务。AI构建你的每日任务。赚取经验值。真正升级。",
+    "cta": "免费开始游戏",
+    "ctaSecondary": "如何运作",
+    "heroUser": "英雄玩家",
+    "heroRole": "生活优化师",
+    "xpLabel": "经验点数",
+    "xpProgress": "{current} / {total} XP",
+    "questMorningMeditation": "晨间冥想",
+    "questDeepWork": "30分钟深度工作",
+    "questEveningReview": "晚间回顾",
+    "statStreak": "连胜",
+    "statQuests": "任务",
+    "statRank": "排名",
+    "level": "等级 {level}"
+  },
+  "quiz": {
+    "questions": [
+      {
+        "question": "当你醒来时，什么最能给你能量？",
+        "options": [
+          "激动人心的新挑战或冒险",
+          "学习新事物或创意工作",
+          "平静而有条理的早晨例行程序",
+          "与亲人或社区联系"
+        ]
+      },
+      {
+        "question": "你更喜欢如何处理压力？",
+        "options": [
+          "高强度体育活动或竞赛",
+          "写日记、阅读或解决问题",
+          "冥想、瑜伽或深呼吸",
+          "与朋友或家人倾诉"
+        ]
+      },
+      {
+        "question": "什么类型的目标最让你兴奋？",
+        "options": [
+          "大胆雄心的目标，回报丰厚",
+          "技能掌握和智力成长",
+          "稳定、一致和内心平静",
+          "建立关系和帮助他人"
+        ]
+      },
+      {
+        "question": "你的朋友会如何描述你？",
+        "options": [
+          "精力充沛、大胆、自发",
+          "好奇、有创造力、深思熟虑",
+          "冷静、可靠、踏实",
+          "温暖、善解人意、支持他人"
+        ]
+      },
+      {
+        "question": "你理想的充电方式是什么？",
+        "options": [
+          "尝试令人兴奋的新事物",
+          "深度专注于激情项目",
+          "休息、亲近自然、安静时光",
+          "与我关心的人共度美好时光"
+        ]
+      }
+    ]
+  },
+  "personalities": {
+    "dopamine": {
+      "title": "冒险家",
+      "description": "你在兴奋、新奇和大胆的挑战中茁壮成长。你的任务将专注于突破界限和实现雄心壮志的目标。"
+    },
+    "acetylcholine": {
+      "title": "思想家",
+      "description": "你热爱学习、创造力和深度专注。你的任务将围绕技能掌握和智力成长。"
+    },
+    "gaba": {
+      "title": "守护者",
+      "description": "你重视稳定、一致和内心平静。你的任务将建立强大的习惯并促进平衡。"
+    },
+    "serotonin": {
+      "title": "连接者",
+      "description": "你从关系和社区中汲取能量。你的任务将加强联系并促进有意义的关系。"
+    }
+  },
+  "taskCategories": {
+    "fitness": "健身",
+    "mindfulness": "正念",
+    "learning": "学习",
+    "productivity": "生产力",
+    "social": "社交",
+    "health": "健康",
+    "creativity": "创造力"
+  },
+  "taskDifficulties": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "epic": "史诗"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "欢迎来到",
+      "description": "您即将踏上成为最好的自己的史诗般旅程。让我们从了解您开始，以便为您制定完美的挑战。",
+      "beginQuest": "开始任务",
+      "duration": "大约需要2分钟"
+    },
+    "title": "发现您的玩家类型",
+    "subtitle": "回答5个快速问题，解锁您的个性化任务系统",
+    "question": "问题 {current} / {total}",
+    "calculating": "正在分析您的答案...",
+    "result": "您是...",
+    "continue": "继续到仪表板",
+    "timePreferences": {
+      "subtitle": "个性化您的体验",
+      "title": "您什么时候工作最好？",
+      "description": "帮助我们在您的最佳表现时间安排任务",
+      "energyQuestion": "您什么时候最有精力？",
+      "durationQuestion": "首选任务时长？",
+      "continue": "继续",
+      "timeOptions": {
+        "morning": {
+          "label": "早晨型人",
+          "description": "早上最有活力"
+        },
+        "afternoon": {
+          "label": "下午巅峰",
+          "description": "午餐后专注力最佳"
+        },
+        "evening": {
+          "label": "傍晚精力",
+          "description": "傍晚最有生产力"
+        },
+        "night": {
+          "label": "夜猫子",
+          "description": "夜间工作最好"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "快速胜利",
+          "description": "5-15分钟任务"
+        },
+        "medium": {
+          "label": "平衡任务",
+          "description": "15-45分钟任务"
+        },
+        "deep": {
+          "label": "深度工作",
+          "description": "1小时以上的会话"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "告诉我们关于您",
+      "title": "您的生活方式背景",
+      "description": "这有助于我们创建适合您日常生活的任务",
+      "occupationQuestion": "什么最能描述您？",
+      "scheduleQuestion": "工作时间表（可选）",
+      "phaseQuestion": "当前生活阶段（可选）",
+      "challengeQuestion": "您最大的挑战是什么？",
+      "continue": "继续",
+      "occupationOptions": {
+        "student": "学生",
+        "officeWorker": "办公室职员",
+        "remoteWorker": "远程工作者",
+        "entrepreneur": "企业家",
+        "freelancer": "自由职业者",
+        "healthcare": "医疗保健",
+        "creative": "创意工作者",
+        "other": "其他"
+      },
+      "scheduleOptions": {
+        "fullTime": "全职",
+        "partTime": "兼职",
+        "flexible": "灵活",
+        "shiftWork": "轮班工作"
+      },
+      "phaseOptions": {
+        "buildingCareer": "建立职业生涯",
+        "workLifeBalance": "工作生活平衡",
+        "studentLife": "学生生活",
+        "exploring": "探索中"
+      },
+      "challengeOptions": {
+        "findingTime": "寻找时间",
+        "lowEnergy": "精力不足",
+        "stayingFocused": "保持专注",
+        "motivation": "动力",
+        "beingConsistent": "保持一致性"
+      }
+    },
+    "interests": {
+      "subtitle": "可选",
+      "title": "您的兴趣是什么？",
+      "description": "选择最多10个兴趣来个性化您的任务",
+      "selected": "已选择 {count}/10",
+      "youSelected": "您选择了：",
+      "skip": "跳过",
+      "continue": "继续",
+      "options": {
+        "yoga": "瑜伽",
+        "running": "跑步",
+        "meditation": "冥想",
+        "reading": "阅读",
+        "writing": "写作",
+        "coding": "编程",
+        "painting": "绘画",
+        "music": "音乐",
+        "gaming": "游戏",
+        "cooking": "烹饪",
+        "photography": "摄影",
+        "languages": "语言",
+        "hiking": "徒步旅行",
+        "gardening": "园艺",
+        "dancing": "舞蹈",
+        "cycling": "骑自行车",
+        "swimming": "游泳",
+        "drawing": "绘图",
+        "journaling": "写日记",
+        "podcasts": "播客"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "设定您的目标",
+      "title": "选择您的任务线",
+      "description": "选择 {maxGoals} 并为每个写一个目标",
+      "goalLabel": "{category} 目标",
+      "goalPlaceholder": "例如，\"在30分钟内跑完5公里\"",
+      "settingUp": "正在设置您的任务...",
+      "startAdventure": "开始您的冒险"
+    }
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "quests": "任务",
+    "leaderboard": "排行榜",
+    "inventory": "背包",
+    "market": "市场",
+    "profile": "个人资料",
+    "logout": "退出登录",
+    "totalXp": "总经验",
+    "dayStreak": "连续天数",
+    "startQuest": "开始任务 →",
+    "dailyQuest": "每日任务",
+    "weeklyQuest": "每周任务",
+    "monthlyQuest": "每月任务",
+    "daily": "每日",
+    "weekly": "每周",
+    "monthly": "每月",
+    "classAdventurer": "冒险家",
+    "classThinker": "思想家",
+    "classGuardian": "守护者",
+    "classConnector": "连接者"
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录以继续您的旅程",
+      "email": "电子邮件",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "密码",
+      "passwordPlaceholder": "输入您的密码",
+      "submit": "登录",
+      "loggingIn": "登录中...",
+      "noAccount": "还没有账户？",
+      "signupLink": "注册",
+      "invalidCredentials": "无效的电子邮件或密码",
+      "emailNotConfirmed": "您的电子邮件尚未确认。请检查您的收件箱或重新发送确认链接。",
+      "error": "无效的电子邮件或密码"
+    },
+    "signup": {
+      "title": "开始您的旅程",
+      "subtitle": "创建您的账户以开始",
+      "email": "电子邮件",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "密码",
+      "passwordPlaceholder": "创建密码",
+      "confirmPassword": "确认密码",
+      "confirmPasswordPlaceholder": "确认您的密码",
+      "submit": "创建账户",
+      "creating": "创建账户中...",
+      "hasAccount": "已有账户？",
+      "loginLink": "登录",
+      "checkEmailTitle": "检查您的电子邮件",
+      "checkEmailMessage": "我们已向您的电子邮件发送了确认链接。点击它以激活您的账户并开始您的任务。",
+      "login": "登录",
+      "error": "创建账户失败",
+      "passwordMismatch": "密码不匹配"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithGithub": "使用 GitHub 继续"
+    }
+  },
+  "dashboard": {
+    "welcome": "欢迎回来，{name}",
+    "subtitle": "这是您今天的任务状态",
+    "level": "等级 {level}",
+    "xp": "{current} / {next} XP",
+    "stats": {
+      "totalXP": "总经验值",
+      "completedQuests": "已完成",
+      "currentStreak": "连胜",
+      "days": "{count}天",
+      "best": "最佳: {streak}天",
+      "experience": "经验",
+      "xpToNextLevel": "{current} / {required} XP 到下一级",
+      "goldBalance": "金币余额",
+      "add": "添加"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "完成任务设置！",
+        "description": "回答几个问题，以便我们个性化您的每日任务和XP奖励。",
+        "startQuiz": "开始测验"
+      },
+      "braverman": {
+        "title": "解锁深度个性洞察",
+        "description": "参加Braverman评估获得+500 XP和个性化任务"
+      }
+    },
+    "questSection": {
+      "generate": "生成",
+      "upgradeForMore": "升级获取更多",
+      "noQuestsTitle": "暂无任务",
+      "noQuestsDescription": "点击\"生成\"创建AI驱动的{timeframe}任务。",
+      "completed": "已完成"
+    },
+    "activeQuests": "活跃任务",
+    "noQuests": "暂无活跃任务",
+    "generateQuests": "生成今日任务",
+    "viewAll": "查看全部",
+    "dailyTasks": {
+      "title": "今日任务",
+      "generateQuests": "生成任务",
+      "generating": "生成中...",
+      "describeGoals": "描述您的目标",
+      "placeholder": "例如：我想多运动、学习西班牙语、每天阅读20页...",
+      "generate": "生成",
+      "noQuestsTitle": "暂无任务",
+      "noQuestsDescription": "点击\"生成任务\"以获取您的个性化每日挑战。",
+      "completed": "已完成",
+      "emptyGoalsError": "请在生成任务前描述你的目标。",
+      "tryAgain": "重试",
+      "upgradePlan": "升级计划",
+      "completeProfile": "完善资料",
+      "cancel": "取消"
+    },
+    "questProgress": {
+      "noQuests": "暂无任务",
+      "progress": "{timeframe}进度",
+      "completed": "{completed}/{total} 已完成"
+    },
+    "questTimer": {
+      "expired": "已过期"
+    },
+    "questTabs": {
+      "yearly": "年度",
+      "monthly": "月度",
+      "weekly": "周度",
+      "daily": "每日",
+      "yearlyTitle": "年度目标",
+      "monthlyTitle": "月度里程碑",
+      "weeklyTitle": "周度目标",
+      "dailyTitle": "今日任务"
+    },
+    "autoRefresh": {
+      "generating": "自动生成任务中...",
+      "generatingDescription": "正在根据您的目标创建个性化任务，请稍候。"
+    }
+  },
+  "profile": {
+    "title": "个人资料",
+    "personalInfo": "个人信息",
+    "displayName": "显示名称",
+    "email": "电子邮件",
+    "personality": "个性类型",
+    "stats": {
+      "title": "统计",
+      "totalXp": "总经验值",
+      "questsDone": "已完成任务",
+      "streak": "连胜"
+    },
+    "balance": {
+      "title": "金币余额",
+      "addEarnings": "添加收入"
+    },
+    "planNames": {
+      "premium": "高级版",
+      "lifetime": "终身版"
+    },
+    "save": "保存更改",
+    "settings": {
+      "title": "设置",
+      "displayName": "显示名称",
+      "avatar": "头像",
+      "uploadAvatar": "上传头像",
+      "aboutMe": "关于我",
+      "aboutMePlaceholder": "告诉我们关于你的情况 — 你的业务、目标、现状... AI将利用这些信息生成更相关的任务。",
+      "aboutMeChars": "{count}/500",
+      "save": "保存更改",
+      "saving": "保存中...",
+      "saveSuccess": "更改保存成功！",
+      "logout": "退出登录",
+      "tabs": {
+        "general": "常规",
+        "personalization": "个性化"
+      },
+      "personalization": {
+        "timePreference": "时间偏好",
+        "timeOptions": {
+          "morning": "早起型",
+          "afternoon": "午后型",
+          "evening": "晚间型",
+          "night": "夜猫子"
+        },
+        "taskDuration": "任务时长",
+        "durationOptions": {
+          "quick": "快速 (5-15分钟)",
+          "medium": "适中 (15-45分钟)",
+          "deep": "深度 (1小时+)"
+        },
+        "occupation": "职业",
+        "selectOccupation": "选择职业",
+        "occupationOptions": {
+          "student": "学生",
+          "officeWorker": "上班族",
+          "remoteWorker": "远程工作者",
+          "freelancer": "自由职业者",
+          "stayAtHomeParent": "全职父母",
+          "entrepreneur": "创业者",
+          "retired": "退休人员",
+          "other": "其他"
+        },
+        "workSchedule": "工作时间",
+        "selectSchedule": "选择时间",
+        "scheduleOptions": {
+          "standard": "标准朝九晚五",
+          "flexible": "弹性工作",
+          "shiftWork": "轮班制",
+          "partTime": "兼职",
+          "irregular": "不固定"
+        },
+        "lifePhase": "人生阶段",
+        "selectLifePhase": "选择阶段",
+        "lifePhaseOptions": {
+          "highSchool": "高中",
+          "university": "大学",
+          "earlyCareer": "职业初期",
+          "midCareer": "职业中期",
+          "parent": "为人父母",
+          "careerChange": "职业转型",
+          "retired": "退休"
+        },
+        "mainChallenge": "主要挑战",
+        "selectChallenge": "选择挑战",
+        "challengeOptions": {
+          "time": "时间不够",
+          "energy": "精力不足",
+          "focus": "保持专注",
+          "motivation": "保持动力",
+          "consistency": "坚持不懈"
+        },
+        "interests": "兴趣爱好 ({count}/10)",
+        "addCustomInterest": "添加自定义兴趣...",
+        "preferNotToSay": "不想透露"
+      }
+    }
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "subtitle": "争夺荣耀的顶尖玩家",
+    "rank": "排名",
+    "player": "玩家",
+    "xp": "经验值",
+    "level": "等级",
+    "streak": "连续",
+    "lvl": "LV {level}",
+    "noRankingsTitle": "暂无排名",
+    "noRankingsDescription": "完成任务以出现在排行榜上。",
+    "yourRank": "你的排名：",
+    "anonymous": "匿名",
+    "you": "（你）"
+  },
+  "levelUp": {
+    "title": "升级了！",
+    "description": "恭喜！你已达到新等级。",
+    "level": "等级 {level}",
+    "continue": "继续"
+  },
+  "chat": {
+    "closeChat": "关闭聊天",
+    "openChat": "打开聊天",
+    "title": "AI任务顾问",
+    "messagesLeft": "今日剩余 {remaining}/50 条消息",
+    "emptyState": "问我任何关于你的任务和目标的问题！",
+    "thinking": "思考中...",
+    "placeholder": "输入消息...",
+    "errorDefault": "出了点问题。",
+    "errorSend": "发送失败，请重试。",
+    "tasksCreated": "已添加{count}个任务到你的任务列表！"
+  },
+  "generateQuestDialog": {
+    "title": "生成{timeframe}任务",
+    "description": "创建适合你目标的AI任务。",
+    "customGoal": "自定义目标",
+    "fromQuest": "从{timeframe}任务",
+    "selectQuest": "选择一个{timeframe}任务",
+    "emptyGoalsError": "请在生成任务前描述你的目标。",
+    "selectParentError": "请选择一个父任务。",
+    "tryAgain": "重试",
+    "upgradePlan": "升级计划",
+    "generate": "生成",
+    "generateFromQuest": "从任务生成",
+    "generating": "生成中...",
+    "placeholder": "例如：我想多运动、学西班牙语、每天读20页书...",
+    "yearly": "年度",
+    "monthly": "月度",
+    "weekly": "每周",
+    "daily": "每日",
+    "generateError": "生成任务失败，请重试。",
+    "cascadeProgress": "正在生成{timeframe}任务...",
+    "cascadeComplete": "已创建{yearly}个年度、{monthly}个月度、{weekly}个每周、{daily}个每日任务！",
+    "cascadeFailed": "级联已停止。已生成的任务已保存。",
+    "cascadeStepDone": "{timeframe}任务已创建 ({count})",
+    "cascadeDone": "完成"
+  },
+  "tasks": {
+    "title": "任务详情",
+    "description": "描述",
+    "category": "类别",
+    "difficulty": "难度",
+    "xpReward": "+{xp} XP",
+    "markComplete": "标记为完成",
+    "completed": "已完成！",
+    "back": "返回仪表板"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "强化道具",
+      "title": "您的",
+      "titleHighlight": "成长",
+      "description": "将日常生活转变为值得游戏的冒险所需的一切。",
+      "aiPowered": {
+        "title": "AI驱动的任务",
+        "description": "基于您的激素类型和心理的个性化每日任务。每个任务都旨在推动您前进。"
+      },
+      "trackProgress": {
+        "title": "追踪您的进度",
+        "description": "赚取经验值，保持连胜，攀登排行榜。看着您的真实生活数据随着完成任务而增长。"
+      },
+      "deepPersonalization": {
+        "title": "深度个性化",
+        "description": "整合Braverman测试，提供符合您大脑化学的任务。没有一刀切的方法。"
+      }
+    },
+    "howItWorks": {
+      "subtitle": "任务指南",
+      "title": "如何",
+      "titleHighlight": "运作",
+      "description": "从注册到升级，只需三个简单步骤。",
+      "step1": {
+        "step": "01",
+        "title": "注册并参加快速测验",
+        "description": "回答几个关于您的生活方式、目标和大脑类型的问题。只需2分钟。"
+      },
+      "step2": {
+        "step": "02",
+        "title": "获取每日AI任务",
+        "description": "我们的AI每天根据您的独特档案和进度制定个性化任务。"
+      },
+      "step3": {
+        "step": "03",
+        "title": "完成并升级",
+        "description": "完成任务以赚取经验值，解锁成就，攀登全球排行榜。"
+      }
+    },
+    "socialProof": {
+      "badge": "加入1,000多人一起提升生活水平",
+      "title": "玩家",
+      "titleHighlight": "评价",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "软件工程师",
+        "quote": "我试过所有的生产力应用。XPLife是第一个真正让我坚持习惯的应用。RPG机制太棒了。"
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "学生",
+        "quote": "AI任务准确得可怕。就像有一个真正理解我大脑运作方式的生活教练。达到了60天连胜！"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "自由职业者",
+        "quote": "与朋友在排行榜上竞争，让我的懒散早晨变成了高效的时光。仅本月就升了3级。"
+      }
+    },
+    "finalCta": {
+      "title": "准备好开始您的",
+      "titleHighlight": "任务了吗？",
+      "description": "您等待的每一天都是永远无法获得的经验值。今天就开始您的免费任务。",
+      "button": "开始您的任务 — 完全免费",
+      "disclaimer": "无需信用卡。永久免费，随时升级。"
+    },
+    "pricing": {
+      "subtitle": "选择您的道路",
+      "title": "选择您的",
+      "titleHighlight": "职业",
+      "description": "无需信用卡。随时升级。",
+      "free": {
+        "name": "免费开始",
+        "cta": "免费开始游戏"
+      },
+      "premium": {
+        "name": "高级版",
+        "badge": "最受欢迎",
+        "cta": "升级至高级版"
+      },
+      "lifetime": {
+        "name": "终身版",
+        "badge": "限时优惠",
+        "cta": "锁定终身访问"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1个活跃目标",
+        "feature2": "每周15个AI生成的任务",
+        "feature3": "基本排行榜访问",
+        "feature4": "社区支持",
+        "feature5": "每天15条AI聊天消息",
+        "feature6": "3个年度任务"
+      },
+      "premium": {
+        "feature1": "每日无限AI任务",
+        "feature2": "3个并行目标",
+        "feature3": "完整的AI辅导和洞察",
+        "feature4": "连胜冻结（3次/月）",
+        "feature5": "优先排行榜",
+        "feature6": "高级分析",
+        "feature7": "无限AI聊天",
+        "feature8": "5个年度任务"
+      },
+      "lifetime": {
+        "feature1": "永久享有高级版所有功能",
+        "feature2": "无需重复付款",
+        "feature3": "创始会员徽章",
+        "feature4": "抢先体验新功能"
+      }
+    }
+  },
+  "upgradeBanner": {
+    "premiumPlan": "高级版计划",
+    "lifetimePlan": "终身版计划",
+    "active": "已激活",
+    "upgradeToPremium": "升级至高级版",
+    "unlimitedTasks": "无限AI任务及更多",
+    "upgradeYourPlan": "升级您的计划",
+    "unlockFeatures": "解锁无限AI任务、3个并行目标、辅导等更多功能。",
+    "premiumButton": "高级版 — €4.99/月",
+    "lifetimeButton": "终身版 — €49"
+  },
+  "levelTitles": {
+    "novice": "新手",
+    "legend": "传奇"
+  },
+  "blog": {
+    "metaTitle": "博客 | XPLife",
+    "metaDescription": "关于游戏化生产力、习惯养成和现实生活升级的技巧、策略和见解。",
+    "badge": "任务日志",
+    "title": "",
+    "titleHighlight": "任务日志",
+    "subtitle": "关于游戏化生产力和现实生活升级的技巧、策略和见解。",
+    "emptyTitle": "暂无文章",
+    "emptyDescription": "新任务正在撰写中。请稍后再来！",
+    "readMore": "阅读更多",
+    "backToBlog": "返回博客",
+    "readTime": "{minutes} 分钟阅读",
+    "ctaTitle": "准备好升级了吗？",
+    "ctaDescription": "别光看了。开始行动吧。你的任务在等着你。",
+    "ctaButton": "免费开始"
+  },
+  "footer": {
+    "tagline": "一次一个任务，提升你的生活水平。",
+    "copyright": "© 2025 XPLife。保留所有权利。",
+    "links": {
+      "about": "关于",
+      "blog": "博客",
+      "contact": "联系",
+      "privacy": "隐私",
+      "terms": "条款"
+    }
+  },
+  "braverman": {
+    "page": {
+      "locked": "已锁定",
+      "lockedDescription": "Braverman性质评估在等级{level}解锁。完成每日任务以赚取XP并升级！",
+      "title": "Braverman性质评估",
+      "subtitle": "140个问题发现你的神经递质特征。完成可获得500 XP。",
+      "resultsTitle": "Braverman评估",
+      "resultsSubtitle": "你的性格特征结果"
+    },
+    "test": {
+      "sectionDopamine": "第1部分：多巴胺",
+      "sectionAcetylcholine": "第2部分：乙酰胆碱",
+      "sectionGaba": "第3部分：GABA",
+      "sectionSerotonin": "第4部分：血清素",
+      "never": "从不",
+      "sometimes": "有时",
+      "often": "经常",
+      "always": "总是",
+      "progress": "{current} / {total}",
+      "previous": "上一题",
+      "next": "下一题",
+      "submit": "提交评估",
+      "submitting": "提交中...",
+      "error": "请在提交前回答所有{count}个问题。",
+      "xpEarned": "+{xp} XP 已获得！",
+      "levelUp": "升级了！你现在是等级 {level}",
+      "questionTooltip": "问题 {number}"
+    },
+    "questions": [
+      "我在白天感到疲倦或疲劳。",
+      "我早上需要咖啡因才能开始新的一天。",
+      "我难以集中注意力或专注。",
+      "我感觉迟钝或思维缓慢。",
+      "我缺乏开始或完成任务的动力。",
+      "我渴望含糖或高碳水化合物的食物。",
+      "我的性欲低下。",
+      "我感到冷漠或情感平淡。",
+      "我早上很难醒来。",
+      "我倾向于拖延重要的任务。",
+      "在会议或讲座中我很难保持警觉。",
+      "我很容易感到无聊。",
+      "我难以做出决定。",
+      "我的体力或耐力低下。",
+      "我觉得自己没有发挥出应有的潜力。",
+      "我的手眼协调能力差。",
+      "我会出现手抖。",
+      "我感到需要持续的刺激或兴奋。",
+      "我在没有改变饮食的情况下体重增加了。",
+      "我依赖功能饮料、补充剂或兴奋剂。",
+      "我很难完成自己开始的项目。",
+      "我与成瘾倾向作斗争（食物、屏幕、物质）。",
+      "我对曾经喜欢的活动感到疏离。",
+      "我在抽象思维或解决问题方面有困难。",
+      "我感觉身体虚弱或缺乏肌肉力量。",
+      "我的反射速度或反应时间慢。",
+      "我经常对生活感到不满。",
+      "我难以兑现承诺。",
+      "我感觉需要经常打盹。",
+      "我对巧克力或甜食有强烈的渴望。",
+      "别人告诉我看起来\"心不在焉\"或疏远。",
+      "快速站起来时我感到头晕。",
+      "我血压低。",
+      "我更喜欢久坐活动而非体力活动。",
+      "我难以同时处理多项任务。",
+      "我忘记把东西放在哪里（钥匙、手机、钱包）。",
+      "我很难记住我遇到的人的名字。",
+      "我在说话说到一半时会失去思路。",
+      "我很难回忆起最近的对话。",
+      "我觉得很难快速学习新信息。",
+      "我在阅读和记住所读内容方面有困难。",
+      "我很难在脑海中想象事物。",
+      "我的方向感很差。",
+      "我无法轻松回忆起过去事件的细节。",
+      "我在语言流畅性或找到合适的词方面有困难。",
+      "我很难遵循复杂的指令。",
+      "我觉得我的创造力下降了。",
+      "我的心理处理速度慢。",
+      "我很难长时间保持注意力。",
+      "我很难认出熟悉的面孔。",
+      "我经常经历\"话到嘴边\"的时刻。",
+      "我很难进行心算。",
+      "我比以前犯更多的拼写或书写错误。",
+      "我难以理解抽象概念。",
+      "我觉得我的记忆力比同龄人差。",
+      "我很难回忆起事实和数据。",
+      "我在阅读时很难集中注意力。",
+      "我需要重新阅读段落才能理解。",
+      "我觉得自己精神上不如以前敏锐。",
+      "我在空间推理或拼图方面有困难。",
+      "我忘记预约或安排的活动。",
+      "我对学习新事物的兴趣降低了。",
+      "我觉得我的词汇量缩小了。",
+      "我很难跟上电影或书籍的情节。",
+      "我在需要视觉想象力的任务上有困难。",
+      "我在手写或打字速度方面有困难。",
+      "我觉得我的理解力下降了。",
+      "我很难有效地进行多任务处理。",
+      "我很难记住列表或顺序。",
+      "我感到一般性的精神模糊或朦胧。",
+      "我没有明确原因地感到焦虑或紧张。",
+      "我经历心悸或心跳加速。",
+      "我的肌肉紧张或僵硬。",
+      "即使有空闲时间也很难放松。",
+      "我感到坐立不安或紧张。",
+      "因为大脑不停运转而难以入睡。",
+      "突然的噪音很容易吓到我。",
+      "我被日常任务压得喘不过气。",
+      "我过度担心事情。",
+      "在压力大的时候我会感到呼吸急促。",
+      "我有与压力相关的消化问题（胃部不适、肠易激综合征）。",
+      "我会咬紧牙关或磨牙。",
+      "我很难安静地坐着。",
+      "我经历恐慌发作或强烈的焦虑峰值。",
+      "我觉得我无法再承受更多事情了。",
+      "我的手冰冷或出汗。",
+      "我在情绪上感到不稳定。",
+      "我经历与紧张或压力相关的头痛。",
+      "我感到恐惧或即将到来的厄运感。",
+      "我很难保持耐心。",
+      "我很容易感到烦躁或沮丧。",
+      "我依赖酒精、食物或物质来平静下来。",
+      "我在组织和保持整洁方面有困难。",
+      "我在社交场合感到紧张。",
+      "我因紧张而经历背痛或身体酸痛。",
+      "我有盗汗或醒来时感到焦虑。",
+      "我感觉我的神经系统总是处于\"开启\"状态。",
+      "我很难将任务委派给他人。",
+      "当我花时间放松时会感到内疚。",
+      "我有耳鸣。",
+      "压力大时我的声音会颤抖。",
+      "在新环境中我处于高度警觉状态。",
+      "我很难对人说\"不\"。",
+      "焦虑时我会频繁排尿。",
+      "我觉得我的压力水平比大多数人高。",
+      "我没有明显原因地感到悲伤或情绪低落。",
+      "我很难入睡或保持睡眠。",
+      "我渴望碳水化合物、面包或意大利面。",
+      "我的自尊心或自信心低。",
+      "我容易烦躁或有情绪波动。",
+      "我对未来感到绝望。",
+      "我对曾经喜欢的活动兴趣减少。",
+      "我对批评过于敏感。",
+      "我感觉与他人脱节。",
+      "我难以控制食欲。",
+      "我经历下午的精力崩溃。",
+      "我有强迫性或重复性的想法。",
+      "一天结束时我感到紧张或无法放松。",
+      "我难以体验快乐。",
+      "我是一个完美主义者，当事情不对时会感到不安。",
+      "我有负面的内心声音或自我对话。",
+      "我很难原谅自己或他人。",
+      "我更喜欢独处而不是与他人在一起。",
+      "我有慢性疼痛或纤维肌痛症状。",
+      "我经历季节性情绪变化（冬天更严重）。",
+      "由于自我怀疑，我很难做出决定。",
+      "我比应该的更加愤怒或怨恨。",
+      "我有暴饮暴食的倾向。",
+      "我经历经前综合征、荷尔蒙情绪变化或潮热。",
+      "我在冲动控制方面有困难。",
+      "我感到情感麻木或疏离。",
+      "我有便秘或消化不规律。",
+      "我过早醒来且无法再次入睡。",
+      "我从疾病或受伤中恢复较慢。",
+      "我想食物或吃东西的时间比应该的多。",
+      "我对亲密关系或身体接触失去了兴趣。",
+      "我有自我伤害或无价值感的想法。",
+      "我难以维持日常规律或习惯。",
+      "我经历无法解释的哭泣发作。",
+      "我觉得生活缺乏意义或目的。"
+    ],
+    "results": {
+      "dominantType": "你的主导类型：",
+      "deficiencyScores": "缺乏分数",
+      "deficiencyDescription": "分数越高表示缺乏越大 — 你的任务将针对这些领域。",
+      "dominant": "（主导）",
+      "backToDashboard": "返回仪表板",
+      "dopamine": "多巴胺",
+      "acetylcholine": "乙酰胆碱",
+      "gaba": "GABA",
+      "serotonin": "血清素"
+    }
+  }
+}

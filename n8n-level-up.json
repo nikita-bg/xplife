@@ -1,0 +1,54 @@
+{
+    "name": "XPLife Level Up Celebration",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "xplife-level-up",
+                "authentication": "headerAuth",
+                "options": {}
+            },
+            "id": "level-webhook",
+            "name": "Level Up Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "quests@xplife.app",
+                "toEmail": "={{ $json.body.email }}",
+                "subject": "🎉 Level Up! {{ $json.body.displayName }} reached Level {{ $json.body.newLevel }}!",
+                "emailFormat": "html",
+                "html": "<div style='text-align:center'><h1>🎉 LEVEL UP!</h1><h2>{{ $json.body.displayName }}, you've reached <strong>Level {{ $json.body.newLevel }}</strong>!</h2><p>Total XP: <strong>{{ $json.body.totalXp }}</strong></p><p>Keep conquering quests to climb even higher! 🚀</p></div>"
+            },
+            "id": "send-level-email",
+            "name": "Send Level Up Email",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 2.1,
+            "position": [
+                420,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Level Up Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Send Level Up Email",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    }
+}

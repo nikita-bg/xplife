@@ -1,0 +1,639 @@
+{
+    "name": "XPLife - AI Chat v2",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "xplife-generate-tasks",
+                "authentication": "headerAuth",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "022557b2-9575-41fa-aaaf-715e1e1b3b4a",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                -128,
+                -64
+            ],
+            "webhookId": "xplife-generate-tasks",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "I5GT8QaERkEBqeq6",
+                    "name": "X-Webhook-Secret"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "modelId": {
+                    "__rl": true,
+                    "value": "gpt-4o",
+                    "mode": "list",
+                    "cachedResultName": "GPT-4O"
+                },
+                "messages": {
+                    "values": [
+                        {
+                            "content": "=LANGUAGE: Generate all content in {{ $json.language }}.\n\n  CORE PROFILE:\n  - Personality: {{ $json.personalityType }}\n  - Level: {{ $json.level }}\n  - Goals: {{ $json.goals }}\n  {{ $json.userGoals ? '- User-described goals: ' + $json.userGoals : '' }}\n  - Neurotransmitter scores: {{ $json.neurotransmitterScores }}\n\n  CHARACTER CLASS CONTEXT:\n  - Class: {{ $json.classProfileDisplayName }} ({{ $json.classProfileClassName }})\n  - Quest style: {{ $json.classProfileQuestStyle }}\n  - Tone: {{ $json.classProfileTone }}\n  - Priority categories: {{ $json.classProfilePriorityCategories }}\n  - Quest title prefixes (use these): {{ $json.classProfileQuestPrefixes }}\n\n  QUEST HISTORY (last 30 days):\n  - Overall completion rate: {{ $json.questHistoryOverallRate }}%\n  - Tasks completed: {{ $json.questHistoryCompleted }}, Skipped: {{ $json.questHistorySkipped }}\n  - Completion by category: {{ $json.questHistoryByCategory }}\n  - Completion by difficulty: {{ $json.questHistoryByDifficulty }}\n  - Average completion time: {{ $json.questHistoryAvgTime }} hours\n\n  DIFFICULTY ADJUSTMENT:\n  - Recommendation: {{ $json.difficultyRecommendation }}\n  - Reasoning: {{ $json.difficultyReasoning }}\n  - Category overrides: {{ $json.difficultyCategoryOverrides }}\n\n  LIFESTYLE & PREFERENCES:\n  {{ $json.timePreference ? '- Energy peak: ' + $json.timePreference + ' person' : '' }}\n  {{ $json.preferredTaskDuration ? '- Prefers: ' + $json.preferredTaskDuration + ' tasks' : '' }}\n  {{ $json.occupation ? '- Occupation: ' + $json.occupation : '' }}\n  {{ $json.workSchedule ? '- Schedule: ' + $json.workSchedule : '' }}\n  {{ $json.lifePhase ? '- Life phase: ' + $json.lifePhase : '' }}\n  {{ $json.mainChallenge ? '- Biggest challenge: ' + $json.mainChallenge : '' }}\n  {{ $json.interests && JSON.parse($json.interests).length > 0 ? '- Interests: ' + JSON.parse($json.interests).join(', ') : '' }}\n  {{ $json.aboutMe ? '- About the user (in their own words): ' + $json.aboutMe : '' }}\n\n  SUCCESS PATTERNS:\n  {{ $json.bestCategory ? '- Best category (high completion): ' + $json.bestCategory : '' }}\n  {{ $json.strugglingCategory ? '- Struggling category (low completion): ' + $json.strugglingCategory : '' }}\n  {{ $json.categoryStats ? '- Category stats: ' + $json.categoryStats : '' }}\n  {{ $json.categoryPreferences ? '- Feedback preferences: ' + $json.categoryPreferences : '' }}\n\n  RECENT ACTIVITY:\n  - Recent tasks: {{ $json.recentTasks }}\n\n  GENERATION CONTEXT:\n  - Quest timeframe: {{ $json.questTimeframe }}\n  - Generation mode: {{ $json.generationMode }}\n  {{ $json.parentQuest ? '- Parent quest to break down: ' + $json.parentQuest : '' }}\n  {{ $json.parentQuests ? '- Parent quests to break down into ' + $json.questTimeframe + ' sub-quests: ' + $json.parentQuests : '' }}\n  - Task count: {{ $json.taskCountMin }} to {{ $json.taskCountMax }}\n\n  Generate {{ $json.taskCountMin }}-{{ $json.taskCountMax }} HYPER-PERSONALIZED {{ $json.questTimeframe }} quests that feel custom-made for this user."
+                        },
+                        {
+                            "content": " You are a gamified life coach AI for the XPLife app. Generate HYPER-PERSONALIZED quests based on user's personality, lifestyle, success patterns, quest history, and CHARACTER CLASS.\n\n  CHARACTER CLASS SYSTEM (CRITICAL — this defines the ENTIRE tone and style of quests):\n  The user's personality type maps to a character class. You MUST:\n  1. Use the quest title prefixes provided in CLASS CONTEXT for quest titles\n  2. Match the tone described in CLASS CONTEXT\n  3. Weight quest categories toward the priority categories listed\n  4. Shape quest descriptions to match the quest style\n\n  Class Behaviors:\n  - Adventurer (dopamine): Bold, competitive, time-pressure. Use exciting language, rewards, novelty. \"Sprint\", \"Challenge\", \"Boss Rush\".\n  - Thinker (acetylcholine): Deep focus, intellectual, creative. Use discovery language, mastery. \"Deep Dive\", \"Knowledge Quest\", \"Experiment\".\n  - Guardian (gaba): Calm, structured, habit-building. Use nurturing language, consistency. \"Daily Ritual\", \"Foundation\", \"Habit Lock\".\n  - Connector (serotonin): Social, warm, community. Use connection language, relationships. \"Connection Quest\", \"Team Challenge\", \"Bond Builder\".\n\n  ADAPTIVE DIFFICULTY (CRITICAL — read the DIFFICULTY ADJUSTMENT section):\n  - If recommendation is \"reduce_difficulty\": Generate EASIER, SHORTER quests. Prefer 'easy' and 'medium' difficulty. Make tasks achievable in 5-15 minutes.\n  - If recommendation is \"balanced\": Mix of easy/medium/hard. Standard behavior.\n  - If recommendation is \"increase_challenge\": Generate HARDER quests. Include 'hard' and 'epic' difficulty. Push the user with ambitious targets.\n  - If a category has \"force_easier\" override: Make ALL quests in that category 'easy' difficulty with short duration.\n  - If a category has \"increase_challenge\" override: Make quests in that category 'hard' or 'epic'.\n\n  Personality Types:\n  - dopamine: Thrives on novelty, competition, and rewards. Prefers high-energy, varied tasks.\n  - acetylcholine: Loves learning, creativity, and deep thinking. Prefers intellectual and creative tasks.\n  - gaba: Values stability, routine, and social connection. Prefers consistent, community-oriented tasks.\n  - serotonin: Seeks meaning, structure, and achievement. Prefers organized, milestone-driven tasks.\n\n  Quest Timeframes:\n  - yearly: 1-3 big ambitious annual goals. These are epic-tier visions for the year.\n  - monthly: 3-5 monthly milestones that break down yearly goals into achievable chunks.\n  - weekly: 5-7 specific weekly targets derived from monthly goals.\n  - daily: 3-5 actionable daily tasks derived from weekly targets.\n\n  If generationMode is \"from-parent\", break down the parent quest into appropriate child quests for the requested timeframe.\n\n  Neurotransmitter Score Personalization (use when scores are provided):\n  - High dopamine deficiency: Include novel, exciting, competitive tasks to boost dopamine\n  - High acetylcholine deficiency: Include creative, learning-focused tasks to boost acetylcholine\n  - High GABA deficiency: Include routine, calming, community-oriented tasks to boost GABA\n  - High serotonin deficiency: Include structured, achievement-focused, meaningful tasks to boost serotonin\n\n  PERSONALIZATION RULES (CRITICAL):\n\n  1. TIME OPTIMIZATION:\n     - If timePreference is \"morning\": Schedule tasks early (7-9am mentions)\n     - If timePreference is \"afternoon\": Schedule for 12-3pm\n     - If timePreference is \"evening\": Schedule for 6-9pm\n     - If timePreference is \"night\": Schedule for late evening/night\n     - If preferredTaskDuration is \"quick\": Generate 5-15 min tasks\n     - If preferredTaskDuration is \"medium\": Generate 15-45 min tasks\n     - If preferredTaskDuration is \"deep\": Generate 1h+ deep work sessions\n\n  2. OCCUPATION & LIFESTYLE ADAPTATION:\n     - \"Remote Worker\": Include walk breaks, desk stretches, focus blocks\n     - \"Student\": Study sessions, campus activities, exam prep\n     - \"Office Worker\": Lunch break activities, commute suggestions, desk exercises\n     - \"Entrepreneur\": Business development, networking, strategic planning\n     - If mainChallenge is \"Finding time\": Create ultra-short tasks (5-10 min)\n     - If mainChallenge is \"Low energy\": Create energizing, movement-based tasks\n     - If mainChallenge is \"Staying focused\": Create time-boxed, distraction-free tasks\n     - If mainChallenge is \"Motivation\": Create reward-rich, exciting tasks\n     - If mainChallenge is \"Being consistent\": Create daily routine tasks\n\n  3. SUCCESS RATE ADAPTATION (categoryStats):\n     - If bestCategory has high completion_rate (>70%): Make those tasks MORE challenging\n     - If strugglingCategory has low completion_rate (<50%): Make those tasks EASIER and SHORTER\n     - Focus MORE on categories user succeeds at\n     - Focus LESS on categories user struggles with (or make them tiny micro-tasks)\n\n  4. FEEDBACK-DRIVEN PERSONALIZATION (categoryPreferences):\n     - If avgEnjoyment is high (>4): Generate MORE tasks in that category\n     - If avgEnjoyment is low (<3): Generate FEWER tasks in that category\n     - If avgDifficulty rating is \"too easy\" (<2.5): Increase difficulty\n     - If avgDifficulty rating is \"too hard\" (>4): Decrease difficulty\n\n  5. INTERESTS INTEGRATION:\n     - Weave user interests into task descriptions naturally\n\n  6. ABOUT ME (FREE TEXT) PERSONALIZATION:\n     - If the user provided an 'About Me' text, treat it as the HIGHEST PRIORITY context\n     - Tailor quests directly to what they described\n     - Use their language and terminology in task descriptions\n\n  7. TASK VARIETY:\n     - Avoid repeating recent tasks\n     - Match difficulty to user level (higher level = can handle harder tasks)\n     - Balance categories based on user preferences\n\n  Rules:\n  - Generate between the specified min and max task count\n  - Each task must have: title, description, category (fitness|mindfulness|learning|productivity|social|health|creativity), difficulty (easy|medium|hard|epic), xp_reward (easy=25, medium=50, hard=100, epic=200)\n  - For yearly quests, use difficulty=epic and xp_reward=200\n  - Tasks should be SPECIFIC, ACTIONABLE, and feel CUSTOM-MADE for this user\n  - Respond ONLY with valid JSON in format: {\"tasks\": [...]}\n\n  YEARLY QUEST RULES (when questTimeframe is \"yearly\" and userGoals is non-empty):\n  - Create exactly 1 MAIN quest that captures and polishes the user's stated goal\n  - You MAY add up to 2 SUPPORTING complementary quests\n  - The main quest MUST come first in the tasks array\n\n  LANGUAGE RULE (CRITICAL): Generate ALL task titles and descriptions in the language specified. Category names and difficulty values MUST stay in English.",
+                            "role": "system"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "a76faf19-a501-4c77-9d0a-a8206404f071",
+            "name": "Generate Tasks (OpenAI)",
+            "type": "@n8n/n8n-nodes-langchain.openAi",
+            "typeVersion": 1.8,
+            "position": [
+                320,
+                -64
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "mO5KBdt5hAygM9nH",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify([$json]) }}",
+                "options": {}
+            },
+            "id": "ad0829a6-0e6d-4292-a727-f9268e3833d4",
+            "name": "Respond to Webhook",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                704,
+                -64
+            ]
+        },
+        {
+            "parameters": {
+                "resource": "assistant",
+                "assistantId": {
+                    "__rl": true,
+                    "value": "asst_H304gvwJxEZYyZOs1Rt2PmRT",
+                    "mode": "list",
+                    "cachedResultName": "Extract Assistant"
+                },
+                "prompt": "define",
+                "text": "=You are the Quest Advisor for the XPLife app — a friendly, motivating life coach who speaks in a light gamification style.\n\nCORE PROFILE:\n- Personality type: {{ $json.personalityType }}\n- Level: {{ $json.level }}\n{{ $json.aboutMe ? '- About the user: ' + $json.aboutMe : '' }}\n- Neurotransmitter scores: {{ $json.neurotransmitterScores }}\n\nLIFESTYLE & PREFERENCES:\n{{ $json.timePreference ? '- Energy peak: ' + $json.timePreference + ' person' : '' }}\n{{ $json.preferredTaskDuration ? '- Prefers: ' + $json.preferredTaskDuration + ' tasks' : '' }}\n{{ $json.occupation ? '- Occupation: ' + $json.occupation : '' }}\n{{ $json.workSchedule ? '- Schedule: ' + $json.workSchedule : '' }}\n{{ $json.lifePhase ? '- Life phase: ' + $json.lifePhase : '' }}\n{{ $json.mainChallenge ? '- Biggest challenge: ' + $json.mainChallenge : '' }}\n{{ $json.interests && JSON.parse($json.interests).length > 0 ? '- Interests: ' + JSON.parse($json.interests).join(', ') : '' }}\n\nCURRENT CONTEXT:\n- Goals: {{ $json.goals }}\n- Recent tasks: {{ $json.recentTasks }}\n\nPersonality-based coaching style:\n- dopamine: Be energetic, use excitement, highlight rewards and novelty. Suggest bold challenges.\n- acetylcholine: Be thoughtful, offer insights, encourage creative and intellectual approaches.\n- gaba: Be warm and supportive, emphasize consistency, routine, and community.\n- serotonin: Be structured, offer clear steps, highlight progress and meaning.\n\nRules:\n- Keep responses concise (2-4 sentences max)\n- Be encouraging and positive\n- Reference their level when relevant\n- Use their interests and occupation to make advice feel personal\n- Suggest actionable advice tailored to their timePreference and preferredTaskDuration\n- Use light quest/RPG metaphors naturally\n- Respond in the user's language: {{ $json.language }}\n- Respond ONLY with valid JSON: { \"reply\": \"your message\" }\n\nUser message:\n\n={{ $json.message }}\n",
+                "options": {}
+            },
+            "id": "a9d5c6f5-596f-4045-8880-221b70071180",
+            "name": "AI Chat Response",
+            "type": "@n8n/n8n-nodes-langchain.openAi",
+            "typeVersion": 1.8,
+            "position": [
+                320,
+                336
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "mO5KBdt5hAygM9nH",
+                    "name": "OpenAi account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "xplife-chat",
+                "authentication": "headerAuth",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "c9f06332-cc05-43fa-83a9-bab1e2dc372d",
+            "name": "Webhook1",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                -128,
+                336
+            ],
+            "webhookId": "xplife-chat",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "I5GT8QaERkEBqeq6",
+                    "name": "X-Webhook-Secret"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify([$json]) }}",
+                "options": {}
+            },
+            "id": "da5c7075-8133-4c45-ab67-a0eadf368908",
+            "name": "Respond to Webhook1",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                704,
+                336
+            ]
+        },
+        {
+            "parameters": {
+                "sessionIdType": "customKey",
+                "sessionKey": "={{ $json.userId }}"
+            },
+            "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+            "typeVersion": 1.3,
+            "position": [
+                464,
+                592
+            ],
+            "id": "213ba94b-17ea-4c7a-9c85-afa97b23a86c",
+            "name": "Simple Memory"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "userId",
+                            "name": "userId",
+                            "value": "={{ $json.body.userId }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "personalityType",
+                            "name": "personalityType",
+                            "value": "={{ $json.body.personalityType }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "level",
+                            "name": "level",
+                            "value": "={{ $json.body.level }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "goals",
+                            "name": "goals",
+                            "value": "={{ JSON.stringify($json.body.goals) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "recentTasks",
+                            "name": "recentTasks",
+                            "value": "={{ JSON.stringify($json.body.recentTasks) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "userGoals",
+                            "name": "userGoals",
+                            "value": "={{ $json.body.userGoals || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "questTimeframe",
+                            "name": "questTimeframe",
+                            "value": "={{ $json.body.questTimeframe || 'daily' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "generationMode",
+                            "name": "generationMode",
+                            "value": "={{ $json.body.generationMode || 'manual' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "parentQuest",
+                            "name": "parentQuest",
+                            "value": "={{ $json.body.parentQuest ? JSON.stringify($json.body.parentQuest) : '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "neurotransmitterScores",
+                            "name": "neurotransmitterScores",
+                            "value": "={{ JSON.stringify($json.body.neurotransmitterScores || {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "taskCountMin",
+                            "name": "taskCountMin",
+                            "value": "={{ $json.body.taskCount ? $json.body.taskCount.min : 3 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "taskCountMax",
+                            "name": "taskCountMax",
+                            "value": "={{ $json.body.taskCount ? $json.body.taskCount.max : 5 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "categoryStats",
+                            "name": "categoryStats",
+                            "value": "={{ JSON.stringify($json.body.categoryStats || {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "bestCategory",
+                            "name": "bestCategory",
+                            "value": "={{ $json.body.bestCategory || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "strugglingCategory",
+                            "name": "strugglingCategory",
+                            "value": "={{ $json.body.strugglingCategory || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "timePreference",
+                            "name": "timePreference",
+                            "value": "={{ $json.body.timePreference || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "preferredTaskDuration",
+                            "name": "preferredTaskDuration",
+                            "value": "={{ $json.body.preferredTaskDuration || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "occupation",
+                            "name": "occupation",
+                            "value": "={{ $json.body.occupation || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "workSchedule",
+                            "name": "workSchedule",
+                            "value": "={{ $json.body.workSchedule || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "lifePhase",
+                            "name": "lifePhase",
+                            "value": "={{ $json.body.lifePhase || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "mainChallenge",
+                            "name": "mainChallenge",
+                            "value": "={{ $json.body.mainChallenge || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "interests",
+                            "name": "interests",
+                            "value": "={{ JSON.stringify($json.body.interests || []) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "categoryPreferences",
+                            "name": "categoryPreferences",
+                            "value": "={{ JSON.stringify($json.body.categoryPreferences || {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "aboutMe",
+                            "name": "aboutMe",
+                            "value": "={{ $json.body.aboutMe || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "parentQuests",
+                            "name": "parentQuests",
+                            "value": "={{ $json.body.parentQuests ? JSON.stringify($json.body.parentQuests) : '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "locale",
+                            "name": "locale",
+                            "value": "={{ $json.body.locale || 'en' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "language",
+                            "name": "language",
+                            "value": "={{ $json.body.language || 'English' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "questHistoryOverallRate",
+                            "name": "questHistoryOverallRate",
+                            "value": "={{ $json.body.questHistory ? Math.round($json.body.questHistory.overallCompletionRate * 100) : 0 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "questHistoryCompleted",
+                            "name": "questHistoryCompleted",
+                            "value": "={{ $json.body.questHistory ? $json.body.questHistory.totalCompleted : 0 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "questHistorySkipped",
+                            "name": "questHistorySkipped",
+                            "value": "={{ $json.body.questHistory ? $json.body.questHistory.totalSkipped : 0 }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "questHistoryByCategory",
+                            "name": "questHistoryByCategory",
+                            "value": "={{ JSON.stringify($json.body.questHistory ? $json.body.questHistory.completionByCategory : {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "questHistoryByDifficulty",
+                            "name": "questHistoryByDifficulty",
+                            "value": "={{ JSON.stringify($json.body.questHistory ? $json.body.questHistory.completionByDifficulty : {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "questHistoryAvgTime",
+                            "name": "questHistoryAvgTime",
+                            "value": "={{ $json.body.questHistory && $json.body.questHistory.avgCompletionTimeHours ? Math.round($json.body.questHistory.avgCompletionTimeHours * 10) / 10 : 'N/A' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "difficultyRecommendation",
+                            "name": "difficultyRecommendation",
+                            "value": "={{ $json.body.difficultyHint ? $json.body.difficultyHint.recommendation : 'balanced' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "difficultyReasoning",
+                            "name": "difficultyReasoning",
+                            "value": "={{ $json.body.difficultyHint ? $json.body.difficultyHint.reasoning : '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "difficultyCategoryOverrides",
+                            "name": "difficultyCategoryOverrides",
+                            "value": "={{ JSON.stringify($json.body.difficultyHint ? $json.body.difficultyHint.categoryOverrides : {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfileClassName",
+                            "name": "classProfileClassName",
+                            "value": "={{ $json.body.classProfile ? $json.body.classProfile.className : 'adventurer' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfileDisplayName",
+                            "name": "classProfileDisplayName",
+                            "value": "={{ $json.body.classProfile ? $json.body.classProfile.displayName : 'Hero' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfileQuestStyle",
+                            "name": "classProfileQuestStyle",
+                            "value": "={{ $json.body.classProfile ? $json.body.classProfile.questStyle : '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfileTone",
+                            "name": "classProfileTone",
+                            "value": "={{ $json.body.classProfile ? $json.body.classProfile.tone : '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfilePriorityCategories",
+                            "name": "classProfilePriorityCategories",
+                            "value": "={{ $json.body.classProfile ? JSON.stringify($json.body.classProfile.priorityCategories) : '[]' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "classProfileQuestPrefixes",
+                            "name": "classProfileQuestPrefixes",
+                            "value": "={{ $json.body.classProfile ? JSON.stringify($json.body.classProfile.questPrefixes) : '[]' }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "c7fad591-dd20-4240-9596-388e0bcd7590",
+            "name": "Parse Input",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                96,
+                -64
+            ]
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "userId",
+                            "name": "userId",
+                            "value": "={{ $json.body.userId }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "message",
+                            "name": "message",
+                            "value": "={{ $json.body.message }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "personalityType",
+                            "name": "personalityType",
+                            "value": "={{ $json.body.personalityType }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "level",
+                            "name": "level",
+                            "value": "={{ $json.body.level }}",
+                            "type": "number"
+                        },
+                        {
+                            "id": "aboutMe",
+                            "name": "aboutMe",
+                            "value": "={{ $json.body.aboutMe || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "recentTasks",
+                            "name": "recentTasks",
+                            "value": "={{ JSON.stringify($json.body.recentTasks || []) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "goals",
+                            "name": "goals",
+                            "value": "={{ JSON.stringify($json.body.goals || []) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "interests",
+                            "name": "interests",
+                            "value": "={{ JSON.stringify($json.body.interests || []) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "timePreference",
+                            "name": "timePreference",
+                            "value": "={{ $json.body.timePreference || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "preferredTaskDuration",
+                            "name": "preferredTaskDuration",
+                            "value": "={{ $json.body.preferredTaskDuration || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "occupation",
+                            "name": "occupation",
+                            "value": "={{ $json.body.occupation || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "workSchedule",
+                            "name": "workSchedule",
+                            "value": "={{ $json.body.workSchedule || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "lifePhase",
+                            "name": "lifePhase",
+                            "value": "={{ $json.body.lifePhase || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "mainChallenge",
+                            "name": "mainChallenge",
+                            "value": "={{ $json.body.mainChallenge || '' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "neurotransmitterScores",
+                            "name": "neurotransmitterScores",
+                            "value": "={{ JSON.stringify($json.body.neurotransmitterScores || {}) }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "locale",
+                            "name": "locale",
+                            "value": "={{ $json.body.locale || 'en' }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "language",
+                            "name": "language",
+                            "value": "={{ $json.body.language || 'English' }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "id": "ff7595ea-6941-4b28-938d-3f3832a2267b",
+            "name": "Parse Input1",
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                96,
+                336
+            ]
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Parse Input",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse Input": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Tasks (OpenAI)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Tasks (OpenAI)": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Webhook1": {
+            "main": [
+                [
+                    {
+                        "node": "Parse Input1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse Input1": {
+            "main": [
+                [
+                    {
+                        "node": "AI Chat Response",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Chat Response": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Simple Memory": {
+            "ai_memory": [
+                [
+                    {
+                        "node": "AI Chat Response",
+                        "type": "ai_memory",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "versionId": "v2-phase1",
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "simplifyopsco"
+    },
+    "tags": []
+}

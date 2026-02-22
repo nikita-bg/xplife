@@ -1,0 +1,909 @@
+{
+  "metadata": {
+    "title": "XPLife - Gamified To-Do List & ADHD Planner | Level Up Your Life",
+    "description": "Transform boring goals into epic RPG quests. Earn XP. Track streaks. Become your best self with AI-powered life optimization. Perfect for ADHD & building habits."
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success"
+  },
+  "navbar": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "login": "Log In",
+    "signup": "Start Your Journey"
+  },
+  "hero": {
+    "badge": "Join 1,000+ players leveling up right now",
+    "title": "Level Up",
+    "titleHighlight": "Your Life",
+    "description": "Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.",
+    "cta": "Start Playing Free",
+    "ctaSecondary": "How It Works",
+    "heroUser": "HERO_USER",
+    "heroRole": "Life Optimizer",
+    "xpLabel": "Experience Points",
+    "xpProgress": "{current} / {total} XP",
+    "questMorningMeditation": "Morning Meditation",
+    "questDeepWork": "30min Deep Work",
+    "questEveningReview": "Evening Review",
+    "statStreak": "Streak",
+    "statQuests": "Quests",
+    "statRank": "Rank",
+    "level": "LVL {level}"
+  },
+  "quiz": {
+    "questions": [
+      {
+        "question": "When you wake up, what energizes you most?",
+        "options": [
+          "A thrilling new challenge or adventure",
+          "Learning something new or creative work",
+          "A calm, structured morning routine",
+          "Connecting with loved ones or community"
+        ]
+      },
+      {
+        "question": "How do you prefer to handle stress?",
+        "options": [
+          "Intense physical activity or competition",
+          "Journaling, reading, or problem-solving",
+          "Meditation, yoga, or deep breathing",
+          "Talking it out with friends or family"
+        ]
+      },
+      {
+        "question": "What type of goals excite you the most?",
+        "options": [
+          "Bold, ambitious goals with big rewards",
+          "Skills mastery and intellectual growth",
+          "Stability, consistency, and inner peace",
+          "Building relationships and helping others"
+        ]
+      },
+      {
+        "question": "How would your friends describe you?",
+        "options": [
+          "Energetic, bold, and spontaneous",
+          "Curious, creative, and thoughtful",
+          "Calm, reliable, and grounded",
+          "Warm, empathetic, and supportive"
+        ]
+      },
+      {
+        "question": "What is your ideal way to recharge?",
+        "options": [
+          "Trying something exciting and new",
+          "Deep focus on a passion project",
+          "Rest, nature, and quiet time",
+          "Quality time with people I care about"
+        ]
+      }
+    ]
+  },
+  "personalities": {
+    "dopamine": {
+      "title": "The Adventurer",
+      "description": "You thrive on excitement, novelty, and bold challenges. Your quests will focus on pushing boundaries and achieving ambitious goals."
+    },
+    "acetylcholine": {
+      "title": "The Thinker",
+      "description": "You love learning, creativity, and deep focus. Your quests will center around skill mastery and intellectual growth."
+    },
+    "gaba": {
+      "title": "The Guardian",
+      "description": "You value stability, consistency, and inner peace. Your quests will build strong habits and promote balance."
+    },
+    "serotonin": {
+      "title": "The Connector",
+      "description": "You draw energy from relationships and community. Your quests will strengthen bonds and promote meaningful connections."
+    }
+  },
+  "taskCategories": {
+    "fitness": "Fitness",
+    "mindfulness": "Mindfulness",
+    "learning": "Learning",
+    "productivity": "Productivity",
+    "social": "Social",
+    "health": "Health",
+    "creativity": "Creativity"
+  },
+  "taskDifficulties": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "epic": "Epic"
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to",
+      "description": "You're about to embark on an epic quest to become your best self. Let's start by learning about you so we can craft the perfect challenges.",
+      "beginQuest": "Begin Quest",
+      "duration": "Takes about 2 minutes"
+    },
+    "title": "Discover Your Player Type",
+    "subtitle": "Answer 5 quick questions to unlock your personalized quest system",
+    "question": "Question {current} of {total}",
+    "calculating": "Analyzing your answers...",
+    "result": "You are...",
+    "continue": "Continue to Dashboard",
+    "timePreferences": {
+      "subtitle": "Personalize Your Experience",
+      "title": "When Do You Work Best?",
+      "description": "Help us schedule tasks at your peak performance times",
+      "energyQuestion": "When do you have the most energy?",
+      "durationQuestion": "Preferred task length?",
+      "continue": "Continue",
+      "timeOptions": {
+        "morning": {
+          "label": "Morning Person",
+          "description": "Most energetic in the morning"
+        },
+        "afternoon": {
+          "label": "Afternoon Peak",
+          "description": "Best focus after lunch"
+        },
+        "evening": {
+          "label": "Evening Energy",
+          "description": "Productive in the evening"
+        },
+        "night": {
+          "label": "Night Owl",
+          "description": "Work best at night"
+        }
+      },
+      "durationOptions": {
+        "quick": {
+          "label": "Quick Wins",
+          "description": "5-15 minute tasks"
+        },
+        "medium": {
+          "label": "Balanced Tasks",
+          "description": "15-45 minute tasks"
+        },
+        "deep": {
+          "label": "Deep Work",
+          "description": "1+ hour sessions"
+        }
+      }
+    },
+    "lifestyle": {
+      "subtitle": "Tell Us About You",
+      "title": "Your Lifestyle Context",
+      "description": "This helps us create tasks that fit your daily life",
+      "occupationQuestion": "What describes you best?",
+      "scheduleQuestion": "Work schedule (optional)",
+      "phaseQuestion": "Current life phase (optional)",
+      "challengeQuestion": "What's your biggest challenge?",
+      "continue": "Continue",
+      "occupationOptions": {
+        "student": "Student",
+        "officeWorker": "Office Worker",
+        "remoteWorker": "Remote Worker",
+        "entrepreneur": "Entrepreneur",
+        "freelancer": "Freelancer",
+        "healthcare": "Healthcare",
+        "creative": "Creative",
+        "other": "Other"
+      },
+      "scheduleOptions": {
+        "fullTime": "Full-time",
+        "partTime": "Part-time",
+        "flexible": "Flexible",
+        "shiftWork": "Shift work"
+      },
+      "phaseOptions": {
+        "buildingCareer": "Building career",
+        "workLifeBalance": "Work-life balance",
+        "studentLife": "Student life",
+        "exploring": "Exploring"
+      },
+      "challengeOptions": {
+        "findingTime": "Finding time",
+        "lowEnergy": "Low energy",
+        "stayingFocused": "Staying focused",
+        "motivation": "Motivation",
+        "beingConsistent": "Being consistent"
+      }
+    },
+    "interests": {
+      "subtitle": "Optional",
+      "title": "What Are Your Interests?",
+      "description": "Select up to 10 interests to personalize your tasks",
+      "selected": "{count}/10 selected",
+      "youSelected": "You selected:",
+      "skip": "Skip",
+      "continue": "Continue",
+      "options": {
+        "yoga": "Yoga",
+        "running": "Running",
+        "meditation": "Meditation",
+        "reading": "Reading",
+        "writing": "Writing",
+        "coding": "Coding",
+        "painting": "Painting",
+        "music": "Music",
+        "gaming": "Gaming",
+        "cooking": "Cooking",
+        "photography": "Photography",
+        "languages": "Languages",
+        "hiking": "Hiking",
+        "gardening": "Gardening",
+        "dancing": "Dancing",
+        "cycling": "Cycling",
+        "swimming": "Swimming",
+        "drawing": "Drawing",
+        "journaling": "Journaling",
+        "podcasts": "Podcasts"
+      }
+    },
+    "goalSetting": {
+      "subtitle": "Set Your Goals",
+      "title": "Choose Your Quest Lines",
+      "description": "Select {maxGoals} and write a goal for each",
+      "goalLabel": "{category} Goal",
+      "goalPlaceholder": "e.g., \"Run 5K in under 30 minutes\"",
+      "settingUp": "Setting up your quest...",
+      "startAdventure": "Start Your Adventure"
+    }
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "quests": "Quests",
+    "leaderboard": "Leaderboard",
+    "inventory": "Inventory",
+    "market": "Market",
+    "profile": "Profile",
+    "logout": "Log Out",
+    "totalXp": "Total XP",
+    "dayStreak": "Day Streak",
+    "startQuest": "START QUEST →",
+    "dailyQuest": "Daily Quest",
+    "weeklyQuest": "Weekly Quest",
+    "monthlyQuest": "Monthly Quest",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "classAdventurer": "THE ADVENTURER",
+    "classThinker": "THE THINKER",
+    "classGuardian": "THE GUARDIAN",
+    "classConnector": "THE CONNECTOR"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Log in to continue your quest",
+      "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Log In",
+      "loggingIn": "Logging in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "invalidCredentials": "Invalid email or password",
+      "emailNotConfirmed": "Your email is not confirmed yet. Please check your inbox or resend the confirmation link.",
+      "error": "Invalid email or password"
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Begin your journey to leveling up",
+      "email": "Email",
+      "emailPlaceholder": "hero@xplife.app",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "submit": "Create Account",
+      "creating": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "checkEmailTitle": "Check Your Email",
+      "checkEmailMessage": "We sent a confirmation link to your email. Click it to activate your account and start your quest.",
+      "error": "Something went wrong. Please try again.",
+      "login": "Log in",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "socialLogin": {
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGithub": "Continue with GitHub"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}",
+    "subtitle": "Here's your quest status for today",
+    "level": "Level {level}",
+    "xp": "{current} / {next} XP",
+    "stats": {
+      "totalXP": "Total XP",
+      "completedQuests": "Completed",
+      "currentStreak": "Streak",
+      "days": "days",
+      "best": "Best: {streak}d",
+      "experience": "Experience",
+      "xpToNextLevel": "{current} / {required} XP to next level",
+      "goldBalance": "Gold Balance",
+      "add": "Add"
+    },
+    "banners": {
+      "onboarding": {
+        "title": "Complete your quest setup!",
+        "description": "Answer a few questions so we can personalize your daily quests and XP rewards.",
+        "startQuiz": "Start Quiz"
+      },
+      "braverman": {
+        "title": "Unlock Deep Personality Insights",
+        "description": "Take the Braverman Assessment for +500 XP and personalized quests"
+      }
+    },
+    "questSection": {
+      "generate": "Generate",
+      "upgradeForMore": "Upgrade for more",
+      "noQuestsTitle": "No Quests Yet",
+      "noQuestsDescription": "Click \"Generate\" to create AI-powered {timeframe} quests.",
+      "completed": "Completed"
+    },
+    "activeQuests": "Active Quests",
+    "noQuests": "No active quests",
+    "generateQuests": "Generate Today's Quests",
+    "viewAll": "View All",
+    "dailyTasks": {
+      "title": "Today's Quests",
+      "generateQuests": "Generate Quests",
+      "generating": "Generating...",
+      "describeGoals": "Describe your goals",
+      "placeholder": "E.g. I want to exercise more, learn Spanish, read 20 pages daily...",
+      "emptyGoalsError": "Please describe your goals before generating quests.",
+      "tryAgain": "Try Again",
+      "upgradePlan": "Upgrade Plan",
+      "completeProfile": "Complete Profile",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "noQuestsTitle": "No Quests Yet",
+      "noQuestsDescription": "Click \"Generate Quests\" to get your personalized daily challenges.",
+      "completed": "Completed"
+    },
+    "questProgress": {
+      "noQuests": "No quests yet",
+      "progress": "{timeframe} progress",
+      "completed": "{completed}/{total} completed"
+    },
+    "questTimer": {
+      "expired": "Expired"
+    },
+    "questTabs": {
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "daily": "Daily",
+      "yearlyTitle": "Yearly Goals",
+      "monthlyTitle": "Monthly Milestones",
+      "weeklyTitle": "Weekly Targets",
+      "dailyTitle": "Today's Quests",
+      "questsTitle": "QUESTS",
+      "questsSubtitle": "Complete quests to earn XP, cases, and coins"
+    },
+    "autoRefresh": {
+      "generating": "Auto-generating quests...",
+      "generatingDescription": "Creating personalized quests based on your goals. This may take a moment."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "displayName": "Display Name",
+    "email": "Email",
+    "personality": "Personality Type",
+    "stats": {
+      "title": "Stats",
+      "totalXp": "Total XP",
+      "questsDone": "Quests Done",
+      "streak": "Streak"
+    },
+    "balance": {
+      "title": "Gold Balance",
+      "addEarnings": "Add Earnings"
+    },
+    "planNames": {
+      "premium": "Premium",
+      "lifetime": "Lifetime"
+    },
+    "save": "Save Changes",
+    "settings": {
+      "title": "Settings",
+      "displayName": "Display Name",
+      "avatar": "Avatar",
+      "uploadAvatar": "Upload Avatar",
+      "aboutMe": "About Me",
+      "aboutMePlaceholder": "Tell us about yourself — your business, goals, situation... The AI will use this to generate more relevant quests.",
+      "aboutMeChars": "{count}/500",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "saveSuccess": "Changes saved successfully!",
+      "logout": "Log Out",
+      "tabs": {
+        "general": "General",
+        "personalization": "Personalization"
+      },
+      "personalization": {
+        "timePreference": "Time Preference",
+        "timeOptions": {
+          "morning": "Morning Person",
+          "afternoon": "Afternoon Energy",
+          "evening": "Evening Focus",
+          "night": "Night Owl"
+        },
+        "taskDuration": "Task Duration",
+        "durationOptions": {
+          "quick": "Quick Wins (5-15m)",
+          "medium": "Balanced (15-45m)",
+          "deep": "Deep Dive (1h+)"
+        },
+        "occupation": "Occupation",
+        "selectOccupation": "Select occupation",
+        "occupationOptions": {
+          "student": "Student",
+          "officeWorker": "Office Worker",
+          "remoteWorker": "Remote Worker",
+          "freelancer": "Freelancer",
+          "stayAtHomeParent": "Stay-at-home Parent",
+          "entrepreneur": "Entrepreneur",
+          "retired": "Retired",
+          "other": "Other"
+        },
+        "workSchedule": "Work Schedule",
+        "selectSchedule": "Select schedule",
+        "scheduleOptions": {
+          "standard": "Standard 9-to-5",
+          "flexible": "Flexible Hours",
+          "shiftWork": "Shift Work",
+          "partTime": "Part-time",
+          "irregular": "Irregular"
+        },
+        "lifePhase": "Life Phase",
+        "selectLifePhase": "Select life phase",
+        "lifePhaseOptions": {
+          "highSchool": "High School",
+          "university": "University",
+          "earlyCareer": "Early Career",
+          "midCareer": "Mid Career",
+          "parent": "Parent",
+          "careerChange": "Career Change",
+          "retired": "Retired"
+        },
+        "mainChallenge": "Main Challenge",
+        "selectChallenge": "Select challenge",
+        "challengeOptions": {
+          "time": "Finding Time",
+          "energy": "Low Energy",
+          "focus": "Maintaining Focus",
+          "motivation": "Staying Motivated",
+          "consistency": "Consistency"
+        },
+        "interests": "Interests & Hobbies ({count}/10)",
+        "addCustomInterest": "Add custom interest...",
+        "preferNotToSay": "Prefer not to say"
+      }
+    }
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "subtitle": "Top players competing for glory",
+    "rank": "Rank",
+    "player": "Player",
+    "xp": "XP",
+    "level": "Level",
+    "streak": "Streak",
+    "lvl": "LVL {level}",
+    "noRankingsTitle": "No Rankings Yet",
+    "noRankingsDescription": "Complete quests to appear on the leaderboard.",
+    "yourRank": "Your rank:",
+    "anonymous": "Anonymous",
+    "you": "(You)"
+  },
+  "levelUp": {
+    "title": "Level Up!",
+    "description": "Congratulations! You have reached a new level.",
+    "level": "Level {level}",
+    "continue": "Continue"
+  },
+  "chat": {
+    "closeChat": "Close chat",
+    "openChat": "Open chat",
+    "title": "AI Quest Advisor",
+    "messagesLeft": "{remaining}/50 messages left today",
+    "emptyState": "Ask me anything about your quests and goals!",
+    "thinking": "Thinking...",
+    "placeholder": "Type a message...",
+    "errorDefault": "Something went wrong.",
+    "errorSend": "Failed to send message. Please try again.",
+    "tasksCreated": "{count} task(s) added to your quests!"
+  },
+  "generateQuestDialog": {
+    "title": "Generate {timeframe} Quests",
+    "description": "Create AI-powered {timeframe} quests tailored to your goals.",
+    "customGoal": "Custom Goal",
+    "fromQuest": "From {timeframe} Quest",
+    "selectQuest": "Select a {timeframe} quest",
+    "emptyGoalsError": "Please describe your goals before generating quests.",
+    "selectParentError": "Please select a parent quest.",
+    "tryAgain": "Try Again",
+    "upgradePlan": "Upgrade Plan",
+    "generate": "Generate",
+    "generateFromQuest": "Generate from Quest",
+    "generating": "Generating...",
+    "placeholder": "E.g. I want to exercise more, learn Spanish, read 20 pages daily...",
+    "yearly": "Yearly",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "daily": "Daily",
+    "generateError": "Failed to generate quests. Please try again.",
+    "cascadeProgress": "Generating {timeframe} quests...",
+    "cascadeComplete": "Created {yearly} yearly, {monthly} monthly, {weekly} weekly, {daily} daily quests!",
+    "cascadeFailed": "Cascade stopped. Generated quests so far have been saved.",
+    "cascadeStepDone": "{timeframe} quests created ({count})",
+    "cascadeDone": "Done"
+  },
+  "tasks": {
+    "title": "Task Details",
+    "description": "Description",
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "xpReward": "+{xp} XP",
+    "markComplete": "Mark as Complete",
+    "completed": "Completed!",
+    "back": "Back to Dashboard"
+  },
+  "landing": {
+    "features": {
+      "subtitle": "Power-Ups",
+      "title": "Your Arsenal of",
+      "titleHighlight": "Growth",
+      "description": "Everything you need to transform your daily routine into an adventure worth playing.",
+      "aiPowered": {
+        "title": "AI-Powered Tasks",
+        "description": "Personalized daily quests based on your hormonal type and psychology. Every task is crafted to push you forward."
+      },
+      "trackProgress": {
+        "title": "Track Your Progress",
+        "description": "Earn XP, maintain streaks, climb the leaderboard. Watch your real-life stats grow as you complete quests."
+      },
+      "deepPersonalization": {
+        "title": "Deep Personalization",
+        "description": "Braverman test integration for tasks that match YOUR brain chemistry. No one-size-fits-all approach."
+      }
+    },
+    "howItWorks": {
+      "subtitle": "Quest Guide",
+      "title": "How It",
+      "titleHighlight": "Works",
+      "description": "From signup to level-up in three simple steps.",
+      "step1": {
+        "step": "01",
+        "title": "Sign Up & Take Quick Quiz",
+        "description": "Answer a few questions about your lifestyle, goals, and brain type. It only takes 2 minutes."
+      },
+      "step2": {
+        "step": "02",
+        "title": "Get Daily AI Tasks",
+        "description": "Our AI crafts personalized quests every day based on your unique profile and progress."
+      },
+      "step3": {
+        "step": "03",
+        "title": "Complete & Level Up",
+        "description": "Finish quests to earn XP, unlock achievements, and climb the global leaderboard."
+      }
+    },
+    "socialProof": {
+      "badge": "Join 1,000+ people leveling up their lives",
+      "title": "Player",
+      "titleHighlight": "Reviews",
+      "testimonial1": {
+        "name": "Alex K.",
+        "role": "Software Engineer",
+        "quote": "I've tried every productivity app out there. XPLife is the first one that actually made me stick to my habits. The RPG mechanics are genius."
+      },
+      "testimonial2": {
+        "name": "Priya M.",
+        "role": "Student",
+        "quote": "The AI tasks are scarily accurate. It's like having a life coach that actually understands how my brain works. Hit a 60-day streak!"
+      },
+      "testimonial3": {
+        "name": "Jordan T.",
+        "role": "Freelancer",
+        "quote": "Competing with friends on the leaderboard turned my lazy mornings into productive power hours. Up 3 levels this month alone."
+      }
+    },
+    "finalCta": {
+      "title": "Ready to Start Your",
+      "titleHighlight": "Quest?",
+      "description": "Every day you wait is XP you'll never earn. Start your free quest today.",
+      "button": "Start Your Quest — It's Free",
+      "disclaimer": "No credit card required. Free forever, upgrade anytime."
+    },
+    "pricing": {
+      "subtitle": "Choose Your Path",
+      "title": "Select Your",
+      "titleHighlight": "Class",
+      "description": "No credit card needed. Upgrade anytime.",
+      "free": {
+        "name": "Start Free",
+        "cta": "Start Playing Free"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Most Popular",
+        "cta": "Go Premium"
+      },
+      "lifetime": {
+        "name": "Lifetime",
+        "badge": "Limited Offer",
+        "cta": "Lock In Lifetime Access"
+      }
+    }
+  },
+  "pricing": {
+    "features": {
+      "free": {
+        "feature1": "1 active goal",
+        "feature2": "15 AI-generated tasks per week",
+        "feature3": "Basic leaderboard access",
+        "feature4": "Community support",
+        "feature5": "15 AI chat messages per day",
+        "feature6": "3 yearly quests"
+      },
+      "premium": {
+        "feature1": "Unlimited AI tasks daily",
+        "feature2": "3 parallel goals",
+        "feature3": "Full AI coaching & insights",
+        "feature4": "Streak freezes (3/month)",
+        "feature5": "Priority leaderboard",
+        "feature6": "Advanced analytics",
+        "feature7": "Unlimited AI chat",
+        "feature8": "5 yearly quests"
+      },
+      "lifetime": {
+        "feature1": "Everything in Premium, forever",
+        "feature2": "No recurring payments",
+        "feature3": "Founding member badge",
+        "feature4": "Early access to new features"
+      }
+    }
+  },
+  "upgradeBanner": {
+    "premiumPlan": "Premium Plan",
+    "lifetimePlan": "Lifetime Plan",
+    "active": "Active",
+    "upgradeToPremium": "Upgrade to Premium",
+    "unlimitedTasks": "Unlimited AI tasks & more",
+    "upgradeYourPlan": "Upgrade Your Plan",
+    "unlockFeatures": "Unlock unlimited AI tasks, 3 parallel goals, coaching & more.",
+    "premiumButton": "Premium — €4.99/mo",
+    "lifetimeButton": "Lifetime — €49"
+  },
+  "levelTitles": {
+    "novice": "Novice",
+    "legend": "Legend"
+  },
+  "blog": {
+    "metaTitle": "Blog | XPLife",
+    "metaDescription": "Tips, strategies, and insights on gamified productivity, habit building, and leveling up your real life.",
+    "badge": "Quest Log",
+    "title": "The",
+    "titleHighlight": "Quest Log",
+    "subtitle": "Tips, strategies, and insights on gamified productivity and leveling up your real life.",
+    "emptyTitle": "No Posts Yet",
+    "emptyDescription": "New quests are being written. Check back soon!",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "readTime": "{minutes} min read",
+    "ctaTitle": "Ready to Level Up?",
+    "ctaDescription": "Stop reading about it. Start playing. Your quests are waiting.",
+    "ctaButton": "Start Playing Free"
+  },
+  "footer": {
+    "tagline": "Level up your life, one quest at a time.",
+    "copyright": "© 2025 XPLife. All rights reserved.",
+    "links": {
+      "about": "About",
+      "blog": "Blog",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  },
+  "braverman": {
+    "page": {
+      "locked": "Locked",
+      "lockedDescription": "The Braverman Nature Assessment unlocks at Level {level}. Complete daily quests to earn XP and level up!",
+      "title": "Braverman Nature Assessment",
+      "subtitle": "140 questions to discover your neurotransmitter profile. Earn 500 XP on completion.",
+      "resultsTitle": "Braverman Assessment",
+      "resultsSubtitle": "Your personality profile results"
+    },
+    "test": {
+      "sectionDopamine": "Part 1: Dopamine",
+      "sectionAcetylcholine": "Part 2: Acetylcholine",
+      "sectionGaba": "Part 3: GABA",
+      "sectionSerotonin": "Part 4: Serotonin",
+      "never": "Never",
+      "sometimes": "Sometimes",
+      "often": "Often",
+      "always": "Always",
+      "progress": "{current} of {total}",
+      "previous": "Previous",
+      "next": "Next",
+      "submit": "Submit Assessment",
+      "submitting": "Submitting...",
+      "error": "Please answer all {count} questions before submitting.",
+      "xpEarned": "+{xp} XP Earned!",
+      "levelUp": "Level Up! You are now Level {level}",
+      "questionTooltip": "Question {number}"
+    },
+    "results": {
+      "dominantType": "Your Dominant Type:",
+      "deficiencyScores": "Deficiency Scores",
+      "deficiencyDescription": "Higher scores indicate greater deficiency — your quests will target these areas.",
+      "dominant": "(Dominant)",
+      "backToDashboard": "Back to Dashboard",
+      "dopamine": "Dopamine",
+      "acetylcholine": "Acetylcholine",
+      "gaba": "GABA",
+      "serotonin": "Serotonin"
+    },
+    "questions": [
+      "I feel tired or fatigued during the day.",
+      "I need caffeine to get going in the morning.",
+      "I have difficulty concentrating or focusing.",
+      "I feel sluggish or mentally slow.",
+      "I lack motivation to start or complete tasks.",
+      "I crave sugary or high-carb foods.",
+      "I have a low sex drive.",
+      "I feel indifferent or emotionally flat.",
+      "I have trouble waking up in the morning.",
+      "I tend to procrastinate on important tasks.",
+      "I have a hard time staying alert during meetings or lectures.",
+      "I feel bored easily.",
+      "I have difficulty making decisions.",
+      "I have low physical energy or endurance.",
+      "I feel like I am not living up to my potential.",
+      "I have poor hand-eye coordination.",
+      "I experience tremors or shaky hands.",
+      "I feel a need for constant stimulation or excitement.",
+      "I have gained weight without changing my diet.",
+      "I rely on energy drinks, supplements, or stimulants.",
+      "I have trouble finishing projects I start.",
+      "I struggle with addictive tendencies (food, screens, substances).",
+      "I feel detached from activities I used to enjoy.",
+      "I have difficulty with abstract thinking or problem solving.",
+      "I feel physically weak or lack muscle tone.",
+      "I have slow reflexes or reaction time.",
+      "I often feel dissatisfied with life.",
+      "I have difficulty following through on commitments.",
+      "I feel the need to take frequent naps.",
+      "I crave chocolate or sweets intensely.",
+      "I have been told I seem \"checked out\" or distant.",
+      "I feel lightheaded when I stand up quickly.",
+      "I have low blood pressure.",
+      "I prefer sedentary activities over physical ones.",
+      "I have difficulty handling multiple tasks at once.",
+      "I forget where I put things (keys, phone, wallet).",
+      "I have difficulty remembering names of people I meet.",
+      "I lose my train of thought mid-sentence.",
+      "I have trouble recalling recent conversations.",
+      "I find it hard to learn new information quickly.",
+      "I have difficulty reading and retaining what I read.",
+      "I struggle to visualize things in my mind.",
+      "I have poor sense of direction.",
+      "I cannot easily recall details of past events.",
+      "I have difficulty with verbal fluency or finding the right word.",
+      "I have trouble following complex instructions.",
+      "I feel my creativity has declined.",
+      "I have slow mental processing speed.",
+      "I struggle to maintain attention for long periods.",
+      "I have difficulty recognizing familiar faces.",
+      "I experience frequent \"tip of the tongue\" moments.",
+      "I have trouble doing mental arithmetic.",
+      "I make more spelling or writing errors than I used to.",
+      "I have difficulty understanding abstract concepts.",
+      "I feel my memory is worse than others my age.",
+      "I struggle to recall facts and figures.",
+      "I have trouble concentrating when reading.",
+      "I need to re-read paragraphs to understand them.",
+      "I feel less sharp mentally than I used to.",
+      "I have difficulty with spatial reasoning or puzzles.",
+      "I forget appointments or scheduled events.",
+      "I have decreased interest in learning new things.",
+      "I feel my vocabulary has shrunk.",
+      "I have difficulty following movie or book plots.",
+      "I struggle with tasks requiring visual imagination.",
+      "I have difficulty with hand-writing or typing speed.",
+      "I feel my comprehension has declined.",
+      "I have trouble multitasking effectively.",
+      "I have difficulty remembering lists or sequences.",
+      "I feel a general mental fogginess or haziness.",
+      "I feel anxious or nervous without a clear reason.",
+      "I experience heart palpitations or a racing heart.",
+      "I have tense or tight muscles.",
+      "I have difficulty relaxing even when I have free time.",
+      "I feel restless or on edge.",
+      "I have trouble falling asleep because my mind races.",
+      "I startle easily at sudden noises.",
+      "I feel overwhelmed by everyday tasks.",
+      "I worry excessively about things.",
+      "I experience shortness of breath during stressful moments.",
+      "I have digestive issues linked to stress (upset stomach, IBS).",
+      "I clench my jaw or grind my teeth.",
+      "I have difficulty sitting still.",
+      "I experience panic attacks or intense anxiety spikes.",
+      "I feel I cannot handle one more thing on my plate.",
+      "I have cold or sweaty hands.",
+      "I feel unsteady or unstable emotionally.",
+      "I experience headaches related to tension or stress.",
+      "I feel a sense of dread or impending doom.",
+      "I have difficulty being patient.",
+      "I get irritated or frustrated easily.",
+      "I rely on alcohol, food, or substances to calm down.",
+      "I have trouble with organization and staying tidy.",
+      "I feel nervous in social situations.",
+      "I experience back pain or body aches from tension.",
+      "I have night sweats or wake up feeling anxious.",
+      "I feel like my nervous system is always \"on\".",
+      "I have difficulty delegating tasks to others.",
+      "I feel guilty when I take time to relax.",
+      "I have ringing in my ears (tinnitus).",
+      "I have a trembling or quivering voice when stressed.",
+      "I feel on high alert in new environments.",
+      "I have difficulty saying \"no\" to people.",
+      "I experience frequent urination when anxious.",
+      "I feel my stress levels are higher than most people.",
+      "I feel sad or down for no apparent reason.",
+      "I have difficulty falling or staying asleep.",
+      "I crave carbohydrates, bread, or pasta.",
+      "I have low self-esteem or confidence.",
+      "I am easily irritated or have mood swings.",
+      "I feel hopeless about the future.",
+      "I have less interest in activities I once enjoyed.",
+      "I am overly sensitive to criticism.",
+      "I feel disconnected from others.",
+      "I have difficulty controlling my appetite.",
+      "I experience afternoon energy crashes.",
+      "I have obsessive or repetitive thoughts.",
+      "I feel tense or unable to unwind at the end of the day.",
+      "I have difficulty experiencing pleasure.",
+      "I am a perfectionist who gets upset when things are not right.",
+      "I have a negative inner voice or self-talk.",
+      "I find it hard to forgive myself or others.",
+      "I prefer to be alone rather than with others.",
+      "I have chronic pain or fibromyalgia symptoms.",
+      "I experience seasonal mood changes (worse in winter).",
+      "I have difficulty making decisions due to self-doubt.",
+      "I feel angry or resentful more than I should.",
+      "I have a tendency to overeat or binge eat.",
+      "I experience PMS, hormonal mood changes, or hot flashes.",
+      "I have difficulty with impulse control.",
+      "I feel emotionally numb or detached.",
+      "I have constipation or irregular digestion.",
+      "I wake up too early and cannot fall back asleep.",
+      "I am slower to recover from illness or injury.",
+      "I think about food or eating more than I should.",
+      "I have lost interest in intimacy or physical affection.",
+      "I have thoughts of self-harm or worthlessness.",
+      "I have difficulty maintaining routines or habits.",
+      "I experience unexplained crying spells.",
+      "I feel life lacks meaning or purpose."
+    ]
+  }
+}
