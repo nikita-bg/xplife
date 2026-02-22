@@ -13,7 +13,6 @@ import type { RankTier } from '@/components/character/CharacterConfig'
 
 const NAV_KEYS = [
     { key: 'dashboard', href: '/dashboard' },
-    { key: 'quests', href: '/quests' },
     { key: 'leaderboard', href: '/leaderboard' },
     { key: 'inventory', href: '/inventory' },
     { key: 'market', href: '/market' },

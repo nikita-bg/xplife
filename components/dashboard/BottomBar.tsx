@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { motion, animate } from 'framer-motion'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { LayoutDashboard, Swords, Trophy, Package, Store, User } from 'lucide-react'
+import { LayoutDashboard, Trophy, Package, Store, User } from 'lucide-react'
 
 interface QuestProgress {
     completed: number
@@ -29,7 +29,6 @@ function progressColor(completed: number, total: number): string {
 
 const NAV_ITEMS = [
     { key: 'dashboard', icon: LayoutDashboard, href: '/dashboard' },
-    { key: 'quests', icon: Swords, href: '/quests' },
     { key: 'leaderboard', icon: Trophy, href: '/leaderboard' },
     { key: 'inventory', icon: Package, href: '/inventory' },
     { key: 'market', icon: Store, href: '/market' },
