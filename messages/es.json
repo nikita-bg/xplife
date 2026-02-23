@@ -367,8 +367,14 @@
       "noAccount": "¿No tienes una cuenta?",
       "signupLink": "Regístrate",
       "invalidCredentials": "Correo electrónico o contraseña inválidos",
-      "emailNotConfirmed": "Tu correo electrónico aún no está confirmado. Por favor, revisa tu bandeja de entrada o reenvía el enlace de confirmación.",
-      "error": "Correo electrónico o contraseña inválidos"
+      "emailNotConfirmed": "Correo no confirmado. Revisa tu bandeja o haz clic en Reenviar.",
+      "error": "Correo electrónico o contraseña inválidos",
+      "continueWithGoogle": "Continuar con Google",
+      "continueWithGithub": "Continuar con GitHub",
+      "or": "O",
+      "backToSignIn": "Volver a iniciar sesión",
+      "terms": "Al iniciar sesión, aceptas nuestros Términos y Política de Privacidad",
+      "resendConfirmation": "Reenviar correo de confirmación"
     },
     "signup": {
       "title": "Comienza Tu Viaje",
@@ -387,7 +393,13 @@
       "checkEmailMessage": "Enviamos un enlace de confirmación a tu correo electrónico. Haz clic en él para activar tu cuenta y comenzar tu misión.",
       "login": "Iniciar sesión",
       "error": "Error al crear la cuenta",
-      "passwordMismatch": "Las contraseñas no coinciden"
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+      "alreadyRegistered": "Este correo ya está registrado. Intenta iniciar sesión.",
+      "notConfirmedResent": "Correo registrado pero no confirmado. Reenviamos el enlace de confirmación.",
+      "confirmationResent": "Enlace de confirmación reenviado! Revisa tu bandeja.",
+      "checkEmail": "Revisa Tu Correo",
+      "checkEmailDesc": "Enviamos un enlace de confirmación a {email}. Haz clic para activar tu cuenta."
     },
     "socialLogin": {
       "continueWithGoogle": "Continuar con Google",

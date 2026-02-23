@@ -367,8 +367,14 @@
       "noAccount": "Don't have an account?",
       "signupLink": "Sign up",
       "invalidCredentials": "Invalid email or password",
-      "emailNotConfirmed": "Your email is not confirmed yet. Please check your inbox or resend the confirmation link.",
-      "error": "Invalid email or password"
+      "emailNotConfirmed": "Email not confirmed. Check your inbox or click Resend.",
+      "error": "Invalid email or password",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGithub": "Continue with GitHub",
+      "or": "OR",
+      "backToSignIn": "Back to Sign In",
+      "terms": "By signing in, you agree to our Terms & Privacy Policy",
+      "resendConfirmation": "Resend confirmation email"
     },
     "signup": {
       "title": "Create Account",
@@ -387,7 +393,13 @@
       "checkEmailMessage": "We sent a confirmation link to your email. Click it to activate your account and start your quest.",
       "error": "Something went wrong. Please try again.",
       "login": "Log in",
-      "passwordMismatch": "Passwords do not match"
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "alreadyRegistered": "This email is already registered. Try logging in.",
+      "notConfirmedResent": "Email registered but not confirmed. We re-sent the confirmation link.",
+      "confirmationResent": "Confirmation link re-sent! Check your inbox.",
+      "checkEmail": "Check Your Email",
+      "checkEmailDesc": "We sent a confirmation link to {email}. Click it to activate your account."
     },
     "socialLogin": {
       "continueWithGoogle": "Continue with Google",

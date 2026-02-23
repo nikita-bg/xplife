@@ -367,8 +367,14 @@
       "noAccount": "还没有账户？",
       "signupLink": "注册",
       "invalidCredentials": "无效的电子邮件或密码",
-      "emailNotConfirmed": "您的电子邮件尚未确认。请检查您的收件箱或重新发送确认链接。",
-      "error": "无效的电子邮件或密码"
+      "emailNotConfirmed": "邮箱尚未确认。请检查收件箱或点击重新发送。",
+      "error": "无效的电子邮件或密码",
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithGithub": "使用 GitHub 继续",
+      "or": "或者",
+      "backToSignIn": "返回登录",
+      "terms": "登录即表示您同意我们的服务条款和隐私政策",
+      "resendConfirmation": "重新发送确认邮件"
     },
     "signup": {
       "title": "开始您的旅程",
@@ -387,7 +393,13 @@
       "checkEmailMessage": "我们已向您的电子邮件发送了确认链接。点击它以激活您的账户并开始您的任务。",
       "login": "登录",
       "error": "创建账户失败",
-      "passwordMismatch": "密码不匹配"
+      "passwordMismatch": "密码不匹配",
+      "passwordTooShort": "密码至少需要6个字符",
+      "alreadyRegistered": "该邮箱已注册。请尝试登录。",
+      "notConfirmedResent": "邮箱已注册但未确认。我们已重新发送确认链接。",
+      "confirmationResent": "确认链接已重新发送！请检查收件箱。",
+      "checkEmail": "检查您的邮箱",
+      "checkEmailDesc": "我们向 {email} 发送了确认链接。点击它来激活您的账户。"
     },
     "socialLogin": {
       "continueWithGoogle": "使用 Google 继续",

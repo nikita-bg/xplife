@@ -367,8 +367,14 @@
       "noAccount": "アカウントをお持ちでないですか？",
       "signupLink": "サインアップ",
       "invalidCredentials": "無効なメールアドレスまたはパスワード",
-      "emailNotConfirmed": "メールアドレスがまだ確認されていません。受信トレイを確認するか、確認リンクを再送信してください。",
-      "error": "無効なメールアドレスまたはパスワード"
+      "emailNotConfirmed": "メールが確認されていません。受信トレイを確認するか、再送をクリックしてください。",
+      "error": "無効なメールアドレスまたはパスワード",
+      "continueWithGoogle": "Googleで続ける",
+      "continueWithGithub": "GitHubで続ける",
+      "or": "または",
+      "backToSignIn": "サインインに戻る",
+      "terms": "サインインすることで利用規約とプライバシーポリシーに同意します",
+      "resendConfirmation": "確認メールを再送する"
     },
     "signup": {
       "title": "旅を始めましょう",
@@ -387,7 +393,13 @@
       "checkEmailMessage": "確認リンクをメールに送信しました。クリックしてアカウントを有効化し、クエストを開始してください。",
       "login": "ログイン",
       "error": "アカウントの作成に失敗しました",
-      "passwordMismatch": "パスワードが一致しません"
+      "passwordMismatch": "パスワードが一致しません",
+      "passwordTooShort": "パスワードは6文字以上必要です",
+      "alreadyRegistered": "このメールはすでに登録されています。ログインしてください。",
+      "notConfirmedResent": "メールは登録済みですが未確認です。確認リンクを再送しました。",
+      "confirmationResent": "確認リンクを再送しました！受信トレイを確認してください。",
+      "checkEmail": "メールを確認してください",
+      "checkEmailDesc": "{email} に確認リンクを送りました。クリックしてアカウントを有効にしてください。"
     },
     "socialLogin": {
       "continueWithGoogle": "Googleで続ける",

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Camera, Globe, AlertTriangle, Loader2, Save, Clock, Heart, X, Plus } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useMessages } from 'next-intl';
 import { useProfile } from '@/hooks/use-profile';
 import { getRankFromLevel } from '@/lib/xpUtils';
 import { createClient } from '@/lib/supabase/client';
@@ -36,6 +36,10 @@ export default function ProfilePage() {
     const dz = useTranslations('profile.dangerZone');
     const sl = useTranslations('profile.statsLabels');
     const pers = useTranslations('profile.settings.personalization');
+    const messages = useMessages() as Record<string, unknown>;
+    const interestOptions = ((messages as Record<string, unknown>)?.onboarding as Record<string, unknown>)?.interests as Record<string, unknown>;
+    const interestLabels = (interestOptions?.options || {}) as Record<string, string>;
+    const getInterestLabel = (key: string) => interestLabels[key] || key.charAt(0).toUpperCase() + key.slice(1);
     const { profile, streak, loading, refresh } = useProfile();
     const router = useRouter();
     const pathname = usePathname();
@@ -324,7 +328,7 @@ export default function ProfilePage() {
                                     }`}
                             >
                                 {active ? <X size={10} className="inline mr-1" /> : <Plus size={10} className="inline mr-1" />}
-                                {interest}
+                                {getInterestLabel(interest)}
                             </button>
                         );
                     })}
