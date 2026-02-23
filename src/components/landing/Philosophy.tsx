@@ -34,17 +34,6 @@ const Philosophy = () => {
         return () => ctx.revert();
     }, []);
 
-    const textToReveal = "making your real life feel like an epic RPG.";
-    const renderWords = () => {
-        return textToReveal.split(' ').map((word, i) => {
-            const isAccent = word.includes('epic') || word.includes('RPG');
-            return (
-                <span key={i} className={`reveal-word inline-block mr-[2vw] ${isAccent ? 'text-accent text-shadow-glow' : 'text-ghost'}`}>
-                    {word}
-                </span>
-            );
-        });
-    };
 
     return (
         <section ref={containerRef} className="relative w-full py-40 md:py-60 overflow-hidden bg-primary flex items-center justify-center">
@@ -55,14 +44,14 @@ const Philosophy = () => {
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-background via-transparent to-background hidden pointer-events-none"></div>
             <div className="relative z-10 max-w-7xl mx-auto px-6 w-full text-center flex flex-col items-center">
                 <p className="manifesto-intro font-sans text-ghost/40 text-lg md:text-2xl mb-8 tracking-wide font-medium">
-                    Most productivity apps focus on: task lists and reminders.
+                    {t('description')}
                 </p>
                 <div ref={textRef} className="overflow-visible">
                     <p className="manifesto-intro font-sans text-ghost/80 text-xl md:text-3xl mb-4 italic tracking-wide">
-                        We focus on:
+                        {t('title')}
                     </p>
-                    <h2 className="font-drama font-black italic text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] leading-[1.1] tracking-tighter w-full max-w-[90vw] mx-auto text-balance">
-                        {renderWords()}
+                    <h2 className="font-drama font-black italic text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] leading-[1.1] tracking-tighter w-full max-w-[90vw] mx-auto text-balance text-accent text-shadow-glow">
+                        {t('titleHighlight')}
                     </h2>
                 </div>
                 <div className="mt-20 w-[1px] h-32 bg-gradient-to-b from-accent to-transparent"></div>
