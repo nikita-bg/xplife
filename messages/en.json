@@ -257,6 +257,79 @@
       "goalPlaceholder": "e.g., \"Run 5K in under 30 minutes\"",
       "settingUp": "Setting up your quest...",
       "startAdventure": "Start Your Adventure"
+    },
+    "quiz": {
+      "questions": [
+        {
+          "q": "When facing a challenge, you prefer to:",
+          "options": [
+            {
+              "text": "Dive in headfirst",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "Analyze all options carefully",
+              "cls": "Thinker"
+            },
+            {
+              "text": "Protect those around you",
+              "cls": "Guardian"
+            },
+            {
+              "text": "Rally a team to help",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "Your ideal weekend involves:",
+          "options": [
+            {
+              "text": "Exploring a new city",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "Reading and learning something new",
+              "cls": "Thinker"
+            },
+            {
+              "text": "Training and improving skills",
+              "cls": "Guardian"
+            },
+            {
+              "text": "Hosting a gathering with friends",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "You feel most accomplished when:",
+          "options": [
+            {
+              "text": "You conquer a fear",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "You solve a complex problem",
+              "cls": "Thinker"
+            },
+            {
+              "text": "You help someone overcome difficulty",
+              "cls": "Guardian"
+            },
+            {
+              "text": "You bring people together",
+              "cls": "Connector"
+            }
+          ]
+        }
+      ],
+      "classDescriptions": {
+        "Adventurer": "You thrive on exploration and new experiences. Your strength lies in adaptability and courage.",
+        "Thinker": "You excel at analysis and strategy. Your mind is your most powerful weapon.",
+        "Guardian": "You draw strength from protecting others. Discipline and dedication define your path.",
+        "Connector": "You empower those around you. Your charisma and empathy are your greatest gifts."
+      }
     }
   },
   "navigation": {

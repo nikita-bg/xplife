@@ -257,6 +257,79 @@
       "goalPlaceholder": "例如，\"在30分钟内跑完5公里\"",
       "settingUp": "正在设置您的任务...",
       "startAdventure": "开始您的冒险"
+    },
+    "quiz": {
+      "questions": [
+        {
+          "q": "面对挑战时，你更倾向于：",
+          "options": [
+            {
+              "text": "直接投入其中",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "仔细分析所有选项",
+              "cls": "Thinker"
+            },
+            {
+              "text": "保护周围的人",
+              "cls": "Guardian"
+            },
+            {
+              "text": "召集团队一起解决",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "你理想的周末是：",
+          "options": [
+            {
+              "text": "探索一座新城市",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "阅读和学习新知识",
+              "cls": "Thinker"
+            },
+            {
+              "text": "训练和提升技能",
+              "cls": "Guardian"
+            },
+            {
+              "text": "举办与朋友的聚会",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "你最有成就感的时刻是：",
+          "options": [
+            {
+              "text": "当你克服了恐惧",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "当你解决了复杂问题",
+              "cls": "Thinker"
+            },
+            {
+              "text": "当你帮助别人渡过难关",
+              "cls": "Guardian"
+            },
+            {
+              "text": "当你把人们聚集在一起",
+              "cls": "Connector"
+            }
+          ]
+        }
+      ],
+      "classDescriptions": {
+        "Adventurer": "你在探索和新体验中茁壮成长。你的力量在于适应力和勇气。",
+        "Thinker": "你擅长分析和战略。你的思维是你最强大的武器。",
+        "Guardian": "你从保护他人中汲取力量。纪律和奉献定义了你的道路。",
+        "Connector": "你赋予周围的人力量。你的魅力和同理心是你最大的礼物。"
+      }
     }
   },
   "navigation": {

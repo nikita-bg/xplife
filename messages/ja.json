@@ -257,6 +257,79 @@
       "goalPlaceholder": "例：「30分以内に5K走る」",
       "settingUp": "クエストを設定中...",
       "startAdventure": "冒険を始める"
+    },
+    "quiz": {
+      "questions": [
+        {
+          "q": "困難に直面したとき、あなたはどうしますか？",
+          "options": [
+            {
+              "text": "すぐに飛び込む",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "すべての選択肢を慎重に分析する",
+              "cls": "Thinker"
+            },
+            {
+              "text": "周りの人を守る",
+              "cls": "Guardian"
+            },
+            {
+              "text": "チームを集めて助けを求める",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "理想的な週末は？",
+          "options": [
+            {
+              "text": "新しい街を探索する",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "読書や新しいことを学ぶ",
+              "cls": "Thinker"
+            },
+            {
+              "text": "トレーニングとスキル向上",
+              "cls": "Guardian"
+            },
+            {
+              "text": "友人と集まりを開く",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "最も達成感を感じるのはいつですか？",
+          "options": [
+            {
+              "text": "恐怖を克服したとき",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "複雑な問題を解決したとき",
+              "cls": "Thinker"
+            },
+            {
+              "text": "誰かが困難を乗り越える手助けをしたとき",
+              "cls": "Guardian"
+            },
+            {
+              "text": "人々を一つにまとめたとき",
+              "cls": "Connector"
+            }
+          ]
+        }
+      ],
+      "classDescriptions": {
+        "Adventurer": "あなたは探求と新しい経験で輝きます。あなたの強みは適応力と勇気にあります。",
+        "Thinker": "あなたは分析と戦略が得意です。あなたの心は最強の武器です。",
+        "Guardian": "あなたは他者を守ることから力を引き出します。規律と献身があなたの道を定めます。",
+        "Connector": "あなたは周りの人を力づけます。あなたのカリスマ性と共感力があなたの最大の贈り物です。"
+      }
     }
   },
   "navigation": {

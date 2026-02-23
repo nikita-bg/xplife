@@ -257,6 +257,79 @@
       "goalPlaceholder": "ej., \"Correr 5K en menos de 30 minutos\"",
       "settingUp": "Configurando tu misión...",
       "startAdventure": "Comenzar Tu Aventura"
+    },
+    "quiz": {
+      "questions": [
+        {
+          "q": "Cuando enfrentas un desafío, prefieres:",
+          "options": [
+            {
+              "text": "Lanzarte de cabeza",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "Analizar todas las opciones cuidadosamente",
+              "cls": "Thinker"
+            },
+            {
+              "text": "Proteger a los que te rodean",
+              "cls": "Guardian"
+            },
+            {
+              "text": "Reunir un equipo para ayudar",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "Tu fin de semana ideal incluye:",
+          "options": [
+            {
+              "text": "Explorar una nueva ciudad",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "Leer y aprender algo nuevo",
+              "cls": "Thinker"
+            },
+            {
+              "text": "Entrenar y mejorar habilidades",
+              "cls": "Guardian"
+            },
+            {
+              "text": "Organizar una reunión con amigos",
+              "cls": "Connector"
+            }
+          ]
+        },
+        {
+          "q": "Te sientes más realizado cuando:",
+          "options": [
+            {
+              "text": "Conquistas un miedo",
+              "cls": "Adventurer"
+            },
+            {
+              "text": "Resuelves un problema complejo",
+              "cls": "Thinker"
+            },
+            {
+              "text": "Ayudas a alguien a superar una dificultad",
+              "cls": "Guardian"
+            },
+            {
+              "text": "Unes a las personas",
+              "cls": "Connector"
+            }
+          ]
+        }
+      ],
+      "classDescriptions": {
+        "Adventurer": "Prosperas en la exploración y las nuevas experiencias. Tu fuerza reside en la adaptabilidad y el coraje.",
+        "Thinker": "Sobresales en el análisis y la estrategia. Tu mente es tu arma más poderosa.",
+        "Guardian": "Obtienes fuerza de proteger a los demás. La disciplina y la dedicación definen tu camino.",
+        "Connector": "Empoderas a quienes te rodean. Tu carisma y empatía son tus mayores dones."
+      }
     }
   },
   "navigation": {

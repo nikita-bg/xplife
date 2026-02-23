@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { useRouter, usePathname } from 'next/navigation';
 import { Dumbbell, BookOpen, Brain, Briefcase, Users, Heart, Palette, ArrowRight, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useMessages } from 'next-intl';
 
 const categories = [
     { id: 'fitness', label: 'Fitness', icon: Dumbbell },
@@ -17,42 +17,9 @@ const categories = [
     { id: 'creativity', label: 'Creativity', icon: Palette },
 ];
 
-const quizQuestions = [
-    {
-        q: 'When facing a challenge, you prefer to:',
-        options: [
-            { text: 'Dive in headfirst', cls: 'Adventurer' },
-            { text: 'Analyze all options carefully', cls: 'Thinker' },
-            { text: 'Protect those around you', cls: 'Guardian' },
-            { text: 'Rally a team to help', cls: 'Connector' },
-        ]
-    },
-    {
-        q: 'Your ideal weekend involves:',
-        options: [
-            { text: 'Exploring a new city', cls: 'Adventurer' },
-            { text: 'Reading and learning something new', cls: 'Thinker' },
-            { text: 'Training and improving skills', cls: 'Guardian' },
-            { text: 'Hosting a gathering with friends', cls: 'Connector' },
-        ]
-    },
-    {
-        q: 'You feel most accomplished when:',
-        options: [
-            { text: 'You conquer a fear', cls: 'Adventurer' },
-            { text: 'You solve a complex problem', cls: 'Thinker' },
-            { text: 'You help someone overcome difficulty', cls: 'Guardian' },
-            { text: 'You bring people together', cls: 'Connector' },
-        ]
-    },
-];
+// Quiz questions are now loaded from translations (see quizQuestions below)
 
-const classData: Record<string, { emoji: string; color: string; desc: string }> = {
-    Adventurer: { emoji: '🗺️', color: 'text-accent-secondary', desc: 'You thrive on exploration and new experiences. Your strength lies in adaptability and courage.' },
-    Thinker: { emoji: '🧠', color: 'text-accent', desc: 'You excel at analysis and strategy. Your mind is your most powerful weapon.' },
-    Guardian: { emoji: '🛡️', color: 'text-tertiary', desc: 'You draw strength from protecting others. Discipline and dedication define your path.' },
-    Connector: { emoji: '🌿', color: 'text-green-400', desc: 'You empower those around you. Your charisma and empathy are your greatest gifts.' },
-};
+// classData colors remain static; descriptions loaded from translations
 
 /* ── Canvas Particles for Welcome Screen ── */
 const WelcomeParticles = () => {
@@ -95,6 +62,27 @@ const WelcomeParticles = () => {
 /* ── Onboarding Steps ── */
 export default function OnboardingPage() {
     const t = useTranslations('onboarding');
+    const messages = useMessages() as Record<string, unknown>;
+
+    // Load quiz questions from translation messages
+    const onboardingMsgs = (messages?.onboarding || {}) as Record<string, unknown>;
+    const quizMsgs = (onboardingMsgs?.quiz || {}) as Record<string, unknown>;
+    type QuizQuestion = { q: string; options: { text: string; cls: string }[] };
+    const quizQuestions: QuizQuestion[] = Array.isArray(quizMsgs?.questions) ? (quizMsgs.questions as QuizQuestion[]) : [];
+    const classDescriptions = (quizMsgs?.classDescriptions || {}) as Record<string, string>;
+
+    const classColors: Record<string, string> = {
+        Adventurer: 'text-accent-secondary',
+        Thinker: 'text-accent',
+        Guardian: 'text-tertiary',
+        Connector: 'text-green-400',
+    };
+    const classEmojis: Record<string, string> = {
+        Adventurer: '🗺️',
+        Thinker: '🧠',
+        Guardian: '🛡️',
+        Connector: '🌿',
+    };
     const [step, setStep] = useState(0);
     const [goals, setGoals] = useState<string[]>([]);
     const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
@@ -269,10 +257,10 @@ export default function OnboardingPage() {
 
                     {step === 3 && revealedClass && (
                         <div>
-                            <div className="text-7xl mb-6 animate-bounce">{classData[revealedClass].emoji}</div>
+                            <div className="text-7xl mb-6 animate-bounce">{classEmojis[revealedClass] || '⭐'}</div>
                             <p className="font-sans text-ghost/40 uppercase tracking-widest text-xs mb-2">{t('result')}</p>
-                            <h2 className={`font-drama italic font-bold text-4xl md:text-5xl ${classData[revealedClass].color} mb-4`}>The {revealedClass}</h2>
-                            <p className="font-sans text-ghost/60 max-w-md mx-auto mb-10">{classData[revealedClass].desc}</p>
+                            <h2 className={`font-drama italic font-bold text-4xl md:text-5xl ${classColors[revealedClass] || 'text-accent'} mb-4`}>The {revealedClass}</h2>
+                            <p className="font-sans text-ghost/60 max-w-md mx-auto mb-10">{classDescriptions[revealedClass] || ''}</p>
                             <button onClick={nextStep} className="btn-magnetic px-8 py-3 rounded-full bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading font-bold text-sm uppercase tracking-wider">
                                 <span className="btn-content flex items-center gap-2">{t('continue')} <ArrowRight size={16} /></span>
                             </button>
