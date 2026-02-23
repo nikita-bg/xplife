@@ -1027,7 +1027,8 @@
     "topDamage": "ダメージトップ",
     "defeated": "撃破",
     "active": "アクティブ",
-    "expired": "期限切れ"
+    "expired": "期限切れ",
+    "spawnBoss": "ボスを召喚"
   },
   "journal": {
     "title": "進捗ジャーナル",

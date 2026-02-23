@@ -1027,7 +1027,8 @@
     "topDamage": "Топ по щети",
     "defeated": "ПОБЕДЕН",
     "active": "АКТИВЕН",
-    "expired": "ИЗТЕКЪЛ"
+    "expired": "ИЗТЕКЪЛ",
+    "spawnBoss": "Призови Бос"
   },
   "journal": {
     "title": "Дневник на прогреса",

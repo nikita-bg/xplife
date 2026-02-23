@@ -1027,7 +1027,8 @@
     "topDamage": "伤害榜",
     "defeated": "已击败",
     "active": "活跃",
-    "expired": "已过期"
+    "expired": "已过期",
+    "spawnBoss": "召唤Boss"
   },
   "journal": {
     "title": "进度日志",

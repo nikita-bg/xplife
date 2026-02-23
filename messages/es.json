@@ -1027,7 +1027,8 @@
     "topDamage": "Máximo Daño",
     "defeated": "DERROTADO",
     "active": "ACTIVO",
-    "expired": "EXPIRADO"
+    "expired": "EXPIRADO",
+    "spawnBoss": "Invocar Jefe"
   },
   "journal": {
     "title": "Diario de Progreso",

@@ -1027,7 +1027,8 @@
     "topDamage": "Top Damage Dealers",
     "defeated": "DEFEATED",
     "active": "ACTIVE",
-    "expired": "EXPIRED"
+    "expired": "EXPIRED",
+    "spawnBoss": "Summon Boss"
   },
   "journal": {
     "title": "Progress Journal",

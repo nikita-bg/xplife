@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Skull, Swords, Trophy, Shield, Timer, Zap, Users } from 'lucide-react';
+import { Skull, Swords, Trophy, Shield, Timer, Zap, Users, Loader2 } from 'lucide-react';
 import gsap from 'gsap';
 import { useTranslations } from 'next-intl';
 
@@ -46,8 +46,22 @@ export default function BossPage() {
     const [contribution, setContribution] = useState<ContributionData | null>(null);
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
     const [loading, setLoading] = useState(true);
+    const [spawning, setSpawning] = useState(false);
     const hpBarRef = useRef<HTMLDivElement>(null);
     const bossCardRef = useRef<HTMLDivElement>(null);
+
+    const handleSpawnBoss = async () => {
+        setSpawning(true);
+        try {
+            const res = await fetch('/api/boss/spawn-user', { method: 'POST' });
+            if (res.ok) {
+                const data = await res.json();
+                setBoss(data.boss);
+                setActive(true);
+            }
+        } catch { /* silent */ }
+        setSpawning(false);
+    };
 
     useEffect(() => {
         const fetchBoss = async () => {
@@ -116,9 +130,17 @@ export default function BossPage() {
                     <Skull size={40} className="text-red-400/40" />
                 </div>
                 <h2 className="font-heading text-2xl font-bold uppercase tracking-wider mb-2">{t('noBoss')}</h2>
-                <p className="font-sans text-sm text-ghost/40">
+                <p className="font-sans text-sm text-ghost/40 mb-6">
                     {t('noBossDesc')}
                 </p>
+                <button
+                    onClick={handleSpawnBoss}
+                    disabled={spawning}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 font-heading font-bold text-sm tracking-wider uppercase hover:bg-red-500/30 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all disabled:opacity-50"
+                >
+                    {spawning ? <Loader2 size={16} className="animate-spin" /> : <Swords size={16} />}
+                    {spawning ? 'Summoning...' : t('spawnBoss')}
+                </button>
             </div>
         );
     }
