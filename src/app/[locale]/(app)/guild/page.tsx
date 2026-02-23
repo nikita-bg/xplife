@@ -71,6 +71,14 @@ export default function GuildPage() {
             setMembers(data.members || []);
             setQuests(data.quests || []);
             setUserRole(data.userRole || 'member');
+
+            // Auto-load invite code for admins/owners
+            if (['owner', 'admin'].includes(data.userRole || '')) {
+                fetch(`/api/guilds/${guildId}/invite`, { method: 'POST' })
+                    .then(r => r.ok ? r.json() : null)
+                    .then(d => { if (d?.inviteCode) setInviteCode(d.inviteCode); })
+                    .catch(() => { });
+            }
         }
     }, []);
 
@@ -143,9 +151,32 @@ export default function GuildPage() {
     };
 
     const copyInvite = () => {
-        navigator.clipboard.writeText(inviteCode);
-        setCopiedInvite(true);
-        setTimeout(() => setCopiedInvite(false), 2000);
+        if (!inviteCode) return;
+        // Try modern clipboard API first
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(inviteCode).then(() => {
+                setCopiedInvite(true);
+                setTimeout(() => setCopiedInvite(false), 2000);
+            }).catch(() => fallbackCopy(inviteCode));
+        } else {
+            fallbackCopy(inviteCode);
+        }
+    };
+
+    const fallbackCopy = (text: string) => {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'fixed';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        try {
+            document.execCommand('copy');
+            setCopiedInvite(true);
+            setTimeout(() => setCopiedInvite(false), 2000);
+        } catch { /* silent */ }
+        document.body.removeChild(el);
     };
 
     const handleContribute = async (questId: string) => {
@@ -456,17 +487,21 @@ export default function GuildPage() {
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5">
                         <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-3">{t('inviteCode')}</div>
                         {inviteCode ? (
-                            <div className="flex gap-2">
-                                <div className="flex-1 bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 font-data text-xs text-accent tracking-wider truncate">
+                            <div className="space-y-2">
+                                {/* Visible code — user can read/type it manually */}
+                                <div className="bg-white/[0.03] border border-white/10 rounded-xl px-3 py-3 font-data text-center text-base text-accent tracking-[0.3em] font-bold select-all">
                                     {inviteCode}
                                 </div>
-                                <button onClick={copyInvite} className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent hover:bg-accent/20 transition-colors shrink-0">
-                                    {copiedInvite ? <Check size={14} /> : <Copy size={14} />}
+                                <button
+                                    onClick={copyInvite}
+                                    className="w-full py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20 transition-colors flex items-center justify-center gap-2"
+                                >
+                                    {copiedInvite ? <><Check size={13} /> Copied!</> : <><Copy size={13} /> Copy Code</>}
                                 </button>
                             </div>
                         ) : (
                             <button onClick={generateInvite} className="w-full py-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/[0.06] transition-all">
-                                {t('copyInvite')}
+                                Generate Code
                             </button>
                         )}
                     </div>
