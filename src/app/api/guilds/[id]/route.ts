@@ -135,6 +135,10 @@ export async function PATCH(
         if (body.description !== undefined) updates.description = body.description?.trim() || null
         if (body.banner_url !== undefined) updates.banner_url = body.banner_url || null
         if (body.emblem !== undefined) updates.emblem = body.emblem || 'shield'
+        if (body.min_level !== undefined) updates.min_level = Math.max(1, Math.min(100, parseInt(body.min_level) || 1))
+        if (body.join_mode !== undefined && ['open', 'closed', 'approval'].includes(body.join_mode)) {
+            updates.join_mode = body.join_mode
+        }
 
         const { data: guild, error } = await admin
             .from('guilds')

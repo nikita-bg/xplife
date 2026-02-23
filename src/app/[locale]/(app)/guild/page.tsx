@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Shield, Plus, Users, Crown, Star, Swords, Copy, Check, LogIn, LogOut, Trash2, UserMinus, UserCheck } from 'lucide-react';
+import { Shield, Plus, Users, Crown, Star, Swords, Copy, Check, LogIn, LogOut, Trash2, UserMinus, UserCheck, Lock, Globe, Clock } from 'lucide-react';
 import gsap from 'gsap';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
@@ -19,6 +19,18 @@ interface GuildData {
     total_xp: number;
     created_at: string;
     userRole?: string;
+    join_mode?: string;
+    min_level?: number;
+}
+
+interface JoinRequest {
+    id: string;
+    user_id: string;
+    status: string;
+    created_at: string;
+    display_name?: string | null;
+    avatar_url?: string | null;
+    level?: number;
 }
 
 interface MemberData {
@@ -62,6 +74,10 @@ export default function GuildPage() {
     const [actionLoading, setActionLoading] = useState<string | null>(null);
     const [discoverGuilds, setDiscoverGuilds] = useState<GuildData[]>([]);
     const [joiningGuild, setJoiningGuild] = useState<string | null>(null);
+    const [pendingRequests, setPendingRequests] = useState<JoinRequest[]>([]);
+    const [settingsJoinMode, setSettingsJoinMode] = useState('open');
+    const [settingsMinLevel, setSettingsMinLevel] = useState(1);
+    const [savingSettings, setSavingSettings] = useState(false);
 
     const loadGuildDetails = useCallback(async (guildId: string) => {
         const res = await fetch(`/api/guilds/${guildId}`);
@@ -72,11 +88,21 @@ export default function GuildPage() {
             setQuests(data.quests || []);
             setUserRole(data.userRole || 'member');
 
+            // Set settings state
+            setSettingsJoinMode(data.guild?.join_mode || 'open');
+            setSettingsMinLevel(data.guild?.min_level || 1);
+
             // Auto-load invite code for admins/owners
             if (['owner', 'admin'].includes(data.userRole || '')) {
                 fetch(`/api/guilds/${guildId}/invite`, { method: 'POST' })
                     .then(r => r.ok ? r.json() : null)
                     .then(d => { if (d?.inviteCode) setInviteCode(d.inviteCode); })
+                    .catch(() => { });
+
+                // Load pending requests
+                fetch(`/api/guilds/${guildId}/requests`)
+                    .then(r => r.ok ? r.json() : { requests: [] })
+                    .then(d => setPendingRequests(d.requests || []))
                     .catch(() => { });
             }
         }
@@ -252,6 +278,43 @@ export default function GuildPage() {
         setShowEmblemPicker(false);
     };
 
+    const saveSettings = async () => {
+        if (!activeGuild) return;
+        setSavingSettings(true);
+        await fetch(`/api/guilds/${activeGuild.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ join_mode: settingsJoinMode, min_level: settingsMinLevel }),
+        });
+        setActiveGuild(prev => prev ? { ...prev, join_mode: settingsJoinMode, min_level: settingsMinLevel } : prev);
+        setSavingSettings(false);
+    };
+
+    const handleApproveRequest = async (requestId: string) => {
+        if (!activeGuild) return;
+        setActionLoading(`req-${requestId}`);
+        await fetch(`/api/guilds/${activeGuild.id}/requests`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ requestId, action: 'approve' }),
+        });
+        setPendingRequests(prev => prev.filter(r => r.id !== requestId));
+        loadGuildDetails(activeGuild.id);
+        setActionLoading(null);
+    };
+
+    const handleRejectRequest = async (requestId: string) => {
+        if (!activeGuild) return;
+        setActionLoading(`req-${requestId}`);
+        await fetch(`/api/guilds/${activeGuild.id}/requests`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ requestId, action: 'reject' }),
+        });
+        setPendingRequests(prev => prev.filter(r => r.id !== requestId));
+        setActionLoading(null);
+    };
+
     const handleDirectJoin = async (guildId: string) => {
         setJoiningGuild(guildId);
         try {
@@ -318,26 +381,35 @@ export default function GuildPage() {
                                 <Users size={14} /> DISCOVER GUILDS
                             </div>
                             <div className="space-y-3">
-                                {discoverGuilds.map(g => (
-                                    <div key={g.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-tertiary/20 transition-colors">
-                                        <div className="w-10 h-10 rounded-xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center p-2 text-tertiary shrink-0">
-                                            {getEmblemIcon(g.emblem || 'shield')}
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="font-heading text-sm font-bold text-white truncate">{g.name}</div>
-                                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">
-                                                {g.member_count} {t('members').toUpperCase()} • {(g.total_xp || 0).toLocaleString()} XP
+                                {discoverGuilds.map(g => {
+                                    const mode = g.join_mode || 'open';
+                                    const isClosed = mode === 'closed';
+                                    return (
+                                        <div key={g.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-tertiary/20 transition-colors">
+                                            <div className="w-10 h-10 rounded-xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center p-2 text-tertiary shrink-0">
+                                                {getEmblemIcon(g.emblem || 'shield')}
                                             </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="font-heading text-sm font-bold text-white truncate flex items-center gap-1">
+                                                    {g.name}
+                                                    {mode === 'closed' && <Lock size={10} className="text-red-400 shrink-0" />}
+                                                    {mode === 'approval' && <Clock size={10} className="text-yellow-400 shrink-0" />}
+                                                </div>
+                                                <div className="font-data text-[10px] text-ghost/40 tracking-wider">
+                                                    {g.member_count} {t('members').toUpperCase()} • {(g.total_xp || 0).toLocaleString()} XP
+                                                    {(g.min_level || 1) > 1 && <span className="text-yellow-400/60"> • LVL {g.min_level}+</span>}
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => handleDirectJoin(g.id)}
+                                                disabled={joiningGuild === g.id || isClosed}
+                                                className={`px-4 py-2 rounded-xl font-data text-[10px] uppercase tracking-wider transition-colors disabled:opacity-30 shrink-0 ${isClosed ? 'bg-white/[0.03] border border-white/10 text-ghost/30' : 'bg-accent/10 border border-accent/20 text-accent hover:bg-accent/20'}`}
+                                            >
+                                                {isClosed ? '🔒' : joiningGuild === g.id ? '...' : mode === 'approval' ? 'REQUEST' : 'JOIN'}
+                                            </button>
                                         </div>
-                                        <button
-                                            onClick={() => handleDirectJoin(g.id)}
-                                            disabled={joiningGuild === g.id}
-                                            className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-[10px] uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 shrink-0"
-                                        >
-                                            {joiningGuild === g.id ? '...' : 'JOIN'}
-                                        </button>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     )}
@@ -504,6 +576,97 @@ export default function GuildPage() {
                                 Generate Code
                             </button>
                         )}
+                    </div>
+                )}
+
+                {/* Guild Settings (admin/owner) */}
+                {isAdmin && (
+                    <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5">
+                        <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-3 flex items-center gap-2">
+                            <Swords size={12} /> Guild Settings
+                        </div>
+
+                        {/* Join Mode */}
+                        <div className="mb-3">
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider mb-1.5">JOIN MODE</div>
+                            <div className="grid grid-cols-3 gap-1.5">
+                                <button
+                                    onClick={() => setSettingsJoinMode('open')}
+                                    className={`py-2 rounded-lg font-data text-[10px] tracking-wider flex items-center justify-center gap-1 transition-colors ${settingsJoinMode === 'open' ? 'bg-green-400/20 border border-green-400/30 text-green-400' : 'bg-white/[0.03] border border-white/10 text-ghost/40 hover:bg-white/[0.06]'}`}
+                                >
+                                    <Globe size={10} /> OPEN
+                                </button>
+                                <button
+                                    onClick={() => setSettingsJoinMode('approval')}
+                                    className={`py-2 rounded-lg font-data text-[10px] tracking-wider flex items-center justify-center gap-1 transition-colors ${settingsJoinMode === 'approval' ? 'bg-yellow-400/20 border border-yellow-400/30 text-yellow-400' : 'bg-white/[0.03] border border-white/10 text-ghost/40 hover:bg-white/[0.06]'}`}
+                                >
+                                    <Clock size={10} /> APPROVAL
+                                </button>
+                                <button
+                                    onClick={() => setSettingsJoinMode('closed')}
+                                    className={`py-2 rounded-lg font-data text-[10px] tracking-wider flex items-center justify-center gap-1 transition-colors ${settingsJoinMode === 'closed' ? 'bg-red-400/20 border border-red-400/30 text-red-400' : 'bg-white/[0.03] border border-white/10 text-ghost/40 hover:bg-white/[0.06]'}`}
+                                >
+                                    <Lock size={10} /> CLOSED
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Min Level */}
+                        <div className="mb-3">
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider mb-1.5">MIN LEVEL TO JOIN</div>
+                            <input
+                                type="number"
+                                min={1}
+                                max={100}
+                                value={settingsMinLevel}
+                                onChange={(e) => setSettingsMinLevel(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+                                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 font-data text-sm text-ghost text-center focus:outline-none focus:border-tertiary/30 transition-colors"
+                            />
+                        </div>
+
+                        <button
+                            onClick={saveSettings}
+                            disabled={savingSettings}
+                            className="w-full py-2 rounded-xl bg-tertiary/10 border border-tertiary/20 text-tertiary font-data text-xs uppercase tracking-wider hover:bg-tertiary/20 transition-colors disabled:opacity-30"
+                        >
+                            {savingSettings ? 'Saving...' : 'Save Settings'}
+                        </button>
+                    </div>
+                )}
+
+                {/* Pending Join Requests (admin/owner, approval mode) */}
+                {isAdmin && pendingRequests.length > 0 && (
+                    <div className="bg-[#0C1021] rounded-[2rem] border border-yellow-400/20 p-5">
+                        <div className="font-heading text-xs uppercase tracking-widest text-yellow-400/60 mb-3 flex items-center gap-2">
+                            <Clock size={12} /> Pending Requests
+                            <span className="ml-auto bg-yellow-400/20 text-yellow-400 font-data text-[10px] px-2 py-0.5 rounded-full">{pendingRequests.length}</span>
+                        </div>
+                        <div className="space-y-2">
+                            {pendingRequests.map(req => (
+                                <div key={req.id} className="flex items-center gap-2 py-2 px-2 rounded-xl bg-white/[0.02] border border-white/5">
+                                    <div className="flex-1 min-w-0">
+                                        <div className="font-sans text-xs text-ghost/70 truncate">{req.display_name || 'Hero'}</div>
+                                        <div className="font-data text-[9px] text-ghost/30 tracking-wider">LVL {req.level ?? 1}</div>
+                                    </div>
+                                    <button
+                                        onClick={() => handleApproveRequest(req.id)}
+                                        disabled={actionLoading === `req-${req.id}`}
+                                        className="w-7 h-7 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center text-green-400 hover:bg-green-400/20 transition-colors"
+                                        title="Approve"
+                                    >
+                                        <Check size={12} />
+                                    </button>
+                                    <button
+                                        onClick={() => handleRejectRequest(req.id)}
+                                        disabled={actionLoading === `req-${req.id}`}
+                                        className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 hover:bg-red-500/20 transition-colors"
+                                        title="Reject"
+                                    >
+                                        <UserMinus size={12} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
 

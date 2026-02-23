@@ -26,7 +26,7 @@ export async function GET() {
     // Fetch all guilds, excluding ones user is already in
     let query = admin
         .from('guilds')
-        .select('id, name, description, emblem, member_count, total_xp, created_at')
+        .select('id, name, description, emblem, member_count, total_xp, created_at, join_mode, min_level')
         .order('member_count', { ascending: false })
         .limit(20)
 

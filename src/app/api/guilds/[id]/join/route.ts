@@ -4,9 +4,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
  * POST /api/guilds/[id]/join — Join a guild
- * Supports two modes:
- *   1. Direct join (no body needed) — for guild discovery
- *   2. Invite code join (body: { inviteCode }) — for private invites
+ * Supports:
+ *   - Direct join (no body) — for guild discovery (respects join_mode + min_level)
+ *   - Invite code join (body: { inviteCode }) — bypasses closed mode but not min_level
  */
 export async function POST(
     request: Request,
@@ -33,7 +33,34 @@ export async function POST(
         return NextResponse.json({ error: 'Already a member of this guild', guildId: params.id }, { status: 409 })
     }
 
-    // Try to parse body for invite code (optional)
+    // Fetch guild settings
+    const { data: guild } = await admin
+        .from('guilds')
+        .select('id, min_level, join_mode')
+        .eq('id', params.id)
+        .single()
+
+    if (!guild) {
+        return NextResponse.json({ error: 'Guild not found' }, { status: 404 })
+    }
+
+    // Fetch user level
+    const { data: userProfile } = await admin
+        .from('users')
+        .select('level')
+        .eq('id', user.id)
+        .single()
+
+    const userLevel = userProfile?.level ?? 1
+
+    // Check min_level
+    if (guild.min_level && userLevel < guild.min_level) {
+        return NextResponse.json({
+            error: `You need to be at least Level ${guild.min_level} to join this guild. You are Level ${userLevel}.`,
+        }, { status: 403 })
+    }
+
+    // Parse body for invite code (optional)
     let inviteCode: string | null = null
     try {
         const body = await request.json()
@@ -43,6 +70,7 @@ export async function POST(
     }
 
     // If invite code provided, validate it
+    const hasValidInvite = !!inviteCode
     if (inviteCode) {
         const { data: invite } = await admin
             .from('guild_invites')
@@ -70,18 +98,42 @@ export async function POST(
             .eq('id', invite.id)
     }
 
-    // Verify guild exists
-    const { data: guild } = await admin
-        .from('guilds')
-        .select('id')
-        .eq('id', params.id)
-        .single()
+    // Enforce join_mode (invite codes bypass 'closed' but not 'approval')
+    const joinMode = guild.join_mode || 'open'
 
-    if (!guild) {
-        return NextResponse.json({ error: 'Guild not found' }, { status: 404 })
+    if (joinMode === 'closed' && !hasValidInvite) {
+        return NextResponse.json({ error: 'This guild is closed to new members' }, { status: 403 })
     }
 
-    // Join
+    if (joinMode === 'approval' && !hasValidInvite) {
+        // Check if already has a pending request
+        const { data: existingReq } = await admin
+            .from('guild_join_requests')
+            .select('id, status')
+            .eq('guild_id', params.id)
+            .eq('user_id', user.id)
+            .single()
+
+        if (existingReq) {
+            if (existingReq.status === 'pending') {
+                return NextResponse.json({ error: 'You already have a pending request', pending: true }, { status: 409 })
+            }
+            if (existingReq.status === 'rejected') {
+                return NextResponse.json({ error: 'Your request was rejected' }, { status: 403 })
+            }
+        }
+
+        // Create join request
+        await admin.from('guild_join_requests').insert({
+            guild_id: params.id,
+            user_id: user.id,
+            status: 'pending',
+        })
+
+        return NextResponse.json({ success: true, pending: true, message: 'Your request has been sent for approval' }, { status: 202 })
+    }
+
+    // Direct join (open mode or valid invite)
     const { error: joinError } = await admin
         .from('guild_members')
         .insert({
@@ -93,20 +145,6 @@ export async function POST(
     if (joinError) {
         console.error('[GUILD-JOIN] Join error:', joinError)
         return NextResponse.json({ error: 'Failed to join guild' }, { status: 500 })
-    }
-
-    // Update member count
-    const { data: guildData } = await admin
-        .from('guilds')
-        .select('member_count')
-        .eq('id', params.id)
-        .single()
-
-    if (guildData) {
-        await admin
-            .from('guilds')
-            .update({ member_count: (guildData.member_count || 0) + 1 })
-            .eq('id', params.id)
     }
 
     return NextResponse.json({ success: true, guildId: params.id })
