@@ -8,22 +8,7 @@ import { createClient } from '@/lib/supabase/client';
 import GuildChat from '@/components/guild/GuildChat';
 import GuildQuestCard from '@/components/guild/GuildQuestCard';
 import CreateGuildModal from '@/components/guild/CreateGuildModal';
-
-// ── Emblem definitions ──
-const EMBLEMS = [
-    { id: 'shield', icon: '🛡️' },
-    { id: 'sword', icon: '⚔️' },
-    { id: 'dragon', icon: '🐉' },
-    { id: 'crown', icon: '👑' },
-    { id: 'flame', icon: '🔥' },
-    { id: 'star', icon: '⭐' },
-    { id: 'moon', icon: '🌙' },
-    { id: 'skull', icon: '💀' },
-    { id: 'crystal', icon: '💎' },
-    { id: 'lightning', icon: '⚡' },
-];
-
-const emblemIcon = (id: string) => EMBLEMS.find(e => e.id === id)?.icon || '🛡️';
+import { EMBLEMS, getEmblemIcon } from '@/components/guild/GuildEmblems';
 
 interface GuildData {
     id: string;
@@ -306,10 +291,10 @@ export default function GuildPage() {
                     {/* Emblem */}
                     <button
                         onClick={() => isOwner && setShowEmblemPicker(v => !v)}
-                        className={`w-16 h-16 rounded-2xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center mx-auto mb-3 text-3xl ${isOwner ? 'hover:bg-tertiary/20 cursor-pointer transition-colors' : 'cursor-default'}`}
+                        className={`w-16 h-16 rounded-2xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center p-3 mx-auto mb-3 text-tertiary ${isOwner ? 'hover:bg-tertiary/20 cursor-pointer transition-colors' : 'cursor-default'}`}
                         title={isOwner ? 'Click to change emblem' : ''}
                     >
-                        {emblemIcon(activeGuild?.emblem || 'shield')}
+                        {getEmblemIcon(activeGuild?.emblem || 'shield')}
                     </button>
 
                     {/* Emblem picker */}
@@ -319,7 +304,7 @@ export default function GuildPage() {
                                 <button
                                     key={e.id}
                                     onClick={() => handleEmblem(e.id)}
-                                    className={`w-10 h-10 rounded-xl text-xl flex items-center justify-center hover:bg-white/10 transition-colors ${activeGuild?.emblem === e.id ? 'bg-accent/20 border border-accent/40' : ''}`}
+                                    className={`w-10 h-10 p-2 rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors ${activeGuild?.emblem === e.id ? 'bg-accent/20 border border-accent/40 text-accent' : 'text-ghost'}`}
                                     title={e.id}
                                 >
                                     {e.icon}
