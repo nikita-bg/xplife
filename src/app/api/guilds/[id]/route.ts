@@ -112,6 +112,7 @@ export async function PATCH(
         if (body.name?.trim()) updates.name = body.name.trim()
         if (body.description !== undefined) updates.description = body.description?.trim() || null
         if (body.banner_url !== undefined) updates.banner_url = body.banner_url || null
+        if (body.emblem !== undefined) updates.emblem = body.emblem || 'shield'
 
         const { data: guild, error } = await admin
             .from('guilds')
@@ -129,3 +130,38 @@ export async function PATCH(
         return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
     }
 }
+
+/**
+ * DELETE /api/guilds/[id] — Delete guild (owner only)
+ */
+export async function DELETE(
+    _request: Request,
+    { params }: { params: { id: string } }
+) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    const admin = createAdminClient()
+
+    const { data: membership } = await admin
+        .from('guild_members')
+        .select('role')
+        .eq('guild_id', params.id)
+        .eq('user_id', user.id)
+        .single()
+
+    if (!membership || membership.role !== 'owner') {
+        return NextResponse.json({ error: 'Only the Guild Master can delete the guild' }, { status: 403 })
+    }
+
+    const { error } = await admin
+        .from('guilds')
+        .delete()
+        .eq('id', params.id)
+
+    if (error) return NextResponse.json({ error: 'Failed to delete guild' }, { status: 500 })
+
+    return NextResponse.json({ deleted: true })
+}
+

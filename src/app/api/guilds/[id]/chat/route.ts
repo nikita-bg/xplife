@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
  * GET /api/guilds/[id]/chat — Fetch recent chat messages
@@ -15,8 +16,10 @@ export async function GET(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Verify membership
-    const { data: membership } = await supabase
+    const admin = createAdminClient()
+
+    // Verify membership (admin client to bypass RLS)
+    const { data: membership } = await admin
         .from('guild_members')
         .select('role')
         .eq('guild_id', params.id)
@@ -27,14 +30,15 @@ export async function GET(
         return NextResponse.json({ error: 'Not a member' }, { status: 403 })
     }
 
-    const { data: messages, error } = await supabase
+    const { data: messages, error } = await admin
         .from('guild_chat_messages')
         .select('*, users(display_name, avatar_url)')
         .eq('guild_id', params.id)
         .order('created_at', { ascending: true })
-        .limit(50)
+        .limit(100)
 
     if (error) {
+        console.error('[GUILD-CHAT] Fetch error:', error)
         return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 })
     }
 
@@ -68,8 +72,10 @@ export async function POST(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Verify membership
-    const { data: membership } = await supabase
+    const admin = createAdminClient()
+
+    // Verify membership (admin client to bypass RLS)
+    const { data: membership } = await admin
         .from('guild_members')
         .select('role')
         .eq('guild_id', params.id)
@@ -92,7 +98,14 @@ export async function POST(
             return NextResponse.json({ error: 'Message too long (max 1000 characters)' }, { status: 400 })
         }
 
-        const { data: message, error } = await supabase
+        // Fetch user display name for the response
+        const { data: userData } = await admin
+            .from('users')
+            .select('display_name, avatar_url')
+            .eq('id', user.id)
+            .single()
+
+        const { data: message, error } = await admin
             .from('guild_chat_messages')
             .insert({
                 guild_id: params.id,
@@ -107,7 +120,13 @@ export async function POST(
             return NextResponse.json({ error: 'Failed to send message' }, { status: 500 })
         }
 
-        return NextResponse.json({ message })
+        return NextResponse.json({
+            message: {
+                ...message,
+                display_name: userData?.display_name || null,
+                avatar_url: userData?.avatar_url || null,
+            }
+        })
     } catch {
         return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
     }

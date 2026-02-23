@@ -13,12 +13,19 @@ interface ChatMessage {
     avatar_url?: string | null;
 }
 
+interface MemberData {
+    user_id: string;
+    display_name?: string | null;
+    avatar_url?: string | null;
+}
+
 interface GuildChatProps {
     guildId: string;
     currentUserId: string;
+    members?: MemberData[];
 }
 
-export default function GuildChat({ guildId, currentUserId }: GuildChatProps) {
+export default function GuildChat({ guildId, currentUserId, members = [] }: GuildChatProps) {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState('');
     const [sending, setSending] = useState(false);
@@ -57,7 +64,14 @@ export default function GuildChat({ guildId, currentUserId }: GuildChatProps) {
                 },
                 (payload) => {
                     const newMsg = payload.new as ChatMessage;
-                    setMessages(prev => [...prev, newMsg]);
+                    // Enrich with display_name from members prop
+                    const member = members.find(m => m.user_id === newMsg.user_id);
+                    const enriched = {
+                        ...newMsg,
+                        display_name: newMsg.display_name ?? member?.display_name ?? null,
+                        avatar_url: newMsg.avatar_url ?? member?.avatar_url ?? null,
+                    };
+                    setMessages(prev => [...prev, enriched]);
                     setTimeout(scrollToBottom, 100);
                 }
             )
