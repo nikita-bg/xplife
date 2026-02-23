@@ -38,12 +38,12 @@ export default async function LocaleLayout({
         notFound();
     }
 
-    const messages = await getMessages();
+    const messages = await getMessages({ locale });
 
     return (
         <html lang={locale} suppressHydrationWarning>
             <body className={`${inter.variable} ${orbitron.variable} ${jetbrainsMono.variable} font-sans`}>
-                <NextIntlClientProvider messages={messages}>
+                <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>
             </body>
