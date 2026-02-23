@@ -38,6 +38,7 @@ function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
 }) {
     const svgRef = useRef<SVGSVGElement>(null);
     const xpProgress = getXPProgress(totalXP);
+    const charCard = useTranslations('dashboard.characterCard');
 
     useEffect(() => {
         if (!svgRef.current) return;
@@ -60,10 +61,10 @@ function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
             </div>
             <h3 className="font-heading font-bold text-xl text-white mb-1">{displayName}</h3>
             <div className="font-data text-xs text-accent-secondary tracking-wider mb-1">{className}</div>
-            <div className="font-data text-[10px] text-ghost/50 mb-4 tracking-wider uppercase">{rankTier} RANK</div>
+            <div className="font-data text-[10px] text-ghost/50 mb-4 tracking-wider uppercase">{rankTier} {charCard('rank')}</div>
             <div className="w-full space-y-2">
                 <div className="flex justify-between font-data text-xs text-ghost/60">
-                    <span>Level {level}</span>
+                    <span>{charCard('level', { level })}</span>
                     <span>{xpProgress.currentXP.toLocaleString()} / {xpProgress.maxXP.toLocaleString()} XP</span>
                 </div>
                 <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
@@ -74,7 +75,7 @@ function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
                 <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-xl">{CLASS_EMOJI[className] || '⚡'}</div>
                 <div className="text-left">
                     <div className="font-sans text-xs text-ghost/80">{className}</div>
-                    <div className="font-data text-[10px] text-ghost/40">Active Class</div>
+                    <div className="font-data text-[10px] text-ghost/40">{charCard('activeClass')}</div>
                 </div>
             </div>
         </div>
@@ -182,6 +183,7 @@ const tabs = ['daily', 'weekly', 'monthly', 'yearly'] as const;
 export default function DashboardPage() {
     const questSection = useTranslations('dashboard.questSection');
     const questTabs = useTranslations('dashboard.questTabs');
+    const dashT = useTranslations('dashboard');
     const [activeTab, setActiveTab] = useState<string>('daily');
     const [quests, setQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
     const [selectedQuest, setSelectedQuest] = useState<Task | null>(null);
@@ -318,7 +320,7 @@ export default function DashboardPage() {
                                     ))}
                                     {completedQuests.length > 0 && (
                                         <>
-                                            <div className="font-data text-xs text-ghost/30 tracking-wider uppercase mt-4 mb-2">Completed</div>
+                                            <div className="font-data text-xs text-ghost/30 tracking-wider uppercase mt-4 mb-2">{questSection('completed')}</div>
                                             {completedQuests.map(q => (
                                                 <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
                                             ))}
@@ -328,7 +330,7 @@ export default function DashboardPage() {
                             ) : (
                                 <div className="text-center py-16">
                                     <Sparkles size={40} className="mx-auto text-accent/30 mb-4 animate-bounce" />
-                                    <p className="font-sans text-ghost/40">No quests yet — Generate your first quest!</p>
+                                    <p className="font-sans text-ghost/40">{dashT('noQuestsMessage')}</p>
                                 </div>
                             )}
                         </div>
@@ -339,7 +341,7 @@ export default function DashboardPage() {
                         >
                             <span className="btn-content flex items-center justify-center gap-2">
                                 {generating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                                {generating ? 'Generating...' : 'Generate New Quests'}
+                                {generating ? dashT('generatingQuests') : dashT('generateNewQuests')}
                             </span>
                         </button>
                     </div>
