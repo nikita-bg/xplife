@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
  * GET /api/leaderboard — Global leaderboard from real users
@@ -12,8 +13,10 @@ export async function GET() {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
+
     // Top 50 users by total_xp
-    const { data: users, error: usersError } = await supabase
+    const { data: users, error: usersError } = await admin
         .from('users')
         .select('id, display_name, avatar_url, total_xp, level, personality_type')
         .order('total_xp', { ascending: false })
@@ -25,7 +28,7 @@ export async function GET() {
 
     // Get streaks for these users
     const userIds = users?.map(u => u.id) || []
-    const { data: streaks } = await supabase
+    const { data: streaks } = await admin
         .from('streaks')
         .select('user_id, current_streak')
         .in('user_id', userIds)

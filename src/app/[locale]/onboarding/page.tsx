@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { useRouter, usePathname } from 'next/navigation';
 import { Dumbbell, BookOpen, Brain, Briefcase, Users, Heart, Palette, ArrowRight, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { useTranslations } from 'next-intl';
 
 const categories = [
     { id: 'fitness', label: 'Fitness', icon: Dumbbell },
@@ -93,6 +94,7 @@ const WelcomeParticles = () => {
 
 /* ── Onboarding Steps ── */
 export default function OnboardingPage() {
+    const t = useTranslations('onboarding');
     const [step, setStep] = useState(0);
     const [goals, setGoals] = useState<string[]>([]);
     const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
@@ -213,13 +215,13 @@ export default function OnboardingPage() {
                             <WelcomeParticles />
                             <div className="relative z-10">
                                 <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl uppercase tracking-tight text-white mb-4">
-                                    Welcome to <span className="text-accent text-shadow-glow">XPLife</span>
+                                    {t('welcome.title')} <span className="text-accent text-shadow-glow">XPLife</span>
                                 </h1>
                                 <p className="font-drama italic text-xl sm:text-2xl text-ghost/60 mb-12 max-w-lg mx-auto">
-                                    Your journey to leveling up real life begins now.
+                                    {t('welcome.description')}
                                 </p>
                                 <button onClick={nextStep} className="btn-magnetic px-10 py-4 rounded-full bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading font-bold text-lg uppercase tracking-wider shadow-[0_0_30px_rgba(255,184,0,0.3)]">
-                                    <span className="btn-content flex items-center gap-3">Begin Your Quest <ArrowRight size={20} /></span>
+                                    <span className="btn-content flex items-center gap-3">{t('welcome.beginQuest')} <ArrowRight size={20} /></span>
                                 </button>
                             </div>
                         </div>
@@ -227,8 +229,8 @@ export default function OnboardingPage() {
 
                     {step === 1 && (
                         <div>
-                            <h2 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-2">What do you want to achieve?</h2>
-                            <p className="font-sans text-ghost/40 mb-10">Select the areas you want to level up.</p>
+                            <h2 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-2">{t('goalSetting.title')}</h2>
+                            <p className="font-sans text-ghost/40 mb-10">{t('goalSetting.description', { maxGoals: 7 })}</p>
                             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-10 max-w-xl mx-auto">
                                 {categories.map(c => {
                                     const selected = goals.includes(c.id);
@@ -243,7 +245,7 @@ export default function OnboardingPage() {
                             </div>
                             <button onClick={nextStep} disabled={goals.length === 0}
                                 className={`btn-magnetic px-8 py-3 rounded-full font-heading font-bold text-sm uppercase tracking-wider transition-all ${goals.length > 0 ? 'bg-accent text-background' : 'bg-white/5 text-ghost/20 cursor-not-allowed'}`}>
-                                <span className="btn-content flex items-center gap-2">Continue <ArrowRight size={16} /></span>
+                                <span className="btn-content flex items-center gap-2">{t('timePreferences.continue')} <ArrowRight size={16} /></span>
                             </button>
                         </div>
                     )}
@@ -268,19 +270,19 @@ export default function OnboardingPage() {
                     {step === 3 && revealedClass && (
                         <div>
                             <div className="text-7xl mb-6 animate-bounce">{classData[revealedClass].emoji}</div>
-                            <p className="font-sans text-ghost/40 uppercase tracking-widest text-xs mb-2">You are</p>
+                            <p className="font-sans text-ghost/40 uppercase tracking-widest text-xs mb-2">{t('result')}</p>
                             <h2 className={`font-drama italic font-bold text-4xl md:text-5xl ${classData[revealedClass].color} mb-4`}>The {revealedClass}</h2>
                             <p className="font-sans text-ghost/60 max-w-md mx-auto mb-10">{classData[revealedClass].desc}</p>
                             <button onClick={nextStep} className="btn-magnetic px-8 py-3 rounded-full bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading font-bold text-sm uppercase tracking-wider">
-                                <span className="btn-content flex items-center gap-2">Accept My Destiny <ArrowRight size={16} /></span>
+                                <span className="btn-content flex items-center gap-2">{t('continue')} <ArrowRight size={16} /></span>
                             </button>
                         </div>
                     )}
 
                     {step === 4 && (
                         <div>
-                            <h2 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-2">Your First Missions Await</h2>
-                            <p className="font-sans text-ghost/40 mb-10">Here are your starter quests.</p>
+                            <h2 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-2">{t('goalSetting.startAdventure')}</h2>
+                            <p className="font-sans text-ghost/40 mb-10">{t('welcome.duration')}</p>
                             <div className="space-y-3 max-w-md mx-auto mb-10">
                                 {[
                                     { title: 'Complete a 10-minute workout', xp: 30, diff: 'Easy' },

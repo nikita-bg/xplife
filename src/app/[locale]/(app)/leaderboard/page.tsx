@@ -50,17 +50,14 @@ export default function LeaderboardPage() {
 
     useEffect(() => {
         if (players.length > 0) {
-            const ctx = gsap.context(() => {
-                const podiumCards = document.querySelectorAll('.podium-card');
-                const lbRows = document.querySelectorAll('.lb-row');
-                if (podiumCards.length > 0) {
-                    gsap.from('.podium-card', { scale: 0, opacity: 0, stagger: 0.15, duration: 0.6, ease: 'back.out(1.7)', delay: 0.2 });
-                }
-                if (lbRows.length > 0) {
-                    gsap.from('.lb-row', { y: 20, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out', delay: podiumCards.length > 0 ? 0.6 : 0.2 });
-                }
-            });
-            return () => ctx.revert();
+            const podiumCards = document.querySelectorAll('.podium-card');
+            const lbRows = document.querySelectorAll('.lb-row');
+            if (podiumCards.length > 0) {
+                gsap.fromTo('.podium-card', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.15, duration: 0.6, ease: 'back.out(1.7)', delay: 0.2 });
+            }
+            if (lbRows.length > 0) {
+                gsap.fromTo('.lb-row', { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: 'power3.out', delay: podiumCards.length > 0 ? 0.6 : 0.2 });
+            }
         }
     }, [players]);
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
  * GET /api/guilds/[id] — Guild details with members and quests
@@ -15,10 +16,11 @@ export async function GET(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
     const guildId = params.id
 
     // Verify membership
-    const { data: membership } = await supabase
+    const { data: membership } = await admin
         .from('guild_members')
         .select('role')
         .eq('guild_id', guildId)
@@ -30,7 +32,7 @@ export async function GET(
     }
 
     // Fetch guild
-    const { data: guild } = await supabase
+    const { data: guild } = await admin
         .from('guilds')
         .select('*')
         .eq('id', guildId)
@@ -41,14 +43,14 @@ export async function GET(
     }
 
     // Fetch members with user info
-    const { data: members } = await supabase
+    const { data: members } = await admin
         .from('guild_members')
         .select('guild_id, user_id, role, joined_at, users(display_name, avatar_url, level, total_xp)')
         .eq('guild_id', guildId)
         .order('joined_at', { ascending: true })
 
     // Fetch active guild quests
-    const { data: quests } = await supabase
+    const { data: quests } = await admin
         .from('guild_quests')
         .select('*')
         .eq('guild_id', guildId)
@@ -89,8 +91,10 @@ export async function PATCH(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
+
     // Verify admin/owner
-    const { data: membership } = await supabase
+    const { data: membership } = await admin
         .from('guild_members')
         .select('role')
         .eq('guild_id', params.id)
@@ -109,7 +113,7 @@ export async function PATCH(
         if (body.description !== undefined) updates.description = body.description?.trim() || null
         if (body.banner_url !== undefined) updates.banner_url = body.banner_url || null
 
-        const { data: guild, error } = await supabase
+        const { data: guild, error } = await admin
             .from('guilds')
             .update(updates)
             .eq('id', params.id)

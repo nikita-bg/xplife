@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { getPlanLimits } from '@/lib/plan-limits'
 
 /**
@@ -13,7 +14,9 @@ export async function GET() {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: memberships } = await supabase
+    const admin = createAdminClient()
+
+    const { data: memberships } = await admin
         .from('guild_members')
         .select('guild_id, role')
         .eq('user_id', user.id)
@@ -23,7 +26,7 @@ export async function GET() {
     }
 
     const guildIds = memberships.map(m => m.guild_id)
-    const { data: guilds, error } = await supabase
+    const { data: guilds, error } = await admin
         .from('guilds')
         .select('*')
         .in('id', guildIds)
@@ -53,8 +56,10 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
+
     // Check plan limit
-    const { data: profile } = await supabase
+    const { data: profile } = await admin
         .from('users')
         .select('plan')
         .eq('id', user.id)
@@ -63,7 +68,7 @@ export async function POST(request: Request) {
     const limits = getPlanLimits(profile?.plan)
 
     // Count guilds user owns
-    const { count: ownedCount } = await supabase
+    const { count: ownedCount } = await admin
         .from('guild_members')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)
@@ -86,7 +91,7 @@ export async function POST(request: Request) {
         }
 
         // Create guild
-        const { data: guild, error: guildError } = await supabase
+        const { data: guild, error: guildError } = await admin
             .from('guilds')
             .insert({
                 name: name.trim(),
@@ -102,7 +107,7 @@ export async function POST(request: Request) {
         }
 
         // Add creator as owner
-        await supabase.from('guild_members').insert({
+        await admin.from('guild_members').insert({
             guild_id: guild.id,
             user_id: user.id,
             role: 'owner',
