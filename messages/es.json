@@ -398,7 +398,16 @@
     "autoRefresh": {
       "generating": "Generando misiones automáticamente...",
       "generatingDescription": "Creando misiones personalizadas basadas en tus objetivos. Esto puede tomar un momento."
-    }
+    },
+    "characterCard": {
+      "rank": "RANGO",
+      "activeClass": "Clase Activa",
+      "level": "Nivel {level}"
+    },
+    "completedLabel": "Completado",
+    "noQuestsMessage": "Aún no hay misiones — ¡Genera tu primera misión!",
+    "generateNewQuests": "Generar Nuevas Misiones",
+    "generatingQuests": "Generando..."
   },
   "profile": {
     "title": "Perfil",
@@ -496,6 +505,42 @@
         "addCustomInterest": "Agregar interés personalizado...",
         "preferNotToSay": "Prefiero no decir"
       }
+    },
+    "statsLabels": {
+      "level": "Nivel",
+      "totalXp": "XP Total",
+      "rank": "Rango",
+      "daysActive": "Días Activos",
+      "streak": "Racha"
+    },
+    "class": {
+      "title": "Tu Clase",
+      "retakeQuiz": "Repetir Test de Personalidad",
+      "adventurer": "El Aventurero",
+      "adventurerDesc": "Prosperas con emoción, novedad y desafíos audaces. Tus misiones se centran en superar límites y lograr metas ambiciosas.",
+      "thinker": "El Pensador",
+      "thinkerDesc": "Amas el aprendizaje, la creatividad y el enfoque profundo. Tus misiones se centran en el dominio de habilidades y el crecimiento intelectual.",
+      "guardian": "El Guardián",
+      "guardianDesc": "Valoras la estabilidad, la consistencia y la paz interior. Tus misiones construyen hábitos fuertes y promueven el equilibrio.",
+      "connector": "El Conector",
+      "connectorDesc": "Obtienes energía de las relaciones y la comunidad. Tus misiones fortalecen los lazos y promueven conexiones significativas."
+    },
+    "plan": {
+      "free": "Aventurero Gratis",
+      "freeDesc": "1 meta · 15 tareas/semana · 15 chats IA/día",
+      "premium": "Héroe Pro",
+      "premiumDesc": "Metas ilimitadas · Tareas ilimitadas · Chats IA ilimitados",
+      "lifetime": "Héroe Legendario",
+      "lifetimeDesc": "Acceso de por vida · Todas las funciones desbloqueadas",
+      "upgrade": "Mejorar a Héroe Pro"
+    },
+    "language": "Idioma",
+    "dangerZone": {
+      "title": "Zona de Peligro",
+      "description": "Esta acción es permanente e irreversible.",
+      "deleteAccount": "Eliminar Cuenta",
+      "deleting": "Eliminando...",
+      "confirmMessage": "¿Estás seguro? Esta acción es permanente e irreversible."
     }
   },
   "leaderboard": {
@@ -511,7 +556,11 @@
     "noRankingsDescription": "Completa misiones para aparecer en la clasificación.",
     "yourRank": "Tu rango:",
     "anonymous": "Anónimo",
-    "you": "(Tú)"
+    "you": "(Tú)",
+    "updatedLive": "Actualizado en vivo",
+    "lvlShort": "Nvl {level}",
+    "daysShort": "{count} días",
+    "youTag": "TÚ"
   },
   "levelUp": {
     "title": "¡Subiste de Nivel!",
@@ -912,6 +961,84 @@
   },
   "appShell": {
     "streak": "Racha de {count} días 🔥",
-    "signOut": "Cerrar Sesión"
+    "signOut": "Cerrar Sesión",
+    "nav": {
+      "dashboard": "Panel",
+      "leaderboard": "Clasificación",
+      "guild": "Gremio",
+      "boss": "Jefe",
+      "journal": "Diario",
+      "inventory": "Inventario",
+      "market": "Mercado",
+      "profile": "Perfil"
+    }
+  },
+  "market": {
+    "title": "Mercado de Objetos",
+    "subtitle": "Comercio entre Jugadores",
+    "sellItem": "Vender Objeto",
+    "browse": "Explorar",
+    "myListings": "Mis Anuncios",
+    "searchPlaceholder": "Buscar objetos...",
+    "confirmPurchase": "Confirmar Compra",
+    "buyMessage": "¿Comprar {name} por 🪙 {price}?",
+    "buy": "Comprar",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "purchaseSuccess": "¡Compra Exitosa!"
+  },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle": "Tu Equipamiento",
+    "equipped": "Equipado",
+    "sell": "Vender",
+    "equip": "Equipar",
+    "coins": "Monedas",
+    "all": "Todo",
+    "empty": "Aún no hay objetos"
+  },
+  "guild": {
+    "title": "Gremio",
+    "noGuild": "Aún no perteneces a un gremio",
+    "createGuild": "Crear Gremio",
+    "joinGuild": "Unirse a Gremio",
+    "members": "Miembros",
+    "guildQuests": "Misiones del Gremio",
+    "inviteCode": "Código de Invitación",
+    "copyInvite": "Copiar Invitación",
+    "copied": "¡Copiado!",
+    "contribute": "Contribuir",
+    "leave": "Abandonar Gremio",
+    "totalXp": "XP Total",
+    "memberCount": "{count} miembros",
+    "questProgress": "{current}/{target}",
+    "loading": "Cargando..."
+  },
+  "boss": {
+    "title": "Jefe Mundial",
+    "noBoss": "No hay batalla de jefe activa",
+    "noBossDesc": "¡Vuelve más tarde para el próximo evento de jefe mundial!",
+    "hp": "HP",
+    "reward": "Recompensa",
+    "timeRemaining": "Tiempo Restante",
+    "yourContribution": "Tu Contribución",
+    "damageDealt": "Daño Infligido",
+    "tasksCompleted": "Tareas Completadas",
+    "topDamage": "Máximo Daño",
+    "defeated": "DERROTADO",
+    "active": "ACTIVO",
+    "expired": "EXPIRADO"
+  },
+  "journal": {
+    "title": "Diario de Progreso",
+    "noData": "No hay misiones completadas este mes",
+    "stats": {
+      "quests": "MISIONES",
+      "xpEarned": "XP GANADO",
+      "activeDays": "DÍAS ACTIVOS",
+      "bestStreak": "MEJOR RACHA"
+    },
+    "categoryBreakdown": "Desglose por Categoría",
+    "bossDamage": "DAÑO INFLIGIDO AL JEFE"
   }
 }

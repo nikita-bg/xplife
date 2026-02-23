@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BookOpen, ChevronLeft, ChevronRight, Zap, Flame, Swords, Calendar, Trophy } from 'lucide-react';
 import gsap from 'gsap';
+import { useTranslations } from 'next-intl';
 
 interface JournalData {
     month: string;
@@ -30,6 +31,8 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function JournalPage() {
+    const t = useTranslations('journal');
+    const st = useTranslations('journal.stats');
     const [data, setData] = useState<JournalData | null>(null);
     const [loading, setLoading] = useState(true);
     const [currentMonth, setCurrentMonth] = useState(() => new Date().toISOString().slice(0, 7));
@@ -86,7 +89,7 @@ export default function JournalPage() {
                     <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
                         <BookOpen size={20} className="text-accent" />
                     </div>
-                    <h1 className="font-heading text-xl font-bold uppercase tracking-wider">Progress Journal</h1>
+                    <h1 className="font-heading text-xl font-bold uppercase tracking-wider">{t('title')}</h1>
                 </div>
                 <div className="flex items-center gap-2">
                     <button onClick={() => navigateMonth(-1)} className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
@@ -102,17 +105,17 @@ export default function JournalPage() {
             {!data || data.summary.questsCompleted === 0 ? (
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-12 text-center">
                     <BookOpen size={40} className="mx-auto text-accent/20 mb-4" />
-                    <p className="font-sans text-ghost/40">No quests completed this month</p>
+                    <p className="font-sans text-ghost/40">{t('noData')}</p>
                 </div>
             ) : (
                 <div ref={cardsRef} className="space-y-6">
                     {/* Stats Grid */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {[
-                            { icon: <Trophy size={18} />, label: 'QUESTS', value: data.summary.questsCompleted, color: 'text-accent' },
-                            { icon: <Zap size={18} />, label: 'XP EARNED', value: data.summary.totalXp.toLocaleString(), color: 'text-accent-secondary' },
-                            { icon: <Calendar size={18} />, label: 'ACTIVE DAYS', value: data.summary.activeDays, color: 'text-tertiary' },
-                            { icon: <Flame size={18} />, label: 'BEST STREAK', value: data.summary.longestStreak, color: 'text-orange-400' },
+                            { icon: <Trophy size={18} />, label: st('quests'), value: data.summary.questsCompleted, color: 'text-accent' },
+                            { icon: <Zap size={18} />, label: st('xpEarned'), value: data.summary.totalXp.toLocaleString(), color: 'text-accent-secondary' },
+                            { icon: <Calendar size={18} />, label: st('activeDays'), value: data.summary.activeDays, color: 'text-tertiary' },
+                            { icon: <Flame size={18} />, label: st('bestStreak'), value: data.summary.longestStreak, color: 'text-orange-400' },
                         ].map((s, i) => (
                             <div key={i} className="bg-[#0C1021] rounded-2xl border border-white/5 p-4 text-center">
                                 <div className={`${s.color} mb-2 flex justify-center`}>{s.icon}</div>
@@ -124,7 +127,7 @@ export default function JournalPage() {
 
                     {/* Category Breakdown */}
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
-                        <h3 className="font-heading text-sm uppercase tracking-wider text-ghost/50 mb-4">Category Breakdown</h3>
+                        <h3 className="font-heading text-sm uppercase tracking-wider text-ghost/50 mb-4">{t('categoryBreakdown')}</h3>
                         <div className="space-y-3">
                             {Object.entries(data.categories)
                                 .sort(([, a], [, b]) => b - a)
@@ -150,7 +153,7 @@ export default function JournalPage() {
                         <div className="bg-[#0C1021] rounded-[2rem] border border-red-400/10 p-6 text-center">
                             <Swords size={24} className="mx-auto text-red-400 mb-2" />
                             <div className="font-heading text-2xl font-bold text-red-400">{data.summary.bossDamage}</div>
-                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">BOSS DAMAGE DEALT</div>
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">{t('bossDamage')}</div>
                         </div>
                     )}
                 </div>

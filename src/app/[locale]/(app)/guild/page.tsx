@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, Plus, Users, Crown, Swords, Copy, Check, LogIn } from 'lucide-react';
 import gsap from 'gsap';
+import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import GuildChat from '@/components/guild/GuildChat';
 import GuildQuestCard from '@/components/guild/GuildQuestCard';
@@ -40,6 +41,7 @@ interface QuestData {
 }
 
 export default function GuildPage() {
+    const t = useTranslations('guild');
     const [guilds, setGuilds] = useState<GuildData[]>([]);
     const [activeGuild, setActiveGuild] = useState<GuildData | null>(null);
     const [members, setMembers] = useState<MemberData[]>([]);
@@ -168,16 +170,16 @@ export default function GuildPage() {
                         <div className="w-20 h-20 rounded-2xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center mx-auto mb-4">
                             <Shield size={40} className="text-tertiary" />
                         </div>
-                        <h2 className="font-heading text-2xl font-bold uppercase tracking-wider mb-2">Join a Guild</h2>
+                        <h2 className="font-heading text-2xl font-bold uppercase tracking-wider mb-2">{t('joinGuild')}</h2>
                         <p className="font-sans text-sm text-ghost/50 mb-6">
-                            Unite with other heroes. Complete guild quests together and climb the ranks.
+                            {t('noGuild')}
                         </p>
 
                         <button
                             onClick={() => setShowCreate(true)}
                             className="btn-magnetic w-full py-4 rounded-2xl bg-tertiary/10 border border-tertiary/30 text-tertiary font-heading text-sm uppercase tracking-wider hover:bg-tertiary/20 transition-all mb-4 flex items-center justify-center gap-2"
                         >
-                            <Plus size={18} /> Create Your Guild
+                            <Plus size={18} /> {t('createGuild')}
                         </button>
 
                         <div className="relative">
@@ -201,7 +203,7 @@ export default function GuildPage() {
                                 disabled={!joinCode.trim() || joining}
                                 className="px-6 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 flex items-center gap-2"
                             >
-                                <LogIn size={14} /> Join
+                                <LogIn size={14} /> {t('joinGuild')}
                             </button>
                         </div>
                     </div>
@@ -246,11 +248,11 @@ export default function GuildPage() {
                     <div className="flex justify-around mt-4">
                         <div className="text-center">
                             <div className="font-heading text-lg text-accent font-bold">{activeGuild?.member_count || 0}</div>
-                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">MEMBERS</div>
+                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">{t('members').toUpperCase()}</div>
                         </div>
                         <div className="text-center">
                             <div className="font-heading text-lg text-accent-secondary font-bold">{(activeGuild?.total_xp || 0).toLocaleString()}</div>
-                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">TOTAL XP</div>
+                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">{t('totalXp').toUpperCase()}</div>
                         </div>
                     </div>
                 </div>
@@ -258,7 +260,7 @@ export default function GuildPage() {
                 {/* Members */}
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5">
                     <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-3 flex items-center gap-2">
-                        <Users size={12} /> Members
+                        <Users size={12} /> {t('members')}
                     </div>
                     <div className="space-y-2 max-h-[200px] overflow-y-auto">
                         {members.map(m => (
@@ -276,7 +278,7 @@ export default function GuildPage() {
                 {/* Invite */}
                 {['owner', 'admin'].includes(userRole) && (
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5">
-                        <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-3">Invite</div>
+                        <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-3">{t('inviteCode')}</div>
                         {inviteCode ? (
                             <div className="flex gap-2">
                                 <div className="flex-1 bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 font-data text-xs text-accent tracking-wider">
@@ -288,7 +290,7 @@ export default function GuildPage() {
                             </div>
                         ) : (
                             <button onClick={generateInvite} className="w-full py-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/[0.06] transition-all">
-                                Generate Invite Code
+                                {t('copyInvite')}
                             </button>
                         )}
                     </div>
@@ -300,7 +302,7 @@ export default function GuildPage() {
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="font-heading font-bold text-xl uppercase tracking-wider flex items-center gap-2">
-                            <Swords size={20} className="text-tertiary" /> Guild Quests
+                            <Swords size={20} className="text-tertiary" /> {t('guildQuests')}
                         </h2>
                         <div className="font-data text-[10px] text-ghost/30 tracking-wider">
                             {quests.filter(q => q.status === 'active').length} ACTIVE

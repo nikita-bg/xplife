@@ -398,7 +398,16 @@
     "autoRefresh": {
       "generating": "自动生成任务中...",
       "generatingDescription": "正在根据您的目标创建个性化任务，请稍候。"
-    }
+    },
+    "characterCard": {
+      "rank": "排名",
+      "activeClass": "当前职业",
+      "level": "等级 {level}"
+    },
+    "completedLabel": "已完成",
+    "noQuestsMessage": "还没有任务 — 生成你的第一个任务！",
+    "generateNewQuests": "生成新任务",
+    "generatingQuests": "生成中..."
   },
   "profile": {
     "title": "个人资料",
@@ -496,6 +505,42 @@
         "addCustomInterest": "添加自定义兴趣...",
         "preferNotToSay": "不想透露"
       }
+    },
+    "statsLabels": {
+      "level": "等级",
+      "totalXp": "总经验值",
+      "rank": "排名",
+      "daysActive": "活跃天数",
+      "streak": "连胜"
+    },
+    "class": {
+      "title": "你的职业",
+      "retakeQuiz": "重新参加性格测试",
+      "adventurer": "冒险家",
+      "adventurerDesc": "你在兴奋、新鲜和大胆挑战中蕴壮成长。你的任务专注于突破极限并实现雄心勃勃的目标。",
+      "thinker": "思想家",
+      "thinkerDesc": "你热爱学习、创造力和深度专注。你的任务以技能掌握和智力成长为中心。",
+      "guardian": "守护者",
+      "guardianDesc": "你重视稳定性、一致性和内心平静。你的任务建立强大的习惯并促进平衡。",
+      "connector": "连接者",
+      "connectorDesc": "你从人际关系和社区中获取能量。你的任务加强纽带并促进有意义的联系。"
+    },
+    "plan": {
+      "free": "免费冒险家",
+      "freeDesc": "1个目标 · 15个任务/周 · 15次AI聊天/天",
+      "premium": "专业英雄",
+      "premiumDesc": "无限目标 · 无限任务 · 无限AI聊天",
+      "lifetime": "传奇英雄",
+      "lifetimeDesc": "终身访问 · 所有功能解锁",
+      "upgrade": "升级到专业英雄"
+    },
+    "language": "语言",
+    "dangerZone": {
+      "title": "危险区域",
+      "description": "此操作不可撤销。",
+      "deleteAccount": "删除账户",
+      "deleting": "删除中...",
+      "confirmMessage": "你确定吗？此操作不可撤销。"
     }
   },
   "leaderboard": {
@@ -511,7 +556,11 @@
     "noRankingsDescription": "完成任务以出现在排行榜上。",
     "yourRank": "你的排名：",
     "anonymous": "匿名",
-    "you": "（你）"
+    "you": "（你）",
+    "updatedLive": "实时更新",
+    "lvlShort": "LV {level}",
+    "daysShort": "{count}天",
+    "youTag": "你"
   },
   "levelUp": {
     "title": "升级了！",
@@ -912,6 +961,84 @@
   },
   "appShell": {
     "streak": "{count}天连胜 🔥",
-    "signOut": "退出登录"
+    "signOut": "退出登录",
+    "nav": {
+      "dashboard": "仪表板",
+      "leaderboard": "排行榜",
+      "guild": "公会",
+      "boss": "首领",
+      "journal": "日志",
+      "inventory": "背包",
+      "market": "市场",
+      "profile": "个人资料"
+    }
+  },
+  "market": {
+    "title": "物品市场",
+    "subtitle": "玩家间交易",
+    "sellItem": "出售物品",
+    "browse": "浏览",
+    "myListings": "我的上架",
+    "searchPlaceholder": "搜索物品...",
+    "confirmPurchase": "确认购买",
+    "buyMessage": "购买 {name} 🪙 {price}？",
+    "buy": "购买",
+    "confirm": "确认",
+    "cancel": "取消",
+    "purchaseSuccess": "购买成功！"
+  },
+  "inventory": {
+    "title": "背包",
+    "subtitle": "你的装备",
+    "equipped": "已装备",
+    "sell": "出售",
+    "equip": "装备",
+    "coins": "金币",
+    "all": "全部",
+    "empty": "还没有物品"
+  },
+  "guild": {
+    "title": "公会",
+    "noGuild": "你还没有加入公会",
+    "createGuild": "创建公会",
+    "joinGuild": "加入公会",
+    "members": "成员",
+    "guildQuests": "公会任务",
+    "inviteCode": "邀请码",
+    "copyInvite": "复制邀请",
+    "copied": "已复制！",
+    "contribute": "贡献",
+    "leave": "离开公会",
+    "totalXp": "总经验值",
+    "memberCount": "{count}个成员",
+    "questProgress": "{current}/{target}",
+    "loading": "加载中..."
+  },
+  "boss": {
+    "title": "世界首领",
+    "noBoss": "没有活跃的首领战",
+    "noBossDesc": "稍后再来查看下一个世界首领活动！",
+    "hp": "HP",
+    "reward": "奖励",
+    "timeRemaining": "剩余时间",
+    "yourContribution": "你的贡献",
+    "damageDealt": "造成伤害",
+    "tasksCompleted": "完成任务",
+    "topDamage": "伤害榜",
+    "defeated": "已击败",
+    "active": "活跃",
+    "expired": "已过期"
+  },
+  "journal": {
+    "title": "进度日志",
+    "noData": "本月没有完成的任务",
+    "stats": {
+      "quests": "任务",
+      "xpEarned": "获得XP",
+      "activeDays": "活跃天数",
+      "bestStreak": "最佳连胜"
+    },
+    "categoryBreakdown": "分类统计",
+    "bossDamage": "首领伤害"
   }
 }

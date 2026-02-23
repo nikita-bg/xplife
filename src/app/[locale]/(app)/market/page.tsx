@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { Search, Coins, Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const listings = [
     { id: 1, name: 'Flame Sword', type: 'Weapon', rarity: 'Rare', price: 350, seller: 'Knight42', time: '2h ago', avatar: '⚔️' },
@@ -22,6 +23,7 @@ const rarityColors: Record<string, string> = {
 };
 
 export default function MarketPage() {
+    const t = useTranslations('market');
     const [search, setSearch] = useState('');
     const [showConfirm, setShowConfirm] = useState<typeof listings[0] | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -46,26 +48,26 @@ export default function MarketPage() {
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">Item Market</h1>
-                    <p className="font-sans text-sm text-ghost/40 mt-1">Player-to-Player Trading</p>
+                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">{t('title')}</h1>
+                    <p className="font-sans text-sm text-ghost/40 mt-1">{t('subtitle')}</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2 font-data text-lg text-accent-secondary"><Coins size={18} /><span className="font-bold">2,400</span></div>
                     <button className="btn-magnetic px-5 py-2.5 rounded-xl bg-accent-secondary/10 border border-accent-secondary/30 text-accent-secondary font-heading text-xs uppercase tracking-wider hover:bg-accent-secondary/20">
-                        <span className="btn-content">Sell Item</span>
+                        <span className="btn-content">{t('sellItem')}</span>
                     </button>
                 </div>
             </div>
 
             <div className="flex gap-2 mb-6">
-                {['browse', 'my listings'].map(t => (
-                    <button key={t} onClick={() => setTab(t)} className={`px-4 py-2 rounded-xl font-data text-xs uppercase tracking-wider transition-all ${tab === t ? 'bg-accent text-background font-bold' : 'bg-white/5 text-ghost/50 hover:text-ghost'}`}>{t}</button>
+                {[{ key: 'browse', label: t('browse') }, { key: 'my listings', label: t('myListings') }].map(item => (
+                    <button key={item.key} onClick={() => setTab(item.key)} className={`px-4 py-2 rounded-xl font-data text-xs uppercase tracking-wider transition-all ${tab === item.key ? 'bg-accent text-background font-bold' : 'bg-white/5 text-ghost/50 hover:text-ghost'}`}>{item.label}</button>
                 ))}
             </div>
 
             <div className="relative mb-6">
                 <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-ghost/30" />
-                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search items..." className="w-full bg-[#0C1021] border border-white/5 rounded-xl py-3 pl-11 pr-4 font-sans text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors" />
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('searchPlaceholder')} className="w-full bg-[#0C1021] border border-white/5 rounded-xl py-3 pl-11 pr-4 font-sans text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -83,7 +85,7 @@ export default function MarketPage() {
                         <div className="flex items-center justify-between">
                             <span className="font-data text-sm text-accent-secondary font-bold">🪙 {item.price}</span>
                             <button onClick={() => setShowConfirm(item)} className="btn-magnetic px-4 py-2 rounded-lg bg-accent/10 border border-accent/30 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20">
-                                <span className="btn-content">Buy</span>
+                                <span className="btn-content">{t('buy')}</span>
                             </button>
                         </div>
                     </div>
@@ -93,11 +95,11 @@ export default function MarketPage() {
             {showConfirm && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={() => setShowConfirm(null)}>
                     <div className="bg-[#0E1226] rounded-[2rem] border border-white/10 p-8 max-w-sm w-full text-center" onClick={e => e.stopPropagation()}>
-                        <h3 className="font-heading font-bold text-lg text-white mb-2">Confirm Purchase</h3>
-                        <p className="font-sans text-sm text-ghost/60 mb-6">Buy <span className="text-accent font-bold">{showConfirm.name}</span> for <span className="text-accent-secondary font-bold">🪙 {showConfirm.price}</span>?</p>
+                        <h3 className="font-heading font-bold text-lg text-white mb-2">{t('confirmPurchase')}</h3>
+                        <p className="font-sans text-sm text-ghost/60 mb-6">{t('buy')} <span className="text-accent font-bold">{showConfirm.name}</span> for <span className="text-accent-secondary font-bold">🪙 {showConfirm.price}</span>?</p>
                         <div className="flex gap-3">
-                            <button onClick={handleBuy} className="btn-magnetic flex-1 py-3 rounded-xl bg-accent text-background font-heading text-sm uppercase tracking-wider font-bold"><span className="btn-content">Confirm</span></button>
-                            <button onClick={() => setShowConfirm(null)} className="flex-1 py-3 rounded-xl bg-white/5 text-ghost/50 font-heading text-sm uppercase hover:bg-white/10">Cancel</button>
+                            <button onClick={handleBuy} className="btn-magnetic flex-1 py-3 rounded-xl bg-accent text-background font-heading text-sm uppercase tracking-wider font-bold"><span className="btn-content">{t('confirm')}</span></button>
+                            <button onClick={() => setShowConfirm(null)} className="flex-1 py-3 rounded-xl bg-white/5 text-ghost/50 font-heading text-sm uppercase hover:bg-white/10">{t('cancel')}</button>
                         </div>
                     </div>
                 </div>
@@ -105,7 +107,7 @@ export default function MarketPage() {
 
             {showSuccess && (
                 <div className="fixed bottom-24 md:bottom-8 left-1/2 -translate-x-1/2 z-50 bg-accent text-background px-6 py-3 rounded-full font-heading text-sm uppercase tracking-wider flex items-center gap-2 shadow-[0_0_30px_rgba(0,245,255,0.3)] animate-bounce">
-                    <Check size={16} /> Purchase Successful!
+                    <Check size={16} /> {t('purchaseSuccess')}
                 </div>
             )}
         </div>

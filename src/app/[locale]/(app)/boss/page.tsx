@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Skull, Swords, Trophy, Shield, Timer, Zap, Users } from 'lucide-react';
 import gsap from 'gsap';
+import { useTranslations } from 'next-intl';
 
 interface BossData {
     id: string;
@@ -39,6 +40,7 @@ const tierColors: Record<string, { text: string; bg: string; border: string; glo
 };
 
 export default function BossPage() {
+    const t = useTranslations('boss');
     const [boss, setBoss] = useState<BossData | null>(null);
     const [active, setActive] = useState(false);
     const [contribution, setContribution] = useState<ContributionData | null>(null);
@@ -113,9 +115,9 @@ export default function BossPage() {
                 <div className="w-20 h-20 rounded-2xl bg-red-400/10 border border-red-400/20 flex items-center justify-center mx-auto mb-4">
                     <Skull size={40} className="text-red-400/40" />
                 </div>
-                <h2 className="font-heading text-2xl font-bold uppercase tracking-wider mb-2">No Active Boss</h2>
+                <h2 className="font-heading text-2xl font-bold uppercase tracking-wider mb-2">{t('noBoss')}</h2>
                 <p className="font-sans text-sm text-ghost/40">
-                    A new boss will spawn next Monday. Complete quests to prepare!
+                    {t('noBossDesc')}
                 </p>
             </div>
         );
@@ -156,7 +158,7 @@ export default function BossPage() {
                 <div className="mb-6">
                     <div className="flex justify-between mb-2">
                         <span className="font-data text-xs text-ghost/40 tracking-wider flex items-center gap-1">
-                            <Shield size={12} /> HP
+                            <Shield size={12} /> {t('hp')}
                         </span>
                         <span className="font-data text-xs text-ghost/60">
                             {boss.current_hp.toLocaleString()} / {boss.max_hp.toLocaleString()}
@@ -166,8 +168,8 @@ export default function BossPage() {
                         <div
                             ref={hpBarRef}
                             className={`h-full rounded-full transition-all ${hpPercent > 50 ? 'bg-gradient-to-r from-green-500 to-green-400' :
-                                    hpPercent > 25 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400' :
-                                        'bg-gradient-to-r from-red-500 to-red-400'
+                                hpPercent > 25 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400' :
+                                    'bg-gradient-to-r from-red-500 to-red-400'
                                 }`}
                             style={{ width: `${hpPercent}%` }}
                         />
@@ -197,7 +199,7 @@ export default function BossPage() {
                 {boss.status === 'defeated' && (
                     <div className="mt-6 py-4 px-6 rounded-2xl bg-green-400/10 border border-green-400/20 text-center">
                         <Trophy size={24} className="text-green-400 mx-auto mb-2" />
-                        <p className="font-heading text-sm uppercase tracking-wider text-green-400">Boss Defeated!</p>
+                        <p className="font-heading text-sm uppercase tracking-wider text-green-400">{t('defeated')}!</p>
                         <p className="font-data text-[10px] text-ghost/40 mt-1">Rewards distributed to all contributors</p>
                     </div>
                 )}
@@ -208,16 +210,16 @@ export default function BossPage() {
                 {/* Your Contribution */}
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
                     <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-4 flex items-center gap-2">
-                        <Swords size={14} /> Your Contribution
+                        <Swords size={14} /> {t('yourContribution')}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="text-center py-3 rounded-xl bg-white/[0.02]">
                             <div className="font-heading text-2xl text-accent font-bold">{contribution?.damage_dealt || 0}</div>
-                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">DAMAGE</div>
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">{t('damageDealt')}</div>
                         </div>
                         <div className="text-center py-3 rounded-xl bg-white/[0.02]">
                             <div className="font-heading text-2xl text-tertiary font-bold">{contribution?.tasks_completed || 0}</div>
-                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">QUESTS</div>
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">{t('tasksCompleted')}</div>
                         </div>
                     </div>
                 </div>
@@ -225,7 +227,7 @@ export default function BossPage() {
                 {/* Leaderboard */}
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
                     <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-4 flex items-center gap-2">
-                        <Users size={14} /> Top Contributors
+                        <Users size={14} /> {t('topDamage')}
                     </div>
                     <div className="space-y-2 max-h-[200px] overflow-y-auto">
                         {leaderboard.length > 0 ? (

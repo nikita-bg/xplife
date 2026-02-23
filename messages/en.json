@@ -398,7 +398,16 @@
     "autoRefresh": {
       "generating": "Auto-generating quests...",
       "generatingDescription": "Creating personalized quests based on your goals. This may take a moment."
-    }
+    },
+    "characterCard": {
+      "rank": "RANK",
+      "activeClass": "Active Class",
+      "level": "Level {level}"
+    },
+    "completedLabel": "Completed",
+    "noQuestsMessage": "No quests yet — Generate your first quest!",
+    "generateNewQuests": "Generate New Quests",
+    "generatingQuests": "Generating..."
   },
   "profile": {
     "title": "Profile",
@@ -496,6 +505,42 @@
         "addCustomInterest": "Add custom interest...",
         "preferNotToSay": "Prefer not to say"
       }
+    },
+    "statsLabels": {
+      "level": "Level",
+      "totalXp": "Total XP",
+      "rank": "Rank",
+      "daysActive": "Days Active",
+      "streak": "Streak"
+    },
+    "class": {
+      "title": "Your Class",
+      "retakeQuiz": "Retake Personality Quiz",
+      "adventurer": "The Adventurer",
+      "adventurerDesc": "You thrive on excitement, novelty, and bold challenges. Your quests focus on pushing boundaries and achieving ambitious goals.",
+      "thinker": "The Thinker",
+      "thinkerDesc": "You love learning, creativity, and deep focus. Your quests center around skill mastery and intellectual growth.",
+      "guardian": "The Guardian",
+      "guardianDesc": "You value stability, consistency, and inner peace. Your quests build strong habits and promote balance.",
+      "connector": "The Connector",
+      "connectorDesc": "You draw energy from relationships and community. Your quests strengthen bonds and promote meaningful connections."
+    },
+    "plan": {
+      "free": "Free Adventurer",
+      "freeDesc": "1 goal · 15 tasks/week · 15 AI chats/day",
+      "premium": "Pro Hero",
+      "premiumDesc": "Unlimited goals · Unlimited tasks · Unlimited AI chats",
+      "lifetime": "Legendary Hero",
+      "lifetimeDesc": "Lifetime access · All features unlocked",
+      "upgrade": "Upgrade to Pro Hero"
+    },
+    "language": "Language",
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "This action is permanent and cannot be undone.",
+      "deleteAccount": "Delete Account",
+      "deleting": "Deleting...",
+      "confirmMessage": "Are you sure? This action is permanent and cannot be undone."
     }
   },
   "leaderboard": {
@@ -511,7 +556,11 @@
     "noRankingsDescription": "Complete quests to appear on the leaderboard.",
     "yourRank": "Your rank:",
     "anonymous": "Anonymous",
-    "you": "(You)"
+    "you": "(You)",
+    "updatedLive": "Updated live",
+    "lvlShort": "Lvl {level}",
+    "daysShort": "{count} days",
+    "youTag": "YOU"
   },
   "levelUp": {
     "title": "Level Up!",
@@ -912,6 +961,84 @@
   },
   "appShell": {
     "streak": "{count} day streak 🔥",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "nav": {
+      "dashboard": "Dashboard",
+      "leaderboard": "Leaderboard",
+      "guild": "Guild",
+      "boss": "Boss",
+      "journal": "Journal",
+      "inventory": "Inventory",
+      "market": "Market",
+      "profile": "Profile"
+    }
+  },
+  "market": {
+    "title": "Item Market",
+    "subtitle": "Player-to-Player Trading",
+    "sellItem": "Sell Item",
+    "browse": "Browse",
+    "myListings": "My Listings",
+    "searchPlaceholder": "Search items...",
+    "confirmPurchase": "Confirm Purchase",
+    "buyMessage": "Buy {name} for 🪙 {price}?",
+    "buy": "Buy",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "purchaseSuccess": "Purchase Successful!"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle": "Your Equipment",
+    "equipped": "Equipped",
+    "sell": "Sell",
+    "equip": "Equip",
+    "coins": "Coins",
+    "all": "All",
+    "empty": "No items yet"
+  },
+  "guild": {
+    "title": "Guild",
+    "noGuild": "You don't belong to a guild yet",
+    "createGuild": "Create Guild",
+    "joinGuild": "Join Guild",
+    "members": "Members",
+    "guildQuests": "Guild Quests",
+    "inviteCode": "Invite Code",
+    "copyInvite": "Copy Invite",
+    "copied": "Copied!",
+    "contribute": "Contribute",
+    "leave": "Leave Guild",
+    "totalXp": "Total XP",
+    "memberCount": "{count} members",
+    "questProgress": "{current}/{target}",
+    "loading": "Loading..."
+  },
+  "boss": {
+    "title": "World Boss",
+    "noBoss": "No active boss battle",
+    "noBossDesc": "Check back later for the next world boss event!",
+    "hp": "HP",
+    "reward": "Reward",
+    "timeRemaining": "Time Remaining",
+    "yourContribution": "Your Contribution",
+    "damageDealt": "Damage Dealt",
+    "tasksCompleted": "Tasks Completed",
+    "topDamage": "Top Damage Dealers",
+    "defeated": "DEFEATED",
+    "active": "ACTIVE",
+    "expired": "EXPIRED"
+  },
+  "journal": {
+    "title": "Progress Journal",
+    "noData": "No quests completed this month",
+    "stats": {
+      "quests": "QUESTS",
+      "xpEarned": "XP EARNED",
+      "activeDays": "ACTIVE DAYS",
+      "bestStreak": "BEST STREAK"
+    },
+    "categoryBreakdown": "Category Breakdown",
+    "bossDamage": "BOSS DAMAGE DEALT"
   }
 }

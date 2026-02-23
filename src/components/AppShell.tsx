@@ -9,14 +9,14 @@ import { createClient } from '@/lib/supabase/client';
 import ChatWidget from '@/components/chat/ChatWidget';
 
 const navItems = [
-    { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-    { to: '/guild', label: 'Guild', icon: Shield },
-    { to: '/boss', label: 'Boss', icon: Skull },
-    { to: '/journal', label: 'Journal', icon: BookOpen },
-    { to: '/inventory', label: 'Inventory', icon: Backpack },
-    { to: '/market', label: 'Market', icon: Store },
-    { to: '/profile', label: 'Profile', icon: User },
+    { to: '/dashboard', labelKey: 'dashboard', icon: LayoutDashboard },
+    { to: '/leaderboard', labelKey: 'leaderboard', icon: Trophy },
+    { to: '/guild', labelKey: 'guild', icon: Shield },
+    { to: '/boss', labelKey: 'boss', icon: Skull },
+    { to: '/journal', labelKey: 'journal', icon: BookOpen },
+    { to: '/inventory', labelKey: 'inventory', icon: Backpack },
+    { to: '/market', labelKey: 'market', icon: Store },
+    { to: '/profile', labelKey: 'profile', icon: User },
 ];
 
 interface AppShellProps {
@@ -27,6 +27,7 @@ const AppShell = ({ children }: AppShellProps) => {
     const pathname = usePathname();
     const router = useRouter();
     const t = useTranslations('appShell');
+    const nav = useTranslations('appShell.nav');
     const [displayName, setDisplayName] = useState('Hero');
     const [userClass, setUserClass] = useState('Adventurer');
     const [currentStreak, setCurrentStreak] = useState(0);
@@ -107,7 +108,7 @@ const AppShell = ({ children }: AppShellProps) => {
                                     }`}
                             >
                                 <item.icon size={18} className="shrink-0 group-hover:scale-110 transition-transform" />
-                                <span className="font-sans">{item.label}</span>
+                                <span className="font-sans">{nav(item.labelKey)}</span>
                             </Link>
                         );
                     })}
@@ -144,7 +145,7 @@ const AppShell = ({ children }: AppShellProps) => {
                             className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-[10px] transition-all ${active ? 'text-accent' : 'text-ghost/40'}`}
                         >
                             <item.icon size={20} />
-                            <span className="font-data">{item.label}</span>
+                            <span className="font-data">{nav(item.labelKey)}</span>
                         </Link>
                     );
                 })}

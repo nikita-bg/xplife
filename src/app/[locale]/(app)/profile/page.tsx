@@ -32,6 +32,10 @@ const LANGUAGES = [
 export default function ProfilePage() {
     const t = useTranslations('profile');
     const settings = useTranslations('profile.settings');
+    const cls = useTranslations('profile.class');
+    const plan = useTranslations('profile.plan');
+    const dz = useTranslations('profile.dangerZone');
+    const sl = useTranslations('profile.statsLabels');
     const { profile, streak, loading, refresh } = useProfile();
     const router = useRouter();
     const pathname = usePathname();
@@ -54,20 +58,29 @@ export default function ProfilePage() {
     const totalXP = profile?.total_xp || 0;
     const rankTier = getRankFromLevel(level);
     const personalityType = profile?.personality_type || 'dopamine';
-    const classInfo = PERSONALITY_CLASSES[personalityType] || PERSONALITY_CLASSES.dopamine;
-    const planInfo = PLAN_LABELS[profile?.plan || 'free'] || PLAN_LABELS.free;
+    const classMap: Record<string, string> = {
+        dopamine: 'adventurer',
+        acetylcholine: 'thinker',
+        gaba: 'guardian',
+        serotonin: 'connector',
+    };
+    const classKey = classMap[personalityType] || 'adventurer';
+    const classEmojis: Record<string, string> = { dopamine: '🗺️', acetylcholine: '🧠', gaba: '🛡️', serotonin: '🌿' };
+    const classEmoji = classEmojis[personalityType] || '🗺️';
 
     // Calculate days active
     const daysActive = profile?.created_at
         ? Math.max(1, Math.ceil((Date.now() - new Date(profile.created_at).getTime()) / (1000 * 60 * 60 * 24)))
         : 0;
 
+    const planKey = profile?.plan || 'free';
+
     const stats = [
-        { label: 'Level', value: String(level), color: 'text-accent' },
-        { label: 'Total XP', value: totalXP.toLocaleString(), color: 'text-accent' },
-        { label: 'Rank', value: rankTier.charAt(0).toUpperCase() + rankTier.slice(1), color: 'text-ghost' },
-        { label: 'Days Active', value: String(daysActive), color: 'text-accent-secondary' },
-        { label: 'Streak', value: String(streak?.current_streak || 0), color: 'text-orange-400' },
+        { label: sl('level'), value: String(level), color: 'text-accent' },
+        { label: sl('totalXp'), value: totalXP.toLocaleString(), color: 'text-accent' },
+        { label: sl('rank'), value: rankTier.charAt(0).toUpperCase() + rankTier.slice(1), color: 'text-ghost' },
+        { label: sl('daysActive'), value: String(daysActive), color: 'text-accent-secondary' },
+        { label: sl('streak'), value: String(streak?.current_streak || 0), color: 'text-orange-400' },
     ];
 
     const handleSave = async () => {
@@ -97,7 +110,7 @@ export default function ProfilePage() {
     };
 
     const handleDeleteAccount = async () => {
-        if (!confirm('Are you sure? This action is permanent and cannot be undone.')) return;
+        if (!confirm(dz('confirmMessage'))) return;
         setDeleting(true);
         try {
             const res = await fetch('/api/account/delete', { method: 'POST' });
@@ -140,7 +153,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
                 <div className="font-heading font-bold text-xl text-white mt-4">{displayName || 'Hero'}</div>
-                <div className="font-data text-xs text-accent-secondary tracking-wider">{classInfo.name} · {rankTier.charAt(0).toUpperCase() + rankTier.slice(1)} Rank</div>
+                <div className="font-data text-xs text-accent-secondary tracking-wider">{cls(classKey)} · {rankTier.charAt(0).toUpperCase() + rankTier.slice(1)}</div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
@@ -164,7 +177,7 @@ export default function ProfilePage() {
                         <input value={profile?.email || ''} readOnly className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 font-sans text-sm text-ghost/30 cursor-not-allowed" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Language</label>
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{t('language')}</label>
                         <div className="relative">
                             <Globe size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-ghost/30" />
                             <select value={language} onChange={e => handleLanguageChange(e.target.value)} className="w-full bg-background border border-white/10 rounded-xl py-3 pl-10 pr-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 appearance-none cursor-pointer">
@@ -185,22 +198,22 @@ export default function ProfilePage() {
 
             <div className="bg-[#0C1021] rounded-[2rem] border border-accent-secondary/20 p-6 md:p-8 mb-6">
                 <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl">{classInfo.emoji}</span>
+                    <span className="text-2xl">{classEmoji}</span>
                     <div>
-                        <h3 className="font-heading font-bold text-white">{classInfo.name}</h3>
-                        <div className="font-data text-xs text-accent-secondary tracking-wider">Your Class</div>
+                        <h3 className="font-heading font-bold text-white">{cls(classKey)}</h3>
+                        <div className="font-data text-xs text-accent-secondary tracking-wider">{cls('title')}</div>
                     </div>
                 </div>
-                <p className="font-sans text-sm text-ghost/60 mb-4 leading-relaxed">{classInfo.desc}</p>
+                <p className="font-sans text-sm text-ghost/60 mb-4 leading-relaxed">{cls(`${classKey}Desc`)}</p>
                 <button onClick={handleRetakeQuiz} className="font-data text-xs text-ghost/40 hover:text-accent transition-colors underline underline-offset-4">
-                    Retake Personality Quiz
+                    {cls('retakeQuiz')}
                 </button>
             </div>
 
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 md:p-8 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <div className="font-heading text-sm font-bold text-white uppercase tracking-wider">{planInfo.label}</div>
-                    <div className="font-sans text-xs text-ghost/40 mt-1">{planInfo.desc}</div>
+                    <div className="font-heading text-sm font-bold text-white uppercase tracking-wider">{plan(planKey)}</div>
+                    <div className="font-sans text-xs text-ghost/40 mt-1">{plan(`${planKey}Desc`)}</div>
                 </div>
                 {profile?.plan === 'free' && (
                     <button
@@ -214,7 +227,7 @@ export default function ProfilePage() {
                         }}
                         className="btn-magnetic px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold shrink-0"
                     >
-                        <span className="btn-content">Upgrade to Pro Hero</span>
+                        <span className="btn-content">{plan('upgrade')}</span>
                     </button>
                 )}
             </div>
@@ -222,16 +235,16 @@ export default function ProfilePage() {
             <div className="bg-[#0C1021] rounded-[2rem] border border-red-500/20 p-6 md:p-8">
                 <div className="flex items-center gap-2 mb-4">
                     <AlertTriangle size={16} className="text-red-400" />
-                    <h3 className="font-heading text-sm font-bold text-red-400 uppercase tracking-wider">Danger Zone</h3>
+                    <h3 className="font-heading text-sm font-bold text-red-400 uppercase tracking-wider">{dz('title')}</h3>
                 </div>
-                <p className="font-sans text-xs text-ghost/40 mb-4">This action is permanent and cannot be undone.</p>
+                <p className="font-sans text-xs text-ghost/40 mb-4">{dz('description')}</p>
                 <button
                     onClick={handleDeleteAccount}
                     disabled={deleting}
                     className="px-6 py-2.5 rounded-xl border border-red-500/30 text-red-400 font-heading text-xs uppercase tracking-wider hover:bg-red-500/10 transition-colors disabled:opacity-50 flex items-center gap-2"
                 >
                     {deleting && <Loader2 size={12} className="animate-spin" />}
-                    {deleting ? 'Deleting...' : 'Delete Account'}
+                    {deleting ? dz('deleting') : dz('deleteAccount')}
                 </button>
             </div>
         </div>

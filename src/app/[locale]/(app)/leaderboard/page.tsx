@@ -75,7 +75,7 @@ export default function LeaderboardPage() {
                     <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">{t('title')}</h1>
                     <div className="flex items-center gap-2 mt-2">
                         <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
-                        <span className="font-data text-xs text-ghost/50 tracking-wider">Updated live</span>
+                        <span className="font-data text-xs text-ghost/50 tracking-wider">{t('updatedLive')}</span>
                     </div>
                 </div>
             </div>
@@ -97,9 +97,9 @@ export default function LeaderboardPage() {
                                         {p.avatar_url ? <img src={p.avatar_url} alt="" className="w-full h-full rounded-full object-cover" /> : classEmoji[p.cls] || '🎮'}
                                     </div>
                                     <div className="font-heading font-bold text-white text-lg">{p.name}</div>
-                                    <div className="font-data text-xs text-accent-secondary tracking-wider mb-2">{p.cls} · Lvl {p.level}</div>
+                                    <div className="font-data text-xs text-accent-secondary tracking-wider mb-2">{p.cls} · {t('lvlShort', { level: p.level })}</div>
                                     <div className="font-data text-sm text-accent font-bold">{p.xp.toLocaleString()} XP</div>
-                                    <div className="font-data text-[10px] text-ghost/30 mt-1">🔥 {p.streak} days</div>
+                                    <div className="font-data text-[10px] text-ghost/30 mt-1">🔥 {t('daysShort', { count: p.streak })}</div>
                                 </div>
                             ))}
                         </div>
@@ -116,9 +116,9 @@ export default function LeaderboardPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
                                         <span className="font-sans text-sm text-white font-medium truncate">{p.name}</span>
-                                        {p.isUser && <span className="font-data text-[10px] bg-accent text-background px-1.5 py-0.5 rounded font-bold">YOU</span>}
+                                        {p.isUser && <span className="font-data text-[10px] bg-accent text-background px-1.5 py-0.5 rounded font-bold">{t('youTag')}</span>}
                                     </div>
-                                    <div className="font-data text-[10px] text-ghost/40 tracking-wider">{p.cls} · Lvl {p.level}</div>
+                                    <div className="font-data text-[10px] text-ghost/40 tracking-wider">{p.cls} · {t('lvlShort', { level: p.level })}</div>
                                 </div>
                                 <div className="font-data text-xs text-ghost/60 hidden sm:block">{p.xp.toLocaleString()} XP</div>
                                 <div className="font-data text-xs text-ghost/40 hidden sm:block">🔥 {p.streak}</div>

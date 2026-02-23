@@ -398,7 +398,16 @@
     "autoRefresh": {
       "generating": "クエストを自動生成中...",
       "generatingDescription": "目標に基づいてパーソナライズされたクエストを作成しています。少々お待ちください。"
-    }
+    },
+    "characterCard": {
+      "rank": "ランク",
+      "activeClass": "アクティブクラス",
+      "level": "レベル {level}"
+    },
+    "completedLabel": "完了",
+    "noQuestsMessage": "まだクエストがありません — 最初のクエストを生成しましょう！",
+    "generateNewQuests": "新しいクエストを生成",
+    "generatingQuests": "生成中..."
   },
   "profile": {
     "title": "プロフィール",
@@ -496,6 +505,42 @@
         "addCustomInterest": "カスタム興味を追加...",
         "preferNotToSay": "回答しない"
       }
+    },
+    "statsLabels": {
+      "level": "レベル",
+      "totalXp": "総経験値",
+      "rank": "ランク",
+      "daysActive": "アクティブ日数",
+      "streak": "連続記録"
+    },
+    "class": {
+      "title": "あなたのクラス",
+      "retakeQuiz": "性格テストをやり直す",
+      "adventurer": "冒険家",
+      "adventurerDesc": "興奮、新しさ、大胆な挑戦に強い。クエストは限界を超え、野心的な目標を達成することに焦点を当てます。",
+      "thinker": "思想家",
+      "thinkerDesc": "学び、創造力、深い集中を愛する。クエストはスキルの習得と知的成長に焦点を当てます。",
+      "guardian": "守護者",
+      "guardianDesc": "安定性、一貫性、内なる平和を大切にする。クエストは強い習慣を築き、バランスを促進します。",
+      "connector": "繋ぎ手",
+      "connectorDesc": "人間関係とコミュニティからエネルギーを得る。クエストは絆を強め、意義あるつながりを促進します。"
+    },
+    "plan": {
+      "free": "無料冒険家",
+      "freeDesc": "1目標 · 15タスク/週 · 15 AIチャット/日",
+      "premium": "プロヒーロー",
+      "premiumDesc": "無制限の目標 · 無制限のタスク · 無制限のAIチャット",
+      "lifetime": "伝説のヒーロー",
+      "lifetimeDesc": "永久アクセス · 全機能解放",
+      "upgrade": "プロヒーローにアップグレード"
+    },
+    "language": "言語",
+    "dangerZone": {
+      "title": "危険ゾーン",
+      "description": "この操作は永久的で取り消しできません。",
+      "deleteAccount": "アカウントを削除",
+      "deleting": "削除中...",
+      "confirmMessage": "本当によろしいですか？この操作は永久的で取り消しできません。"
     }
   },
   "leaderboard": {
@@ -511,7 +556,11 @@
     "noRankingsDescription": "クエストを完了してリーダーボードに登場しましょう。",
     "yourRank": "あなたのランク：",
     "anonymous": "匿名",
-    "you": "（あなた）"
+    "you": "（あなた）",
+    "updatedLive": "リアルタイム更新",
+    "lvlShort": "LV {level}",
+    "daysShort": "{count}日",
+    "youTag": "あなた"
   },
   "levelUp": {
     "title": "レベルアップ！",
@@ -912,6 +961,84 @@
   },
   "appShell": {
     "streak": "{count}日連続 🔥",
-    "signOut": "ログアウト"
+    "signOut": "ログアウト",
+    "nav": {
+      "dashboard": "ダッシュボード",
+      "leaderboard": "リーダーボード",
+      "guild": "ギルド",
+      "boss": "ボス",
+      "journal": "ジャーナル",
+      "inventory": "インベントリ",
+      "market": "マーケット",
+      "profile": "プロフィール"
+    }
+  },
+  "market": {
+    "title": "アイテムマーケット",
+    "subtitle": "プレイヤー間取引",
+    "sellItem": "アイテムを売る",
+    "browse": "閲覧",
+    "myListings": "自分の出品",
+    "searchPlaceholder": "アイテムを検索...",
+    "confirmPurchase": "購入を確認",
+    "buyMessage": "{name} を 🪙 {price} で購入しますか？",
+    "buy": "購入",
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "purchaseSuccess": "購入成功！"
+  },
+  "inventory": {
+    "title": "インベントリ",
+    "subtitle": "あなたの装備",
+    "equipped": "装備中",
+    "sell": "売る",
+    "equip": "装備",
+    "coins": "コイン",
+    "all": "すべて",
+    "empty": "まだアイテムがありません"
+  },
+  "guild": {
+    "title": "ギルド",
+    "noGuild": "まだギルドに入っていません",
+    "createGuild": "ギルドを作成",
+    "joinGuild": "ギルドに参加",
+    "members": "メンバー",
+    "guildQuests": "ギルドクエスト",
+    "inviteCode": "招待コード",
+    "copyInvite": "招待をコピー",
+    "copied": "コピーしました！",
+    "contribute": "貢献",
+    "leave": "ギルドを脱退",
+    "totalXp": "総経験値",
+    "memberCount": "{count}人のメンバー",
+    "questProgress": "{current}/{target}",
+    "loading": "読み込み中..."
+  },
+  "boss": {
+    "title": "ワールドボス",
+    "noBoss": "アクティブなボス戦はありません",
+    "noBossDesc": "次のワールドボスイベントをお楽しみに！",
+    "hp": "HP",
+    "reward": "報酬",
+    "timeRemaining": "残り時間",
+    "yourContribution": "あなたの貢献",
+    "damageDealt": "与えたダメージ",
+    "tasksCompleted": "完了タスク",
+    "topDamage": "ダメージトップ",
+    "defeated": "撃破",
+    "active": "アクティブ",
+    "expired": "期限切れ"
+  },
+  "journal": {
+    "title": "進捗ジャーナル",
+    "noData": "今月完了したクエストはありません",
+    "stats": {
+      "quests": "クエスト",
+      "xpEarned": "獲得XP",
+      "activeDays": "アクティブ日数",
+      "bestStreak": "最高連続記録"
+    },
+    "categoryBreakdown": "カテゴリー別内訳",
+    "bossDamage": "ボスへのダメージ"
   }
 }

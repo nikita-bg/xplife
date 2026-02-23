@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { Coins, Shield, Sword, Shirt, Footprints, HardHat, type LucideIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const rarityStyles: Record<string, { border: string; text: string; bg: string; glow: string }> = {
     Common: { border: 'border-gray-500/30', text: 'text-gray-400', bg: 'bg-gray-500', glow: '' },
@@ -30,6 +31,7 @@ const filterTypes = ['All', 'Head', 'Body', 'Arms', 'Legs', 'Weapon'];
 const slotIcons: Record<string, LucideIcon> = { Head: HardHat, Body: Shirt, Arms: Shield, Legs: Footprints, Weapon: Sword };
 
 export default function InventoryPage() {
+    const t = useTranslations('inventory');
     const [filter, setFilter] = useState('All');
     const [selectedItem, setSelectedItem] = useState<typeof items[0] | null>(null);
 
@@ -47,11 +49,11 @@ export default function InventoryPage() {
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <div className="flex items-center gap-3">
-                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">Your Arsenal</h1>
+                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">{t('title')}</h1>
                     <span className="font-data text-xs bg-white/10 px-2 py-1 rounded-full text-ghost/60">{items.length} items</span>
                 </div>
                 <div className="flex items-center gap-2 font-data text-lg text-accent-secondary">
-                    <Coins size={18} /><span className="font-bold">2,400 coins</span>
+                    <Coins size={18} /><span className="font-bold">2,400 {t('coins')}</span>
                 </div>
             </div>
 
@@ -71,7 +73,7 @@ export default function InventoryPage() {
                                 <div key={item.id} onClick={() => setSelectedItem(item)}
                                     className={`inv-card bg-[#0C1021] rounded-[1.5rem] border ${rs.border} ${rs.glow} p-4 cursor-pointer hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group`}>
                                     {item.rarity === 'Mythic' && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-[shimmer_2s_infinite] pointer-events-none"></div>}
-                                    {item.equipped && <div className="absolute top-3 right-3 font-data text-[9px] bg-accent/20 text-accent px-1.5 py-0.5 rounded border border-accent/30">EQUIPPED</div>}
+                                    {item.equipped && <div className="absolute top-3 right-3 font-data text-[9px] bg-accent/20 text-accent px-1.5 py-0.5 rounded border border-accent/30">{t('equipped').toUpperCase()}</div>}
                                     <div className={`w-full aspect-square rounded-xl ${rs.bg}/10 flex items-center justify-center mb-3`}>
                                         <div className={`w-12 h-12 ${rs.bg}/20 rounded-lg flex items-center justify-center`}>
                                             <Icon size={24} className={rs.text} />
@@ -90,7 +92,7 @@ export default function InventoryPage() {
 
                 <div className="lg:col-span-3">
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 sticky top-8">
-                        <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-ghost/60 mb-4">Equipped</h3>
+                        <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-ghost/60 mb-4">{t('equipped')}</h3>
                         <div className="space-y-3">
                             {equippedSlots.map(slot => {
                                 const equipped = items.find(i => i.type === slot && i.equipped);
@@ -101,7 +103,7 @@ export default function InventoryPage() {
                                             <Icon size={16} />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className={`font-sans text-xs ${equipped ? 'text-white' : 'text-ghost/20'} truncate`}>{equipped ? equipped.name : 'Empty'}</div>
+                                            <div className={`font-sans text-xs ${equipped ? 'text-white' : 'text-ghost/20'} truncate`}>{equipped ? equipped.name : t('empty')}</div>
                                             <div className="font-data text-[10px] text-ghost/30">{slot}</div>
                                         </div>
                                     </div>
@@ -127,7 +129,7 @@ export default function InventoryPage() {
                         <div className="font-data text-xs text-ghost/40 text-center mb-6">Class: {selectedItem.cls}</div>
                         <div className="flex gap-3">
                             <button className="btn-magnetic flex-1 py-3 rounded-xl bg-accent text-background font-heading text-sm uppercase tracking-wider font-bold">
-                                <span className="btn-content">{selectedItem.equipped ? 'Unequip' : 'Equip'}</span>
+                                <span className="btn-content">{selectedItem.equipped ? t('sell') : t('equip')}</span>
                             </button>
                             <button onClick={() => setSelectedItem(null)} className="px-4 py-3 rounded-xl bg-white/5 text-ghost/50 font-heading text-sm uppercase tracking-wider hover:bg-white/10 transition-all">Close</button>
                         </div>
