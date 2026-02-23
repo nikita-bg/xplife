@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { useRouter, usePathname } from 'next/navigation';
-import { Dumbbell, BookOpen, Brain, Briefcase, Users, Heart, Palette, ArrowRight } from 'lucide-react';
+import { Dumbbell, BookOpen, Brain, Briefcase, Users, Heart, Palette, ArrowRight, Loader2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 const categories = [
     { id: 'fitness', label: 'Fitness', icon: Dumbbell },
@@ -116,6 +117,15 @@ export default function OnboardingPage() {
         setGoals(prev => prev.includes(id) ? prev.filter(g => g !== id) : [...prev, id]);
     };
 
+    const CLASS_TO_PERSONALITY: Record<string, string> = {
+        Adventurer: 'dopamine',
+        Thinker: 'acetylcholine',
+        Guardian: 'gaba',
+        Connector: 'serotonin',
+    };
+
+    const [saving, setSaving] = useState(false);
+
     const answerQuiz = (cls: string) => {
         const newAnswers = [...quizAnswers, cls];
         setQuizAnswers(newAnswers);
@@ -131,8 +141,60 @@ export default function OnboardingPage() {
             newAnswers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
             const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
             setRevealedClass(winner);
+
+            // Save personality type to DB
+            const savePersonality = async () => {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    const personalityType = CLASS_TO_PERSONALITY[winner] || 'dopamine';
+                    await supabase.from('users').update({
+                        personality_type: personalityType,
+                        updated_at: new Date().toISOString(),
+                    }).eq('id', user.id);
+                }
+            };
+            savePersonality();
+
             nextStep();
         }
+    };
+
+    const handleFinishOnboarding = async () => {
+        setSaving(true);
+        try {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                // Save goals
+                if (goals.length > 0) {
+                    const goalRows = goals.map(g => ({
+                        user_id: user.id,
+                        title: g.charAt(0).toUpperCase() + g.slice(1),
+                        category: g,
+                    }));
+                    await supabase.from('goals').insert(goalRows);
+                }
+
+                // Set onboarding as completed
+                await supabase.from('users').update({
+                    onboarding_completed: true,
+                    updated_at: new Date().toISOString(),
+                }).eq('id', user.id);
+
+                // Generate first quests via AI
+                try {
+                    await fetch('/api/ai/generate-tasks', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ questTimeframe: 'daily', locale }),
+                    });
+                } catch { /* non-critical */ }
+            }
+        } catch (err) {
+            console.error('Onboarding save error:', err);
+        }
+        router.push(`/${locale}/dashboard`);
     };
 
     return (
@@ -235,8 +297,10 @@ export default function OnboardingPage() {
                                     </div>
                                 ))}
                             </div>
-                            <button onClick={() => router.push(`/${locale}/dashboard`)} className="btn-magnetic px-10 py-4 rounded-full bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading font-bold text-lg uppercase tracking-wider shadow-[0_0_30px_rgba(255,184,0,0.3)]">
-                                <span className="btn-content flex items-center gap-3">Enter XPLife <ArrowRight size={20} /></span>
+                            <button onClick={handleFinishOnboarding} disabled={saving} className="btn-magnetic px-10 py-4 rounded-full bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading font-bold text-lg uppercase tracking-wider shadow-[0_0_30px_rgba(255,184,0,0.3)] disabled:opacity-50">
+                                <span className="btn-content flex items-center gap-3">
+                                    {saving ? <><Loader2 size={20} className="animate-spin" /> Setting up...</> : <>Enter XPLife <ArrowRight size={20} /></>}
+                                </span>
                             </button>
                         </div>
                     )}

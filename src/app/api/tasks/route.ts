@@ -172,6 +172,59 @@ export async function PATCH(request: Request) {
                 task_id: id,
             })
 
+            // ── Update level from total XP ──
+            const { getLevelFromTotalXP } = await import('@/lib/xpUtils')
+            const newTotalXP = (profile?.total_xp || 0) + xpAmount
+            const newLevel = getLevelFromTotalXP(newTotalXP)
+            if (profile && newLevel !== profile.total_xp) {
+                await supabase
+                    .from('users')
+                    .update({ level: newLevel })
+                    .eq('id', user.id)
+            }
+
+            // ── Update streak ──
+            const today = new Date().toISOString().split('T')[0]
+            const { data: streak } = await supabase
+                .from('streaks')
+                .select('*')
+                .eq('user_id', user.id)
+                .single()
+
+            if (streak) {
+                const lastDate = streak.last_activity_date
+                if (lastDate !== today) {
+                    let newStreak = 1
+                    if (lastDate) {
+                        const last = new Date(lastDate + 'T00:00:00')
+                        const todayDate = new Date(today + 'T00:00:00')
+                        const diffDays = Math.round((todayDate.getTime() - last.getTime()) / (1000 * 60 * 60 * 24))
+                        if (diffDays === 1) {
+                            newStreak = (streak.current_streak || 0) + 1
+                        }
+                        // diffDays > 1 means streak broken, reset to 1
+                    }
+                    const newLongest = Math.max(streak.longest_streak || 0, newStreak)
+                    await supabase
+                        .from('streaks')
+                        .update({
+                            current_streak: newStreak,
+                            longest_streak: newLongest,
+                            last_activity_date: today,
+                            updated_at: new Date().toISOString(),
+                        })
+                        .eq('user_id', user.id)
+                }
+            } else {
+                // Create streak record if it doesn't exist
+                await supabase.from('streaks').insert({
+                    user_id: user.id,
+                    current_streak: 1,
+                    longest_streak: 1,
+                    last_activity_date: today,
+                })
+            }
+
             // ── Auto-deal boss damage ──
             const difficultyDamage: Record<string, number> = { easy: 10, medium: 20, hard: 35, epic: 50 }
             const damage = difficultyDamage[task.difficulty] || 15

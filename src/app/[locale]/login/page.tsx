@@ -1,12 +1,24 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
     const supabase = createClient();
     const pathname = usePathname();
+    const router = useRouter();
     const locale = pathname.split('/')[1] || 'en';
+
+    const [mode, setMode] = useState<'login' | 'signup'>('login');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const handleOAuth = async (provider: 'google' | 'github') => {
         await supabase.auth.signInWithOAuth({
@@ -17,15 +29,104 @@ export default function LoginPage() {
         });
     };
 
+    const handleEmailLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+            if (error.message.toLowerCase().includes('not confirmed')) {
+                setError('Email not confirmed. Check your inbox or click Resend below.');
+            } else {
+                setError('Invalid email or password');
+            }
+            setLoading(false);
+            return;
+        }
+        router.push(`/${locale}/dashboard`);
+        router.refresh();
+    };
+
+    const handleEmailSignup = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            setLoading(false);
+            return;
+        }
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters');
+            setLoading(false);
+            return;
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                emailRedirectTo: `${window.location.origin}/${locale}/dashboard`,
+            },
+        });
+
+        if (error) {
+            if (error.message.toLowerCase().includes('already')) {
+                setError('This email is already registered. Try logging in.');
+            } else {
+                setError(error.message);
+            }
+            setLoading(false);
+            return;
+        }
+
+        if (data?.user?.identities?.length === 0) {
+            setError('Email already registered but not confirmed. We re-sent the confirmation link.');
+            await supabase.auth.resend({ type: 'signup', email });
+            setLoading(false);
+            return;
+        }
+
+        setSuccess(true);
+        setLoading(false);
+    };
+
+    const handleResend = async () => {
+        await supabase.auth.resend({ type: 'signup', email });
+        setError('Confirmation link re-sent! Check your inbox.');
+    };
+
+    if (success) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center p-6">
+                <div className="max-w-md w-full bg-[#0C1021] rounded-3xl border border-white/5 p-10 text-center">
+                    <span className="text-4xl mb-3 block">✉️</span>
+                    <h1 className="font-heading font-black text-2xl text-ghost uppercase tracking-tight">Check Your Email</h1>
+                    <p className="font-sans text-ghost/50 text-sm mt-4">We sent a confirmation link to <strong className="text-ghost/80">{email}</strong>. Click it to activate your account.</p>
+                    <Link href={`/${locale}/login`} className="inline-block mt-6 text-accent text-sm hover:underline" onClick={() => { setSuccess(false); setMode('login'); }}>
+                        Back to Sign In
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-background flex items-center justify-center p-6">
             <div className="max-w-md w-full bg-[#0C1021] rounded-3xl border border-white/5 p-10">
                 <div className="text-center mb-8">
                     <span className="text-4xl mb-3 block">⚡</span>
-                    <h1 className="font-heading font-black text-2xl text-ghost uppercase tracking-tight">Sign In</h1>
-                    <p className="font-sans text-ghost/50 text-sm mt-2">Continue your adventure</p>
+                    <h1 className="font-heading font-black text-2xl text-ghost uppercase tracking-tight">
+                        {mode === 'login' ? 'Sign In' : 'Create Account'}
+                    </h1>
+                    <p className="font-sans text-ghost/50 text-sm mt-2">
+                        {mode === 'login' ? 'Continue your adventure' : 'Begin your quest'}
+                    </p>
                 </div>
 
+                {/* OAuth */}
                 <div className="space-y-3">
                     <button
                         onClick={() => handleOAuth('google')}
@@ -43,8 +144,83 @@ export default function LoginPage() {
                     </button>
                 </div>
 
-                <div className="mt-6 text-center">
-                    <p className="font-sans text-xs text-ghost/30">By signing in, you agree to our Terms & Privacy Policy</p>
+                {/* Divider */}
+                <div className="flex items-center gap-3 my-6">
+                    <div className="h-px flex-1 bg-white/10" />
+                    <span className="font-data text-xs text-ghost/30 tracking-wider">OR</span>
+                    <div className="h-px flex-1 bg-white/10" />
+                </div>
+
+                {/* Email/Password Form */}
+                <form onSubmit={mode === 'login' ? handleEmailLogin : handleEmailSignup} className="space-y-4">
+                    <div>
+                        <label className="font-data text-xs text-ghost/50 tracking-wider block mb-1.5">EMAIL</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            placeholder="hero@xplife.app"
+                            required
+                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-ghost font-sans text-sm placeholder:text-ghost/20 focus:outline-none focus:border-accent/50 transition-colors"
+                        />
+                    </div>
+                    <div>
+                        <label className="font-data text-xs text-ghost/50 tracking-wider block mb-1.5">PASSWORD</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            required
+                            minLength={6}
+                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-ghost font-sans text-sm placeholder:text-ghost/20 focus:outline-none focus:border-accent/50 transition-colors"
+                        />
+                    </div>
+                    {mode === 'signup' && (
+                        <div>
+                            <label className="font-data text-xs text-ghost/50 tracking-wider block mb-1.5">CONFIRM PASSWORD</label>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={e => setConfirmPassword(e.target.value)}
+                                placeholder="••••••••"
+                                required
+                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-ghost font-sans text-sm placeholder:text-ghost/20 focus:outline-none focus:border-accent/50 transition-colors"
+                            />
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-sm text-red-400 font-sans">
+                            <p>{error}</p>
+                            {error.includes('not confirmed') && (
+                                <button type="button" onClick={handleResend} className="mt-2 text-xs underline hover:no-underline text-red-300">
+                                    Resend confirmation email
+                                </button>
+                            )}
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-accent text-primary rounded-xl font-heading font-bold tracking-wider text-sm shadow-[0_0_15px_rgba(0,245,255,0.3)] hover:shadow-[0_0_25px_rgba(0,245,255,0.5)] transition-all disabled:opacity-50"
+                    >
+                        {loading && <Loader2 size={16} className="animate-spin" />}
+                        {mode === 'login' ? 'Sign In' : 'Create Account'}
+                    </button>
+                </form>
+
+                <p className="mt-6 text-center font-sans text-xs text-ghost/30">
+                    {mode === 'login' ? (
+                        <>Don&apos;t have an account?{' '}<button onClick={() => { setMode('signup'); setError(null); }} className="text-accent hover:underline">Sign Up</button></>
+                    ) : (
+                        <>Already have an account?{' '}<button onClick={() => { setMode('login'); setError(null); }} className="text-accent hover:underline">Sign In</button></>
+                    )}
+                </p>
+
+                <div className="mt-4 text-center">
+                    <p className="font-sans text-xs text-ghost/20">By signing in, you agree to our Terms & Privacy Policy</p>
                 </div>
             </div>
         </div>

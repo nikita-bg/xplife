@@ -8,10 +8,11 @@ import ProofUpload from './ProofUpload';
 interface Quest {
     id: string | number;
     title: string;
-    description?: string;
+    description?: string | null;
     category: string;
     difficulty: string;
-    xp: number;
+    xp?: number;
+    xp_reward?: number;
 }
 
 interface QuestCompleteModalProps {
@@ -70,7 +71,7 @@ export default function QuestCompleteModal({ quest, isOpen, onClose, onConfirm }
             gsap.fromTo(xpRef.current,
                 { innerText: '0', scale: 0.5, opacity: 0 },
                 {
-                    innerText: quest.xp,
+                    innerText: quest.xp_reward || quest.xp || 50,
                     scale: 1,
                     opacity: 1,
                     duration: 1.2,
@@ -175,7 +176,7 @@ export default function QuestCompleteModal({ quest, isOpen, onClose, onConfirm }
                             <span className={`font-data text-[10px] px-2 py-0.5 rounded-full border ${diffColors[quest.difficulty] || 'text-ghost/40 bg-white/5 border-white/10'}`}>
                                 {quest.difficulty}
                             </span>
-                            <span className="font-data text-xs text-accent-secondary ml-auto">+{quest.xp} XP</span>
+                            <span className="font-data text-xs text-accent-secondary ml-auto">+{quest.xp_reward || quest.xp || 50} XP</span>
                         </div>
                     </div>
 
