@@ -2,6 +2,7 @@
 
 import React, { useLayoutEffect, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { useTranslations } from 'next-intl';
 
 /* ── Pure-Canvas Particle System ── */
 const HeroParticles = () => {
@@ -97,6 +98,7 @@ const HeroParticles = () => {
 /* ── Hero Section ── */
 const Hero = () => {
     const containerRef = useRef<HTMLElement>(null);
+    const t = useTranslations('hero');
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -132,17 +134,17 @@ const Hero = () => {
             <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-24 md:pb-32 flex flex-col items-start justify-end h-full">
                 <div className="max-w-4xl w-full">
                     <h1 className="hero-anim font-heading font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tightest text-ghost mb-2">
-                        Your Life is the
+                        {t('title')}
                     </h1>
 
                     <div className="hero-anim group relative font-drama italic text-accent font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tighter leading-[0.85] mb-8 pr-4 py-2 cursor-default">
                         <span className="relative z-10 text-shadow-glow transition-all duration-300 group-hover:text-white">
-                            Ultimate Quest.
+                            {t('titleHighlight')}
                         </span>
                     </div>
 
                     <p className="hero-anim text-ghost/80 font-sans text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-                        Transform boring goals into epic RPG quests. AI builds your daily missions. Earn XP. Level up for real.
+                        {t('description')}
                     </p>
 
                     <div className="hero-anim mb-8 group relative inline-block">
@@ -151,7 +153,7 @@ const Hero = () => {
                         <button className="btn-magnetic relative px-8 py-4 rounded-full bg-background border-2 border-accent text-accent hover:text-background hover:bg-accent transition-all duration-300 text-lg overflow-hidden flex items-center justify-center">
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-20 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#000_2px,#000_4px)] transition-opacity"></div>
                             <span className="btn-content font-heading font-bold tracking-wider uppercase flex items-center gap-3 relative z-10">
-                                Start Playing Free
+                                {t('cta')}
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform">
                                     <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                                 </svg>
@@ -162,12 +164,12 @@ const Hero = () => {
                     <div className="hero-anim flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 font-data text-xs sm:text-sm text-ghost/60 tracking-wider uppercase border-t border-white/10 pt-6">
                         <div className="flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-accent-secondary shadow-[0_0_8px_rgba(255,184,0,0.8)]"></span>
-                            <span>4,920+ Active Players</span>
+                            <span>4,920+ {t('statStreak')}</span>
                         </div>
                         <span className="hidden sm:inline-block text-white/20">•</span>
                         <div className="flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(155,78,221,0.8)]"></span>
-                            <span>146,400+ Quests Completed</span>
+                            <span>146,400+ {t('statQuests')}</span>
                         </div>
                     </div>
                 </div>

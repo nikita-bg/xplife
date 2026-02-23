@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 const Footer = () => {
+    const t = useTranslations('footer');
     return (
         <footer className="w-full bg-[#050714] text-ghost/80 py-16 px-6 md:px-12 rounded-t-[4rem] border-t border-white/5 relative z-20 mt-20">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
@@ -14,7 +16,7 @@ const Footer = () => {
                         </span>
                     </div>
                     <p className="font-sans text-sm text-ghost/50 mb-8 max-w-sm">
-                        Level Up Your Life.<br />Transform your goals into epic RPG quests powered by AI.
+                        {t('tagline')}
                     </p>
                     <div className="inline-flex items-center gap-3 bg-background border border-white/10 rounded-full px-4 py-2 mt-auto">
                         <span className="relative flex h-2 w-2">
@@ -51,7 +53,7 @@ const Footer = () => {
 
             <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p className="font-sans text-xs text-ghost/40">
-                    &copy; {new Date().getFullYear()} XPLife. All rights reserved.
+                    {t('copyright')}
                 </p>
                 <div className="font-data text-[10px] text-ghost/20 tracking-widest uppercase">
                     SYSTEM_VERSION: 3.0.0-PRO

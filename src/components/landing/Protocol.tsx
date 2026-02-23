@@ -3,6 +3,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,11 +52,12 @@ const AnimEKG = () => (
 
 const Protocol = () => {
     const containerRef = useRef<HTMLElement>(null);
+    const t = useTranslations('landing.howItWorks');
 
     const cards = [
-        { id: "01", title: "Create Your Character", desc: "Define your avatar, set your core attributes, and establish your starting baseline. The journey begins with knowing who you are.", Anim: AnimAvatar },
-        { id: "02", title: "AI Generates Your Quests", desc: "Our engine breaks down your real-world goals into manageable, personalized daily missions that adapt to your progress.", Anim: AnimScanner },
-        { id: "03", title: "Level Up For Real", desc: "Complete quests to earn XP, unlock achievements, and physically rank up in life. Build streaks and watch your reality transform.", Anim: AnimEKG }
+        { id: "01", title: t('step1.title'), desc: t('step1.description'), Anim: AnimAvatar },
+        { id: "02", title: t('step2.title'), desc: t('step2.description'), Anim: AnimScanner },
+        { id: "03", title: t('step3.title'), desc: t('step3.description'), Anim: AnimEKG }
     ];
 
     useLayoutEffect(() => {

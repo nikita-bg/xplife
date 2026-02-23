@@ -3,12 +3,14 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Philosophy = () => {
     const containerRef = useRef<HTMLElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
+    const t = useTranslations('hero');
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {

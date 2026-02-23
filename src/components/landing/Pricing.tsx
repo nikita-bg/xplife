@@ -4,6 +4,7 @@ import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +49,7 @@ const PricingCard = ({ title, price, desc, features, highlighted, cta }: Pricing
 
 const Pricing = () => {
     const containerRef = useRef<HTMLElement>(null);
+    const t = useTranslations('landing.pricing');
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -67,10 +69,10 @@ const Pricing = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-20">
                     <h2 className="font-heading font-black text-4xl md:text-5xl lg:text-6xl text-ghost uppercase tracking-tight mb-6">
-                        Unlock Your Potential
+                        {t('title')} <span className="text-accent">{t('titleHighlight')}</span>
                     </h2>
                     <p className="font-sans text-lg text-ghost/60 max-w-2xl mx-auto">
-                        Choose the tier that matches your ambition. Start your journey today.
+                        {t('description')}
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start relative max-w-6xl mx-auto">

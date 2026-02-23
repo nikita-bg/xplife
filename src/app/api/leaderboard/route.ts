@@ -13,11 +13,15 @@ export async function GET() {
     }
 
     // Top 50 users by total_xp
-    const { data: users } = await supabase
+    const { data: users, error: usersError } = await supabase
         .from('users')
-        .select('id, display_name, avatar_url, total_xp, level, class')
+        .select('id, display_name, avatar_url, total_xp, level, personality_type')
         .order('total_xp', { ascending: false })
         .limit(50)
+
+    if (usersError) {
+        console.error('[LEADERBOARD] Users query error:', usersError)
+    }
 
     // Get streaks for these users
     const userIds = users?.map(u => u.id) || []
@@ -31,12 +35,19 @@ export async function GET() {
         streakMap.set(s.user_id, s.current_streak)
     }
 
+    const classMap: Record<string, string> = {
+        dopamine: 'Adventurer',
+        acetylcholine: 'Thinker',
+        gaba: 'Guardian',
+        serotonin: 'Connector',
+    }
+
     const leaderboard = users?.map((u, i) => ({
         rank: i + 1,
         id: u.id,
         name: u.display_name || 'Hero',
         avatar_url: u.avatar_url,
-        cls: u.class || 'Adventurer',
+        cls: classMap[u.personality_type || ''] || 'Adventurer',
         level: u.level || 1,
         xp: u.total_xp || 0,
         streak: streakMap.get(u.id) || 0,

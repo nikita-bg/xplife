@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,7 @@ const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const pathname = usePathname();
     const locale = pathname.split('/')[1] || 'en';
+    const t = useTranslations('navbar');
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -60,21 +62,21 @@ const Navbar = () => {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-6 font-sans text-sm font-medium tracking-wide">
-                <a href="#how-it-works" className="text-ghost/60 hover:text-accent transition-colors">How It Works</a>
-                <a href="#features" className="text-ghost/60 hover:text-accent transition-colors">Features</a>
-                <a href="#pricing" className="text-ghost/60 hover:text-accent transition-colors">Pricing</a>
+                <a href="#how-it-works" className="text-ghost/60 hover:text-accent transition-colors">{t('howItWorks')}</a>
+                <a href="#features" className="text-ghost/60 hover:text-accent transition-colors">{t('features')}</a>
+                <a href="#pricing" className="text-ghost/60 hover:text-accent transition-colors">{t('pricing')}</a>
                 <LanguageSwitcher />
                 <Link
                     href={`/${locale}/login`}
                     className="text-ghost/60 hover:text-ghost transition-colors"
                 >
-                    Sign In
+                    {t('login')}
                 </Link>
                 <Link
                     href={`/${locale}/login`}
                     className="bg-accent text-primary px-5 py-2 rounded-full font-heading font-bold tracking-wider text-xs shadow-[0_0_15px_rgba(0,245,255,0.3)] hover:shadow-[0_0_25px_rgba(0,245,255,0.5)] transition-all"
                 >
-                    Start Playing Free
+                    {t('signup')}
                 </Link>
             </div>
 
@@ -91,13 +93,13 @@ const Navbar = () => {
             {mobileOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-[#0C1021]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col gap-4 md:hidden">
                     <a href="#how-it-works" className="text-ghost/60 font-sans text-sm hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
-                        How It Works
+                        {t('howItWorks')}
                     </a>
                     <a href="#features" className="text-ghost/60 font-sans text-sm hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
-                        Features
+                        {t('features')}
                     </a>
                     <a href="#pricing" className="text-ghost/60 font-sans text-sm hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
-                        Pricing
+                        {t('pricing')}
                     </a>
                     <div className="py-1"><LanguageSwitcher /></div>
                     <Link
@@ -105,14 +107,14 @@ const Navbar = () => {
                         className="text-ghost/60 font-sans text-sm hover:text-ghost transition-colors"
                         onClick={() => setMobileOpen(false)}
                     >
-                        Sign In
+                        {t('login')}
                     </Link>
                     <Link
                         href={`/${locale}/login`}
                         className="bg-accent text-primary px-5 py-2.5 rounded-full font-heading font-bold tracking-wider text-sm text-center shadow-[0_0_15px_rgba(0,245,255,0.3)] transition-all"
                         onClick={() => setMobileOpen(false)}
                     >
-                        Start Playing Free
+                        {t('signup')}
                     </Link>
                 </div>
             )}

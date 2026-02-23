@@ -30,6 +30,7 @@ const AppShell = ({ children }: AppShellProps) => {
     const [displayName, setDisplayName] = useState('Hero');
     const [userClass, setUserClass] = useState('Adventurer');
     const [currentStreak, setCurrentStreak] = useState(0);
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
     const segments = pathname.split('/');
     const locale = segments[1] || 'en';
@@ -42,13 +43,14 @@ const AppShell = ({ children }: AppShellProps) => {
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
                 const [profileRes, streakRes] = await Promise.all([
-                    supabase.from('users').select('display_name, personality_type').eq('id', user.id).single(),
+                    supabase.from('users').select('display_name, personality_type, avatar_url').eq('id', user.id).single(),
                     supabase.from('streaks').select('current_streak').eq('user_id', user.id).single(),
                 ]);
                 if (profileRes.data) {
                     setDisplayName(profileRes.data.display_name || user.email?.split('@')[0] || 'Hero');
                     const classMap: Record<string, string> = { dopamine: 'Adventurer', acetylcholine: 'Thinker', gaba: 'Guardian', serotonin: 'Connector' };
                     setUserClass(classMap[profileRes.data.personality_type || ''] || 'Adventurer');
+                    setAvatarUrl(profileRes.data.avatar_url || null);
                 }
                 if (streakRes.data) {
                     setCurrentStreak(streakRes.data.current_streak || 0);
@@ -78,8 +80,12 @@ const AppShell = ({ children }: AppShellProps) => {
 
                 <div className="px-4 py-5 border-b border-white/5">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-tertiary flex items-center justify-center text-sm font-bold text-background shrink-0">
-                            {displayName.charAt(0).toUpperCase()}
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-tertiary flex items-center justify-center text-sm font-bold text-background shrink-0 overflow-hidden">
+                            {avatarUrl ? (
+                                <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+                            ) : (
+                                displayName.charAt(0).toUpperCase()
+                            )}
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="font-heading text-sm font-bold text-white truncate">{displayName}</div>

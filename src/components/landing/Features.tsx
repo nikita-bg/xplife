@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Activity, Target, CalendarDays, MousePointer2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -156,6 +157,7 @@ const HabitTrackerGrid = () => {
 
 const Features = () => {
     const containerRef = useRef<HTMLElement>(null);
+    const t = useTranslations('landing.features');
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -173,34 +175,34 @@ const Features = () => {
                 <div className="mb-20">
                     <div className="font-data text-accent font-bold tracking-wider uppercase text-sm mb-4 flex items-center gap-3">
                         <span className="w-8 h-[1px] bg-accent"></span>
-                        Functional Artifacts
+                        {t('subtitle')}
                     </div>
                     <h2 className="text-4xl md:text-5xl lg:text-6xl text-ghost leading-tight max-w-2xl">
-                        AI-POWERED PROGRESSION.
+                        {t('title')} <span className="text-accent">{t('titleHighlight')}</span>
                     </h2>
                     <p className="mt-6 text-ghost/60 font-sans text-lg max-w-xl">
-                        We replace static lists with dynamic mission protocols. Earn real experience for real-world progress.
+                        {t('description')}
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
                     <div className="feature-card h-[400px] bg-[#0C1021] rounded-[2rem] border border-white/5 p-8 flex flex-col row-span-2">
-                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">AI Quest Generator</h3>
-                        <p className="text-sm text-ghost/50 mb-8 font-sans">AI regenerates daily, weekly, and monthly quests to balance your progression state.</p>
+                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">{t('aiPowered.title')}</h3>
+                        <p className="text-sm text-ghost/50 mb-8 font-sans">{t('aiPowered.description')}</p>
                         <div className="flex-grow rounded-xl bg-background border border-white/5 p-4 overflow-hidden shadow-inner">
                             <QuestGenerator />
                         </div>
                     </div>
                     <div className="feature-card h-[350px] bg-[#0C1021] rounded-[2rem] border border-white/5 p-8 flex flex-col">
-                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">Real-Time XP Tracking</h3>
-                        <p className="text-sm text-ghost/50 mb-8 font-sans">Live XP tracking. Watch your global ranking update in real time as you complete tasks.</p>
+                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">{t('trackProgress.title')}</h3>
+                        <p className="text-sm text-ghost/50 mb-8 font-sans">{t('trackProgress.description')}</p>
                         <div className="flex-grow rounded-xl overflow-hidden">
                             <XPLiveFeed />
                         </div>
                     </div>
                     <div className="feature-card h-[350px] bg-[#0C1021] rounded-[2rem] border border-white/5 p-8 flex flex-col">
-                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">Habit Streak Tracker</h3>
-                        <p className="text-sm text-ghost/50 mb-8 font-sans">Build unbreakable streaks with an interface designed to reward consistency.</p>
+                        <h3 className="font-heading font-bold text-lg mb-2 uppercase tracking-wide">{t('deepPersonalization.title')}</h3>
+                        <p className="text-sm text-ghost/50 mb-8 font-sans">{t('deepPersonalization.description')}</p>
                         <div className="flex-grow rounded-xl bg-background border border-white/5 p-6 overflow-hidden shadow-inner">
                             <HabitTrackerGrid />
                         </div>
