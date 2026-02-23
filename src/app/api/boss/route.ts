@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
  * GET /api/boss — Fetch active boss event + user's contribution
@@ -12,8 +13,10 @@ export async function GET() {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
+
     // Find active boss
-    const { data: boss } = await supabase
+    const { data: boss } = await admin
         .from('boss_events')
         .select('*')
         .eq('status', 'active')
@@ -23,7 +26,7 @@ export async function GET() {
 
     if (!boss) {
         // Check recently defeated
-        const { data: recent } = await supabase
+        const { data: recent } = await admin
             .from('boss_events')
             .select('*')
             .eq('status', 'defeated')
@@ -34,8 +37,8 @@ export async function GET() {
         return NextResponse.json({ boss: recent || null, active: false, contribution: null })
     }
 
-    // Fetch user's contribution
-    const { data: contribution } = await supabase
+    // Fetch user's contribution (admin to bypass RLS)
+    const { data: contribution } = await admin
         .from('boss_contributions')
         .select('*')
         .eq('boss_id', boss.id)

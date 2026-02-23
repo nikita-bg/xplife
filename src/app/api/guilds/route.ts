@@ -67,17 +67,17 @@ export async function POST(request: Request) {
 
     const limits = getPlanLimits(profile?.plan)
 
-    // Count guilds user owns
+    // Count guilds user currently OWNS (active membership)
     const { count: ownedCount } = await admin
         .from('guild_members')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)
         .eq('role', 'owner')
 
-    const maxGuilds = limits.maxGoals // reuse maxGoals as maxGuilds (1 free, 3 premium)
+    const maxGuilds = limits.maxGuilds
     if ((ownedCount ?? 0) >= maxGuilds) {
         return NextResponse.json(
-            { error: `Maximum ${maxGuilds} guild(s) for your plan. Upgrade for more.`, upgrade: true },
+            { error: `You can only own ${maxGuilds} guild(s) on your current plan. Upgrade for more.`, upgrade: true },
             { status: 403 }
         )
     }

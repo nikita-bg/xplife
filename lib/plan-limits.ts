@@ -6,12 +6,13 @@ export interface PlanLimits {
     chatPerDay: number               // -1 = unlimited
     maxYearlyQuests: number
     questGenerationsPerDay: number   // -1 = unlimited
+    maxGuilds: number                // max guilds user can OWN, -1 = unlimited
 }
 
 export const PLAN_LIMITS: Record<PlanType, PlanLimits> = {
-    free: { maxGoals: 1, maxTasksPerWeek: 15, chatPerDay: 15, maxYearlyQuests: 3, questGenerationsPerDay: 3 },
-    premium: { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5, questGenerationsPerDay: -1 },
-    lifetime: { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5, questGenerationsPerDay: -1 },
+    free: { maxGoals: 1, maxTasksPerWeek: 15, chatPerDay: 15, maxYearlyQuests: 3, questGenerationsPerDay: 3, maxGuilds: 1 },
+    premium: { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5, questGenerationsPerDay: -1, maxGuilds: 3 },
+    lifetime: { maxGoals: 3, maxTasksPerWeek: -1, chatPerDay: -1, maxYearlyQuests: 5, questGenerationsPerDay: -1, maxGuilds: 5 },
 }
 
 export function getPlanLimits(plan: string | null | undefined): PlanLimits {
