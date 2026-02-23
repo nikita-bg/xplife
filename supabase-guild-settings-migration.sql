@@ -51,3 +51,6 @@ FOR EACH ROW EXECUTE FUNCTION sync_guild_member_count();
 UPDATE guilds g SET member_count = (
   SELECT COUNT(*) FROM guild_members gm WHERE gm.guild_id = g.id
 );
+
+-- 5. Enable Realtime for join requests
+ALTER PUBLICATION supabase_realtime ADD TABLE guild_join_requests;

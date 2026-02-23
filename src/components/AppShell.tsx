@@ -136,20 +136,22 @@ const AppShell = ({ children }: AppShellProps) => {
                 </div>
             </main>
 
-            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#080B1A]/90 backdrop-blur-xl border-t border-white/10 px-2 py-2 flex justify-around items-center">
-                {navItems.slice(0, 5).map(item => {
-                    const active = isActive(item.to);
-                    return (
-                        <Link
-                            key={item.to}
-                            href={`/${locale}${item.to}`}
-                            className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-[10px] transition-all ${active ? 'text-accent' : 'text-ghost/40'}`}
-                        >
-                            <item.icon size={20} />
-                            <span className="font-data">{nav(item.labelKey)}</span>
-                        </Link>
-                    );
-                })}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#080B1A]/90 backdrop-blur-xl border-t border-white/10 pb-[env(safe-area-inset-bottom)]">
+                <div className="flex overflow-x-auto scrollbar-hide px-1 py-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {navItems.map(item => {
+                        const active = isActive(item.to);
+                        return (
+                            <Link
+                                key={item.to}
+                                href={`/${locale}${item.to}`}
+                                className={`flex flex-col items-center gap-0.5 min-w-[64px] flex-1 py-1.5 rounded-xl text-[9px] transition-all ${active ? 'text-accent' : 'text-ghost/40'}`}
+                            >
+                                <item.icon size={18} />
+                                <span className="font-data truncate w-full text-center">{nav(item.labelKey)}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
             </nav>
 
             {/* Floating AI Chat */}
