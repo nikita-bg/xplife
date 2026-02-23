@@ -28,24 +28,42 @@ export async function GET() {
         return NextResponse.json({ leaderboard: [], boss: null })
     }
 
-    // Top 20 contributors with user info (admin bypasses RLS)
+    // Top 20 contributors (no join — join breaks due to auth.users FK)
     const { data: contributions } = await admin
         .from('boss_contributions')
-        .select('user_id, damage_dealt, tasks_completed, users(display_name, avatar_url)')
+        .select('user_id, damage_dealt, tasks_completed')
         .eq('boss_id', boss.id)
         .order('damage_dealt', { ascending: false })
         .limit(20)
 
-    const leaderboard = contributions?.map((c, i) => {
-        const userData = (c.users ?? {}) as unknown as Record<string, unknown>
-        return {
-            rank: i + 1,
-            user_id: c.user_id,
-            damage_dealt: c.damage_dealt,
-            tasks_completed: c.tasks_completed,
-            ...userData,
+    // Fetch user profiles separately
+    const userIds = Array.from(new Set((contributions || []).map(c => c.user_id)))
+    const profileMap: Record<string, { display_name: string | null; avatar_url: string | null }> = {}
+
+    if (userIds.length > 0) {
+        const { data: profiles } = await admin
+            .from('users')
+            .select('id, display_name, avatar_url')
+            .in('id', userIds)
+
+        if (profiles) {
+            for (const p of profiles) {
+                profileMap[p.id] = {
+                    display_name: p.display_name,
+                    avatar_url: p.avatar_url,
+                }
+            }
         }
-    }) || []
+    }
+
+    const leaderboard = (contributions || []).map((c, i) => ({
+        rank: i + 1,
+        user_id: c.user_id,
+        damage_dealt: c.damage_dealt,
+        tasks_completed: c.tasks_completed,
+        display_name: profileMap[c.user_id]?.display_name || null,
+        avatar_url: profileMap[c.user_id]?.avatar_url || null,
+    }))
 
     return NextResponse.json({ leaderboard, boss })
 }

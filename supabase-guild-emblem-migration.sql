@@ -38,3 +38,4 @@ CREATE POLICY IF NOT EXISTS "Users can update own contributions"
 
 -- 5. Enable realtime for boss_events so HP updates live
 ALTER PUBLICATION supabase_realtime ADD TABLE boss_events;
+ALTER PUBLICATION supabase_realtime ADD TABLE boss_contributions;

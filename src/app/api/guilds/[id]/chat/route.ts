@@ -18,7 +18,7 @@ export async function GET(
 
     const admin = createAdminClient()
 
-    // Verify membership (admin client to bypass RLS)
+    // Verify membership
     const { data: membership } = await admin
         .from('guild_members')
         .select('role')
@@ -30,9 +30,10 @@ export async function GET(
         return NextResponse.json({ error: 'Not a member' }, { status: 403 })
     }
 
-    const { data: messages, error } = await admin
+    // Fetch messages (no join — join breaks due to auth.users FK)
+    const { data: messageRows, error } = await admin
         .from('guild_chat_messages')
-        .select('*, users(display_name, avatar_url)')
+        .select('id, guild_id, user_id, content, created_at')
         .eq('guild_id', params.id)
         .order('created_at', { ascending: true })
         .limit(100)
@@ -42,18 +43,36 @@ export async function GET(
         return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 })
     }
 
-    // Flatten user data
-    const flatMessages = messages?.map(m => {
-        const userData = (m.users ?? {}) as unknown as Record<string, unknown>
-        return {
-            id: m.id,
-            guild_id: m.guild_id,
-            user_id: m.user_id,
-            content: m.content,
-            created_at: m.created_at,
-            ...userData,
+    // Fetch user profiles separately
+    const userIds = Array.from(new Set((messageRows || []).map(m => m.user_id)))
+    const profileMap: Record<string, { display_name: string | null; avatar_url: string | null }> = {}
+
+    if (userIds.length > 0) {
+        const { data: profiles } = await admin
+            .from('users')
+            .select('id, display_name, avatar_url')
+            .in('id', userIds)
+
+        if (profiles) {
+            for (const p of profiles) {
+                profileMap[p.id] = {
+                    display_name: p.display_name,
+                    avatar_url: p.avatar_url,
+                }
+            }
         }
-    }) || []
+    }
+
+    // Merge
+    const flatMessages = (messageRows || []).map(m => ({
+        id: m.id,
+        guild_id: m.guild_id,
+        user_id: m.user_id,
+        content: m.content,
+        created_at: m.created_at,
+        display_name: profileMap[m.user_id]?.display_name || null,
+        avatar_url: profileMap[m.user_id]?.avatar_url || null,
+    }))
 
     return NextResponse.json({ messages: flatMessages })
 }
@@ -74,7 +93,7 @@ export async function POST(
 
     const admin = createAdminClient()
 
-    // Verify membership (admin client to bypass RLS)
+    // Verify membership
     const { data: membership } = await admin
         .from('guild_members')
         .select('role')
@@ -98,7 +117,7 @@ export async function POST(
             return NextResponse.json({ error: 'Message too long (max 1000 characters)' }, { status: 400 })
         }
 
-        // Fetch user display name for the response
+        // Fetch user display name
         const { data: userData } = await admin
             .from('users')
             .select('display_name, avatar_url')

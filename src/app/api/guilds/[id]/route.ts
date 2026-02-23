@@ -42,12 +42,46 @@ export async function GET(
         return NextResponse.json({ error: 'Guild not found' }, { status: 404 })
     }
 
-    // Fetch members with user info
-    const { data: members } = await admin
+    // Fetch members (WITHOUT join — join fails due to auth.users FK)
+    const { data: memberRows } = await admin
         .from('guild_members')
-        .select('guild_id, user_id, role, joined_at, users(display_name, avatar_url, level, total_xp)')
+        .select('guild_id, user_id, role, joined_at')
         .eq('guild_id', guildId)
         .order('joined_at', { ascending: true })
+
+    // Fetch user profiles separately
+    const userIds = (memberRows || []).map(m => m.user_id)
+    const profileMap: Record<string, { display_name: string | null; avatar_url: string | null; level: number; total_xp: number }> = {}
+
+    if (userIds.length > 0) {
+        const { data: profiles } = await admin
+            .from('users')
+            .select('id, display_name, avatar_url, level, total_xp')
+            .in('id', userIds)
+
+        if (profiles) {
+            for (const p of profiles) {
+                profileMap[p.id] = {
+                    display_name: p.display_name,
+                    avatar_url: p.avatar_url,
+                    level: p.level ?? 1,
+                    total_xp: p.total_xp ?? 0,
+                }
+            }
+        }
+    }
+
+    // Merge members with profiles
+    const flatMembers = (memberRows || []).map(m => ({
+        guild_id: m.guild_id,
+        user_id: m.user_id,
+        role: m.role,
+        joined_at: m.joined_at,
+        display_name: profileMap[m.user_id]?.display_name || null,
+        avatar_url: profileMap[m.user_id]?.avatar_url || null,
+        level: profileMap[m.user_id]?.level ?? 1,
+        total_xp: profileMap[m.user_id]?.total_xp ?? 0,
+    }))
 
     // Fetch active guild quests
     const { data: quests } = await admin
@@ -56,18 +90,6 @@ export async function GET(
         .eq('guild_id', guildId)
         .eq('status', 'active')
         .order('created_at', { ascending: false })
-
-    // Flatten member data
-    const flatMembers = members?.map(m => {
-        const userData = (m.users ?? {}) as unknown as Record<string, unknown>
-        return {
-            guild_id: m.guild_id,
-            user_id: m.user_id,
-            role: m.role,
-            joined_at: m.joined_at,
-            ...userData,
-        }
-    }) || []
 
     return NextResponse.json({
         guild,
@@ -164,4 +186,3 @@ export async function DELETE(
 
     return NextResponse.json({ deleted: true })
 }
-
