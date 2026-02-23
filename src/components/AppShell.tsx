@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Trophy, Backpack, Store, User, Flame, Shield, Skull, BookOpen, LogOut } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import ChatWidget from '@/components/chat/ChatWidget';
 
@@ -25,6 +26,7 @@ interface AppShellProps {
 const AppShell = ({ children }: AppShellProps) => {
     const pathname = usePathname();
     const router = useRouter();
+    const t = useTranslations('appShell');
     const [displayName, setDisplayName] = useState('Hero');
     const [userClass, setUserClass] = useState('Adventurer');
     const [currentStreak, setCurrentStreak] = useState(0);
@@ -108,14 +110,14 @@ const AppShell = ({ children }: AppShellProps) => {
                 <div className="px-4 py-5 border-t border-white/5 space-y-3">
                     <div className="flex items-center gap-2">
                         <Flame size={16} className="text-orange-400" />
-                        <span className="font-data text-xs text-orange-400 tracking-wider">{currentStreak} day streak 🔥</span>
+                        <span className="font-data text-xs text-orange-400 tracking-wider">{t('streak', { count: currentStreak })}</span>
                     </div>
                     <button
                         onClick={handleLogout}
                         className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans text-red-400/70 hover:text-red-400 hover:bg-red-400/5 border border-red-400/10 hover:border-red-400/20 transition-all"
                     >
                         <LogOut size={16} />
-                        Sign Out
+                        {t('signOut')}
                     </button>
                 </div>
             </aside>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
 
@@ -12,6 +13,7 @@ interface ChatMessage {
 }
 
 export default function ChatWidget() {
+    const t = useTranslations('chat')
     const router = useRouter()
     const pathname = usePathname()
     const locale = pathname.split('/')[1] || 'en'
@@ -129,9 +131,9 @@ export default function ChatWidget() {
                     {/* Header */}
                     <div className="flex items-center justify-between border-b border-white/5 bg-[#0C1021]/90 px-5 py-3">
                         <div>
-                            <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider">AI Quest Advisor</h3>
+                            <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider">{t('title')}</h3>
                             {remaining !== null && (
-                                <p className="font-data text-[10px] text-ghost/40 tracking-wider">{remaining}/50 messages left today</p>
+                                <p className="font-data text-[10px] text-ghost/40 tracking-wider">{t('messagesLeft', { remaining: remaining ?? 0 })}</p>
                             )}
                         </div>
                         <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
@@ -143,14 +145,14 @@ export default function ChatWidget() {
                     <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
                         {messages.length === 0 && (
                             <div className="flex h-full items-center justify-center">
-                                <p className="text-center font-sans text-sm text-ghost/40">Ask me anything about your quests and goals!</p>
+                                <p className="text-center font-sans text-sm text-ghost/40">{t('emptyState')}</p>
                             </div>
                         )}
                         {messages.map((msg, i) => (
                             <div key={msg.id || i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm whitespace-pre-wrap ${msg.role === 'user'
-                                        ? 'bg-accent/15 text-accent border border-accent/20'
-                                        : 'bg-white/5 text-ghost/80 border border-white/5'
+                                    ? 'bg-accent/15 text-accent border border-accent/20'
+                                    : 'bg-white/5 text-ghost/80 border border-white/5'
                                     }`}>
                                     {msg.content}
                                 </div>
@@ -159,7 +161,7 @@ export default function ChatWidget() {
                         {sending && (
                             <div className="flex justify-start">
                                 <div className="max-w-[85%] rounded-2xl bg-white/5 border border-white/5 px-4 py-2.5 text-sm text-ghost/40 flex items-center gap-2">
-                                    <Loader2 size={14} className="animate-spin" /> Thinking...
+                                    <Loader2 size={14} className="animate-spin" /> {t('thinking')}
                                 </div>
                             </div>
                         )}
@@ -172,7 +174,7 @@ export default function ChatWidget() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Type a message..."
+                            placeholder={t('placeholder')}
                             className="flex-1 bg-white/5 border border-white/10 rounded-xl py-2.5 px-4 text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors"
                             disabled={sending || remaining === 0}
                         />

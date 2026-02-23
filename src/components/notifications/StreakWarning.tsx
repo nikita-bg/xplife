@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from 'react'
 import { AlertTriangle, X, Flame } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 
 export default function StreakWarning() {
+    const t = useTranslations('streakWarning')
     const [show, setShow] = useState(false)
     const [streakDays, setStreakDays] = useState(0)
 
@@ -48,10 +50,10 @@ export default function StreakWarning() {
             </div>
             <div className="flex-1 min-w-0">
                 <h4 className="font-heading text-sm font-bold text-orange-400 uppercase tracking-wider flex items-center gap-2">
-                    <AlertTriangle size={14} /> Streak at Risk!
+                    <AlertTriangle size={14} /> {t('title')}
                 </h4>
                 <p className="font-sans text-xs text-ghost/50 mt-1">
-                    Your {streakDays}-day streak will break if you don&apos;t complete a quest today. Keep going!
+                    {t('description', { days: streakDays })}
                 </p>
             </div>
             <button

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Camera, Globe, AlertTriangle, Loader2, Save } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useProfile } from '@/hooks/use-profile';
 import { getRankFromLevel } from '@/lib/xpUtils';
 import { createClient } from '@/lib/supabase/client';
@@ -29,6 +30,8 @@ const LANGUAGES = [
 ];
 
 export default function ProfilePage() {
+    const t = useTranslations('profile');
+    const settings = useTranslations('profile.settings');
     const { profile, streak, loading, refresh } = useProfile();
     const router = useRouter();
     const pathname = usePathname();
@@ -121,7 +124,7 @@ export default function ProfilePage() {
 
     return (
         <div className="max-w-3xl mx-auto">
-            <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-8">Profile</h1>
+            <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-8">{t('title')}</h1>
 
             <div className="flex flex-col items-center mb-8">
                 <div className="relative group cursor-pointer">
@@ -150,14 +153,14 @@ export default function ProfilePage() {
             </div>
 
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 md:p-8 mb-6">
-                <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60 mb-6">Account Settings</h2>
+                <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60 mb-6">{settings('title')}</h2>
                 <div className="space-y-5">
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Display Name</label>
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{t('displayName')}</label>
                         <input value={displayName} onChange={e => setDisplayName(e.target.value)} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Email</label>
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{t('email')}</label>
                         <input value={profile?.email || ''} readOnly className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 font-sans text-sm text-ghost/30 cursor-not-allowed" />
                     </div>
                     <div>
@@ -175,7 +178,7 @@ export default function ProfilePage() {
                         className="btn-magnetic px-8 py-3 rounded-xl bg-accent text-background font-heading text-sm uppercase tracking-wider font-bold shadow-[0_0_15px_rgba(0,245,255,0.3)] hover:shadow-[0_0_25px_rgba(0,245,255,0.5)] disabled:opacity-50 flex items-center gap-2"
                     >
                         {saving ? <Loader2 size={14} className="animate-spin" /> : saved ? <Save size={14} /> : null}
-                        <span className="btn-content">{saved ? 'Saved!' : saving ? 'Saving...' : 'Save Changes'}</span>
+                        <span className="btn-content">{saved ? settings('saveSuccess') : saving ? settings('saving') : settings('save')}</span>
                     </button>
                 </div>
             </div>

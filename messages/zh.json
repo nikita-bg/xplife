@@ -391,7 +391,9 @@
       "yearlyTitle": "年度目标",
       "monthlyTitle": "月度里程碑",
       "weeklyTitle": "周度目标",
-      "dailyTitle": "今日任务"
+      "dailyTitle": "今日任务",
+      "questsTitle": "任务",
+      "questsSubtitle": "完成任务赚取XP、箱子和金币"
     },
     "autoRefresh": {
       "generating": "自动生成任务中...",
@@ -903,5 +905,13 @@
       "gaba": "GABA",
       "serotonin": "血清素"
     }
+  },
+  "streakWarning": {
+    "title": "连胜即将中断！",
+    "description": "如果你今天不完成任务，你的{days}天连胜将会中断。继续加油！"
+  },
+  "appShell": {
+    "streak": "{count}天连胜 🔥",
+    "signOut": "退出登录"
   }
 }

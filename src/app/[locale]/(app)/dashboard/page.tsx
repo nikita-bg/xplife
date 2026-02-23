@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { Sparkles, Check, Brain, Camera, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
 import StreakWarning from '@/components/notifications/StreakWarning';
 import { useProfile } from '@/hooks/use-profile';
@@ -110,6 +111,8 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
     totalXP: number; currentStreak: number; longestStreak: number;
     quests: Record<string, Task[]>; onGenerateQuests: () => void; generating: boolean;
 }) {
+    const stats = useTranslations('dashboard.stats');
+    const questSection = useTranslations('dashboard.questSection');
     const xpRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (!xpRef.current) return;
@@ -133,14 +136,14 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
     return (
         <div className="space-y-6">
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 text-center">
-                <div className="font-data text-xs text-ghost/40 tracking-widest uppercase mb-2">Total XP</div>
+                <div className="font-data text-xs text-ghost/40 tracking-widest uppercase mb-2">{stats('totalXP')}</div>
                 <div className="font-heading font-black text-4xl text-accent text-shadow-glow" ref={xpRef}>0</div>
             </div>
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 flex items-center gap-3">
                 <div className="text-2xl">🔥</div>
                 <div>
-                    <div className="font-heading text-lg text-orange-400 font-bold">{currentStreak} Days</div>
-                    <div className="font-data text-[10px] text-ghost/40 tracking-wider">CURRENT STREAK · Best: {longestStreak}</div>
+                    <div className="font-heading text-lg text-orange-400 font-bold">{currentStreak} {stats('days')}</div>
+                    <div className="font-data text-[10px] text-ghost/40 tracking-wider">{stats('currentStreak')} · {stats('best', { streak: longestStreak })}</div>
                 </div>
             </div>
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 flex justify-around">
@@ -166,7 +169,7 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
             >
                 <span className="btn-content flex items-center justify-center gap-2">
                     {generating ? <Loader2 size={16} className="animate-spin" /> : <Brain size={16} />}
-                    {generating ? 'Generating...' : 'AI Quest Advisor'}
+                    {generating ? questSection('generate') + '...' : questSection('generate')}
                 </span>
             </button>
         </div>
@@ -175,6 +178,8 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
 
 /* ── Dashboard Page ── */
 export default function DashboardPage() {
+    const questSection = useTranslations('dashboard.questSection');
+    const questTabs = useTranslations('dashboard.questTabs');
     const tabs = ['daily', 'weekly', 'monthly', 'yearly'] as const;
     const [activeTab, setActiveTab] = useState<string>('daily');
     const [quests, setQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
@@ -287,16 +292,16 @@ export default function DashboardPage() {
                 <div className="dash-card lg:col-span-6">
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="font-heading font-bold text-xl uppercase tracking-wider">Quest Board</h2>
+                            <h2 className="font-heading font-bold text-xl uppercase tracking-wider">{questTabs('questsTitle')}</h2>
                             <div className="font-data text-[10px] text-ghost/30 tracking-wider">
-                                {completedQuests.length}/{currentQuests.length} COMPLETE
+                                {completedQuests.length}/{currentQuests.length} {questSection('completed')}
                             </div>
                         </div>
                         <div className="flex gap-2 mb-6 bg-white/5 rounded-xl p-1">
                             {tabs.map(tab => (
                                 <button key={tab} onClick={() => setActiveTab(tab)}
                                     className={`flex-1 py-2 rounded-lg font-data text-xs uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-accent text-background font-bold' : 'text-ghost/50 hover:text-ghost'}`}>
-                                    {tab}
+                                    {questTabs(tab as 'daily' | 'weekly' | 'monthly' | 'yearly')}
                                 </button>
                             ))}
                         </div>

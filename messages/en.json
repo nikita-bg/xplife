@@ -905,5 +905,13 @@
       "I experience unexplained crying spells.",
       "I feel life lacks meaning or purpose."
     ]
+  },
+  "streakWarning": {
+    "title": "Streak at Risk!",
+    "description": "Your {days}-day streak will break if you don't complete a quest today. Keep going!"
+  },
+  "appShell": {
+    "streak": "{count} day streak 🔥",
+    "signOut": "Sign Out"
   }
 }

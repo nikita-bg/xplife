@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { Crown, TrendingUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Player {
     rank: number;
@@ -28,6 +29,7 @@ const classEmoji: Record<string, string> = {
 };
 
 export default function LeaderboardPage() {
+    const t = useTranslations('leaderboard');
     const [players, setPlayers] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -70,7 +72,7 @@ export default function LeaderboardPage() {
         <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">Global Leaderboard</h1>
+                    <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white">{t('title')}</h1>
                     <div className="flex items-center gap-2 mt-2">
                         <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
                         <span className="font-data text-xs text-ghost/50 tracking-wider">Updated live</span>
@@ -81,7 +83,7 @@ export default function LeaderboardPage() {
             {players.length === 0 ? (
                 <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-12 text-center">
                     <TrendingUp size={40} className="mx-auto text-accent/20 mb-4" />
-                    <p className="font-sans text-ghost/40">No players yet. Be the first!</p>
+                    <p className="font-sans text-ghost/40">{t('noRankingsDescription')}</p>
                 </div>
             ) : (
                 <>

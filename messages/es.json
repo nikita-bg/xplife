@@ -391,7 +391,9 @@
       "yearlyTitle": "Metas Anuales",
       "monthlyTitle": "Hitos Mensuales",
       "weeklyTitle": "Objetivos Semanales",
-      "dailyTitle": "Misiones de Hoy"
+      "dailyTitle": "Misiones de Hoy",
+      "questsTitle": "MISIONES",
+      "questsSubtitle": "Completa misiones para ganar XP, cofres y monedas"
     },
     "autoRefresh": {
       "generating": "Generando misiones automáticamente...",
@@ -903,5 +905,13 @@
       "Experimento episodios de llanto sin explicación.",
       "Siento que la vida carece de significado o propósito."
     ]
+  },
+  "streakWarning": {
+    "title": "¡Racha en Riesgo!",
+    "description": "Tu racha de {days} días se romperá si no completas una misión hoy. ¡Sigue adelante!"
+  },
+  "appShell": {
+    "streak": "Racha de {count} días 🔥",
+    "signOut": "Cerrar Sesión"
   }
 }
