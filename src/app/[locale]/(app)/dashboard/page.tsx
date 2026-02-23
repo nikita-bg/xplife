@@ -177,10 +177,11 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
 }
 
 /* ── Dashboard Page ── */
+const tabs = ['daily', 'weekly', 'monthly', 'yearly'] as const;
+
 export default function DashboardPage() {
     const questSection = useTranslations('dashboard.questSection');
     const questTabs = useTranslations('dashboard.questTabs');
-    const tabs = ['daily', 'weekly', 'monthly', 'yearly'] as const;
     const [activeTab, setActiveTab] = useState<string>('daily');
     const [quests, setQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
     const [selectedQuest, setSelectedQuest] = useState<Task | null>(null);

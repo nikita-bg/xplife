@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Activity, Target, CalendarDays, MousePointer2 } from 'lucide-react';
@@ -55,7 +55,7 @@ const QuestGenerator = () => {
 };
 
 const XPLiveFeed = () => {
-    const messages = ["+50 XP — Completed morning routine", "+120 XP — Weekly goal achieved", "🔥 7-day streak: +200 XP", "LEVEL UP: Iron -> Bronze"];
+    const messages = useMemo(() => ["+50 XP — Completed morning routine", "+120 XP — Weekly goal achieved", "🔥 7-day streak: +200 XP", "LEVEL UP: Iron -> Bronze"], []);
     const [displayedLines, setDisplayedLines] = useState<string[]>([]);
     const [currentLineIndex, setCurrentLineIndex] = useState(0);
     const [currentCharIndex, setCurrentCharIndex] = useState(0);

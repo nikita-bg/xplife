@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { Crown, TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -94,7 +95,7 @@ export default function LeaderboardPage() {
                                 <div key={p.id} className={`podium-card bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 text-center ${i === 0 ? 'sm:order-2 sm:scale-105 sm:border-yellow-500/30 sm:shadow-[0_0_30px_rgba(255,184,0,0.1)]' : i === 1 ? 'sm:order-1' : 'sm:order-3'}`}>
                                     <div className="flex justify-center mb-3">{podiumIcons[i]}</div>
                                     <div className={`w-16 h-16 mx-auto rounded-full bg-gradient-to-br ${podiumColors[i]} flex items-center justify-center text-2xl mb-3`}>
-                                        {p.avatar_url ? <img src={p.avatar_url} alt="" className="w-full h-full rounded-full object-cover" /> : classEmoji[p.cls] || '🎮'}
+                                        {p.avatar_url ? <Image src={p.avatar_url} alt="" width={64} height={64} className="w-full h-full rounded-full object-cover" /> : classEmoji[p.cls] || '🎮'}
                                     </div>
                                     <div className="font-heading font-bold text-white text-lg">{p.name}</div>
                                     <div className="font-data text-xs text-accent-secondary tracking-wider mb-2">{p.cls} · {t('lvlShort', { level: p.level })}</div>
@@ -111,7 +112,7 @@ export default function LeaderboardPage() {
                             <div key={p.id} className={`lb-row flex items-center gap-4 px-6 py-4 border-b border-white/5 last:border-0 hover:-translate-y-0.5 transition-all cursor-pointer ${p.isUser ? 'bg-accent/5 border-l-2 border-l-accent shadow-[inset_0_0_20px_rgba(0,245,255,0.03)]' : ''}`}>
                                 <div className="font-data text-sm text-ghost/40 w-8 text-center">{p.rank}</div>
                                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm overflow-hidden">
-                                    {p.avatar_url ? <img src={p.avatar_url} alt="" className="w-full h-full object-cover" /> : classEmoji[p.cls] || '🎮'}
+                                    {p.avatar_url ? <Image src={p.avatar_url} alt="" width={32} height={32} className="w-full h-full object-cover" /> : classEmoji[p.cls] || '🎮'}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2">

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Trophy, Backpack, Store, User, Flame, Shield, Skull, BookOpen, LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -83,7 +84,7 @@ const AppShell = ({ children }: AppShellProps) => {
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-tertiary flex items-center justify-center text-sm font-bold text-background shrink-0 overflow-hidden">
                             {avatarUrl ? (
-                                <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+                                <Image src={avatarUrl} alt="" width={40} height={40} className="w-full h-full object-cover" />
                             ) : (
                                 displayName.charAt(0).toUpperCase()
                             )}

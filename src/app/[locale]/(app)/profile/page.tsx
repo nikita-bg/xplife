@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Camera, Globe, AlertTriangle, Loader2, Save } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useProfile } from '@/hooks/use-profile';
@@ -8,18 +9,6 @@ import { getRankFromLevel } from '@/lib/xpUtils';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, usePathname } from 'next/navigation';
 
-const PERSONALITY_CLASSES: Record<string, { name: string; emoji: string; desc: string }> = {
-    dopamine: { name: 'The Adventurer', emoji: '🗺️', desc: 'You thrive on excitement, novelty, and bold challenges. Your quests focus on pushing boundaries and achieving ambitious goals.' },
-    acetylcholine: { name: 'The Thinker', emoji: '🧠', desc: 'You love learning, creativity, and deep focus. Your quests center around skill mastery and intellectual growth.' },
-    gaba: { name: 'The Guardian', emoji: '🛡️', desc: 'You value stability, consistency, and inner peace. Your quests build strong habits and promote balance.' },
-    serotonin: { name: 'The Connector', emoji: '🌿', desc: 'You draw energy from relationships and community. Your quests strengthen bonds and promote meaningful connections.' },
-};
-
-const PLAN_LABELS: Record<string, { label: string; desc: string }> = {
-    free: { label: 'Free Adventurer', desc: '1 goal · 15 tasks/week · 15 AI chats/day' },
-    premium: { label: 'Pro Hero', desc: 'Unlimited goals · Unlimited tasks · Unlimited AI chats' },
-    lifetime: { label: 'Legendary Hero', desc: 'Lifetime access · All features unlocked' },
-};
 
 const LANGUAGES = [
     { code: 'en', label: 'English' },
@@ -143,7 +132,7 @@ export default function ProfilePage() {
                 <div className="relative group cursor-pointer">
                     <div className="w-28 h-28 rounded-full bg-gradient-to-br from-accent to-tertiary flex items-center justify-center text-4xl font-bold text-background ring-4 ring-accent/20 overflow-hidden">
                         {profile?.avatar_url ? (
-                            <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
+                            <Image src={profile.avatar_url} alt="" width={112} height={112} className="w-full h-full object-cover" />
                         ) : (
                             displayName.charAt(0).toUpperCase() || 'H'
                         )}
