@@ -35,6 +35,7 @@ export default function ProfilePage() {
     const plan = useTranslations('profile.plan');
     const dz = useTranslations('profile.dangerZone');
     const sl = useTranslations('profile.statsLabels');
+    const pers = useTranslations('profile.settings.personalization');
     const { profile, streak, loading, refresh } = useProfile();
     const router = useRouter();
     const pathname = usePathname();
@@ -243,8 +244,8 @@ export default function ProfilePage() {
                         <input value={profile?.email || ''} readOnly className="w-full bg-background border border-white/5 rounded-xl py-3 px-4 font-sans text-sm text-ghost/30 cursor-not-allowed" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">About Me</label>
-                        <textarea value={aboutMe} onChange={e => setAboutMe(e.target.value)} rows={3} placeholder="Tell us about yourself..." className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors resize-none" />
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{settings('aboutMe')}</label>
+                        <textarea value={aboutMe} onChange={e => setAboutMe(e.target.value)} rows={3} placeholder={settings('aboutMePlaceholder')} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors resize-none" />
                     </div>
                     <div>
                         <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{t('language')}</label>
@@ -270,36 +271,36 @@ export default function ProfilePage() {
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 md:p-8 mb-6">
                 <div className="flex items-center gap-2 mb-6">
                     <Clock size={16} className="text-accent" />
-                    <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60">Personalization</h2>
+                    <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60">{settings('tabs.personalization')}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Time Preference</label>
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('timePreference')}</label>
                         <select value={timePreference} onChange={e => setTimePreference(e.target.value)} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 appearance-none cursor-pointer">
-                            {TIME_OPTIONS.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
+                            {TIME_OPTIONS.map(opt => <option key={opt} value={opt}>{pers(`timeOptions.${opt}`)}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Task Duration</label>
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('taskDuration')}</label>
                         <select value={taskDuration} onChange={e => setTaskDuration(e.target.value)} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 appearance-none cursor-pointer">
-                            {DURATION_OPTIONS.map(d => <option key={d} value={d}>{d === 'quick' ? 'Quick (5-15 min)' : d === 'medium' ? 'Medium (15-30 min)' : 'Deep (30+ min)'}</option>)}
+                            {DURATION_OPTIONS.map(d => <option key={d} value={d}>{pers(`durationOptions.${d}`)}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Occupation</label>
-                        <input value={occupation} onChange={e => setOccupation(e.target.value)} placeholder="e.g. Remote Developer" className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('occupation')}</label>
+                        <input value={occupation} onChange={e => setOccupation(e.target.value)} placeholder={pers('selectOccupation')} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Work Schedule</label>
-                        <input value={workSchedule} onChange={e => setWorkSchedule(e.target.value)} placeholder="e.g. 9-5, flexible" className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('workSchedule')}</label>
+                        <input value={workSchedule} onChange={e => setWorkSchedule(e.target.value)} placeholder={pers('selectSchedule')} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Life Phase</label>
-                        <input value={lifePhase} onChange={e => setLifePhase(e.target.value)} placeholder="e.g. Student, New parent" className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('lifePhase')}</label>
+                        <input value={lifePhase} onChange={e => setLifePhase(e.target.value)} placeholder={pers('selectLifePhase')} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
                     </div>
                     <div>
-                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">Main Challenge</label>
-                        <input value={mainChallenge} onChange={e => setMainChallenge(e.target.value)} placeholder="e.g. Staying focused" className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
+                        <label className="font-data text-xs text-ghost/40 uppercase tracking-wider block mb-2">{pers('mainChallenge')}</label>
+                        <input value={mainChallenge} onChange={e => setMainChallenge(e.target.value)} placeholder={pers('selectChallenge')} className="w-full bg-background border border-white/10 rounded-xl py-3 px-4 font-sans text-sm text-ghost focus:outline-none focus:border-accent/30 transition-colors" />
                     </div>
                 </div>
             </div>
@@ -308,7 +309,7 @@ export default function ProfilePage() {
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 md:p-8 mb-6">
                 <div className="flex items-center gap-2 mb-4">
                     <Heart size={16} className="text-tertiary" />
-                    <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60">Interests</h2>
+                    <h2 className="font-heading text-sm font-bold uppercase tracking-widest text-ghost/60">{pers('interests', { count: interests.length })}</h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
                     {INTEREST_OPTIONS.map(interest => {
@@ -328,7 +329,7 @@ export default function ProfilePage() {
                         );
                     })}
                 </div>
-                <p className="font-sans text-[10px] text-ghost/30 mt-3">Select interests to personalize your AI-generated quests</p>
+                <p className="font-sans text-[10px] text-ghost/30 mt-3">{pers('addCustomInterest')}</p>
             </div>
 
             <div className="bg-[#0C1021] rounded-[2rem] border border-accent-secondary/20 p-6 md:p-8 mb-6">
