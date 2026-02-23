@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Trophy, Backpack, Store, User, Flame, Shield, Skull, BookOpen, LogOut } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import ChatWidget from '@/components/chat/ChatWidget';
 
 const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -140,6 +141,9 @@ const AppShell = ({ children }: AppShellProps) => {
                     );
                 })}
             </nav>
+
+            {/* Floating AI Chat */}
+            <ChatWidget />
         </div>
     );
 };

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { Sparkles, Check, Brain, Camera, Loader2 } from 'lucide-react';
 import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
+import StreakWarning from '@/components/notifications/StreakWarning';
 import { useProfile } from '@/hooks/use-profile';
 import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils';
 import { usePathname } from 'next/navigation';
@@ -277,83 +278,86 @@ export default function DashboardPage() {
     const completedQuests = currentQuests.filter(q => q.status === 'completed');
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="dash-card lg:col-span-3">
-                <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} />
-            </div>
-            <div className="dash-card lg:col-span-6">
-                <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="font-heading font-bold text-xl uppercase tracking-wider">Quest Board</h2>
-                        <div className="font-data text-[10px] text-ghost/30 tracking-wider">
-                            {completedQuests.length}/{currentQuests.length} COMPLETE
-                        </div>
-                    </div>
-                    <div className="flex gap-2 mb-6 bg-white/5 rounded-xl p-1">
-                        {tabs.map(tab => (
-                            <button key={tab} onClick={() => setActiveTab(tab)}
-                                className={`flex-1 py-2 rounded-lg font-data text-xs uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-accent text-background font-bold' : 'text-ghost/50 hover:text-ghost'}`}>
-                                {tab}
-                            </button>
-                        ))}
-                    </div>
-                    <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-                        {loadingQuests ? (
-                            <div className="flex justify-center py-16">
-                                <Loader2 size={24} className="animate-spin text-accent/50" />
-                            </div>
-                        ) : currentQuests.length > 0 ? (
-                            <>
-                                {pendingQuests.length > 0 && pendingQuests.map(q => (
-                                    <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
-                                ))}
-                                {completedQuests.length > 0 && (
-                                    <>
-                                        <div className="font-data text-xs text-ghost/30 tracking-wider uppercase mt-4 mb-2">Completed</div>
-                                        {completedQuests.map(q => (
-                                            <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
-                                        ))}
-                                    </>
-                                )}
-                            </>
-                        ) : (
-                            <div className="text-center py-16">
-                                <Sparkles size={40} className="mx-auto text-accent/30 mb-4 animate-bounce" />
-                                <p className="font-sans text-ghost/40">No quests yet — Generate your first quest!</p>
-                            </div>
-                        )}
-                    </div>
-                    <button
-                        onClick={handleGenerateQuests}
-                        disabled={generating}
-                        className="btn-magnetic w-full mt-6 py-4 rounded-2xl bg-accent-secondary/10 border border-accent-secondary/30 text-accent-secondary font-heading text-sm uppercase tracking-wider hover:bg-accent-secondary/20 transition-all disabled:opacity-50"
-                    >
-                        <span className="btn-content flex items-center justify-center gap-2">
-                            {generating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                            {generating ? 'Generating...' : 'Generate New Quests'}
-                        </span>
-                    </button>
+        <div>
+            <StreakWarning />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="dash-card lg:col-span-3">
+                    <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} />
                 </div>
+                <div className="dash-card lg:col-span-6">
+                    <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="font-heading font-bold text-xl uppercase tracking-wider">Quest Board</h2>
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">
+                                {completedQuests.length}/{currentQuests.length} COMPLETE
+                            </div>
+                        </div>
+                        <div className="flex gap-2 mb-6 bg-white/5 rounded-xl p-1">
+                            {tabs.map(tab => (
+                                <button key={tab} onClick={() => setActiveTab(tab)}
+                                    className={`flex-1 py-2 rounded-lg font-data text-xs uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-accent text-background font-bold' : 'text-ghost/50 hover:text-ghost'}`}>
+                                    {tab}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+                            {loadingQuests ? (
+                                <div className="flex justify-center py-16">
+                                    <Loader2 size={24} className="animate-spin text-accent/50" />
+                                </div>
+                            ) : currentQuests.length > 0 ? (
+                                <>
+                                    {pendingQuests.length > 0 && pendingQuests.map(q => (
+                                        <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
+                                    ))}
+                                    {completedQuests.length > 0 && (
+                                        <>
+                                            <div className="font-data text-xs text-ghost/30 tracking-wider uppercase mt-4 mb-2">Completed</div>
+                                            {completedQuests.map(q => (
+                                                <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
+                                            ))}
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <div className="text-center py-16">
+                                    <Sparkles size={40} className="mx-auto text-accent/30 mb-4 animate-bounce" />
+                                    <p className="font-sans text-ghost/40">No quests yet — Generate your first quest!</p>
+                                </div>
+                            )}
+                        </div>
+                        <button
+                            onClick={handleGenerateQuests}
+                            disabled={generating}
+                            className="btn-magnetic w-full mt-6 py-4 rounded-2xl bg-accent-secondary/10 border border-accent-secondary/30 text-accent-secondary font-heading text-sm uppercase tracking-wider hover:bg-accent-secondary/20 transition-all disabled:opacity-50"
+                        >
+                            <span className="btn-content flex items-center justify-center gap-2">
+                                {generating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                                {generating ? 'Generating...' : 'Generate New Quests'}
+                            </span>
+                        </button>
+                    </div>
 
-                {/* Quest Complete Modal */}
-                {selectedQuest && (
-                    <QuestCompleteModal
-                        quest={selectedQuest}
-                        isOpen={modalOpen}
-                        onClose={() => { setModalOpen(false); setSelectedQuest(null); }}
-                        onConfirm={handleQuestConfirm}
+                    {/* Quest Complete Modal */}
+                    {selectedQuest && (
+                        <QuestCompleteModal
+                            quest={selectedQuest}
+                            isOpen={modalOpen}
+                            onClose={() => { setModalOpen(false); setSelectedQuest(null); }}
+                            onConfirm={handleQuestConfirm}
+                        />
+                    )}
+                </div>
+                <div className="dash-card lg:col-span-3">
+                    <StatsPanel
+                        totalXP={totalXP}
+                        currentStreak={currentStreak}
+                        longestStreak={longestStreak}
+                        quests={quests}
+                        onGenerateQuests={handleGenerateQuests}
+                        generating={generating}
                     />
-                )}
-            </div>
-            <div className="dash-card lg:col-span-3">
-                <StatsPanel
-                    totalXP={totalXP}
-                    currentStreak={currentStreak}
-                    longestStreak={longestStreak}
-                    quests={quests}
-                    onGenerateQuests={handleGenerateQuests}
-                    generating={generating}
-                />
+                </div>
             </div>
         </div>
     );

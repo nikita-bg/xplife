@@ -200,7 +200,17 @@ export default function ProfilePage() {
                     <div className="font-sans text-xs text-ghost/40 mt-1">{planInfo.desc}</div>
                 </div>
                 {profile?.plan === 'free' && (
-                    <button className="btn-magnetic px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold shrink-0">
+                    <button
+                        onClick={() => {
+                            const checkoutUrl = process.env.NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_URL
+                            if (checkoutUrl) {
+                                window.open(`${checkoutUrl}?checkout[email]=${encodeURIComponent(profile?.email || '')}`, '_blank')
+                            } else {
+                                alert('Checkout is not configured yet. Please contact support.')
+                            }
+                        }}
+                        className="btn-magnetic px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold shrink-0"
+                    >
                         <span className="btn-content">Upgrade to Pro Hero</span>
                     </button>
                 )}
