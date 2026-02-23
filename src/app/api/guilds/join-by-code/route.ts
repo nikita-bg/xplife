@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
- * POST /api/guilds/join-by-code — Join a guild using just an invite code
- * (without knowing the guild ID upfront)
+ * POST /api/guilds/join-by-code — Join a guild using an invite code
  */
 export async function POST(request: Request) {
     const supabase = createClient()
@@ -13,6 +13,8 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const admin = createAdminClient()
+
     try {
         const body = await request.json()
         const { inviteCode } = body
@@ -21,18 +23,18 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Invite code is required' }, { status: 400 })
         }
 
-        // Find invite by code
-        const { data: invite } = await supabase
+        // Find invite by code (case-insensitive)
+        const { data: invite } = await admin
             .from('guild_invites')
             .select('*')
-            .eq('invite_code', inviteCode.trim())
+            .ilike('invite_code', inviteCode.trim())
             .single()
 
         if (!invite) {
             return NextResponse.json({ error: 'Invalid invite code' }, { status: 404 })
         }
 
-        // Check expiry
+        // Check expiry (if set)
         if (invite.expires_at && new Date(invite.expires_at) < new Date()) {
             return NextResponse.json({ error: 'Invite has expired' }, { status: 410 })
         }
@@ -43,7 +45,7 @@ export async function POST(request: Request) {
         }
 
         // Check if already a member
-        const { data: existing } = await supabase
+        const { data: existing } = await admin
             .from('guild_members')
             .select('user_id')
             .eq('guild_id', invite.guild_id)
@@ -54,8 +56,8 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Already a member of this guild', guildId: invite.guild_id }, { status: 409 })
         }
 
-        // Join
-        const { error: joinError } = await supabase
+        // Join guild
+        const { error: joinError } = await admin
             .from('guild_members')
             .insert({
                 guild_id: invite.guild_id,
@@ -69,7 +71,7 @@ export async function POST(request: Request) {
         }
 
         // Increment invite uses
-        await supabase
+        await admin
             .from('guild_invites')
             .update({ uses: invite.uses + 1 })
             .eq('id', invite.id)

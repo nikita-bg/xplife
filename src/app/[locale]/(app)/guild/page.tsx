@@ -60,6 +60,8 @@ export default function GuildPage() {
     const [showEmblemPicker, setShowEmblemPicker] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [actionLoading, setActionLoading] = useState<string | null>(null);
+    const [discoverGuilds, setDiscoverGuilds] = useState<GuildData[]>([]);
+    const [joiningGuild, setJoiningGuild] = useState<string | null>(null);
 
     const loadGuildDetails = useCallback(async (guildId: string) => {
         const res = await fetch(`/api/guilds/${guildId}`);
@@ -89,6 +91,12 @@ export default function GuildPage() {
             setLoading(false);
         };
         fetchGuilds();
+
+        // Fetch discoverable guilds
+        fetch('/api/guilds/discover')
+            .then(r => r.ok ? r.json() : { guilds: [] })
+            .then(d => setDiscoverGuilds(d.guilds || []))
+            .catch(() => { });
 
         const supabase = createClient();
         supabase.auth.getUser().then(({ data }) => {
@@ -213,6 +221,22 @@ export default function GuildPage() {
         setShowEmblemPicker(false);
     };
 
+    const handleDirectJoin = async (guildId: string) => {
+        setJoiningGuild(guildId);
+        try {
+            const res = await fetch(`/api/guilds/${guildId}/join`, { method: 'POST' });
+            if (res.ok) {
+                loadGuildDetails(guildId);
+                const listRes = await fetch('/api/guilds');
+                if (listRes.ok) {
+                    const d = await listRes.json();
+                    setGuilds(d.guilds || []);
+                }
+            }
+        } catch { /* silent */ }
+        setJoiningGuild(null);
+    };
+
     // ── No Guild State ──
     if (!loading && guilds.length === 0) {
         return (
@@ -255,6 +279,37 @@ export default function GuildPage() {
                             </button>
                         </div>
                     </div>
+
+                    {/* Discover Guilds */}
+                    {discoverGuilds.length > 0 && (
+                        <div className="guild-card bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
+                            <div className="font-heading text-xs uppercase tracking-widest text-ghost/40 mb-4 flex items-center gap-2">
+                                <Users size={14} /> DISCOVER GUILDS
+                            </div>
+                            <div className="space-y-3">
+                                {discoverGuilds.map(g => (
+                                    <div key={g.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-tertiary/20 transition-colors">
+                                        <div className="w-10 h-10 rounded-xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center p-2 text-tertiary shrink-0">
+                                            {getEmblemIcon(g.emblem || 'shield')}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="font-heading text-sm font-bold text-white truncate">{g.name}</div>
+                                            <div className="font-data text-[10px] text-ghost/40 tracking-wider">
+                                                {g.member_count} {t('members').toUpperCase()} • {(g.total_xp || 0).toLocaleString()} XP
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => handleDirectJoin(g.id)}
+                                            disabled={joiningGuild === g.id}
+                                            className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-[10px] uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 shrink-0"
+                                        >
+                                            {joiningGuild === g.id ? '...' : 'JOIN'}
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <CreateGuildModal
