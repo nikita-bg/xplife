@@ -54,11 +54,13 @@ function getColorClass(percentRemaining: number): string {
 }
 
 export default function QuestTimer({ timeframe }: QuestTimerProps) {
-    const [timeLeft, setTimeLeft] = useState<number>(() => {
-        return getDeadline(timeframe).getTime() - Date.now()
-    })
+    const [timeLeft, setTimeLeft] = useState<number>(
+        () => getDeadline(timeframe).getTime() - Date.now()
+    )
 
+    // Recalculate immediately when timeframe changes, then tick every minute
     useEffect(() => {
+        setTimeLeft(getDeadline(timeframe).getTime() - Date.now())
         const interval = setInterval(() => {
             setTimeLeft(getDeadline(timeframe).getTime() - Date.now())
         }, 60_000)

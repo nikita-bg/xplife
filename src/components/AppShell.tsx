@@ -78,9 +78,9 @@ const AppShell = ({ children }: AppShellProps) => {
                         <Image
                             src="/logo.svg"
                             alt="XPLife"
-                            width={140}
-                            height={36}
-                            className="h-8 w-auto"
+                            width={180}
+                            height={44}
+                            className="h-10 w-auto"
                             priority
                         />
                     </Link>

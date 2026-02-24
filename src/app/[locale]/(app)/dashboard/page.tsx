@@ -274,6 +274,7 @@ export default function DashboardPage() {
     // ── Goal description state (Bug 2) ──
     const [showGoalInput, setShowGoalInput] = useState(false);
     const [goalText, setGoalText] = useState('');
+    const [genMode, setGenMode] = useState<'custom' | 'parent'>('custom');
 
     // ── Auto-generation guard ──
     const autoGenAttempted = useRef<Set<string>>(new Set());
@@ -340,7 +341,7 @@ export default function DashboardPage() {
         });
     }, [fetchQuests, locale]);
 
-    /* ── Generate quests via AI (Bug 2: with optional goals) ── */
+    /* ── Generate quests via AI ── */
     const handleGenerateQuests = async () => {
         if (!showGoalInput) {
             setShowGoalInput(true);
@@ -349,19 +350,29 @@ export default function DashboardPage() {
 
         setGenerating(true);
         try {
+            const parentTf = activeTab === 'daily' ? 'weekly' : activeTab === 'weekly' ? 'monthly' : activeTab === 'monthly' ? 'yearly' : null;
+            const parentQuests = parentTf ? (quests[parentTf] || []) : [];
+
+            const payload: Record<string, unknown> = {
+                questTimeframe: activeTab,
+                locale,
+            };
+
+            if (genMode === 'parent' && parentQuests.length > 0) {
+                payload.generationMode = 'cascade';
+                payload.parentQuestIds = parentQuests.map(q => q.id);
+                payload.parentQuests = parentQuests.map(q => ({ id: q.id, title: q.title, description: q.description }));
+            } else if (goalText.trim()) {
+                payload.goals = goalText.trim();
+            }
+
             const res = await fetch('/api/ai/generate-tasks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    questTimeframe: activeTab,
-                    locale,
-                    goals: goalText.trim() || undefined,
-                }),
+                body: JSON.stringify(payload),
             });
             const data = await res.json();
-            if (data.success || data.count > 0) {
-                await fetchQuests();
-            } else if (data.alreadyExists) {
+            if (data.success || data.count > 0 || data.alreadyExists) {
                 await fetchQuests();
             } else if (data.error) {
                 console.error('Quest generation error:', data.error);
@@ -392,6 +403,7 @@ export default function DashboardPage() {
         setGenerating(false);
         setShowGoalInput(false);
         setGoalText('');
+        setGenMode('custom');
     };
 
     /* ── Complete quest ── */
@@ -467,46 +479,78 @@ export default function DashboardPage() {
                             ))}
                         </div>
 
-                        {/* Bug 2: Goal description input */}
-                        {showGoalInput && (
-                            <div className="bg-white/[0.03] rounded-2xl border border-white/10 p-4 mb-4 space-y-3">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="font-data text-xs text-ghost/60 tracking-wider uppercase">
-                                        {dashT('describeGoals') || 'Describe your goals (optional)'}
-                                    </h3>
-                                    <button
-                                        onClick={() => { setShowGoalInput(false); setGoalText(''); }}
-                                        className="text-ghost/30 hover:text-ghost/60 transition-colors"
-                                    >
-                                        <X size={14} />
-                                    </button>
+                        {/* Generate panel: goal description + parent mode */}
+                        {showGoalInput && (() => {
+                            const parentTf = activeTab === 'daily' ? 'weekly' : activeTab === 'weekly' ? 'monthly' : activeTab === 'monthly' ? 'yearly' : null;
+                            const parentLabel = parentTf ? parentTf.charAt(0).toUpperCase() + parentTf.slice(1) : null;
+                            const hasParentQuests = parentTf ? (quests[parentTf] || []).length > 0 : false;
+                            return (
+                                <div className="bg-white/[0.03] rounded-2xl border border-white/10 p-4 mb-4 space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        {/* Mode tabs */}
+                                        <div className="flex gap-1 bg-white/5 rounded-lg p-0.5">
+                                            <button
+                                                onClick={() => setGenMode('custom')}
+                                                className={`px-3 py-1 rounded-md font-data text-[10px] uppercase tracking-wider transition-all ${genMode === 'custom' ? 'bg-accent/20 text-accent' : 'text-ghost/40 hover:text-ghost/60'}`}
+                                            >
+                                                Custom Goal
+                                            </button>
+                                            {hasParentQuests && parentLabel && (
+                                                <button
+                                                    onClick={() => setGenMode('parent')}
+                                                    className={`px-3 py-1 rounded-md font-data text-[10px] uppercase tracking-wider transition-all ${genMode === 'parent' ? 'bg-tertiary/20 text-tertiary' : 'text-ghost/40 hover:text-ghost/60'}`}
+                                                >
+                                                    From {parentLabel}
+                                                </button>
+                                            )}
+                                        </div>
+                                        <button
+                                            onClick={() => { setShowGoalInput(false); setGoalText(''); setGenMode('custom'); }}
+                                            className="text-ghost/30 hover:text-ghost/60 transition-colors"
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+
+                                    {genMode === 'custom' ? (
+                                        <textarea
+                                            value={goalText}
+                                            onChange={(e) => setGoalText(e.target.value)}
+                                            placeholder={dashT('goalsPlaceholder') || 'e.g. I want to focus on fitness and meditation today...'}
+                                            rows={3}
+                                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 font-sans text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors resize-none"
+                                        />
+                                    ) : (
+                                        <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                                            {(quests[parentTf!] || []).map(q => (
+                                                <div key={q.id} className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-tertiary shrink-0" />
+                                                    <span className="font-sans text-xs text-ghost/70 truncate">{q.title}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    <div className="flex gap-2 justify-end">
+                                        <button
+                                            onClick={handleGenerateSkipGoals}
+                                            disabled={generating}
+                                            className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/[0.06] transition-colors disabled:opacity-30"
+                                        >
+                                            {dashT('skipGenerate') || 'Skip & Generate'}
+                                        </button>
+                                        <button
+                                            onClick={handleGenerateQuests}
+                                            disabled={generating}
+                                            className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 flex items-center gap-2"
+                                        >
+                                            {generating ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+                                            {generating ? (dashT('generatingQuests') || 'Generating...') : (dashT('generateWithGoals') || 'Generate')}
+                                        </button>
+                                    </div>
                                 </div>
-                                <textarea
-                                    value={goalText}
-                                    onChange={(e) => setGoalText(e.target.value)}
-                                    placeholder={dashT('goalsPlaceholder') || 'e.g. I want to focus on fitness and meditation today...'}
-                                    rows={3}
-                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 font-sans text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors resize-none"
-                                />
-                                <div className="flex gap-2 justify-end">
-                                    <button
-                                        onClick={handleGenerateSkipGoals}
-                                        disabled={generating}
-                                        className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/[0.06] transition-colors disabled:opacity-30"
-                                    >
-                                        {dashT('skipGenerate') || 'Skip & Generate'}
-                                    </button>
-                                    <button
-                                        onClick={handleGenerateQuests}
-                                        disabled={generating}
-                                        className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 flex items-center gap-2"
-                                    >
-                                        {generating ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
-                                        {generating ? (dashT('generatingQuests') || 'Generating...') : (dashT('generateWithGoals') || 'Generate')}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                            );
+                        })()}
 
                         <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                             {loadingQuests ? (
