@@ -70,6 +70,7 @@ const Navbar = () => {
                 <a href="#how-it-works" className="text-ghost/60 hover:text-accent transition-colors">{t('howItWorks')}</a>
                 <a href="#features" className="text-ghost/60 hover:text-accent transition-colors">{t('features')}</a>
                 <a href="#pricing" className="text-ghost/60 hover:text-accent transition-colors">{t('pricing')}</a>
+                <Link href={`/${locale}/blog`} className="text-ghost/60 hover:text-accent transition-colors">{t('blog')}</Link>
                 <LanguageSwitcher />
                 <Link
                     href={`/${locale}/login`}
@@ -106,6 +107,9 @@ const Navbar = () => {
                     <a href="#pricing" className="text-ghost/60 font-sans text-sm hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
                         {t('pricing')}
                     </a>
+                    <Link href={`/${locale}/blog`} className="text-ghost/60 font-sans text-sm hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
+                        {t('blog')}
+                    </Link>
                     <div className="py-1"><LanguageSwitcher /></div>
                     <Link
                         href={`/${locale}/login`}

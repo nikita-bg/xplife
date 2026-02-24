@@ -185,7 +185,10 @@ function QuestCard({ quest, onClick, unlockStatus }: { quest: Task; onClick: (qu
                         {quest.proof_url && <Camera size={10} className="text-green-400" />}
                     </div>
                 </div>
-                <div className="font-data text-xs text-accent-secondary tracking-wider shrink-0">+{quest.xp_reward} XP</div>
+                <div className="flex flex-col items-end gap-0.5 shrink-0">
+                    <div className="font-data text-xs text-accent-secondary tracking-wider">+{quest.xp_reward} XP</div>
+                    <div className="font-data text-[10px] text-amber-400 tracking-wider">+{{ easy: 5, medium: 10, hard: 20, epic: 35 }[difficulty] || 8} 🪙</div>
+                </div>
             </div>
             {/* Unlock requirement progress */}
             {locked && unlockStatus && (
