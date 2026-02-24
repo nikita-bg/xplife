@@ -425,6 +425,7 @@ export default function DashboardPage() {
             const payload: Record<string, unknown> = {
                 questTimeframe: activeTab,
                 locale,
+                force: true, // Allow manual re-generation even if tasks exist
             };
 
             if (genMode === 'parent' && allParents.length > 0) {
@@ -469,7 +470,7 @@ export default function DashboardPage() {
             const res = await fetch('/api/ai/generate-tasks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ questTimeframe: activeTab, locale }),
+                body: JSON.stringify({ questTimeframe: activeTab, locale, force: true }),
             });
             const data2 = await res.json();
             if (data2.alreadyExists) {

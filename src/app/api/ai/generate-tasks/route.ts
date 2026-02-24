@@ -51,25 +51,28 @@ export async function POST(request: Request) {
     let parentQuestIds: string[] | undefined
     let generationMode: 'manual' | 'from-parent' | 'cascade' = 'manual'
     let locale = 'en'
+    let forceGenerate = false
 
     try {
         const body = await request.json()
-        userGoals = body.goals
+        userGoals = body.goals || body.userGoals
         questTimeframe = body.questTimeframe || 'daily'
         parentQuestId = body.parentQuestId
         parentQuestIds = body.parentQuestIds
         generationMode = body.generationMode || 'manual'
         locale = body.locale || 'en'
+        forceGenerate = body.force === true
     } catch {
         // no body or invalid JSON
     }
 
     const language = LOCALE_TO_LANGUAGE[locale] || 'English'
     const ts = new Date().toISOString()
-    console.log(`[TASK-GEN ${ts}] Started for user:`, user.id, 'timeframe:', questTimeframe, 'mode:', generationMode)
+    console.log(`[TASK-GEN ${ts}] Started for user:`, user.id, 'timeframe:', questTimeframe, 'mode:', generationMode, 'force:', forceGenerate)
 
     // ── Check webhook config ──
     const webhookUrl = process.env.N8N_WEBHOOK_URL
+    console.log(`[TASK-GEN ${ts}] N8N_WEBHOOK_URL set:`, !!webhookUrl, webhookUrl ? webhookUrl.substring(0, 50) + '...' : 'MISSING')
     if (!webhookUrl) {
         console.error(`[TASK-GEN ${ts}] N8N_WEBHOOK_URL not set`)
         return NextResponse.json({ error: 'AI task generation not configured yet' }, { status: 503 })
@@ -89,6 +92,7 @@ export async function POST(request: Request) {
 
     // ── Rate Limiting: Weekly task limit ──
     const weeklyLimit = await checkWeeklyTaskLimit(user.id, profile.plan, supabase)
+    console.log(`[TASK-GEN ${ts}] Weekly limit check:`, weeklyLimit)
     if (!weeklyLimit.allowed) {
         return NextResponse.json(
             { error: `Weekly limit reached (${weeklyLimit.current}/${weeklyLimit.limit}). Upgrade for unlimited.`, upgrade: true },
@@ -108,7 +112,7 @@ export async function POST(request: Request) {
     }
 
     // ── Duplicate generation guard ──
-    if (questTimeframe !== 'yearly') {
+    if (!forceGenerate && questTimeframe !== 'yearly') {
         let periodStart: string
         const now = new Date()
 
@@ -132,10 +136,14 @@ export async function POST(request: Request) {
             .neq('status', 'skipped')
             .gte('created_at', periodStart)
 
+        console.log(`[TASK-GEN ${ts}] Duplicate guard: ${existingCount} ${questTimeframe} tasks since ${periodStart}`)
+
         if ((existingCount ?? 0) > 0) {
-            console.log(`[TASK-GEN ${ts}] Duplicate guard: ${existingCount} ${questTimeframe} tasks already exist`)
+            console.log(`[TASK-GEN ${ts}] BLOCKED by duplicate guard — ${existingCount} tasks already exist`)
             return NextResponse.json({ success: true, count: 0, alreadyExists: true })
         }
+    } else if (forceGenerate) {
+        console.log(`[TASK-GEN ${ts}] Duplicate guard SKIPPED (force=true)`)
     }
 
     // ── Fetch goals ──

@@ -199,6 +199,21 @@ export interface GuildChatMessage {
     avatar_url?: string | null
 }
 
+// ── Blog Types ──
+
+export interface BlogPost {
+    id: string
+    title: string
+    slug: string
+    content: string
+    excerpt: string | null
+    cover_image_url: string | null
+    status: 'draft' | 'published'
+    published_at: string | null
+    created_at: string
+    updated_at: string | null
+}
+
 // ── Boss Event Types ──
 
 export type BossTier = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary'
