@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import gsap from 'gsap';
-import { Sparkles, Check, Brain, Camera, Loader2, X } from 'lucide-react';
+import { Sparkles, Check, Brain, Camera, Loader2, X, Lock, Unlock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
 import QuestTimer from '@/components/quest/QuestTimer';
@@ -11,6 +11,7 @@ import { useProfile } from '@/hooks/use-profile';
 import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils';
 import { usePathname } from 'next/navigation';
 import type { Task, QuestTimeframe } from '@/lib/types';
+import { getUnlockStatus, hasRequirements, type UnlockStatus } from '@/lib/quest-requirements';
 
 const diffColors: Record<string, string> = {
     easy: 'text-green-400 bg-green-400/10',
@@ -157,26 +158,85 @@ function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
 }
 
 /* ── Quest Card ── */
-function QuestCard({ quest, onClick }: { quest: Task; onClick: (quest: Task) => void }) {
+function QuestCard({ quest, onClick, unlockStatus }: { quest: Task; onClick: (quest: Task) => void; unlockStatus?: UnlockStatus | null }) {
     const done = quest.status === 'completed';
     const difficulty = quest.difficulty || 'medium';
+    const locked = unlockStatus && !unlockStatus.unlocked && !done;
     return (
-        <div className="group bg-[#0C1021] rounded-2xl border border-white/5 p-4 flex items-center gap-4 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_0_20px_rgba(0,245,255,0.05)] transition-all duration-300 cursor-pointer"
-            onClick={() => !done && onClick(quest)}>
-            <div className="relative shrink-0">
-                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${done ? 'bg-accent border-accent' : 'border-white/20 group-hover:border-accent/50'}`}>
-                    {done && <Check size={14} className="text-background" />}
+        <div
+            className={`group bg-[#0C1021] rounded-2xl border p-4 transition-all duration-300 ${locked
+                ? 'border-white/5 opacity-70 cursor-not-allowed'
+                : 'border-white/5 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_0_20px_rgba(0,245,255,0.05)] cursor-pointer'
+                }`}
+            onClick={() => !done && !locked && onClick(quest)}
+        >
+            <div className="flex items-center gap-4">
+                <div className="relative shrink-0">
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${done ? 'bg-accent border-accent' : locked ? 'border-white/10' : 'border-white/20 group-hover:border-accent/50'
+                        }`}>
+                        {done ? <Check size={14} className="text-background" /> : locked ? <Lock size={10} className="text-ghost/30" /> : null}
+                    </div>
                 </div>
-            </div>
-            <div className="flex-1 min-w-0">
-                <div className={`font-sans text-sm ${done ? 'line-through text-ghost/30' : 'text-ghost'}`}>{quest.title}</div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="font-data text-[10px] text-ghost/40 tracking-wider capitalize">{quest.category}</span>
-                    <span className={`font-data text-[10px] px-1.5 py-0.5 rounded capitalize ${diffColors[difficulty] || diffColors.medium}`}>{difficulty}</span>
-                    {quest.proof_url && <Camera size={10} className="text-green-400" />}
+                <div className="flex-1 min-w-0">
+                    <div className={`font-sans text-sm ${done ? 'line-through text-ghost/30' : 'text-ghost'}`}>{quest.title}</div>
+                    <div className="flex items-center gap-2 mt-1">
+                        <span className="font-data text-[10px] text-ghost/40 tracking-wider capitalize">{quest.category}</span>
+                        <span className={`font-data text-[10px] px-1.5 py-0.5 rounded capitalize ${diffColors[difficulty] || diffColors.medium}`}>{difficulty}</span>
+                        {quest.proof_url && <Camera size={10} className="text-green-400" />}
+                    </div>
                 </div>
+                <div className="font-data text-xs text-accent-secondary tracking-wider shrink-0">+{quest.xp_reward} XP</div>
             </div>
-            <div className="font-data text-xs text-accent-secondary tracking-wider shrink-0">+{quest.xp_reward} XP</div>
+            {/* Unlock requirement progress */}
+            {locked && unlockStatus && (
+                <div className="mt-3 pt-3 border-t border-white/5">
+                    <div className="flex items-center gap-2 mb-1.5">
+                        <Lock size={10} className="text-amber-400" />
+                        <span className="font-data text-[9px] text-amber-400/80 tracking-wider uppercase">
+                            Complete {unlockStatus.childTimeframe} quests to unlock
+                        </span>
+                    </div>
+                    <div className="flex gap-3">
+                        {(['hard', 'medium', 'easy'] as const).map(d => {
+                            const b = unlockStatus.breakdown[d];
+                            const pct = Math.min(100, (b.done / b.required) * 100);
+                            const full = b.done >= b.required;
+                            return (
+                                <div key={d} className="flex-1">
+                                    <div className="flex items-center justify-between mb-0.5">
+                                        <span className={`font-data text-[8px] tracking-wider uppercase ${d === 'hard' ? 'text-red-400/60' : d === 'medium' ? 'text-amber-400/60' : 'text-green-400/60'
+                                            }`}>{d}</span>
+                                        <span className={`font-data text-[8px] ${full ? 'text-accent' : 'text-ghost/30'}`}>
+                                            {b.done}/{b.required}
+                                        </span>
+                                    </div>
+                                    <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+                                        <div
+                                            className={`h-full rounded-full transition-all ${full ? 'bg-accent' : 'bg-white/20'}`}
+                                            style={{ width: `${pct}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="mt-1.5">
+                        <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
+                            <div
+                                className={`h-full rounded-full transition-all ${unlockStatus.progress >= 1 ? 'bg-accent' : 'bg-amber-400/50'}`}
+                                style={{ width: `${Math.min(100, unlockStatus.progress * 100)}%` }}
+                            />
+                        </div>
+                        <div className="font-data text-[8px] text-ghost/30 text-right mt-0.5">{Math.round(unlockStatus.progress * 100)}% overall</div>
+                    </div>
+                </div>
+            )}
+            {done && unlockStatus?.unlocked && (
+                <div className="mt-2 flex items-center gap-1">
+                    <Unlock size={9} className="text-accent/50" />
+                    <span className="font-data text-[8px] text-accent/50 tracking-wider">UNLOCKED</span>
+                </div>
+            )}
         </div>
     );
 }
@@ -271,10 +331,11 @@ export default function DashboardPage() {
     const pathname = usePathname();
     const locale = pathname.split('/')[1] || 'en';
 
-    // ── Goal description state (Bug 2) ──
+    // ── Goal description state ──
     const [showGoalInput, setShowGoalInput] = useState(false);
     const [goalText, setGoalText] = useState('');
     const [genMode, setGenMode] = useState<'custom' | 'parent'>('custom');
+    const [selectedParentIds, setSelectedParentIds] = useState<Set<string>>(new Set());
 
     // ── Auto-generation guard ──
     const autoGenAttempted = useRef<Set<string>>(new Set());
@@ -351,17 +412,21 @@ export default function DashboardPage() {
         setGenerating(true);
         try {
             const parentTf = activeTab === 'daily' ? 'weekly' : activeTab === 'weekly' ? 'monthly' : activeTab === 'monthly' ? 'yearly' : null;
-            const parentQuests = parentTf ? (quests[parentTf] || []) : [];
+            const allParents = parentTf ? (quests[parentTf] || []) : [];
 
             const payload: Record<string, unknown> = {
                 questTimeframe: activeTab,
                 locale,
             };
 
-            if (genMode === 'parent' && parentQuests.length > 0) {
+            if (genMode === 'parent' && allParents.length > 0) {
+                // Use selected parents, or all if none selected
+                const chosen = selectedParentIds.size > 0
+                    ? allParents.filter(q => selectedParentIds.has(q.id))
+                    : allParents;
                 payload.generationMode = 'cascade';
-                payload.parentQuestIds = parentQuests.map(q => q.id);
-                payload.parentQuests = parentQuests.map(q => ({ id: q.id, title: q.title, description: q.description }));
+                payload.parentQuestIds = chosen.map(q => q.id);
+                payload.parentQuests = chosen.map(q => ({ id: q.id, title: q.title, description: q.description }));
             } else if (goalText.trim()) {
                 payload.goals = goalText.trim();
             }
@@ -383,6 +448,7 @@ export default function DashboardPage() {
         setGenerating(false);
         setShowGoalInput(false);
         setGoalText('');
+        setSelectedParentIds(new Set());
     };
 
     const handleGenerateSkipGoals = async () => {
@@ -404,6 +470,7 @@ export default function DashboardPage() {
         setShowGoalInput(false);
         setGoalText('');
         setGenMode('custom');
+        setSelectedParentIds(new Set());
     };
 
     /* ── Complete quest ── */
@@ -441,6 +508,15 @@ export default function DashboardPage() {
     const currentQuests = quests[activeTab] || [];
     const pendingQuests = currentQuests.filter(q => q.status !== 'completed');
     const completedQuests = currentQuests.filter(q => q.status === 'completed');
+
+    // Compute unlock status for the active tab (personality-dependent)
+    const currentUnlockStatus = useMemo(() => {
+        if (!hasRequirements(activeTab as QuestTimeframe)) return null;
+        const childTf = activeTab === 'weekly' ? 'daily' : activeTab === 'monthly' ? 'weekly' : activeTab === 'yearly' ? 'monthly' : null;
+        if (!childTf) return null;
+        const childCompleted = (quests[childTf] || []).filter(q => q.status === 'completed');
+        return getUnlockStatus(activeTab as QuestTimeframe, childCompleted, personalityType);
+    }, [activeTab, quests, personalityType]);
 
     const isLoading = profileLoading || loadingQuests;
 
@@ -505,7 +581,7 @@ export default function DashboardPage() {
                                             )}
                                         </div>
                                         <button
-                                            onClick={() => { setShowGoalInput(false); setGoalText(''); setGenMode('custom'); }}
+                                            onClick={() => { setShowGoalInput(false); setGoalText(''); setGenMode('custom'); setSelectedParentIds(new Set()); }}
                                             className="text-ghost/30 hover:text-ghost/60 transition-colors"
                                         >
                                             <X size={14} />
@@ -522,12 +598,38 @@ export default function DashboardPage() {
                                         />
                                     ) : (
                                         <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-                                            {(quests[parentTf!] || []).map(q => (
-                                                <div key={q.id} className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-tertiary shrink-0" />
-                                                    <span className="font-sans text-xs text-ghost/70 truncate">{q.title}</span>
+                                            <div className="font-data text-[9px] text-ghost/30 tracking-wider mb-1">SELECT QUESTS TO GENERATE FROM:</div>
+                                            {(quests[parentTf!] || []).map(q => {
+                                                const isSelected = selectedParentIds.has(q.id);
+                                                return (
+                                                    <button
+                                                        key={q.id}
+                                                        onClick={() => {
+                                                            setSelectedParentIds(prev => {
+                                                                const next = new Set(prev);
+                                                                if (next.has(q.id)) next.delete(q.id);
+                                                                else next.add(q.id);
+                                                                return next;
+                                                            });
+                                                        }}
+                                                        className={`w-full flex items-center gap-2 p-2.5 rounded-xl border text-left transition-all ${isSelected
+                                                            ? 'bg-tertiary/10 border-tertiary/30'
+                                                            : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+                                                            }`}
+                                                    >
+                                                        <div className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all ${isSelected ? 'bg-tertiary border-tertiary' : 'border-white/20'
+                                                            }`}>
+                                                            {isSelected && <Check size={10} className="text-background" />}
+                                                        </div>
+                                                        <span className={`font-sans text-xs truncate ${isSelected ? 'text-ghost' : 'text-ghost/50'}`}>{q.title}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                            {selectedParentIds.size > 0 && (
+                                                <div className="font-data text-[9px] text-tertiary/60 tracking-wider">
+                                                    {selectedParentIds.size} quest{selectedParentIds.size > 1 ? 's' : ''} selected
                                                 </div>
-                                            ))}
+                                            )}
                                         </div>
                                     )}
 
@@ -558,13 +660,13 @@ export default function DashboardPage() {
                             ) : currentQuests.length > 0 ? (
                                 <>
                                     {pendingQuests.length > 0 && pendingQuests.map(q => (
-                                        <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
+                                        <QuestCard key={q.id} quest={q} onClick={handleQuestClick} unlockStatus={currentUnlockStatus} />
                                     ))}
                                     {completedQuests.length > 0 && (
                                         <>
                                             <div className="font-data text-xs text-ghost/30 tracking-wider uppercase mt-4 mb-2">{questSection('completed')}</div>
                                             {completedQuests.map(q => (
-                                                <QuestCard key={q.id} quest={q} onClick={handleQuestClick} />
+                                                <QuestCard key={q.id} quest={q} onClick={handleQuestClick} unlockStatus={currentUnlockStatus} />
                                             ))}
                                         </>
                                     )}

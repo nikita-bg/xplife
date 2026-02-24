@@ -774,21 +774,34 @@
       "subtitle": "Choose Your Path",
       "title": "Select Your",
       "titleHighlight": "Class",
-      "description": "No credit card needed. Upgrade anytime.",
-      "free": {
-        "name": "Start Free",
-        "cta": "Start Playing Free"
-      },
-      "premium": {
-        "name": "Premium",
-        "badge": "Most Popular",
-        "cta": "Go Premium"
-      },
-      "lifetime": {
-        "name": "Lifetime",
-        "badge": "Limited Offer",
-        "cta": "Lock In Lifetime Access"
-      }
+      "description": "No credit card needed. Start free. Upgrade anytime.",
+      "freeName": "Free Adventurer",
+      "freePrice": "Free",
+      "freeDesc": "Start your RPG journey with core features.",
+      "freeF1": "1 Active Goal",
+      "freeF2": "15 AI Quests / Week",
+      "freeF3": "Basic Progress Tracking",
+      "freeF4": "Community Leaderboard",
+      "freeCta": "Start Playing Free",
+      "proName": "Pro Hero",
+      "proPrice": "€5.99",
+      "proDesc": "Unlimited quests, guilds, boss battles & AI coaching.",
+      "proF1": "3 Active Goals + Unlimited Quests",
+      "proF2": "Guild System & Boss Battles",
+      "proF3": "Full AI Coaching & Journal",
+      "proF4": "Quest Cascade (Yearly → Daily)",
+      "proF5": "Streak Freezes & Advanced Analytics",
+      "proF6": "Priority Support",
+      "proCta": "Upgrade to Pro",
+      "lifeName": "Guild Master",
+      "lifePrice": "€49",
+      "lifeDesc": "Lifetime access — one payment, forever.",
+      "lifeF1": "Everything in Pro, Forever",
+      "lifeF2": "All Future Features Included",
+      "lifeF3": "Exclusive In-App Cosmetics",
+      "lifeF4": "Founding Member Badge",
+      "lifeF5": "Direct Access to Founders",
+      "lifeCta": "Go Lifetime"
     }
   },
   "pricing": {
@@ -827,7 +840,7 @@
     "unlimitedTasks": "Unlimited AI tasks & more",
     "upgradeYourPlan": "Upgrade Your Plan",
     "unlockFeatures": "Unlock unlimited AI tasks, 3 parallel goals, coaching & more.",
-    "premiumButton": "Premium — €4.99/mo",
+    "premiumButton": "Premium — €5.99/mo",
     "lifetimeButton": "Lifetime — €49"
   },
   "levelTitles": {

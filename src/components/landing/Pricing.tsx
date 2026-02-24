@@ -76,9 +76,9 @@ const Pricing = () => {
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start relative max-w-6xl mx-auto">
-                    <PricingCard title="Free Adventurer" price="$0" desc="Perfect for starting your RPG journey." features={["1 Active Goal", "15 Tasks / Week", "15 AI Generations / Day", "Basic Progress Analytics"]} cta="Start Playing Free" highlighted={false} />
-                    <PricingCard title="Pro Hero" price="$12" desc="For those serious about leveling up their life." features={["3 Active Goals", "Unlimited Tasks", "Unlimited AI Generations", "Advanced Streak Analytics", "Priority Support", "Exclusive Discord Role"]} cta="Upgrade to Pro" highlighted={true} />
-                    <PricingCard title="Guild Master" price="$299" desc="The ultimate commitment to your evolution." features={["Lifetime Access to Pro Features", "All Future Updates Included", "Exclusive In-App Cosmetics", "Direct Feedback to Founders", "Guild Master Discord Badge"]} cta="Go Lifetime" highlighted={false} />
+                    <PricingCard title={t('freeName')} price={t('freePrice')} desc={t('freeDesc')} features={[t('freeF1'), t('freeF2'), t('freeF3'), t('freeF4')]} cta={t('freeCta')} highlighted={false} />
+                    <PricingCard title={t('proName')} price={t('proPrice')} desc={t('proDesc')} features={[t('proF1'), t('proF2'), t('proF3'), t('proF4'), t('proF5'), t('proF6')]} cta={t('proCta')} highlighted={true} />
+                    <PricingCard title={t('lifeName')} price={t('lifePrice')} desc={t('lifeDesc')} features={[t('lifeF1'), t('lifeF2'), t('lifeF3'), t('lifeF4'), t('lifeF5')]} cta={t('lifeCta')} highlighted={false} />
                 </div>
             </div>
         </section>

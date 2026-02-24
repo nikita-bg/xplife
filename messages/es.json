@@ -774,21 +774,34 @@
       "subtitle": "Elige Tu Camino",
       "title": "Selecciona Tu",
       "titleHighlight": "Clase",
-      "description": "No se necesita tarjeta de crédito. Mejora en cualquier momento.",
-      "free": {
-        "name": "Comienza Gratis",
-        "cta": "Juega Gratis"
-      },
-      "premium": {
-        "name": "Premium",
-        "badge": "Más Popular",
-        "cta": "Hazte Premium"
-      },
-      "lifetime": {
-        "name": "Vitalicio",
-        "badge": "Oferta Limitada",
-        "cta": "Asegura Acceso Vitalicio"
-      }
+      "description": "Sin tarjeta de crédito. Empieza gratis. Mejora cuando quieras.",
+      "freeName": "Aventurero Gratis",
+      "freePrice": "Gratis",
+      "freeDesc": "Empieza tu viaje RPG con funciones básicas.",
+      "freeF1": "1 Objetivo Activo",
+      "freeF2": "15 Misiones IA / Semana",
+      "freeF3": "Seguimiento Básico",
+      "freeF4": "Clasificación Comunitaria",
+      "freeCta": "Empieza Gratis",
+      "proName": "Héroe Pro",
+      "proPrice": "€5.99",
+      "proDesc": "Misiones ilimitadas, gremios, batallas y coaching IA.",
+      "proF1": "3 Objetivos + Misiones Ilimitadas",
+      "proF2": "Gremios & Batallas de Jefe",
+      "proF3": "Coaching IA & Diario Completo",
+      "proF4": "Cascada de Misiones (Anual → Diaria)",
+      "proF5": "Congelación de Rachas & Análisis Avanzado",
+      "proF6": "Soporte Prioritario",
+      "proCta": "Mejorar a Pro",
+      "lifeName": "Maestro de Gremio",
+      "lifePrice": "€49",
+      "lifeDesc": "Acceso de por vida — un pago, para siempre.",
+      "lifeF1": "Todo en Pro, Para Siempre",
+      "lifeF2": "Todas las Funciones Futuras",
+      "lifeF3": "Cosméticos Exclusivos",
+      "lifeF4": "Insignia de Fundador",
+      "lifeF5": "Acceso Directo a Fundadores",
+      "lifeCta": "Ir Vitalicio"
     }
   },
   "pricing": {
@@ -827,7 +840,7 @@
     "unlimitedTasks": "Tareas de IA ilimitadas y más",
     "upgradeYourPlan": "Mejora Tu Plan",
     "unlockFeatures": "Desbloquea tareas de IA ilimitadas, 3 objetivos paralelos, coaching y más.",
-    "premiumButton": "Premium — €4.99/mes",
+    "premiumButton": "Premium — €5.99/mes",
     "lifetimeButton": "Vitalicio — €49"
   },
   "levelTitles": {

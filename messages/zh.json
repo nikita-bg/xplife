@@ -774,21 +774,34 @@
       "subtitle": "选择您的道路",
       "title": "选择您的",
       "titleHighlight": "职业",
-      "description": "无需信用卡。随时升级。",
-      "free": {
-        "name": "免费开始",
-        "cta": "免费开始游戏"
-      },
-      "premium": {
-        "name": "高级版",
-        "badge": "最受欢迎",
-        "cta": "升级至高级版"
-      },
-      "lifetime": {
-        "name": "终身版",
-        "badge": "限时优惠",
-        "cta": "锁定终身访问"
-      }
+      "description": "无需信用卡。免费开始。随时升级。",
+      "freeName": "免费冒险家",
+      "freePrice": "免费",
+      "freeDesc": "用基本功能开始你的RPG旅程。",
+      "freeF1": "1个活跃目标",
+      "freeF2": "每周15个AI任务",
+      "freeF3": "基本进度追踪",
+      "freeF4": "社区排行榜",
+      "freeCta": "免费开始",
+      "proName": "专业英雄",
+      "proPrice": "€5.99",
+      "proDesc": "无限任务、公会、首领战和AI辅导。",
+      "proF1": "3个目标 + 无限任务",
+      "proF2": "公会和首领战",
+      "proF3": "完整AI辅导和日志",
+      "proF4": "任务级联（年度→每日）",
+      "proF5": "连胜冻结和高级分析",
+      "proF6": "优先支持",
+      "proCta": "升级到专业版",
+      "lifeName": "公会大师",
+      "lifePrice": "€49",
+      "lifeDesc": "终身访问 — 一次付费，永远拥有。",
+      "lifeF1": "专业版所有功能，永久享有",
+      "lifeF2": "包含所有未来功能",
+      "lifeF3": "独家装饰",
+      "lifeF4": "创始会员徽章",
+      "lifeF5": "直接联系创始人",
+      "lifeCta": "获取终身版"
     }
   },
   "pricing": {
@@ -827,7 +840,7 @@
     "unlimitedTasks": "无限AI任务及更多",
     "upgradeYourPlan": "升级您的计划",
     "unlockFeatures": "解锁无限AI任务、3个并行目标、辅导等更多功能。",
-    "premiumButton": "高级版 — €4.99/月",
+    "premiumButton": "高级版 — €5.99/月",
     "lifetimeButton": "终身版 — €49"
   },
   "levelTitles": {
