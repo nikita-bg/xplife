@@ -69,9 +69,7 @@ function Weapon({ itemName, rarity }: { itemName: string; rarity: string }) {
     if (shape === 'staff') {
         return (
             <group position={[0.55, 0.2, 0]}>
-                {/* Staff pole */}
                 <VoxelBox position={[0, 0, 0]} size={[0.06, 1.2, 0.06]} color="#8B6914" />
-                {/* Crystal top */}
                 <mesh position={[0, 0.65, 0]}>
                     <octahedronGeometry args={[0.1]} />
                     <meshStandardMaterial
@@ -89,23 +87,17 @@ function Weapon({ itemName, rarity }: { itemName: string; rarity: string }) {
     if (shape === 'hammer') {
         return (
             <group position={[0.55, 0.15, 0]}>
-                {/* Handle */}
                 <VoxelBox position={[0, 0, 0]} size={[0.06, 0.8, 0.06]} color="#8B6914" />
-                {/* Head */}
                 <VoxelBox position={[0, 0.45, 0]} size={[0.22, 0.15, 0.15]}
                     color={vis.color} emissive={vis.emissive} emissiveIntensity={vis.emissiveIntensity} />
             </group>
         )
     }
 
-    // Default: sword
     return (
         <group position={[0.55, 0.1, 0]} rotation={[0, 0, -0.15]}>
-            {/* Handle */}
             <VoxelBox position={[0, -0.1, 0]} size={[0.04, 0.2, 0.06]} color="#8B6914" />
-            {/* Guard */}
             <VoxelBox position={[0, 0.02, 0]} size={[0.18, 0.04, 0.04]} color={vis.color} />
-            {/* Blade */}
             <VoxelBox position={[0, 0.35, 0]} size={[0.06, 0.6, 0.02]}
                 color={vis.color} emissive={vis.emissive} emissiveIntensity={vis.emissiveIntensity} />
         </group>
@@ -143,14 +135,15 @@ function RankAura({ rank }: { rank: RankTier }) {
     )
 }
 
-// ─── Rank Particles ─────────────────────────────────────────────────────────
+// ─── Rank Particles (imperative approach) ───────────────────────────────────
 
 function RankParticles({ rank }: { rank: RankTier }) {
     const ref = useRef<THREE.Points>(null)
     const effect = RANK_EFFECTS[rank]
 
-    const { positions, colors } = useMemo(() => {
+    const geometry = useMemo(() => {
         const count = 30
+        const geo = new THREE.BufferGeometry()
         const pos = new Float32Array(count * 3)
         const col = new Float32Array(count * 3)
         const c = new THREE.Color(effect.auraColor)
@@ -163,12 +156,24 @@ function RankParticles({ rank }: { rank: RankTier }) {
             col[i * 3 + 1] = c.g
             col[i * 3 + 2] = c.b
         }
-        return { positions: pos, colors: col }
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+        geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
+        return geo
     }, [effect.auraColor])
+
+    const material = useMemo(() => {
+        return new THREE.PointsMaterial({
+            size: 0.04,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.6,
+            sizeAttenuation: true,
+        })
+    }, [])
 
     useFrame(({ clock }) => {
         if (ref.current) {
-            const posAttr = ref.current.geometry.attributes.position
+            const posAttr = ref.current.geometry.attributes.position as THREE.BufferAttribute
             for (let i = 0; i < posAttr.count; i++) {
                 let y = posAttr.getY(i)
                 y += 0.005
@@ -182,21 +187,7 @@ function RankParticles({ rank }: { rank: RankTier }) {
 
     if (!effect.hasParticles) return null
 
-    return (
-        <points ref={ref}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    args={[positions, 3]}
-                />
-                <bufferAttribute
-                    attach="attributes-color"
-                    args={[colors, 3]}
-                />
-            </bufferGeometry>
-            <pointsMaterial size={0.04} vertexColors transparent opacity={0.6} sizeAttenuation />
-        </points>
-    )
+    return <points ref={ref} geometry={geometry} material={material} />
 }
 
 // ─── Main Avatar ────────────────────────────────────────────────────────────
@@ -210,7 +201,6 @@ export default function VoxelAvatar({
     const style = CLASS_STYLES[characterClass]
     const { headScale, torsoWidth, limbWidth } = style.proportions
 
-    // Find equipped items by slot
     const equippedMap = useMemo(() => {
         const map: Partial<Record<EquipSlot, EquippedItemData>> = {}
         for (const item of equipped) {
@@ -232,18 +222,13 @@ export default function VoxelAvatar({
 
     return (
         <group ref={groupRef} position={[0, -0.8, 0]}>
-            {/* ── Head ── */}
+            {/* Head */}
             <group position={[0, 1.55, 0]} scale={[headScale, headScale, headScale]}>
-                {/* Base head */}
                 <VoxelBox position={[0, 0, 0]} size={[0.4, 0.45, 0.4]} color={style.skinTone} />
-                {/* Eyes */}
                 <VoxelBox position={[-0.1, 0.02, 0.21]} size={[0.07, 0.05, 0.02]} color="#1a1a2e" />
                 <VoxelBox position={[0.1, 0.02, 0.21]} size={[0.07, 0.05, 0.02]} color="#1a1a2e" />
-                {/* Hair */}
                 <VoxelBox position={[0, 0.2, -0.02]} size={[0.44, 0.12, 0.44]} color="#4A3728" />
                 <VoxelBox position={[0, 0.1, -0.22]} size={[0.42, 0.3, 0.06]} color="#4A3728" />
-
-                {/* Helmet overlay */}
                 {headVis && (
                     <VoxelBox position={[0, 0.08, 0]} size={[0.48, 0.38, 0.48]}
                         color={headVis.color} emissive={headVis.emissive}
@@ -251,23 +236,14 @@ export default function VoxelAvatar({
                 )}
             </group>
 
-            {/* ── Neck ── */}
+            {/* Neck */}
             <VoxelBox position={[0, 1.28, 0]} size={[0.15, 0.08, 0.15]} color={style.skinTone} />
 
-            {/* ── Torso ── */}
+            {/* Torso */}
             <group>
-                {/* Base torso */}
-                <VoxelBox position={[0, 0.9, 0]}
-                    size={[0.5 * torsoWidth, 0.65, 0.3]}
-                    color={style.bodyColor} />
-                {/* Accent stripe */}
-                <VoxelBox position={[0, 0.9, 0.155]}
-                    size={[0.08, 0.6, 0.01]}
-                    color={style.accentColor}
-                    emissive={style.accentColor}
-                    emissiveIntensity={0.3} />
-
-                {/* Armor overlay */}
+                <VoxelBox position={[0, 0.9, 0]} size={[0.5 * torsoWidth, 0.65, 0.3]} color={style.bodyColor} />
+                <VoxelBox position={[0, 0.9, 0.155]} size={[0.08, 0.6, 0.01]}
+                    color={style.accentColor} emissive={style.accentColor} emissiveIntensity={0.3} />
                 {bodyVis && (
                     <VoxelBox position={[0, 0.9, 0]} size={[0.55 * torsoWidth, 0.6, 0.35]}
                         color={bodyVis.color} emissive={bodyVis.emissive}
@@ -275,46 +251,30 @@ export default function VoxelAvatar({
                 )}
             </group>
 
-            {/* ── Arms ── */}
             {/* Left arm */}
             <group>
-                <VoxelBox position={[-0.35 * torsoWidth, 1.0, 0]}
-                    size={[0.15 * limbWidth, 0.25, 0.18]}
-                    color={style.bodyColor} />
-                <VoxelBox position={[-0.35 * torsoWidth, 0.7, 0]}
-                    size={[0.13 * limbWidth, 0.35, 0.15]}
-                    color={style.skinTone} />
+                <VoxelBox position={[-0.35 * torsoWidth, 1.0, 0]} size={[0.15 * limbWidth, 0.25, 0.18]} color={style.bodyColor} />
+                <VoxelBox position={[-0.35 * torsoWidth, 0.7, 0]} size={[0.13 * limbWidth, 0.35, 0.15]} color={style.skinTone} />
                 {armsVis && (
-                    <VoxelBox position={[-0.35 * torsoWidth, 0.72, 0]}
-                        size={[0.17 * limbWidth, 0.2, 0.19]}
-                        color={armsVis.color} emissive={armsVis.emissive}
-                        emissiveIntensity={armsVis.emissiveIntensity} opacity={0.85} />
+                    <VoxelBox position={[-0.35 * torsoWidth, 0.72, 0]} size={[0.17 * limbWidth, 0.2, 0.19]}
+                        color={armsVis.color} emissive={armsVis.emissive} emissiveIntensity={armsVis.emissiveIntensity} opacity={0.85} />
                 )}
             </group>
             {/* Right arm */}
             <group>
-                <VoxelBox position={[0.35 * torsoWidth, 1.0, 0]}
-                    size={[0.15 * limbWidth, 0.25, 0.18]}
-                    color={style.bodyColor} />
-                <VoxelBox position={[0.35 * torsoWidth, 0.7, 0]}
-                    size={[0.13 * limbWidth, 0.35, 0.15]}
-                    color={style.skinTone} />
+                <VoxelBox position={[0.35 * torsoWidth, 1.0, 0]} size={[0.15 * limbWidth, 0.25, 0.18]} color={style.bodyColor} />
+                <VoxelBox position={[0.35 * torsoWidth, 0.7, 0]} size={[0.13 * limbWidth, 0.35, 0.15]} color={style.skinTone} />
                 {armsVis && (
-                    <VoxelBox position={[0.35 * torsoWidth, 0.72, 0]}
-                        size={[0.17 * limbWidth, 0.2, 0.19]}
-                        color={armsVis.color} emissive={armsVis.emissive}
-                        emissiveIntensity={armsVis.emissiveIntensity} opacity={0.85} />
+                    <VoxelBox position={[0.35 * torsoWidth, 0.72, 0]} size={[0.17 * limbWidth, 0.2, 0.19]}
+                        color={armsVis.color} emissive={armsVis.emissive} emissiveIntensity={armsVis.emissiveIntensity} opacity={0.85} />
                 )}
             </group>
 
-            {/* ── Legs ── */}
             {/* Left leg */}
             <group>
                 <VoxelBox position={[-0.12, 0.35, 0]} size={[0.18 * limbWidth, 0.5, 0.2]}
                     color={legsVis ? legsVis.color : '#1a1a2e'} />
-                {/* Boot */}
-                <VoxelBox position={[-0.12, 0.07, 0.04]}
-                    size={[0.2 * limbWidth, 0.14, 0.28]}
+                <VoxelBox position={[-0.12, 0.07, 0.04]} size={[0.2 * limbWidth, 0.14, 0.28]}
                     color={legsVis ? legsVis.color : '#3a3a4e'}
                     emissive={legsVis ? legsVis.emissive : '#000000'}
                     emissiveIntensity={legsVis ? legsVis.emissiveIntensity : 0} />
@@ -323,26 +283,22 @@ export default function VoxelAvatar({
             <group>
                 <VoxelBox position={[0.12, 0.35, 0]} size={[0.18 * limbWidth, 0.5, 0.2]}
                     color={legsVis ? legsVis.color : '#1a1a2e'} />
-                {/* Boot */}
-                <VoxelBox position={[0.12, 0.07, 0.04]}
-                    size={[0.2 * limbWidth, 0.14, 0.28]}
+                <VoxelBox position={[0.12, 0.07, 0.04]} size={[0.2 * limbWidth, 0.14, 0.28]}
                     color={legsVis ? legsVis.color : '#3a3a4e'}
                     emissive={legsVis ? legsVis.emissive : '#000000'}
                     emissiveIntensity={legsVis ? legsVis.emissiveIntensity : 0} />
             </group>
 
-            {/* ── Weapon ── */}
-            {weaponItem && (
-                <Weapon itemName={weaponItem.name} rarity={weaponItem.rarity} />
-            )}
+            {/* Weapon */}
+            {weaponItem && <Weapon itemName={weaponItem.name} rarity={weaponItem.rarity} />}
 
-            {/* ── Ground Shadow ── */}
+            {/* Ground Shadow */}
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
                 <circleGeometry args={[0.4, 32]} />
                 <meshStandardMaterial color="#000000" transparent opacity={0.3} />
             </mesh>
 
-            {/* ── Rank Effects ── */}
+            {/* Rank Effects */}
             <RankAura rank={rank} />
             <RankParticles rank={rank} />
         </group>
