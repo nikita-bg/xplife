@@ -1,13 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { Camera, Globe, AlertTriangle, Loader2, Save, Clock, Heart, X, Plus, Coins } from 'lucide-react';
 import { useTranslations, useMessages } from 'next-intl';
 import { useProfile } from '@/hooks/use-profile';
 import { getRankFromLevel } from '@/lib/xpUtils';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, usePathname } from 'next/navigation';
+import { PERSONALITY_TO_CLASS } from '@/components/avatar/avatar-data';
+import type { EquippedItemData } from '@/components/avatar/VoxelAvatar';
+import type { CharacterClass } from '@/components/avatar/avatar-data';
+
+const AvatarCanvas = dynamic(() => import('@/components/avatar/AvatarCanvas'), { ssr: false });
 
 const INTEREST_OPTIONS = [
     'fitness', 'yoga', 'meditation', 'running', 'hiking', 'swimming',
@@ -62,7 +68,29 @@ export default function ProfilePage() {
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
     const [earningsInput, setEarningsInput] = useState('');
     const [earningsAdding, setEarningsAdding] = useState(false);
+    const [equippedItems, setEquippedItems] = useState<EquippedItemData[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Fetch equipped items for 3D avatar
+    const fetchEquipped = useCallback(async () => {
+        try {
+            const res = await fetch('/api/inventory');
+            if (res.ok) {
+                const data = await res.json();
+                const equipped = data.equipped || {};
+                const items: EquippedItemData[] = [];
+                for (const [slot, item] of Object.entries(equipped)) {
+                    if (item && typeof item === 'object') {
+                        const i = item as { name?: string; rarity?: string };
+                        items.push({ slot: slot as EquippedItemData['slot'], name: i.name || '', rarity: i.rarity || 'Common' });
+                    }
+                }
+                setEquippedItems(items);
+            }
+        } catch { /* silent */ }
+    }, []);
+
+    useEffect(() => { fetchEquipped(); }, [fetchEquipped]);
 
     useEffect(() => {
         if (profile) {
@@ -212,7 +240,17 @@ export default function ProfilePage() {
             <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-8">{t('title')}</h1>
 
             <div className="flex flex-col items-center mb-8">
-                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                {/* 3D Avatar */}
+                <AvatarCanvas
+                    characterClass={(PERSONALITY_TO_CLASS[personalityType] || 'Adventurer') as CharacterClass}
+                    rank={rankTier}
+                    equipped={equippedItems}
+                    size="lg"
+                    interactive
+                />
+
+                {/* Photo avatar below */}
+                <div className="relative group cursor-pointer mt-4" onClick={() => fileInputRef.current?.click()}>
                     <div className="w-28 h-28 rounded-full bg-gradient-to-br from-accent to-tertiary flex items-center justify-center text-4xl font-bold text-background ring-4 ring-accent/20 overflow-hidden">
                         {uploadingAvatar ? (
                             <Loader2 size={32} className="animate-spin text-white" />

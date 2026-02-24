@@ -1,9 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import gsap from 'gsap';
 import { Coins, Shield, Sword, Shirt, Footprints, HardHat, Check, AlertTriangle, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import type { EquippedItemData } from '@/components/avatar/VoxelAvatar';
+
+const AvatarCanvas = dynamic(() => import('@/components/avatar/AvatarCanvas'), { ssr: false });
 
 interface InventoryItem {
     inventoryId: string;
@@ -68,6 +72,17 @@ export default function InventoryPage() {
     }, []);
 
     useEffect(() => { fetchInventory(); }, [fetchInventory]);
+
+    const avatarEquipped = useMemo<EquippedItemData[]>(() => {
+        const result: EquippedItemData[] = [];
+        for (const [slot, item] of Object.entries(equipped)) {
+            if (item && typeof item === 'object') {
+                const i = item as EquippedItem;
+                result.push({ slot: slot as EquippedItemData['slot'], name: i.name || '', rarity: i.rarity || 'Common' });
+            }
+        }
+        return result;
+    }, [equipped]);
 
     const filtered = filter === 'All' ? items : items.filter(i => i.type === filter);
 
@@ -230,6 +245,15 @@ export default function InventoryPage() {
 
                 {/* Equipped Panel */}
                 <div className="lg:col-span-3">
+                    {/* Live 3D Avatar Preview */}
+                    <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-4 mb-4">
+                        <AvatarCanvas
+                            rank="iron"
+                            equipped={avatarEquipped}
+                            size="sm"
+                            interactive={false}
+                        />
+                    </div>
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 sticky top-8">
                         <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-ghost/60 mb-4">{t('equipped')}</h3>
                         <div className="space-y-3">
