@@ -9,7 +9,7 @@ import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
 import QuestTimer from '@/components/quest/QuestTimer';
 import StreakWarning from '@/components/notifications/StreakWarning';
 import { useProfile } from '@/hooks/use-profile';
-import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils';
+import { getXPProgress, getRankFromLevel, type RankTier } from '@/lib/xpUtils';
 import { usePathname } from 'next/navigation';
 import type { Task, QuestTimeframe } from '@/lib/types';
 import { getUnlockStatus, hasRequirements, type UnlockStatus } from '@/lib/quest-requirements';
@@ -123,7 +123,7 @@ function CharacterCard({ displayName, className, level, totalXP, rankTier, perso
         <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 flex flex-col items-center text-center">
             <AvatarCanvas
                 characterClass={(PERSONALITY_TO_CLASS[personalityType] || 'Adventurer') as CharacterClass}
-                rank={rankTier as any}
+                rank={rankTier as RankTier}
                 size="md"
                 interactive={false}
             />
