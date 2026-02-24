@@ -2,17 +2,17 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { randomUUID } from 'crypto'
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-
 export async function POST(request: Request) {
     try {
         const authHeader = request.headers.get('x-api-key')
         if (authHeader !== process.env.BLOG_API_KEY) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
+
+        const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
 
         const rawBuffer = Buffer.from(await request.arrayBuffer())
 

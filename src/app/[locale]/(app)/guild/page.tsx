@@ -138,11 +138,12 @@ export default function GuildPage() {
         });
     }, [loadGuildDetails]);
 
+    const activeGuildId = activeGuild?.id;
     useEffect(() => {
-        if (activeGuild) {
+        if (activeGuildId) {
             gsap.from('.guild-card', { y: 30, opacity: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out' });
         }
-    }, [activeGuild?.id]);
+    }, [activeGuildId]);
 
     const handleJoin = async () => {
         if (!joinCode.trim() || joining) return;

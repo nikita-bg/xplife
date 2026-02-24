@@ -80,7 +80,7 @@ export default function GuildChat({ guildId, currentUserId, members = [] }: Guil
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [guildId, scrollToBottom]);
+    }, [guildId, scrollToBottom, members]);
 
     const sendMessage = async () => {
         if (!input.trim() || sending) return;
