@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 /**
  * GET /api/market — List all shop items
@@ -10,11 +11,16 @@ export async function GET(request: Request) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+    const db = createServiceClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
     const url = new URL(request.url)
     const type = url.searchParams.get('type')
     const rarity = url.searchParams.get('rarity')
 
-    let query = supabase
+    let query = db
         .from('shop_items')
         .select('*')
         .order('price', { ascending: true })
@@ -30,7 +36,7 @@ export async function GET(request: Request) {
     }
 
     // Also get user's owned item IDs so we can mark them as "owned"
-    const { data: owned } = await supabase
+    const { data: owned } = await db
         .from('user_inventory')
         .select('item_id')
         .eq('user_id', user.id)
@@ -38,7 +44,7 @@ export async function GET(request: Request) {
     const ownedIds = new Set((owned || []).map(o => o.item_id))
 
     // Get gold balance
-    const { data: profile } = await supabase
+    const { data: profile } = await db
         .from('users')
         .select('gold_balance')
         .eq('id', user.id)

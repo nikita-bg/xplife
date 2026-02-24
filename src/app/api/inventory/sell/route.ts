@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 /**
  * POST /api/inventory/sell — Sell an item for 50% of its price
@@ -10,12 +11,17 @@ export async function POST(request: Request) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+    const db = createServiceClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
     try {
         const { itemId } = await request.json()
         if (!itemId) return NextResponse.json({ error: 'itemId is required' }, { status: 400 })
 
         // Verify user owns the item
-        const { data: owned } = await supabase
+        const { data: owned } = await db
             .from('user_inventory')
             .select('id')
             .eq('user_id', user.id)
@@ -27,7 +33,7 @@ export async function POST(request: Request) {
         }
 
         // Get item price for refund
-        const { data: item } = await supabase
+        const { data: item } = await db
             .from('shop_items')
             .select('name, price, type')
             .eq('id', itemId)
@@ -38,14 +44,14 @@ export async function POST(request: Request) {
         const sellPrice = Math.floor(item.price / 2)
 
         // Unequip if equipped
-        await supabase
+        await db
             .from('user_equipped')
             .delete()
             .eq('user_id', user.id)
             .eq('item_id', itemId)
 
         // Remove from inventory
-        const { error: deleteError } = await supabase
+        const { error: deleteError } = await db
             .from('user_inventory')
             .delete()
             .eq('user_id', user.id)
@@ -57,13 +63,13 @@ export async function POST(request: Request) {
         }
 
         // Add gold back
-        const { data: profile } = await supabase
+        const { data: profile } = await db
             .from('users')
             .select('gold_balance')
             .eq('id', user.id)
             .single()
 
-        await supabase
+        await db
             .from('users')
             .update({ gold_balance: (profile?.gold_balance || 0) + sellPrice })
             .eq('id', user.id)

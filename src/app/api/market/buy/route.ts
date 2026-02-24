@@ -1,21 +1,29 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 /**
  * POST /api/market/buy — Purchase an item from the shop
  * Body: { itemId: string }
  */
 export async function POST(request: Request) {
+    // Auth check via cookie-based client
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    // Service role client for DB mutations (bypasses RLS)
+    const db = createServiceClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
 
     try {
         const { itemId } = await request.json()
         if (!itemId) return NextResponse.json({ error: 'itemId is required' }, { status: 400 })
 
         // Check if already owned
-        const { data: existing } = await supabase
+        const { data: existing } = await db
             .from('user_inventory')
             .select('id')
             .eq('user_id', user.id)
@@ -27,7 +35,7 @@ export async function POST(request: Request) {
         }
 
         // Get item price
-        const { data: item, error: itemError } = await supabase
+        const { data: item, error: itemError } = await db
             .from('shop_items')
             .select('id, name, price')
             .eq('id', itemId)
@@ -38,7 +46,7 @@ export async function POST(request: Request) {
         }
 
         // Get user gold balance
-        const { data: profile } = await supabase
+        const { data: profile } = await db
             .from('users')
             .select('gold_balance')
             .eq('id', user.id)
@@ -55,7 +63,7 @@ export async function POST(request: Request) {
         }
 
         // Deduct gold
-        const { error: updateError } = await supabase
+        const { error: updateError } = await db
             .from('users')
             .update({ gold_balance: goldBalance - item.price })
             .eq('id', user.id)
@@ -66,13 +74,13 @@ export async function POST(request: Request) {
         }
 
         // Add to inventory
-        const { error: insertError } = await supabase
+        const { error: insertError } = await db
             .from('user_inventory')
             .insert({ user_id: user.id, item_id: itemId })
 
         if (insertError) {
             // Rollback gold
-            await supabase
+            await db
                 .from('users')
                 .update({ gold_balance: goldBalance })
                 .eq('id', user.id)
