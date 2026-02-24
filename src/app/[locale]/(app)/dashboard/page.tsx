@@ -436,7 +436,7 @@ export default function DashboardPage() {
                 payload.parentQuestIds = chosen.map(q => q.id);
                 payload.parentQuests = chosen.map(q => ({ id: q.id, title: q.title, description: q.description }));
             } else if (goalText.trim()) {
-                payload.goals = goalText.trim();
+                payload.userGoals = goalText.trim();
             }
 
             const res = await fetch('/api/ai/generate-tasks', {
@@ -445,10 +445,14 @@ export default function DashboardPage() {
                 body: JSON.stringify(payload),
             });
             const data = await res.json();
-            if (data.success || data.count > 0 || data.alreadyExists) {
+            if (data.alreadyExists) {
+                await fetchQuests();
+                // Quests already exist for this period — just show them
+            } else if (data.success || data.count > 0) {
                 await fetchQuests();
             } else if (data.error) {
                 console.error('Quest generation error:', data.error);
+                // TODO: show toast
             }
         } catch (err) {
             console.error('Failed to generate quests:', err);
@@ -467,9 +471,14 @@ export default function DashboardPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ questTimeframe: activeTab, locale }),
             });
-            const data = await res.json();
-            if (data.success || data.count > 0 || data.alreadyExists) {
+            const data2 = await res.json();
+            if (data2.alreadyExists) {
                 await fetchQuests();
+            } else if (data2.success || data2.count > 0) {
+                await fetchQuests();
+            } else if (data2.error) {
+                console.error('Quest generation error (skip-goals):', data2.error);
+                // TODO: show toast
             }
         } catch (err) {
             console.error('Failed to generate quests:', err);

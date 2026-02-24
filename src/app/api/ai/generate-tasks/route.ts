@@ -320,14 +320,16 @@ export async function POST(request: Request) {
         // ── Parse response ──
         let raw: unknown
         const responseText = await response.text()
-        console.log(`[TASK-GEN ${ts}] N8N raw response:`, responseText.substring(0, 500))
+        console.log(`[TASK-GEN ${ts}] N8N raw response (first 800):`, responseText.substring(0, 800))
 
         try {
             raw = JSON.parse(responseText)
         } catch {
-            console.error(`[TASK-GEN ${ts}] N8N response not valid JSON`)
+            console.error(`[TASK-GEN ${ts}] N8N response not valid JSON:`, responseText.substring(0, 200))
             return NextResponse.json({ error: 'AI service returned invalid response. Please try again.' }, { status: 503 })
         }
+
+        console.log(`[TASK-GEN ${ts}] Parsed JSON type:`, typeof raw, Array.isArray(raw) ? `array[${(raw as unknown[]).length}]` : '')
 
         type TaskItem = { title: string; description?: string; category: string; difficulty?: string; xp_reward?: number }
         let tasks: TaskItem[] = []
@@ -335,30 +337,56 @@ export async function POST(request: Request) {
         try {
             let content: unknown = raw
 
+            // n8n wraps response in array via JSON.stringify([$json])
             if (Array.isArray(raw) && raw.length > 0) {
-                const first = raw[0]
-                if (first?.message?.content) content = first.message.content
+                const first = raw[0] as Record<string, unknown>
+                console.log(`[TASK-GEN ${ts}] First item keys:`, Object.keys(first))
+                // LangChain OpenAI node v1.8: {message: {content: '...'}}
+                if (first?.message && typeof first.message === 'object' && (first.message as Record<string, unknown>)?.content) {
+                    content = (first.message as Record<string, unknown>).content
+                }
+                // Agent/chain output
                 else if (first?.output) content = first.output
+                // Direct text field
                 else if (first?.text) content = first.text
+                // Tasks directly in first item
+                else if (Array.isArray(first?.tasks)) content = first
+                // The AI response might be nested deeper
+                else if (first?.choices && Array.isArray(first.choices)) {
+                    const choices = first.choices as Array<{ message?: { content?: string } }>
+                    content = choices[0]?.message?.content ?? content
+                }
+            } else if (typeof raw === 'object' && raw !== null && 'tasks' in raw) {
+                // Direct {tasks:[]} response, no array wrapping
+                content = raw
             }
 
+            console.log(`[TASK-GEN ${ts}] Content type after unwrap:`, typeof content, typeof content === 'string' ? `(first 200: ${String(content).substring(0, 200)})` : '')
+
             const extractJson = (str: string): string => {
+                // Remove markdown fences
                 const fenceMatch = str.match(/```(?:json)?\s*([\s\S]*?)```/)
-                return fenceMatch ? fenceMatch[1].trim() : str.trim()
+                if (fenceMatch) return fenceMatch[1].trim()
+                // Find the JSON object/array start
+                const objStart = str.indexOf('{')
+                if (objStart !== -1) return str.substring(objStart).trim()
+                return str.trim()
             }
 
             if (typeof content === 'string') {
                 const cleaned = extractJson(content)
+                console.log(`[TASK-GEN ${ts}] Cleaned string to parse (first 300):`, cleaned.substring(0, 300))
                 const parsed = JSON.parse(cleaned)
                 tasks = parsed.tasks || []
             } else if (typeof content === 'object' && content !== null && 'tasks' in content) {
                 tasks = (content as { tasks: TaskItem[] }).tasks || []
             }
         } catch (parseErr) {
-            console.error(`[TASK-GEN ${ts}] Failed to parse tasks:`, parseErr, raw)
+            console.error(`[TASK-GEN ${ts}] Failed to parse tasks from response:`, parseErr)
+            console.error(`[TASK-GEN ${ts}] Raw was:`, JSON.stringify(raw).substring(0, 400))
         }
 
-        console.log(`[TASK-GEN ${ts}] Parsed ${tasks.length} tasks`)
+        console.log(`[TASK-GEN ${ts}] Parsed ${tasks.length} tasks`, tasks.length > 0 ? `(first: ${tasks[0]?.title})` : '')
 
         if (tasks.length > 0) {
             const taskInserts = tasks.map(task => ({

@@ -8,25 +8,30 @@ import { useTranslations } from 'next-intl';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CHECKOUT_URLS = {
+    monthly: 'https://xplife.lemonsqueezy.com/checkout/buy/8db20f22-8c42-4727-bca5-1b3fc5d87d5b?embed=1',
+    annual: 'https://xplife.lemonsqueezy.com/checkout/buy/313b7ce1-cb60-42e8-8530-fb62a075dc5d?embed=1',
+    lifetime: 'https://xplife.lemonsqueezy.com/checkout/buy/04853322-5000-40db-b6b4-6659235ca9e3?embed=1',
+};
+
 interface PricingCardProps {
     title: string;
     price: string;
     annualPrice?: string;
-    period?: string;
-    annualNote?: string;
     desc: string;
     features: string[];
     highlighted: boolean;
     cta: string;
     badge?: string;
-    badgeColor?: string;
+    badgeColor?: 'tertiary' | 'accent' | 'amber';
     isAnnual?: boolean;
-    ctaHref?: string;
+    checkoutUrl?: string;
+    isFree?: boolean;
 }
 
-const PricingCard = ({ title, price, annualPrice, desc, features, highlighted, cta, badge, badgeColor = 'tertiary', isAnnual }: PricingCardProps) => {
+const PricingCard = ({ title, price, annualPrice, desc, features, highlighted, cta, badge, badgeColor = 'tertiary', isAnnual, checkoutUrl, isFree }: PricingCardProps) => {
     const displayPrice = isAnnual && annualPrice ? annualPrice : price;
-    const isLifetime = !annualPrice && price !== 'Free' && price !== '€0';
+    const isLifetime = !annualPrice && !isFree;
 
     return (
         <div className={`pricing-card relative flex flex-col p-8 rounded-[2rem] border ${highlighted
@@ -49,21 +54,18 @@ const PricingCard = ({ title, price, annualPrice, desc, features, highlighted, c
 
             <div className="mb-2">
                 <span className="font-data text-4xl text-white font-bold tracking-tighter">{displayPrice}</span>
-                {!isLifetime && displayPrice !== 'Free' && displayPrice !== '€0' && (
-                    <span className="text-ghost/40 text-sm ml-2">{isAnnual ? '/mo' : '/mo'}</span>
-                )}
-                {isLifetime && <span className="text-ghost/40 text-sm ml-2"> one-time</span>}
+                {!isFree && !isLifetime && <span className="text-ghost/40 text-sm ml-2">/mo</span>}
+                {isLifetime && <span className="text-ghost/40 text-sm ml-2">one-time</span>}
             </div>
 
             {isAnnual && annualPrice && (
-                <div className="mb-6 flex items-center gap-2">
+                <div className="mb-5">
                     <span className="font-data text-xs text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
                         Save 30% — billed annually
                     </span>
                 </div>
             )}
-            {!isAnnual && annualPrice && <div className="mb-6" />}
-            {isLifetime && <div className="mb-6" />}
+            {((!isAnnual && annualPrice) || isLifetime || isFree) && <div className="mb-5" />}
 
             <ul className="flex-grow space-y-4 mb-8">
                 {features.map((feature, i) => (
@@ -74,13 +76,24 @@ const PricingCard = ({ title, price, annualPrice, desc, features, highlighted, c
                 ))}
             </ul>
 
-            <button className={`btn-magnetic w-full py-4 rounded-xl font-heading font-bold uppercase tracking-wider text-sm ${highlighted
-                ? 'bg-accent text-primary shadow-[0_0_20px_rgba(0,245,255,0.3)] hover:shadow-[0_0_30px_rgba(0,245,255,0.5)]'
-                : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'
-                }`}>
-                <span className={highlighted ? 'bg-slider bg-white/20' : ''}></span>
-                <span className="btn-content">{cta}</span>
-            </button>
+            {isFree ? (
+                <a
+                    href="/en/login"
+                    className={`btn-magnetic w-full py-4 rounded-xl font-heading font-bold uppercase tracking-wider text-sm text-center bg-white/5 text-white hover:bg-white/10 border border-white/10`}
+                >
+                    {cta}
+                </a>
+            ) : (
+                <a
+                    href={checkoutUrl}
+                    className={`lemonsqueezy-button btn-magnetic w-full py-4 rounded-xl font-heading font-bold uppercase tracking-wider text-sm text-center block ${highlighted
+                        ? 'bg-accent text-primary shadow-[0_0_20px_rgba(0,245,255,0.3)] hover:shadow-[0_0_30px_rgba(0,245,255,0.5)]'
+                        : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'
+                        }`}
+                >
+                    {cta}
+                </a>
+            )}
         </div>
     );
 };
@@ -115,7 +128,7 @@ const Pricing = () => {
                     </p>
 
                     {/* Billing Toggle */}
-                    <div className="inline-flex items-center gap-4 bg-[#0C1021] border border-white/10 rounded-2xl p-1.5">
+                    <div className="inline-flex items-center gap-1 bg-[#0C1021] border border-white/10 rounded-2xl p-1.5">
                         <button
                             onClick={() => setIsAnnual(false)}
                             className={`px-5 py-2 rounded-xl font-data text-xs uppercase tracking-wider transition-all ${!isAnnual ? 'bg-white/10 text-white font-bold' : 'text-ghost/40 hover:text-ghost/60'}`}
@@ -141,10 +154,11 @@ const Pricing = () => {
                         features={[t('freeF1'), t('freeF2'), t('freeF3'), t('freeF4'), t('freeF5')]}
                         cta={t('freeCta')}
                         highlighted={false}
+                        isFree={true}
                         isAnnual={isAnnual}
                     />
 
-                    {/* Pro — highlighted */}
+                    {/* Pro Hero */}
                     <PricingCard
                         title={t('proName')}
                         price={t('proPrice')}
@@ -155,6 +169,7 @@ const Pricing = () => {
                         highlighted={true}
                         badge={isAnnual ? t('annualBadge') : t('popularBadge')}
                         badgeColor="tertiary"
+                        checkoutUrl={isAnnual ? CHECKOUT_URLS.annual : CHECKOUT_URLS.monthly}
                         isAnnual={isAnnual}
                     />
 
@@ -168,11 +183,12 @@ const Pricing = () => {
                         highlighted={false}
                         badge={t('foundingBadge')}
                         badgeColor="amber"
+                        checkoutUrl={CHECKOUT_URLS.lifetime}
                         isAnnual={isAnnual}
                     />
                 </div>
 
-                {/* Founding Price note */}
+                {/* Founding note */}
                 <div className="text-center mt-12 flex items-center justify-center gap-2">
                     <Zap size={14} className="text-amber-400" />
                     <p className="font-data text-xs text-ghost/40 tracking-wider">

@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { locales } from '@/i18n';
 import { Inter, Orbitron, JetBrains_Mono } from 'next/font/google';
 
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>
+                <Script src="https://assets.lemonsqueezy.com/lemon.js" strategy="afterInteractive" />
             </body>
         </html>
     );

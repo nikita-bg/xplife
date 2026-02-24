@@ -415,19 +415,12 @@ export default function ProfilePage() {
                     <div className="font-sans text-xs text-ghost/40 mt-1">{plan(`${planKey}Desc`)}</div>
                 </div>
                 {profile?.plan === 'free' && (
-                    <button
-                        onClick={() => {
-                            const checkoutUrl = process.env.NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_URL
-                            if (checkoutUrl) {
-                                window.open(`${checkoutUrl}?checkout[email]=${encodeURIComponent(profile?.email || '')}`, '_blank')
-                            } else {
-                                alert('Checkout is not configured yet. Please contact support.')
-                            }
-                        }}
-                        className="btn-magnetic px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold shrink-0"
+                    <a
+                        href={`https://xplife.lemonsqueezy.com/checkout/buy/8db20f22-8c42-4727-bca5-1b3fc5d87d5b?embed=1&checkout[email]=${encodeURIComponent(profile?.email || '')}`}
+                        className="lemonsqueezy-button btn-magnetic px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold shrink-0"
                     >
                         <span className="btn-content">{plan('upgrade')}</span>
-                    </button>
+                    </a>
                 )}
             </div>
 
