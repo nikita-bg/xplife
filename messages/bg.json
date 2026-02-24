@@ -492,7 +492,10 @@
     "completedLabel": "Завършено",
     "noQuestsMessage": "Все още няма квестове — Генерирай първия си квест!",
     "generateNewQuests": "Генерирай нови квестове",
-    "generatingQuests": "Генериране..."
+    "generatingQuests": "Генериране...",
+    "goalsPlaceholder": "напр. Искам да се фокусирам върху фитнес и медитация днес...",
+    "skipGenerate": "Пропусни и генерирай",
+    "generateWithGoals": "Генерирай"
   },
   "profile": {
     "title": "Профил",

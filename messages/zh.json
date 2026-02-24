@@ -492,7 +492,10 @@
     "completedLabel": "已完成",
     "noQuestsMessage": "还没有任务 — 生成你的第一个任务！",
     "generateNewQuests": "生成新任务",
-    "generatingQuests": "生成中..."
+    "generatingQuests": "生成中...",
+    "goalsPlaceholder": "例如：我今天想专注于健身和冥想...",
+    "skipGenerate": "跳过并生成",
+    "generateWithGoals": "生成"
   },
   "profile": {
     "title": "个人资料",

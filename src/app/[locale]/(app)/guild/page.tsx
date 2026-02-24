@@ -118,7 +118,7 @@ export default function GuildPage() {
                     const data = await res.json();
                     setGuilds(data.guilds || []);
                     if (data.guilds?.length > 0) {
-                        loadGuildDetails(data.guilds[0].id);
+                        await loadGuildDetails(data.guilds[0].id);
                     }
                 }
             } catch { /* silent */ }

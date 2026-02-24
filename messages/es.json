@@ -492,7 +492,10 @@
     "completedLabel": "Completado",
     "noQuestsMessage": "Aún no hay misiones — ¡Genera tu primera misión!",
     "generateNewQuests": "Generar Nuevas Misiones",
-    "generatingQuests": "Generando..."
+    "generatingQuests": "Generando...",
+    "goalsPlaceholder": "ej. Quiero enfocarme en fitness y meditación hoy...",
+    "skipGenerate": "Omitir y generar",
+    "generateWithGoals": "Generar"
   },
   "profile": {
     "title": "Perfil",

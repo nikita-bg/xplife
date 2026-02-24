@@ -492,7 +492,10 @@
     "completedLabel": "完了",
     "noQuestsMessage": "まだクエストがありません — 最初のクエストを生成しましょう！",
     "generateNewQuests": "新しいクエストを生成",
-    "generatingQuests": "生成中..."
+    "generatingQuests": "生成中...",
+    "goalsPlaceholder": "例：今日はフィットネスと瞑想に集中したい...",
+    "skipGenerate": "スキップして生成",
+    "generateWithGoals": "生成する"
   },
   "profile": {
     "title": "プロフィール",

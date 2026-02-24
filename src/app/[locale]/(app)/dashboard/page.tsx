@@ -2,14 +2,15 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
-import { Sparkles, Check, Brain, Camera, Loader2 } from 'lucide-react';
+import { Sparkles, Check, Brain, Camera, Loader2, X, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
+import QuestTimer from '@/components/quest/QuestTimer';
 import StreakWarning from '@/components/notifications/StreakWarning';
 import { useProfile } from '@/hooks/use-profile';
 import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils';
 import { usePathname } from 'next/navigation';
-import type { Task } from '@/lib/types';
+import type { Task, QuestTimeframe } from '@/lib/types';
 
 const diffColors: Record<string, string> = {
     easy: 'text-green-400 bg-green-400/10',
@@ -31,6 +32,79 @@ const CLASS_EMOJI: Record<string, string> = {
     Guardian: '🛡️',
     Connector: '🌿',
 };
+
+/* ── Period boundary helpers ── */
+function getPeriodStart(timeframe: QuestTimeframe): Date {
+    const now = new Date();
+    switch (timeframe) {
+        case 'daily':
+            return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+        case 'weekly': {
+            const dow = now.getDay();
+            const monOffset = dow === 0 ? 6 : dow - 1;
+            const mon = new Date(now.getFullYear(), now.getMonth(), now.getDate() - monOffset, 0, 0, 0, 0);
+            return mon;
+        }
+        case 'monthly':
+            return new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+        case 'yearly':
+            return new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
+    }
+}
+
+function filterCurrentPeriodQuests(quests: Task[], timeframe: QuestTimeframe): Task[] {
+    const periodStart = getPeriodStart(timeframe);
+    return quests.filter(q => new Date(q.created_at) >= periodStart);
+}
+
+/* ── Loading Skeleton ── */
+function SkeletonCard({ className = '' }: { className?: string }) {
+    return (
+        <div className={`bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 animate-pulse ${className}`}>
+            <div className="flex flex-col items-center gap-4">
+                <div className="w-32 h-32 rounded-full bg-white/5" />
+                <div className="w-24 h-4 bg-white/5 rounded-lg" />
+                <div className="w-16 h-3 bg-white/5 rounded-lg" />
+                <div className="w-full h-2 bg-white/5 rounded-full mt-4" />
+            </div>
+        </div>
+    );
+}
+
+function SkeletonQuestList() {
+    return (
+        <div className="space-y-3">
+            {[1, 2, 3].map(i => (
+                <div key={i} className="bg-[#0C1021] rounded-2xl border border-white/5 p-4 flex items-center gap-4 animate-pulse">
+                    <div className="w-6 h-6 rounded-full bg-white/5" />
+                    <div className="flex-1 space-y-2">
+                        <div className="w-3/4 h-3.5 bg-white/5 rounded-lg" />
+                        <div className="w-1/3 h-2.5 bg-white/5 rounded-lg" />
+                    </div>
+                    <div className="w-12 h-3 bg-white/5 rounded-lg" />
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function SkeletonStats() {
+    return (
+        <div className="space-y-6 animate-pulse">
+            <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 text-center">
+                <div className="w-20 h-3 bg-white/5 rounded-lg mx-auto mb-3" />
+                <div className="w-28 h-8 bg-white/5 rounded-lg mx-auto" />
+            </div>
+            <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-white/5" />
+                <div className="space-y-2 flex-1">
+                    <div className="w-16 h-4 bg-white/5 rounded-lg" />
+                    <div className="w-24 h-2.5 bg-white/5 rounded-lg" />
+                </div>
+            </div>
+        </div>
+    );
+}
 
 /* ── Character Card (real data) ── */
 function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
@@ -118,10 +192,13 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
     useEffect(() => {
         if (!xpRef.current) return;
         const ctx = gsap.context(() => {
-            gsap.fromTo(xpRef.current, { innerText: '0' }, {
-                innerText: String(totalXP), duration: 2, ease: 'power2.out', snap: { innerText: 1 },
-                onUpdate: function () {
-                    if (xpRef.current) xpRef.current.innerText = Math.round(Number(this.targets()[0].innerText)).toLocaleString();
+            const counter = { val: 0 };
+            gsap.to(counter, {
+                val: totalXP,
+                duration: 2,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    if (xpRef.current) xpRef.current.innerText = Math.round(counter.val).toLocaleString();
                 }
             });
         });
@@ -190,9 +267,16 @@ export default function DashboardPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [generating, setGenerating] = useState(false);
     const [loadingQuests, setLoadingQuests] = useState(true);
-    const { profile, streak, refresh } = useProfile();
+    const { profile, streak, loading: profileLoading, refresh } = useProfile();
     const pathname = usePathname();
     const locale = pathname.split('/')[1] || 'en';
+
+    // ── Goal description state (Bug 2) ──
+    const [showGoalInput, setShowGoalInput] = useState(false);
+    const [goalText, setGoalText] = useState('');
+
+    // ── Auto-generation guard ──
+    const autoGenAttempted = useRef<Set<string>>(new Set());
 
     const displayName = profile?.display_name || 'Hero';
     const personalityType = profile?.personality_type || 'dopamine';
@@ -212,33 +296,72 @@ export default function DashboardPage() {
                 tabs.map(tf => fetch(`/api/tasks?timeframe=${tf}`).then(r => r.json()))
             );
             tabs.forEach((tf, i) => {
-                results[tf] = responses[i]?.tasks || [];
+                const allQuests = responses[i]?.tasks || [];
+                // Filter to current period only (Bug 4: quest expiration)
+                results[tf] = filterCurrentPeriodQuests(allQuests, tf);
             });
             setQuests(results);
+            return results;
         } catch (err) {
             console.error('Failed to fetch quests:', err);
+            return null;
+        } finally {
+            setLoadingQuests(false);
         }
-        setLoadingQuests(false);
     }, []);
 
     useEffect(() => {
-        fetchQuests();
-    }, [fetchQuests]);
+        fetchQuests().then(results => {
+            if (!results) return;
+            // Auto-generate for empty periods that have parent quests (Bug 4)
+            const autoGenOrder: QuestTimeframe[] = ['monthly', 'weekly', 'daily'];
+            for (const tf of autoGenOrder) {
+                if (results[tf].length > 0) continue;
+                const parentTf = tf === 'daily' ? 'weekly' : tf === 'weekly' ? 'monthly' : 'yearly';
+                const parentQuests = results[parentTf] || [];
+                if (parentQuests.length === 0) continue;
+                if (autoGenAttempted.current.has(tf)) continue;
 
-    /* ── Generate quests via AI ── */
+                autoGenAttempted.current.add(tf);
+                fetch('/api/ai/generate-tasks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        questTimeframe: tf,
+                        generationMode: 'cascade',
+                        parentQuestIds: parentQuests.map(q => q.id),
+                        locale,
+                    }),
+                })
+                    .then(() => fetchQuests())
+                    .catch(() => { /* autoGenAttempted prevents retry */ });
+                break; // Only one at a time
+            }
+        });
+    }, [fetchQuests, locale]);
+
+    /* ── Generate quests via AI (Bug 2: with optional goals) ── */
     const handleGenerateQuests = async () => {
+        if (!showGoalInput) {
+            setShowGoalInput(true);
+            return;
+        }
+
         setGenerating(true);
         try {
             const res = await fetch('/api/ai/generate-tasks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ questTimeframe: activeTab, locale }),
+                body: JSON.stringify({
+                    questTimeframe: activeTab,
+                    locale,
+                    goals: goalText.trim() || undefined,
+                }),
             });
             const data = await res.json();
             if (data.success || data.count > 0) {
                 await fetchQuests();
             } else if (data.alreadyExists) {
-                // Quests already exist for this period — just refresh
                 await fetchQuests();
             } else if (data.error) {
                 console.error('Quest generation error:', data.error);
@@ -247,6 +370,28 @@ export default function DashboardPage() {
             console.error('Failed to generate quests:', err);
         }
         setGenerating(false);
+        setShowGoalInput(false);
+        setGoalText('');
+    };
+
+    const handleGenerateSkipGoals = async () => {
+        setGenerating(true);
+        try {
+            const res = await fetch('/api/ai/generate-tasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ questTimeframe: activeTab, locale }),
+            });
+            const data = await res.json();
+            if (data.success || data.count > 0 || data.alreadyExists) {
+                await fetchQuests();
+            }
+        } catch (err) {
+            console.error('Failed to generate quests:', err);
+        }
+        setGenerating(false);
+        setShowGoalInput(false);
+        setGoalText('');
     };
 
     /* ── Complete quest ── */
@@ -279,25 +424,38 @@ export default function DashboardPage() {
             gsap.from('.dash-card', { y: 30, opacity: 0, stagger: 0.15, duration: 0.6, ease: 'power3.out' });
         });
         return () => ctx.revert();
-    }, []);
+    }, [profileLoading]);
 
     const currentQuests = quests[activeTab] || [];
     const pendingQuests = currentQuests.filter(q => q.status !== 'completed');
     const completedQuests = currentQuests.filter(q => q.status === 'completed');
 
+    const isLoading = profileLoading || loadingQuests;
+
     return (
         <div>
             <StreakWarning />
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Left: Character Card */}
                 <div className="dash-card lg:col-span-3">
-                    <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} />
+                    {isLoading ? (
+                        <SkeletonCard />
+                    ) : (
+                        <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} />
+                    )}
                 </div>
+
+                {/* Center: Quests */}
                 <div className="dash-card lg:col-span-6">
                     <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="font-heading font-bold text-xl uppercase tracking-wider">{questTabs('questsTitle')}</h2>
-                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">
-                                {completedQuests.length}/{currentQuests.length} {questSection('completed')}
+                            <div className="flex items-center gap-3">
+                                {/* Bug 3: Quest Timer */}
+                                <QuestTimer timeframe={activeTab as QuestTimeframe} />
+                                <div className="font-data text-[10px] text-ghost/30 tracking-wider">
+                                    {completedQuests.length}/{currentQuests.length} {questSection('completed')}
+                                </div>
                             </div>
                         </div>
                         <div className="flex gap-2 mb-6 bg-white/5 rounded-xl p-1">
@@ -308,11 +466,51 @@ export default function DashboardPage() {
                                 </button>
                             ))}
                         </div>
+
+                        {/* Bug 2: Goal description input */}
+                        {showGoalInput && (
+                            <div className="bg-white/[0.03] rounded-2xl border border-white/10 p-4 mb-4 space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="font-data text-xs text-ghost/60 tracking-wider uppercase">
+                                        {dashT('describeGoals') || 'Describe your goals (optional)'}
+                                    </h3>
+                                    <button
+                                        onClick={() => { setShowGoalInput(false); setGoalText(''); }}
+                                        className="text-ghost/30 hover:text-ghost/60 transition-colors"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                                <textarea
+                                    value={goalText}
+                                    onChange={(e) => setGoalText(e.target.value)}
+                                    placeholder={dashT('goalsPlaceholder') || 'e.g. I want to focus on fitness and meditation today...'}
+                                    rows={3}
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 font-sans text-sm text-ghost placeholder:text-ghost/20 focus:outline-none focus:border-accent/30 transition-colors resize-none"
+                                />
+                                <div className="flex gap-2 justify-end">
+                                    <button
+                                        onClick={handleGenerateSkipGoals}
+                                        disabled={generating}
+                                        className="px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/[0.06] transition-colors disabled:opacity-30"
+                                    >
+                                        {dashT('skipGenerate') || 'Skip & Generate'}
+                                    </button>
+                                    <button
+                                        onClick={handleGenerateQuests}
+                                        disabled={generating}
+                                        className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent font-data text-xs uppercase tracking-wider hover:bg-accent/20 transition-colors disabled:opacity-30 flex items-center gap-2"
+                                    >
+                                        {generating ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+                                        {generating ? (dashT('generatingQuests') || 'Generating...') : (dashT('generateWithGoals') || 'Generate')}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                             {loadingQuests ? (
-                                <div className="flex justify-center py-16">
-                                    <Loader2 size={24} className="animate-spin text-accent/50" />
-                                </div>
+                                <SkeletonQuestList />
                             ) : currentQuests.length > 0 ? (
                                 <>
                                     {pendingQuests.length > 0 && pendingQuests.map(q => (
@@ -334,16 +532,18 @@ export default function DashboardPage() {
                                 </div>
                             )}
                         </div>
-                        <button
-                            onClick={handleGenerateQuests}
-                            disabled={generating}
-                            className="btn-magnetic w-full mt-6 py-4 rounded-2xl bg-accent-secondary/10 border border-accent-secondary/30 text-accent-secondary font-heading text-sm uppercase tracking-wider hover:bg-accent-secondary/20 transition-all disabled:opacity-50"
-                        >
-                            <span className="btn-content flex items-center justify-center gap-2">
-                                {generating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                                {generating ? dashT('generatingQuests') : dashT('generateNewQuests')}
-                            </span>
-                        </button>
+                        {!showGoalInput && (
+                            <button
+                                onClick={handleGenerateQuests}
+                                disabled={generating}
+                                className="btn-magnetic w-full mt-6 py-4 rounded-2xl bg-accent-secondary/10 border border-accent-secondary/30 text-accent-secondary font-heading text-sm uppercase tracking-wider hover:bg-accent-secondary/20 transition-all disabled:opacity-50"
+                            >
+                                <span className="btn-content flex items-center justify-center gap-2">
+                                    {generating ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                                    {generating ? (dashT('generatingQuests') || 'Generating...') : (dashT('generateNewQuests') || 'Generate New Quests')}
+                                </span>
+                            </button>
+                        )}
                     </div>
 
                     {/* Quest Complete Modal */}
@@ -356,15 +556,21 @@ export default function DashboardPage() {
                         />
                     )}
                 </div>
+
+                {/* Right: Stats */}
                 <div className="dash-card lg:col-span-3">
-                    <StatsPanel
-                        totalXP={totalXP}
-                        currentStreak={currentStreak}
-                        longestStreak={longestStreak}
-                        quests={quests}
-                        onGenerateQuests={handleGenerateQuests}
-                        generating={generating}
-                    />
+                    {isLoading ? (
+                        <SkeletonStats />
+                    ) : (
+                        <StatsPanel
+                            totalXP={totalXP}
+                            currentStreak={currentStreak}
+                            longestStreak={longestStreak}
+                            quests={quests}
+                            onGenerateQuests={handleGenerateQuests}
+                            generating={generating}
+                        />
+                    )}
                 </div>
             </div>
         </div>

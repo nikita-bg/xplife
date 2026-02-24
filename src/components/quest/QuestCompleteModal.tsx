@@ -66,24 +66,26 @@ export default function QuestCompleteModal({ quest, isOpen, onClose, onConfirm }
         setCompleting(true);
         setShowXpAnimation(true);
 
-        // XP counter animation
+        const xpAmount = quest.xp_reward || quest.xp || 50;
+
+        // XP counter animation using a plain object (reliable GSAP pattern)
         if (xpRef.current) {
+            xpRef.current.innerText = '+0 XP';
+            const counter = { val: 0 };
             gsap.fromTo(xpRef.current,
-                { innerText: '0', scale: 0.5, opacity: 0 },
-                {
-                    innerText: quest.xp_reward || quest.xp || 50,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 1.2,
-                    ease: 'power2.out',
-                    snap: { innerText: 1 },
-                    onUpdate: function () {
-                        if (xpRef.current) {
-                            xpRef.current.innerText = `+${Math.round(Number(this.targets()[0].innerText))} XP`;
-                        }
-                    },
-                }
+                { scale: 0.5, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' }
             );
+            gsap.to(counter, {
+                val: xpAmount,
+                duration: 1.2,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    if (xpRef.current) {
+                        xpRef.current.innerText = `+${Math.round(counter.val)} XP`;
+                    }
+                },
+            });
         }
 
         // Wait for animation then confirm
@@ -127,7 +129,7 @@ export default function QuestCompleteModal({ quest, isOpen, onClose, onConfirm }
                             className="font-heading text-4xl font-black text-accent"
                             style={{ textShadow: '0 0 30px rgba(0,245,255,0.5)' }}
                         >
-                            +0 XP
+
                         </div>
                         <p className="font-data text-xs text-ghost/40 mt-2 tracking-wider uppercase">Quest Complete!</p>
 
