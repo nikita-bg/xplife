@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
-import { Sparkles, Check, Brain, Camera, Loader2, X, Clock } from 'lucide-react';
+import { Sparkles, Check, Brain, Camera, Loader2, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import QuestCompleteModal from '@/components/quest/QuestCompleteModal';
 import QuestTimer from '@/components/quest/QuestTimer';
