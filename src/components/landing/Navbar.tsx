@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -54,10 +55,14 @@ const Navbar = () => {
         >
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center gap-2 group">
-                <span className="text-accent">⚡</span>
-                <span className="font-heading font-bold text-xl tracking-wider uppercase text-white">
-                    XPLife
-                </span>
+                <Image
+                    src="/logo.svg"
+                    alt="XPLife"
+                    width={160}
+                    height={40}
+                    className="h-9 w-auto"
+                    priority
+                />
             </Link>
 
             {/* Desktop Nav */}

@@ -74,9 +74,15 @@ const AppShell = ({ children }: AppShellProps) => {
             {/* Desktop Sidebar */}
             <aside className="hidden md:flex fixed top-0 left-0 w-64 h-screen flex-col z-40 bg-[#080B1A]/80 backdrop-blur-xl border-r border-white/5">
                 <div className="px-6 py-6 border-b border-white/5">
-                    <Link href={`/${locale}/dashboard`} className="flex items-center gap-2">
-                        <span className="text-accent text-xl">⚡</span>
-                        <span className="font-heading font-bold text-lg tracking-widest uppercase text-white">XPLife</span>
+                    <Link href={`/${locale}/dashboard`} className="flex items-center">
+                        <Image
+                            src="/logo.svg"
+                            alt="XPLife"
+                            width={140}
+                            height={36}
+                            className="h-8 w-auto"
+                            priority
+                        />
                     </Link>
                 </div>
 
