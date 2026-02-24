@@ -171,17 +171,24 @@ export async function PATCH(request: Request) {
         if (status === 'completed' && task) {
             const xpAmount = task.xp_reward || 50
 
-            // Update user total XP
+            // ── Gold reward based on difficulty ──
+            const difficultyGold: Record<string, number> = { easy: 5, medium: 10, hard: 20, epic: 35 }
+            const goldAmount = difficultyGold[task.difficulty] || 8
+
+            // Update user total XP + gold balance
             const { data: profile } = await supabase
                 .from('users')
-                .select('total_xp')
+                .select('total_xp, gold_balance')
                 .eq('id', user.id)
                 .single()
 
             if (profile) {
                 await supabase
                     .from('users')
-                    .update({ total_xp: (profile.total_xp || 0) + xpAmount })
+                    .update({
+                        total_xp: (profile.total_xp || 0) + xpAmount,
+                        gold_balance: (profile.gold_balance || 0) + goldAmount,
+                    })
                     .eq('id', user.id)
             }
 

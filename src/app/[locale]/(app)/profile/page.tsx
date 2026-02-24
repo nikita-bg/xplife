@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Camera, Globe, AlertTriangle, Loader2, Save, Clock, Heart, X, Plus } from 'lucide-react';
+import { Camera, Globe, AlertTriangle, Loader2, Save, Clock, Heart, X, Plus, Coins } from 'lucide-react';
 import { useTranslations, useMessages } from 'next-intl';
 import { useProfile } from '@/hooks/use-profile';
 import { getRankFromLevel } from '@/lib/xpUtils';
@@ -60,6 +60,8 @@ export default function ProfilePage() {
     const [saved, setSaved] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
+    const [earningsInput, setEarningsInput] = useState('');
+    const [earningsAdding, setEarningsAdding] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -104,6 +106,8 @@ export default function ProfilePage() {
 
     const level = profile?.level || 1;
     const totalXP = profile?.total_xp || 0;
+    const goldBalance = profile?.gold_balance || 0;
+    const realWorldEarnings = profile?.real_world_earnings || 0;
     const rankTier = getRankFromLevel(level);
     const personalityType = profile?.personality_type || 'dopamine';
     const classMap: Record<string, string> = {
@@ -234,6 +238,61 @@ export default function ProfilePage() {
                         <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase mt-1">{s.label}</div>
                     </div>
                 ))}
+            </div>
+
+            {/* Dual Currency */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div className="bg-[#0C1021] rounded-2xl border border-white/5 p-5">
+                    <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">🪙</span>
+                        <div>
+                            <div className="font-heading text-2xl text-amber-400 font-bold">{goldBalance.toLocaleString()}</div>
+                            <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">{t('balance.title')}</div>
+                        </div>
+                    </div>
+                    <p className="font-sans text-[10px] text-ghost/30 mt-2">Earned from completing quests. Spend in the marketplace.</p>
+                </div>
+                <div className="bg-[#0C1021] rounded-2xl border border-white/5 p-5">
+                    <div className="flex items-center gap-3 mb-2">
+                        <Coins size={28} className="text-green-400" />
+                        <div>
+                            <div className="font-heading text-2xl text-green-400 font-bold">€{realWorldEarnings.toLocaleString()}</div>
+                            <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">Real-World Earnings</div>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 mt-3">
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={earningsInput}
+                            onChange={e => setEarningsInput(e.target.value)}
+                            placeholder="0.00"
+                            className="flex-1 bg-background border border-white/10 rounded-xl py-2 px-3 font-data text-sm text-ghost focus:outline-none focus:border-green-500/30 transition-colors"
+                        />
+                        <button
+                            onClick={async () => {
+                                const amount = parseFloat(earningsInput);
+                                if (!amount || amount <= 0) return;
+                                setEarningsAdding(true);
+                                try {
+                                    await fetch('/api/balance', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ amount }),
+                                    });
+                                    setEarningsInput('');
+                                    refresh();
+                                } catch { /* */ }
+                                setEarningsAdding(false);
+                            }}
+                            disabled={earningsAdding || !earningsInput}
+                            className="px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 font-data text-xs uppercase tracking-wider hover:bg-green-500/20 disabled:opacity-40 transition-all"
+                        >
+                            {earningsAdding ? <Loader2 size={12} className="animate-spin" /> : t('balance.addEarnings')}
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 md:p-8 mb-6">

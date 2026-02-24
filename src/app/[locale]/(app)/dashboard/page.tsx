@@ -242,8 +242,8 @@ function QuestCard({ quest, onClick, unlockStatus }: { quest: Task; onClick: (qu
 }
 
 /* ── Stats Panel (real data) ── */
-function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQuests, generating }: {
-    totalXP: number; currentStreak: number; longestStreak: number;
+function StatsPanel({ totalXP, currentStreak, longestStreak, goldBalance, quests, onGenerateQuests, generating }: {
+    totalXP: number; currentStreak: number; longestStreak: number; goldBalance: number;
     quests: Record<string, Task[]>; onGenerateQuests: () => void; generating: boolean;
 }) {
     const stats = useTranslations('dashboard.stats');
@@ -276,6 +276,13 @@ function StatsPanel({ totalXP, currentStreak, longestStreak, quests, onGenerateQ
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 text-center">
                 <div className="font-data text-xs text-ghost/40 tracking-widest uppercase mb-2">{stats('totalXP')}</div>
                 <div className="font-heading font-black text-4xl text-accent text-shadow-glow" ref={xpRef}>0</div>
+            </div>
+            <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 flex items-center gap-3">
+                <div className="text-2xl">🪙</div>
+                <div>
+                    <div className="font-heading text-lg text-amber-400 font-bold">{goldBalance.toLocaleString()}</div>
+                    <div className="font-data text-[10px] text-ghost/40 tracking-wider">{stats('goldBalance')}</div>
+                </div>
             </div>
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-5 flex items-center gap-3">
                 <div className="text-2xl">🔥</div>
@@ -345,6 +352,7 @@ export default function DashboardPage() {
     const className = PERSONALITY_CLASSES[personalityType] || 'Adventurer';
     const level = profile?.level || 1;
     const totalXP = profile?.total_xp || 0;
+    const goldBalance = profile?.gold_balance || 0;
     const rankTier = getRankFromLevel(level);
     const currentStreak = streak?.current_streak || 0;
     const longestStreak = streak?.longest_streak || 0;
@@ -712,6 +720,7 @@ export default function DashboardPage() {
                             totalXP={totalXP}
                             currentStreak={currentStreak}
                             longestStreak={longestStreak}
+                            goldBalance={goldBalance}
                             quests={quests}
                             onGenerateQuests={handleGenerateQuests}
                             generating={generating}

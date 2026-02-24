@@ -9,7 +9,7 @@ interface Quest {
     id: string | number;
     title: string;
     description?: string | null;
-    category: string;
+    category: string | null;
     difficulty: string;
     xp?: number;
     xp_reward?: number;
