@@ -85,7 +85,7 @@ export async function POST(request: Request) {
                 .update({ gold_balance: goldBalance })
                 .eq('id', user.id)
             console.error('[MARKET] Inventory insert error:', insertError)
-            return NextResponse.json({ error: 'Failed to add item to inventory' }, { status: 500 })
+            return NextResponse.json({ error: 'Failed to add item to inventory', details: insertError?.message || String(insertError) }, { status: 500 })
         }
 
         return NextResponse.json({

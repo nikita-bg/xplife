@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import gsap from 'gsap';
 import { Sparkles, Check, Brain, Camera, Loader2, X, Lock, Unlock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -12,6 +13,10 @@ import { getXPProgress, getRankFromLevel } from '@/lib/xpUtils';
 import { usePathname } from 'next/navigation';
 import type { Task, QuestTimeframe } from '@/lib/types';
 import { getUnlockStatus, hasRequirements, type UnlockStatus } from '@/lib/quest-requirements';
+import { PERSONALITY_TO_CLASS } from '@/components/avatar/avatar-data';
+import type { CharacterClass } from '@/components/avatar/avatar-data';
+
+const AvatarCanvas = dynamic(() => import('@/components/avatar/AvatarCanvas'), { ssr: false });
 
 const diffColors: Record<string, string> = {
     easy: 'text-green-400 bg-green-400/10',
@@ -108,32 +113,20 @@ function SkeletonStats() {
 }
 
 /* ── Character Card (real data) ── */
-function CharacterCard({ displayName, className, level, totalXP, rankTier }: {
-    displayName: string; className: string; level: number; totalXP: number; rankTier: string;
+function CharacterCard({ displayName, className, level, totalXP, rankTier, personalityType }: {
+    displayName: string; className: string; level: number; totalXP: number; rankTier: string; personalityType: string;
 }) {
-    const svgRef = useRef<SVGSVGElement>(null);
     const xpProgress = getXPProgress(totalXP);
     const charCard = useTranslations('dashboard.characterCard');
 
-    useEffect(() => {
-        if (!svgRef.current) return;
-        const ctx = gsap.context(() => {
-            gsap.to(svgRef.current, { rotation: 360, duration: 15, ease: 'none', repeat: -1 });
-        });
-        return () => ctx.revert();
-    }, []);
-
     return (
         <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-6 flex flex-col items-center text-center">
-            <div className="w-40 h-40 mb-6 flex items-center justify-center">
-                <svg ref={svgRef} viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_30px_rgba(0,245,255,0.4)]">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#00F5FF" strokeWidth="2" />
-                    <polygon points="50,15 85,50 50,85 15,50" fill="none" stroke="#9B4EDD" strokeWidth="1.5" opacity="0.5" />
-                    <circle cx="50" cy="50" r="12" fill="#FFB800" opacity="0.8" className="animate-pulse" />
-                    <line x1="50" y1="5" x2="50" y2="95" stroke="white" strokeWidth="0.3" opacity="0.2" />
-                    <line x1="5" y1="50" x2="95" y2="50" stroke="white" strokeWidth="0.3" opacity="0.2" />
-                </svg>
-            </div>
+            <AvatarCanvas
+                characterClass={(PERSONALITY_TO_CLASS[personalityType] || 'Adventurer') as CharacterClass}
+                rank={rankTier as any}
+                size="md"
+                interactive={false}
+            />
             <h3 className="font-heading font-bold text-xl text-white mb-1">{displayName}</h3>
             <div className="font-data text-xs text-accent-secondary tracking-wider mb-1">{className}</div>
             <div className="font-data text-[10px] text-ghost/50 mb-4 tracking-wider uppercase">{rankTier} {charCard('rank')}</div>
@@ -550,7 +543,7 @@ export default function DashboardPage() {
                     {isLoading ? (
                         <SkeletonCard />
                     ) : (
-                        <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} />
+                        <CharacterCard displayName={displayName} className={className} level={level} totalXP={totalXP} rankTier={rankTier} personalityType={personalityType} />
                     )}
                 </div>
 
