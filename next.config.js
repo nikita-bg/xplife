@@ -5,6 +5,12 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     swcMinify: true,
+    transpilePackages: [
+        'three',
+        '@react-three/fiber',
+        '@react-three/drei',
+        '@react-three/postprocessing',
+    ],
     compiler: {
         removeConsole: process.env.NODE_ENV === "production",
     },
@@ -16,6 +22,14 @@ const nextConfig = {
                 hostname: '**',
             },
         ],
+    },
+    webpack(config) {
+        // Ensure only one copy of 'three' is in the bundle
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            three: require.resolve('three'),
+        };
+        return config;
     },
     async headers() {
         return [
