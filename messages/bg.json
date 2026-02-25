@@ -247,7 +247,14 @@
         "swimming": "Плуване",
         "drawing": "Рисуване",
         "journaling": "Дневник",
-        "podcasts": "Подкасти"
+        "podcasts": "Подкасти",
+        "fitness": "Фитнес",
+        "art": "Изкуство",
+        "travel": "Пътуване",
+        "chess": "Шах",
+        "public speaking": "Публично говорене",
+        "volunteering": "Доброволчество",
+        "finance": "Финанси"
       }
     },
     "goalSetting": {
@@ -512,7 +519,9 @@
     },
     "balance": {
       "title": "Златен Баланс",
-      "addEarnings": "Добави Печалби"
+      "addEarnings": "Добави Печалби",
+      "earnings": "Реални Печалби",
+      "description": "Спечелени от завършване на квестове. Похарчете ги в пазара."
     },
     "planNames": {
       "premium": "Премиум",
@@ -1078,6 +1087,7 @@
       "leaderboard": "Класация",
       "guild": "Гилдия",
       "boss": "Бос",
+      "braverman": "Бравърман",
       "journal": "Дневник",
       "inventory": "Инвентар",
       "market": "Пазар",

@@ -247,7 +247,14 @@
         "swimming": "Swimming",
         "drawing": "Drawing",
         "journaling": "Journaling",
-        "podcasts": "Podcasts"
+        "podcasts": "Podcasts",
+        "fitness": "Fitness",
+        "art": "Art",
+        "travel": "Travel",
+        "chess": "Chess",
+        "public speaking": "Public Speaking",
+        "volunteering": "Volunteering",
+        "finance": "Finance"
       }
     },
     "goalSetting": {
@@ -512,7 +519,9 @@
     },
     "balance": {
       "title": "Gold Balance",
-      "addEarnings": "Add Earnings"
+      "addEarnings": "Add Earnings",
+      "earnings": "Real-World Earnings",
+      "description": "Earned from completing quests. Spend in the marketplace."
     },
     "planNames": {
       "premium": "Premium",
@@ -1078,6 +1087,7 @@
       "leaderboard": "Leaderboard",
       "guild": "Guild",
       "boss": "Boss",
+      "braverman": "Braverman",
       "journal": "Journal",
       "inventory": "Inventory",
       "market": "Market",

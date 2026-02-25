@@ -247,7 +247,14 @@
         "swimming": "游泳",
         "drawing": "绘图",
         "journaling": "写日记",
-        "podcasts": "播客"
+        "podcasts": "播客",
+        "fitness": "健身",
+        "art": "艺术",
+        "travel": "旅行",
+        "chess": "国际象棋",
+        "public speaking": "公开演讲",
+        "volunteering": "志愿服务",
+        "finance": "金融"
       }
     },
     "goalSetting": {
@@ -512,7 +519,9 @@
     },
     "balance": {
       "title": "金币余额",
-      "addEarnings": "添加收入"
+      "addEarnings": "添加收入",
+      "earnings": "现实收入",
+      "description": "通过完成任务获得。在市场中消费。"
     },
     "planNames": {
       "premium": "高级版",
@@ -1078,6 +1087,7 @@
       "leaderboard": "排行榜",
       "guild": "公会",
       "boss": "首领",
+      "braverman": "Braverman测试",
       "journal": "日志",
       "inventory": "背包",
       "market": "市场",

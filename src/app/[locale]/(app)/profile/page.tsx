@@ -288,14 +288,14 @@ export default function ProfilePage() {
                             <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">{t('balance.title')}</div>
                         </div>
                     </div>
-                    <p className="font-sans text-[10px] text-ghost/30 mt-2">Earned from completing quests. Spend in the marketplace.</p>
+                    <p className="font-sans text-[10px] text-ghost/30 mt-2">{t('balance.description')}</p>
                 </div>
                 <div className="bg-[#0C1021] rounded-2xl border border-white/5 p-5">
                     <div className="flex items-center gap-3 mb-2">
                         <Coins size={28} className="text-green-400" />
                         <div>
                             <div className="font-heading text-2xl text-green-400 font-bold">€{realWorldEarnings.toLocaleString()}</div>
-                            <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">Real-World Earnings</div>
+                            <div className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">{t('balance.earnings')}</div>
                         </div>
                     </div>
                     <div className="flex gap-2 mt-3">

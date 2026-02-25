@@ -171,7 +171,7 @@ export default function QuestCompleteModal({ quest, isOpen, onClose, onConfirm }
                     <div className="bg-white/[0.03] rounded-xl border border-white/5 p-4 mb-6">
                         <h4 className="font-sans text-sm text-ghost font-medium mb-2">{quest.title}</h4>
                         {quest.description && (
-                            <p className="font-sans text-xs text-ghost/50 mb-3 line-clamp-2">{quest.description}</p>
+                            <p className="font-sans text-xs text-ghost/50 mb-3 max-h-32 overflow-y-auto">{quest.description}</p>
                         )}
                         <div className="flex items-center gap-3">
                             <span className="font-data text-[10px] text-ghost/40 tracking-wider uppercase">{quest.category}</span>

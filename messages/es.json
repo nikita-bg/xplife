@@ -247,7 +247,14 @@
         "swimming": "Natación",
         "drawing": "Dibujo",
         "journaling": "Diario",
-        "podcasts": "Podcasts"
+        "podcasts": "Podcasts",
+        "fitness": "Fitness",
+        "art": "Arte",
+        "travel": "Viajes",
+        "chess": "Ajedrez",
+        "public speaking": "Oratoria",
+        "volunteering": "Voluntariado",
+        "finance": "Finanzas"
       }
     },
     "goalSetting": {
@@ -512,7 +519,9 @@
     },
     "balance": {
       "title": "Balance de Oro",
-      "addEarnings": "Añadir Ganancias"
+      "addEarnings": "Añadir Ganancias",
+      "earnings": "Ganancias Reales",
+      "description": "Ganadas al completar misiones. Gástalas en el mercado."
     },
     "planNames": {
       "premium": "Premium",
@@ -1078,6 +1087,7 @@
       "leaderboard": "Clasificación",
       "guild": "Gremio",
       "boss": "Jefe",
+      "braverman": "Braverman",
       "journal": "Diario",
       "inventory": "Inventario",
       "market": "Mercado",

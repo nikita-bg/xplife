@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Trophy, Backpack, Store, User, Flame, Shield, Skull, BookOpen, LogOut } from 'lucide-react';
+import { LayoutDashboard, Trophy, Backpack, Store, User, Flame, Shield, Skull, BookOpen, Brain, LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import ChatWidget from '@/components/chat/ChatWidget';
@@ -14,6 +14,7 @@ const navItems = [
     { to: '/leaderboard', labelKey: 'leaderboard', icon: Trophy },
     { to: '/guild', labelKey: 'guild', icon: Shield },
     { to: '/boss', labelKey: 'boss', icon: Skull },
+    { to: '/braverman', labelKey: 'braverman', icon: Brain },
     { to: '/journal', labelKey: 'journal', icon: BookOpen },
     { to: '/inventory', labelKey: 'inventory', icon: Backpack },
     { to: '/market', labelKey: 'market', icon: Store },

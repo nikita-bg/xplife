@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Shield, Plus, Users, Crown, Star, Swords, Copy, Check, LogIn, LogOut, Trash2, UserMinus, UserCheck, Lock, Globe, Clock } from 'lucide-react';
+import { Shield, Plus, Users, Crown, Star, Swords, Copy, Check, LogIn, LogOut, Trash2, UserMinus, UserCheck, Lock, Globe, Clock, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
@@ -78,6 +78,8 @@ export default function GuildPage() {
     const [settingsJoinMode, setSettingsJoinMode] = useState('open');
     const [settingsMinLevel, setSettingsMinLevel] = useState(1);
     const [savingSettings, setSavingSettings] = useState(false);
+    const [showCreateQuest, setShowCreateQuest] = useState(false);
+    const [creatingQuest, setCreatingQuest] = useState(false);
 
     const loadGuildDetails = useCallback(async (guildId: string) => {
         const res = await fetch(`/api/guilds/${guildId}`);
@@ -218,6 +220,34 @@ export default function GuildPage() {
             loadGuildDetails(activeGuild.id);
         } catch { /* silent */ }
         setContributingQuest(null);
+    };
+
+    const handleCreateGuildQuest = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!activeGuild || creatingQuest) return;
+        setCreatingQuest(true);
+        try {
+            const formData = new FormData(e.currentTarget);
+            const res = await fetch(`/api/guilds/${activeGuild.id}/quests`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: formData.get('title'),
+                    description: formData.get('description') || null,
+                    category: formData.get('category') || 'productivity',
+                    difficulty: formData.get('difficulty') || 'medium',
+                    xp_reward: Number(formData.get('xp_reward')) || 100,
+                    target_contributions: Number(formData.get('target_contributions')) || 10,
+                }),
+            });
+            if (res.ok) {
+                setShowCreateQuest(false);
+                loadGuildDetails(activeGuild.id);
+            }
+        } catch (err) {
+            console.error('Failed to create quest:', err);
+        }
+        setCreatingQuest(false);
     };
 
     const handleLeave = async () => {
@@ -711,10 +741,88 @@ export default function GuildPage() {
                         <h2 className="font-heading font-bold text-xl uppercase tracking-wider flex items-center gap-2">
                             <Swords size={20} className="text-tertiary" /> {t('guildQuests')}
                         </h2>
-                        <div className="font-data text-[10px] text-ghost/30 tracking-wider">
-                            {quests.filter(q => q.status === 'active').length} ACTIVE
+                        <div className="flex items-center gap-3">
+                            {isAdmin && (
+                                <button
+                                    onClick={() => setShowCreateQuest(!showCreateQuest)}
+                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-tertiary/10 border border-tertiary/30 text-tertiary font-data text-[10px] uppercase tracking-wider hover:bg-tertiary/20 transition-all"
+                                >
+                                    <Sparkles size={12} /> Create Quest
+                                </button>
+                            )}
+                            <div className="font-data text-[10px] text-ghost/30 tracking-wider">
+                                {quests.filter(q => q.status === 'active').length} ACTIVE
+                            </div>
                         </div>
                     </div>
+
+                    {/* Create Quest Form */}
+                    {showCreateQuest && isAdmin && (
+                        <form onSubmit={handleCreateGuildQuest} className="mb-6 p-4 bg-white/[0.02] rounded-xl border border-white/5 space-y-3">
+                            <input
+                                name="title"
+                                required
+                                placeholder="Quest title..."
+                                className="w-full bg-background border border-white/10 rounded-xl py-2 px-3 font-sans text-sm text-ghost focus:outline-none focus:border-tertiary/30 transition-colors"
+                            />
+                            <textarea
+                                name="description"
+                                placeholder="Description (optional)"
+                                rows={2}
+                                className="w-full bg-background border border-white/10 rounded-xl py-2 px-3 font-sans text-xs text-ghost focus:outline-none focus:border-tertiary/30 transition-colors resize-none"
+                            />
+                            <div className="grid grid-cols-2 gap-2">
+                                <select name="category" className="bg-background border border-white/10 rounded-xl py-2 px-3 font-data text-xs text-ghost focus:outline-none">
+                                    <option value="productivity">Productivity</option>
+                                    <option value="health">Health</option>
+                                    <option value="social">Social</option>
+                                    <option value="learning">Learning</option>
+                                    <option value="creativity">Creativity</option>
+                                    <option value="finance">Finance</option>
+                                </select>
+                                <select name="difficulty" className="bg-background border border-white/10 rounded-xl py-2 px-3 font-data text-xs text-ghost focus:outline-none">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="hard">Hard</option>
+                                    <option value="epic">Epic</option>
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <input
+                                    name="xp_reward"
+                                    type="number"
+                                    min="10"
+                                    defaultValue={100}
+                                    placeholder="XP Reward"
+                                    className="bg-background border border-white/10 rounded-xl py-2 px-3 font-data text-xs text-ghost focus:outline-none"
+                                />
+                                <input
+                                    name="target_contributions"
+                                    type="number"
+                                    min="1"
+                                    defaultValue={10}
+                                    placeholder="Target contributions"
+                                    className="bg-background border border-white/10 rounded-xl py-2 px-3 font-data text-xs text-ghost focus:outline-none"
+                                />
+                            </div>
+                            <div className="flex gap-2 justify-end">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowCreateQuest(false)}
+                                    className="px-4 py-2 rounded-xl font-data text-xs text-ghost/40 hover:text-ghost/60 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={creatingQuest}
+                                    className="px-4 py-2 rounded-xl bg-tertiary/10 border border-tertiary/30 text-tertiary font-data text-xs uppercase tracking-wider hover:bg-tertiary/20 transition-all disabled:opacity-50"
+                                >
+                                    {creatingQuest ? 'Creating...' : 'Create Quest'}
+                                </button>
+                            </div>
+                        </form>
+                    )}
 
                     <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
                         {quests.length > 0 ? (

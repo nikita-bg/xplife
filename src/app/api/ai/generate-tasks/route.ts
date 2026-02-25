@@ -286,6 +286,17 @@ export async function POST(request: Request) {
                 priorityCategories: classProfile.priorityCategories,
                 questPrefixes: classProfile.questPrefixes,
             },
+            // ── Explicit difficulty distribution ──
+            difficultyDistribution: difficultyHint.recommendation === 'reduce_difficulty'
+                ? { easy: 3, medium: 1, hard: 0, epic: 0 }
+                : difficultyHint.recommendation === 'increase_challenge'
+                    ? { easy: 0, medium: 2, hard: 2, epic: 1 }
+                    : { easy: 1, medium: 2, hard: 1, epic: 0 },
+            difficultyInstruction: difficultyHint.recommendation === 'reduce_difficulty'
+                ? 'IMPORTANT: Generate mostly easy quests with 1 medium quest. The user has a low completion rate and needs encouragement.'
+                : difficultyHint.recommendation === 'increase_challenge'
+                    ? 'IMPORTANT: Generate challenging quests — mostly medium and hard, with 1 epic quest. The user is excelling and needs more challenge.'
+                    : 'IMPORTANT: Generate quests with VARIED difficulty. Include a mix: approximately 25% easy, 50% medium, 25% hard. Do NOT generate all easy quests. Each quest MUST have a "difficulty" field set to one of: "easy", "medium", "hard", or "epic".',
         }
 
         console.log(`[TASK-GEN ${ts}] Calling N8N webhook...`)

@@ -247,7 +247,14 @@
         "swimming": "水泳",
         "drawing": "描画",
         "journaling": "日記",
-        "podcasts": "ポッドキャスト"
+        "podcasts": "ポッドキャスト",
+        "fitness": "フィットネス",
+        "art": "アート",
+        "travel": "旅行",
+        "chess": "チェス",
+        "public speaking": "パブリックスピーキング",
+        "volunteering": "ボランティア",
+        "finance": "金融"
       }
     },
     "goalSetting": {
@@ -512,7 +519,9 @@
     },
     "balance": {
       "title": "ゴールド残高",
-      "addEarnings": "収入を追加"
+      "addEarnings": "収入を追加",
+      "earnings": "実世界の収入",
+      "description": "クエストの完了で獲得。マーケットプレイスで使用。"
     },
     "planNames": {
       "premium": "プレミアム",
@@ -1078,6 +1087,7 @@
       "leaderboard": "リーダーボード",
       "guild": "ギルド",
       "boss": "ボス",
+      "braverman": "ブレイバーマン",
       "journal": "ジャーナル",
       "inventory": "インベントリ",
       "market": "マーケット",
