@@ -326,6 +326,7 @@ export default function DashboardPage() {
     const dashT = useTranslations('dashboard');
     const [activeTab, setActiveTab] = useState<string>('daily');
     const [quests, setQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
+    const [rawQuests, setRawQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
     const [selectedQuest, setSelectedQuest] = useState<Task | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [generating, setGenerating] = useState(false);
@@ -358,14 +359,18 @@ export default function DashboardPage() {
         setLoadingQuests(true);
         try {
             const results: Record<string, Task[]> = { daily: [], weekly: [], monthly: [], yearly: [] };
+            const raw: Record<string, Task[]> = { daily: [], weekly: [], monthly: [], yearly: [] };
             const responses = await Promise.all(
                 tabs.map(tf => fetch(`/api/tasks?timeframe=${tf}`).then(r => r.json()))
             );
             tabs.forEach((tf, i) => {
                 const allQuests = responses[i]?.tasks || [];
-                // Filter to current period only (Bug 4: quest expiration)
+                // Store raw (unfiltered) for unlock calculations across periods
+                raw[tf] = allQuests;
+                // Filter to current period only for display (Bug 4: quest expiration)
                 results[tf] = filterCurrentPeriodQuests(allQuests, tf);
             });
+            setRawQuests(raw);
             setQuests(results);
             return results;
         } catch (err) {
@@ -528,9 +533,15 @@ export default function DashboardPage() {
         if (!hasRequirements(activeTab as QuestTimeframe)) return null;
         const childTf = activeTab === 'weekly' ? 'daily' : activeTab === 'monthly' ? 'weekly' : activeTab === 'yearly' ? 'monthly' : null;
         if (!childTf) return null;
-        const childCompleted = (quests[childTf] || []).filter(q => q.status === 'completed');
+
+        // Use the parent period start to count ALL completed child tasks in the period
+        // e.g. for weekly quests: count daily tasks completed since start of this week
+        const parentPeriodStart = getPeriodStart(activeTab as QuestTimeframe);
+        const childCompleted = (rawQuests[childTf] || []).filter(
+            q => q.status === 'completed' && new Date(q.completed_at || q.created_at) >= parentPeriodStart
+        );
         return getUnlockStatus(activeTab as QuestTimeframe, childCompleted, personalityType);
-    }, [activeTab, quests, personalityType]);
+    }, [activeTab, quests, rawQuests, personalityType]);
 
     const isLoading = profileLoading || loadingQuests;
 
