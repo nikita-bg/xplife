@@ -297,6 +297,37 @@ export async function POST(request: Request) {
                 : difficultyHint.recommendation === 'increase_challenge'
                     ? 'IMPORTANT: Generate challenging quests — mostly medium and hard, with 1 epic quest. The user is excelling and needs more challenge.'
                     : 'IMPORTANT: Generate quests with VARIED difficulty. Include a mix: approximately 25% easy, 50% medium, 25% hard. Do NOT generate all easy quests. Each quest MUST have a "difficulty" field set to one of: "easy", "medium", "hard", or "epic".',
+            // ── Timeframe-specific quest guidance ──
+            timeframeInstruction: questTimeframe === 'daily'
+                ? 'Generate DAILY quests: small, concrete actions completable in a single day (15min-2hrs). Examples: "Do 20 push-ups", "Read for 30 minutes", "Write in journal". Do NOT generate multi-day or vague tasks.'
+                : questTimeframe === 'weekly'
+                    ? 'Generate WEEKLY quests: medium-scope goals achievable within 7 days. These should be measurable habits or projects with clear milestones. Examples: "Exercise 4 times this week", "Complete Chapter 3 of course", "Cook healthy meals 5 days". Do NOT generate single-day tasks or month-long projects.'
+                    : questTimeframe === 'monthly'
+                        ? 'Generate MONTHLY quests: ambitious but achievable goals for a 30-day period. These should represent meaningful progress. Examples: "Run a total of 50km", "Finish online certification", "Build a side project MVP", "Read 2 books". Do NOT generate daily or weekly tasks.'
+                        : 'Generate YEARLY quests: transformative long-term goals for the entire year. These should be life-changing milestones. Examples: "Run a marathon", "Learn a new language to conversational level", "Save $10,000". Do NOT generate short-term tasks.',
+            // ── Braverman neurotransmitter-informed quest guidance ──
+            bravermanGuidance: (() => {
+                const scores = {
+                    dopamine: profile.dopamine_score ?? 0,
+                    acetylcholine: profile.acetylcholine_score ?? 0,
+                    gaba: profile.gaba_score ?? 0,
+                    serotonin: profile.serotonin_score ?? 0,
+                }
+                const entries = Object.entries(scores).sort(([, a], [, b]) => b - a)
+                const dominant = entries[0]
+                const deficient = entries[entries.length - 1]
+
+                const guidanceMap: Record<string, string> = {
+                    dopamine: 'User has high dopamine deficiency — generate quests that boost energy, motivation, and reward (exercise, goal-setting, new experiences, competitive challenges).',
+                    acetylcholine: 'User has high acetylcholine deficiency — generate quests that enhance memory, learning, and focus (reading, puzzles, deep work, studying, creative writing).',
+                    gaba: 'User has high GABA deficiency — generate quests that reduce anxiety and promote calm (meditation, yoga, breathing exercises, nature walks, journaling).',
+                    serotonin: 'User has high serotonin deficiency — generate quests that improve mood and social connection (social activities, gratitude practice, helping others, sleep hygiene, sunlight exposure).',
+                }
+
+                if (dominant[1] === 0 && deficient[1] === 0) return null
+
+                return `NEUROTRANSMITTER PROFILE: Dominant=${dominant[0]} (score: ${dominant[1]}), Most deficient=${deficient[0]} (score: ${deficient[1]}). ${guidanceMap[deficient[0]] || ''} Balance quests across categories but lean toward addressing the deficiency.`
+            })(),
         }
 
         console.log(`[TASK-GEN ${ts}] Calling N8N webhook...`)

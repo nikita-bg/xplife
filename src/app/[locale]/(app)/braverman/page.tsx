@@ -1,22 +1,12 @@
-'use client'
+import type { Metadata } from 'next';
+import { generatePageMetadata, getPageSEO } from '@/lib/seo';
+import BravermanClient from './BravermanClient';
 
-import React from 'react'
-import BravermanTest from '@/components/braverman/BravermanTest'
-import { useTranslations } from 'next-intl'
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+    const seo = getPageSEO('braverman', locale);
+    return generatePageMetadata({ title: seo.title, description: seo.description, path: '/braverman', locale, noIndex: true });
+}
 
 export default function BravermanPage() {
-    const t = useTranslations('braverman.page')
-    return (
-        <div className="max-w-3xl mx-auto">
-            <div className="mb-8">
-                <h1 className="font-heading font-black text-3xl md:text-4xl uppercase tracking-tight text-white mb-2">
-                    {t('title')}
-                </h1>
-                <p className="font-sans text-sm text-ghost/40">
-                    {t('subtitle')}
-                </p>
-            </div>
-            <BravermanTest />
-        </div>
-    )
+    return <BravermanClient />;
 }

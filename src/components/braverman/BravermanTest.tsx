@@ -3,20 +3,26 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { ChevronLeft, ChevronRight, Sparkles, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { BRAVERMAN_QUESTIONS } from '@/lib/constants/braverman-questions'
 import type { PersonalityType } from '@/lib/types'
 import BravermanResults from './BravermanResults'
 
 const STORAGE_KEY = 'braverman-progress'
 
-const SECTION_KEYS: { label: string; neurotransmitter: PersonalityType; start: number; end: number }[] = [
-    { label: 'Part 1: Dopamine', neurotransmitter: 'dopamine', start: 0, end: 34 },
-    { label: 'Part 2: Acetylcholine', neurotransmitter: 'acetylcholine', start: 35, end: 69 },
-    { label: 'Part 3: GABA', neurotransmitter: 'gaba', start: 70, end: 104 },
-    { label: 'Part 4: Serotonin', neurotransmitter: 'serotonin', start: 105, end: 139 },
-]
+const SECTION_LABELS: Record<string, string> = {
+    sectionDopamine: 'Part 1: Dopamine',
+    sectionAcetylcholine: 'Part 2: Acetylcholine',
+    sectionGaba: 'Part 3: GABA',
+    sectionSerotonin: 'Part 4: Serotonin',
+}
 
-const scoreLabels = ['Never', 'Sometimes', 'Often', 'Always']
+const SECTION_KEYS: { labelKey: keyof typeof SECTION_LABELS; neurotransmitter: PersonalityType; start: number; end: number }[] = [
+    { labelKey: 'sectionDopamine', neurotransmitter: 'dopamine', start: 0, end: 34 },
+    { labelKey: 'sectionAcetylcholine', neurotransmitter: 'acetylcholine', start: 35, end: 69 },
+    { labelKey: 'sectionGaba', neurotransmitter: 'gaba', start: 70, end: 104 },
+    { labelKey: 'sectionSerotonin', neurotransmitter: 'serotonin', start: 105, end: 139 },
+]
 const scoreColors = [
     'border-white/10 text-ghost/50 hover:border-white/20',
     'border-yellow-500/20 text-yellow-400/70 hover:border-yellow-500/40',
@@ -39,6 +45,8 @@ export default function BravermanTest() {
     const router = useRouter()
     const pathname = usePathname()
     const locale = pathname.split('/')[1] || 'en'
+    const t = useTranslations('braverman.test')
+    const tQuestions = useTranslations('braverman')
     const [currentIndex, setCurrentIndex] = useState(0)
     const [answers, setAnswers] = useState<Record<number, number>>({})
     const [submitting, setSubmitting] = useState(false)
@@ -72,6 +80,13 @@ export default function BravermanTest() {
     const question = BRAVERMAN_QUESTIONS[currentIndex]
     const totalQuestions = BRAVERMAN_QUESTIONS.length
     const currentSection = SECTION_KEYS.find(s => currentIndex >= s.start && currentIndex <= s.end)
+    // Get translated question text; fall back to English from constants
+    const translatedQuestion = (() => {
+        try { return tQuestions(`questions.${currentIndex}`) }
+        catch { return question.question }
+    })()
+    const translatedScoreLabels = [t('never'), t('sometimes'), t('often'), t('always')]
+    const sectionLabel = currentSection ? t(currentSection.labelKey as 'sectionDopamine' | 'sectionAcetylcholine' | 'sectionGaba' | 'sectionSerotonin') : ''
     const allAnswered = Object.keys(answers).length === totalQuestions
     const isLastQuestion = currentIndex === totalQuestions - 1
     const answeredCount = Object.keys(answers).length
@@ -106,7 +121,7 @@ export default function BravermanTest() {
 
     const handleSubmit = async () => {
         if (!allAnswered) {
-            setError(`Please answer all ${totalQuestions} questions before submitting.`)
+            setError(t('error', { count: totalQuestions }))
             return
         }
         setError(null)
@@ -146,10 +161,10 @@ export default function BravermanTest() {
                 <div className="bg-[#0C1021] rounded-[2rem] border border-accent/20 p-8 text-center shadow-[0_0_40px_rgba(0,245,255,0.08)]">
                     <Sparkles size={32} className="mx-auto mb-3 text-accent" />
                     <h2 className="font-heading text-2xl font-bold text-accent uppercase tracking-wider">
-                        +{results.xpAwarded || 500} XP Earned!
+                        {t('xpEarned', { xp: results.xpAwarded || 500 })}
                     </h2>
                     {results.leveledUp && (
-                        <p className="font-data text-sm text-accent-secondary mt-2">Level Up! You are now Level {results.newLevel}</p>
+                        <p className="font-data text-sm text-accent-secondary mt-2">{t('levelUp', { level: results.newLevel })}</p>
                     )}
                 </div>
                 <BravermanResults scores={results.scores} dominantType={results.dominantType} locale={locale} />
@@ -162,8 +177,8 @@ export default function BravermanTest() {
             {/* Progress */}
             <div>
                 <div className="flex items-center justify-between mb-2">
-                    <span className="font-data text-xs text-ghost/50 tracking-wider uppercase">{currentSection?.label}</span>
-                    <span className="font-data text-xs text-ghost/40">{currentIndex + 1} of {totalQuestions} ({answeredCount} answered)</span>
+                    <span className="font-data text-xs text-ghost/50 tracking-wider uppercase">{sectionLabel}</span>
+                    <span className="font-data text-xs text-ghost/40">{t('progress', { current: currentIndex + 1, total: totalQuestions })}</span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-white/5">
                     <div
@@ -175,9 +190,9 @@ export default function BravermanTest() {
 
             {/* Question */}
             <div className="bg-[#0C1021] rounded-[2rem] border border-white/5 p-8">
-                <p className="font-sans text-lg text-white font-medium mb-8">{question.question}</p>
+                <p className="font-sans text-lg text-white font-medium mb-8">{translatedQuestion}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {scoreLabels.map((label, score) => {
+                    {translatedScoreLabels.map((label, score) => {
                         const isSelected = answers[question.id] === score
                         return (
                             <button
@@ -200,7 +215,7 @@ export default function BravermanTest() {
                     disabled={currentIndex === 0}
                     className="flex items-center gap-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/10 disabled:opacity-30 transition-all"
                 >
-                    <ChevronLeft size={14} /> Previous
+                    <ChevronLeft size={14} /> {t('previous')}
                 </button>
 
                 {isLastQuestion && allAnswered ? (
@@ -209,7 +224,7 @@ export default function BravermanTest() {
                         disabled={submitting}
                         className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-secondary to-yellow-500 text-background font-heading text-sm uppercase tracking-wider font-bold disabled:opacity-50 transition-all"
                     >
-                        {submitting ? <><Loader2 size={16} className="animate-spin" /> Submitting...</> : <><Sparkles size={16} /> Submit Assessment</>}
+                        {submitting ? <><Loader2 size={16} className="animate-spin" /> {t('submitting')}</> : <><Sparkles size={16} /> {t('submit')}</>}
                     </button>
                 ) : (
                     <button
@@ -217,7 +232,7 @@ export default function BravermanTest() {
                         disabled={isLastQuestion}
                         className="flex items-center gap-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-ghost/50 font-data text-xs uppercase tracking-wider hover:bg-white/10 disabled:opacity-30 transition-all"
                     >
-                        Next <ChevronRight size={14} />
+                        {t('next')} <ChevronRight size={14} />
                     </button>
                 )}
             </div>

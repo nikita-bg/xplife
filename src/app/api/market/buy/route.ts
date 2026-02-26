@@ -76,7 +76,11 @@ export async function POST(request: Request) {
         // Add to inventory
         const { error: insertError } = await db
             .from('user_inventory')
-            .insert({ user_id: user.id, item_id: itemId })
+            .insert({
+                user_id: user.id,
+                item_id: itemId,
+                acquired_at: new Date().toISOString(),
+            })
 
         if (insertError) {
             // Rollback gold

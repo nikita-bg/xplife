@@ -499,6 +499,8 @@
     },
     "completedLabel": "Completed",
     "noQuestsMessage": "No quests yet — Generate your first quest!",
+    "questHistory": "Past Quest History",
+    "noHistory": "No past quests found",
     "generateNewQuests": "Generate New Quests",
     "generatingQuests": "Generating...",
     "goalsPlaceholder": "e.g. I want to focus on fitness and meditation today...",

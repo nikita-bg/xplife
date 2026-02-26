@@ -1,23 +1,12 @@
-'use client';
+import type { Metadata } from 'next';
+import { generatePageMetadata, getPageSEO } from '@/lib/seo';
+import LandingClient from './LandingClient';
 
-import Navbar from '@/components/landing/Navbar';
-import Hero from '@/components/landing/Hero';
-import Features from '@/components/landing/Features';
-import Philosophy from '@/components/landing/Philosophy';
-import Protocol from '@/components/landing/Protocol';
-import Pricing from '@/components/landing/Pricing';
-import Footer from '@/components/landing/Footer';
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+    const seo = getPageSEO('home', locale);
+    return generatePageMetadata({ title: seo.title, description: seo.description, path: '', locale });
+}
 
-export default function LandingPage() {
-    return (
-        <div className="w-full min-h-screen bg-background text-ghost overflow-hidden selection:bg-accent selection:text-primary relative">
-            <Navbar />
-            <Hero />
-            <Features />
-            <Philosophy />
-            <Protocol />
-            <Pricing />
-            <Footer />
-        </div>
-    );
+export default function HomePage() {
+    return <LandingClient />;
 }
