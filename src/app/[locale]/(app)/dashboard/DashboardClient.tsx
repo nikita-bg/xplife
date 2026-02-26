@@ -336,6 +336,7 @@ export default function DashboardClient() {
     const [showHistory, setShowHistory] = useState(false);
     const [historyQuests, setHistoryQuests] = useState<Task[]>([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
+    const [childHistory, setChildHistory] = useState<Task[]>([]);
     const [equippedItems, setEquippedItems] = useState<EquippedItemData[]>([]);
     const { profile, streak, loading: profileLoading, refresh } = useProfile();
     const pathname = usePathname();
@@ -458,6 +459,26 @@ export default function DashboardClient() {
         if (showHistory) fetchHistory();
     }, [showHistory, fetchHistory]);
 
+    /* ── Fetch child history for lock progress ── */
+    const fetchChildHistory = useCallback(async (currentTab: string) => {
+        if (!hasRequirements(currentTab as QuestTimeframe)) return;
+        const childTf = currentTab === 'weekly' ? 'daily' : currentTab === 'monthly' ? 'weekly' : currentTab === 'yearly' ? 'monthly' : null;
+        if (!childTf) return;
+
+        const parentPeriodStart = getPeriodStart(currentTab as QuestTimeframe).toISOString();
+        try {
+            const res = await fetch(`/api/tasks?timeframe=${childTf}&startDate=${parentPeriodStart}&status=completed&limit=200`);
+            const data = await res.json();
+            setChildHistory(data.tasks || []);
+        } catch (err) {
+            console.error('Failed to fetch child history', err);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchChildHistory(activeTab);
+    }, [activeTab, fetchChildHistory]);
+
     /* ── Generate quests via AI ── */
     const handleGenerateQuests = async () => {
         if (!showGoalInput) {
@@ -556,6 +577,7 @@ export default function DashboardClient() {
             if (res.ok) {
                 await fetchQuests();
                 refresh(); // Refresh profile to get updated XP, streak, level
+                fetchChildHistory(activeTab); // Update unlock progress
             }
         } catch (err) {
             console.error('Failed to complete quest:', err);
@@ -581,14 +603,13 @@ export default function DashboardClient() {
         const childTf = activeTab === 'weekly' ? 'daily' : activeTab === 'monthly' ? 'weekly' : activeTab === 'yearly' ? 'monthly' : null;
         if (!childTf) return null;
 
-        // Use the parent period start to count ALL completed child tasks in the period
-        // e.g. for weekly quests: count daily tasks completed since start of this week
+        // Use the fetched child history which contains all child tasks completed since the parent period start
         const parentPeriodStart = getPeriodStart(activeTab as QuestTimeframe);
-        const childCompleted = (rawQuests[childTf] || []).filter(
+        const childCompleted = childHistory.filter(
             q => q.status === 'completed' && new Date(q.completed_at || q.created_at) >= parentPeriodStart
         );
         return getUnlockStatus(activeTab as QuestTimeframe, childCompleted, personalityType);
-    }, [activeTab, rawQuests, personalityType]);
+    }, [activeTab, childHistory, personalityType]);
 
     const isLoading = profileLoading || loadingQuests;
 
@@ -770,7 +791,7 @@ export default function DashboardClient() {
                                             {historyQuests
                                                 .filter(hq => !currentQuests.some(cq => cq.id === hq.id))
                                                 .map(q => (
-                                                    <QuestCard key={q.id} quest={q} onClick={() => {}} />
+                                                    <QuestCard key={q.id} quest={q} onClick={() => { }} />
                                                 ))}
                                         </div>
                                     ) : (

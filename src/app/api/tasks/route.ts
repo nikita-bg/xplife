@@ -32,26 +32,33 @@ export async function GET(request: Request) {
         query = query.eq('quest_timeframe', timeframe)
 
         if (!includeHistory) {
-            // Filter to current period only — prevents expired quests from showing
-            const now = new Date()
-            let periodStart: string
-
-            if (timeframe === 'daily') {
-                periodStart = `${now.toISOString().split('T')[0]}T00:00:00`
-            } else if (timeframe === 'weekly') {
-                const dow = now.getDay()
-                const monOffset = dow === 0 ? 6 : dow - 1
-                const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - monOffset)
-                monday.setHours(0, 0, 0, 0)
-                periodStart = monday.toISOString()
-            } else if (timeframe === 'monthly') {
-                periodStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+            // Check if client provided a specific start date
+            const startDate = searchParams.get('startDate')
+            
+            if (startDate) {
+                query = query.gte('created_at', startDate)
             } else {
-                // yearly — filter to current year
-                periodStart = new Date(now.getFullYear(), 0, 1).toISOString()
-            }
+                // Default: Filter to current period only — prevents expired quests from showing
+                const now = new Date()
+                let periodStart: string
 
-            query = query.gte('created_at', periodStart)
+                if (timeframe === 'daily') {
+                    periodStart = `${now.toISOString().split('T')[0]}T00:00:00`
+                } else if (timeframe === 'weekly') {
+                    const dow = now.getDay()
+                    const monOffset = dow === 0 ? 6 : dow - 1
+                    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - monOffset)
+                    monday.setHours(0, 0, 0, 0)
+                    periodStart = monday.toISOString()
+                } else if (timeframe === 'monthly') {
+                    periodStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+                } else {
+                    // yearly — filter to current year
+                    periodStart = new Date(now.getFullYear(), 0, 1).toISOString()
+                }
+
+                query = query.gte('created_at', periodStart)
+            }
         }
     }
 
