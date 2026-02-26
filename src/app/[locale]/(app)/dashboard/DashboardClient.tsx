@@ -588,7 +588,7 @@ export default function DashboardClient() {
             q => q.status === 'completed' && new Date(q.completed_at || q.created_at) >= parentPeriodStart
         );
         return getUnlockStatus(activeTab as QuestTimeframe, childCompleted, personalityType);
-    }, [activeTab, quests, rawQuests, personalityType]);
+    }, [activeTab, rawQuests, personalityType]);
 
     const isLoading = profileLoading || loadingQuests;
 

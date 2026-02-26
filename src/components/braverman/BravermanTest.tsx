@@ -10,14 +10,9 @@ import BravermanResults from './BravermanResults'
 
 const STORAGE_KEY = 'braverman-progress'
 
-const SECTION_LABELS: Record<string, string> = {
-    sectionDopamine: 'Part 1: Dopamine',
-    sectionAcetylcholine: 'Part 2: Acetylcholine',
-    sectionGaba: 'Part 3: GABA',
-    sectionSerotonin: 'Part 4: Serotonin',
-}
+type SectionLabelKey = 'sectionDopamine' | 'sectionAcetylcholine' | 'sectionGaba' | 'sectionSerotonin'
 
-const SECTION_KEYS: { labelKey: keyof typeof SECTION_LABELS; neurotransmitter: PersonalityType; start: number; end: number }[] = [
+const SECTION_KEYS: { labelKey: SectionLabelKey; neurotransmitter: PersonalityType; start: number; end: number }[] = [
     { labelKey: 'sectionDopamine', neurotransmitter: 'dopamine', start: 0, end: 34 },
     { labelKey: 'sectionAcetylcholine', neurotransmitter: 'acetylcholine', start: 35, end: 69 },
     { labelKey: 'sectionGaba', neurotransmitter: 'gaba', start: 70, end: 104 },
@@ -86,10 +81,9 @@ export default function BravermanTest() {
         catch { return question.question }
     })()
     const translatedScoreLabels = [t('never'), t('sometimes'), t('often'), t('always')]
-    const sectionLabel = currentSection ? t(currentSection.labelKey as 'sectionDopamine' | 'sectionAcetylcholine' | 'sectionGaba' | 'sectionSerotonin') : ''
+    const sectionLabel = currentSection ? t(currentSection.labelKey) : ''
     const allAnswered = Object.keys(answers).length === totalQuestions
     const isLastQuestion = currentIndex === totalQuestions - 1
-    const answeredCount = Object.keys(answers).length
 
     const handleAnswer = (score: number) => {
         const newAnswers = { ...answers, [question.id]: score }
