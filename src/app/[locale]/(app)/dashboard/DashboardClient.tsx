@@ -328,7 +328,6 @@ export default function DashboardClient() {
     const dashT = useTranslations('dashboard');
     const [activeTab, setActiveTab] = useState<string>('daily');
     const [quests, setQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
-    const [rawQuests, setRawQuests] = useState<Record<string, Task[]>>({ daily: [], weekly: [], monthly: [], yearly: [] });
     const [selectedQuest, setSelectedQuest] = useState<Task | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [generating, setGenerating] = useState(false);
@@ -389,18 +388,14 @@ export default function DashboardClient() {
         setLoadingQuests(true);
         try {
             const results: Record<string, Task[]> = { daily: [], weekly: [], monthly: [], yearly: [] };
-            const raw: Record<string, Task[]> = { daily: [], weekly: [], monthly: [], yearly: [] };
             const responses = await Promise.all(
                 tabs.map(tf => fetch(`/api/tasks?timeframe=${tf}`).then(r => r.json()))
             );
             tabs.forEach((tf, i) => {
                 const allQuests = responses[i]?.tasks || [];
-                // Store raw (unfiltered) for unlock calculations across periods
-                raw[tf] = allQuests;
-                // Filter to current period only for display (Bug 4: quest expiration)
+                // Filter to current period only for display
                 results[tf] = filterCurrentPeriodQuests(allQuests, tf);
             });
-            setRawQuests(raw);
             setQuests(results);
             return results;
         } catch (err) {
