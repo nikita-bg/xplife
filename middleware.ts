@@ -2,7 +2,6 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { intlMiddleware } from '@/lib/i18n/middleware'
 import { updateSession } from '@/lib/supabase/middleware'
 import { trackPageView, shouldTrackAnalytics } from '@/lib/analytics/tracker'
-import { auth } from '@/lib/auth/config'
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
@@ -18,7 +17,32 @@ export async function middleware(request: NextRequest) {
         return updateSession(request)
     }
 
-    // Handle i18n routing for page routes
+    // CRITICAL: Skip i18n entirely for /admin routes — they are not locale-prefixed
+    // Without this, intlMiddleware redirects /admin/login → /bg/admin/login causing infinite loop
+    if (pathname.startsWith('/admin')) {
+        // Check for NextAuth session token cookie
+        // NextAuth v5 uses 'authjs.session-token' in dev, '__Secure-authjs.session-token' in prod
+        const sessionToken = request.cookies.get('authjs.session-token')?.value
+            || request.cookies.get('__Secure-authjs.session-token')?.value
+
+        // Admin route protection — require session token
+        if (!pathname.startsWith('/admin/login')) {
+            if (!sessionToken) {
+                const loginUrl = new URL('/admin/login', request.url)
+                loginUrl.searchParams.set('callbackUrl', pathname)
+                return NextResponse.redirect(loginUrl)
+            }
+        }
+
+        // Redirect already-logged-in admin users away from login page
+        if (pathname.startsWith('/admin/login') && sessionToken) {
+            return NextResponse.redirect(new URL('/admin', request.url))
+        }
+
+        return NextResponse.next()
+    }
+
+    // Handle i18n routing for non-admin page routes
     const intlResponse = intlMiddleware(request)
 
     // If i18n middleware returns a redirect, use it directly
@@ -27,9 +51,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // Analytics tracking (non-blocking, fire-and-forget)
-    // Track page views after i18n resolution but before auth checks
     if (shouldTrackAnalytics(pathname)) {
-        // Don't await - run in background to avoid blocking request
         trackPageView(request).catch(err => {
             console.error('[Middleware] Analytics tracking error:', err)
         })
@@ -41,24 +63,6 @@ export async function middleware(request: NextRequest) {
     // If Supabase returns a redirect (e.g. unauthenticated), use it
     if (supabaseResponse.status === 307 || supabaseResponse.status === 308) {
         return supabaseResponse
-    }
-
-    // Admin route protection with NextAuth
-    if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
-        const session = await auth()
-        if (!session || session.user?.role !== 'admin') {
-            const loginUrl = new URL('/admin/login', request.url)
-            loginUrl.searchParams.set('callbackUrl', pathname)
-            return NextResponse.redirect(loginUrl)
-        }
-    }
-
-    // Redirect logged-in admin users away from login page
-    if (pathname.startsWith('/admin/login')) {
-        const session = await auth()
-        if (session?.user?.role === 'admin') {
-            return NextResponse.redirect(new URL('/admin', request.url))
-        }
     }
 
     // CRITICAL: Return intlResponse as the base (it has locale headers that next-intl needs)

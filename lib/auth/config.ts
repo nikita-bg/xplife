@@ -101,29 +101,6 @@ export const authConfig: NextAuthConfig = {
       }
       return session
     },
-
-    /**
-     * Authorized Callback
-     * Controls access to routes via middleware
-     * Returns true to allow access, false to redirect to login
-     */
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnAdminRoute = nextUrl.pathname.startsWith('/admin')
-      const isOnLoginPage = nextUrl.pathname.startsWith('/admin/login')
-
-      if (isOnAdminRoute && !isOnLoginPage) {
-        // Admin routes require authentication
-        return isLoggedIn
-      }
-
-      if (isOnLoginPage && isLoggedIn) {
-        // Redirect logged-in users away from login page
-        return Response.redirect(new URL('/admin', nextUrl))
-      }
-
-      return true
-    }
   },
 
   secret: process.env.NEXTAUTH_SECRET,
