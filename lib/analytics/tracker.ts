@@ -17,7 +17,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest } from 'next/server'
 import crypto from 'crypto'
-import UAParser from 'ua-parser-js'
+import { UAParser } from 'ua-parser-js'
 
 // Initialize Supabase client with service role key for write access
 const supabase = createClient(

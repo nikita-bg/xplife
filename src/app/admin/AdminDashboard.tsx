@@ -13,7 +13,7 @@
  * - Responsive cyberpunk design
  */
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { signOut } from 'next-auth/react'
 import {
   BarChart3,
@@ -87,11 +87,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
 
-  useEffect(() => {
-    fetchAnalytics()
-  }, [timeRange])
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     if (!loading) setRefreshing(true)
 
     try {
@@ -130,7 +126,11 @@ export default function AdminDashboard() {
       setLoading(false)
       setRefreshing(false)
     }
-  }
+  }, [timeRange])
+
+  useEffect(() => {
+    fetchAnalytics()
+  }, [fetchAnalytics])
 
   const handleLogout = () => {
     signOut({ callbackUrl: '/admin/login' })
@@ -182,11 +182,10 @@ export default function AdminDashboard() {
             <button
               key={range}
               onClick={() => setTimeRange(range)}
-              className={`px-6 py-2.5 rounded-xl font-data text-sm uppercase tracking-wide transition-all ${
-                timeRange === range
-                  ? 'bg-accent text-background shadow-[0_0_20px_rgba(0,245,255,0.3)] font-bold'
-                  : 'bg-[#0C1021] border border-white/10 text-ghost/60 hover:text-ghost hover:border-white/20'
-              }`}
+              className={`px-6 py-2.5 rounded-xl font-data text-sm uppercase tracking-wide transition-all ${timeRange === range
+                ? 'bg-accent text-background shadow-[0_0_20px_rgba(0,245,255,0.3)] font-bold'
+                : 'bg-[#0C1021] border border-white/10 text-ghost/60 hover:text-ghost hover:border-white/20'
+                }`}
             >
               {range}
             </button>
